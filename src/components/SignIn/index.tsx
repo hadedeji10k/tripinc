@@ -22,7 +22,7 @@ const Signin = () => {
           <form>
             <div>
               <label className="signin_label">Email</label>
-              <input className="signin_input" type="text" placeholder='Enter your email address'/>
+              <input className="signin_input" type="email" placeholder='Enter your email address'/>
             </div>
             <div>
               <label className="signin_label">Password</label>

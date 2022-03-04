@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
-import Signup from '../components/SignUp';
-import Signin from '../components/SignIn';
+// import Signup from '../components/SignUp';
+// import Signin from '../components/SignIn';
+import BasicDetails from '../components/BasicDetails'
 
 
 const Home: React.FC = () => {
@@ -17,7 +18,8 @@ const Home: React.FC = () => {
             <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
             <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
             {/* <Signup /> */}
-            <Signin />
+            {/* <Signin /> */}
+            <BasicDetails />
         </>
   )
 }

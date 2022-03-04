@@ -30,7 +30,7 @@ const Signup = () => {
             </div>
             <div>
               <label className="signup_label">Email</label>
-              <input className="signup_input" type="text" placeholder='Enter your email address'/>
+              <input className="signup_input" type="email" placeholder='Enter your email address'/>
             </div>
             <div>
               <label className="signup_label">Password</label>
