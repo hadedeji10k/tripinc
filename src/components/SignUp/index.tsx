@@ -5,7 +5,7 @@ import { BsGoogle } from 'react-icons/bs'
 
 const Signup = () => {
   return (
-      <div className="signnup_container">
+      <div className="signup_container">
         <div className="signup_word">
           <h1 className="signup_header">Sign up</h1>
           <h3 className="signup_title">Welcome to Tripinc. All aboard.</h3>

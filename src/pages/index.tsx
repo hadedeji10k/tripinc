@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import Signup from '../components/SignUp';
+import Signin from '../components/SignIn';
 
 
 const Home: React.FC = () => {
@@ -15,7 +16,8 @@ const Home: React.FC = () => {
         <>
             <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
             <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
-            <Signup />
+            {/* <Signup /> */}
+            <Signin />
         </>
   )
 }

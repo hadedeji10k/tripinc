@@ -1,4 +1,4 @@
-.signup_container {
+.signin_container {
     max-width: 1000px;
     width: 100%;
     height: 80%;
@@ -10,7 +10,7 @@
     align-content: center;
 }
 
-.signup_word {
+.signin_word {
     /* font-size: 2.5rem;
     /* color: #fff; */
     display: flex;
@@ -24,7 +24,7 @@
     align-self: center;
 }
 
-.signup_header {
+.signin_header {
     font-size: 3rem;
     font-family: 'DM Sans', sans-serif;
     font-weight: 700;
@@ -37,7 +37,7 @@
     color: #141416;
 }
 
-.signup_title {
+.signin_title {
     font-size: 1rem;
     font-weight: 400;
     /* color: #fff; */
@@ -49,12 +49,12 @@
     letter-spacing: 0.3px;
 }
 
-.signup_label {
+.signin_label {
     text-transform: uppercase;
     font-size: 14px;
 }
 
-.signup_input {
+.signin_input {
     display: block;
     margin-top: 7px;
     margin-bottom: 20px;
@@ -69,17 +69,17 @@
 
 }
 
-.signup_input:focus {
+.signin_input:focus {
     border: 2px solid #252748;
     transition: all 0.3s ease-in-out;
 }
 
-/* .signup_input:hover {
+/* .signin_input:hover {
     border: 2px solid #252748;
     transition: all 0.3s ease-in-out;
 } */
 
-.signup_button_container {
+.signin_button_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -89,7 +89,7 @@
     align-self: center;
 }
 
-.signup_button {
+.signin_button {
     display: block;
     margin-top: 7px;
     margin-bottom: 25px;
@@ -109,18 +109,18 @@
     cursor: pointer;
 }
 
-.signup_button:hover {
+.signin_button:hover {
     background: #677ed8;
     color: #FCFCFD;
     transition: all 0.3s ease-in-out; 
 }
 
-.external_signup_button {
+.external_signin_button {
     /* display: flex; */
     margin-bottom: 1.5rem;
 }
 
-.signup_google_button {
+.signin_google_button {
     display: inline-block;
     margin-top: 7px;
     margin-right: 20px;
@@ -140,13 +140,13 @@
     cursor: pointer;
 }
 
-.signup_google_button:hover {
+.signin_google_button:hover {
     background: #1c1c6e;
     color: #FCFCFD;
     transition: all 0.3s ease-in-out; 
 }
 
-.signup_facebook_button {
+.signin_facebook_button {
     display: inline-block;
     margin-top: 7px;
     margin-right: 20px;
@@ -166,22 +166,22 @@
     cursor: pointer;
 }
 
-.signup_facebook_button:hover {
+.signin_facebook_button:hover {
     background: #677ed8;
     color: #FCFCFD;
     transition: all 0.3s ease-in-out; 
 }
 
-.signup_or {
+.signin_or {
     position: relative;
     margin-bottom: 1.5rem;
 }
 
-.signup_or_line {
+.signin_or_line {
     width: 450px;
 }
 
-.signup_or_text {
+.signin_or_text {
     position: absolute;
     top: 30%;
     left: 50%;
@@ -218,51 +218,159 @@
     color: #353945;
 }
 
+.password_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem; 
+    align-self: center;
+}
+
+.forgot_password a {
+    color: #fff;
+    text-decoration: none;
+    background: #475683;
+    padding: 15px;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+.forgot_password a:hover {
+    color: #fff;
+    background: #233774;
+    transition: all 0.3s ease-in-out;
+}
+
+.remember_me {
+    color: #353945;
+}
+
+/* input[type=checkbox] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 3px;
+    background-color: #353945;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* input[type=checkbox]:hover {
+    background: #23262F;
+} */
+
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox_input {
+    display: none;
+}
+
+.checkbox_box {
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid #353945;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.checkbox_box::after {
+    content: "\2714";
+    color: #fff;
+    transform: scale(0);
+    transition: transform 0.15s;
+}
+
+.checkbox_input:checked + .checkbox_box {
+    background: #353945;
+    
+}
+
+.checkbox_input:checked + .checkbox_box::after {
+    transform: scale(1);
+}
+
+/* label:before {
+    border-radius: 3px;
+} */
+
+input[type=checkbox]:checked {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: #f3f3f3;
+    text-align: center;
+    line-height: 15px;
+}
+
 @media screen and (max-width: 700px) {
-    .signup_or_line {
+    .signin_or_line {
         width: 400px;
     }
-    .signup_or_text {
+    .signin_or_text {
         font-size: 0.9rem;
         padding: 0.6rem;
     }
-    .signup_input {
+    .signin_input {
         width: 400px;
     }
 }
 @media screen and (max-width: 550px) {
-    .signup_or_line {
+    .signin_or_line {
         width: 300px;
     }
-    .signup_or_text {
+    .signin_or_text {
         font-size: 0.9rem;
         width: 200px;
     }
-    .signup_input {
+    .signin_input {
         width: 300px;
+    }
+    .password_box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .remember_me, .forgot_password {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 }
 
 @media screen and (max-width: 400px) {
-    .signup_google_button, .signup_facebook_button {
+    .signin_google_button, .signin_facebook_button {
         width: 120px;
         font-size: 0.8rem;
     }
-    .signup_input {
+    .signin_input {
         width: 300px;
     }
 }
 
 @media screen and (max-width: 345px) {  
-    .signup_input {
+    .signin_input {
         width: 250px;
         font-size: 0.8rem;
     }
-    .signup_google_button, .signup_facebook_button {
+    .signin_google_button, .signin_facebook_button {
         display: block;
         margin-bottom: 0.5rem;
     }
-    .signup_label {
+    .signin_label {
         font-size: 12px;
     }
     .have_account {
@@ -271,13 +379,13 @@
 }
 
 @media screen and (max-width: 300px) {  
-    .signup_header {
+    .signin_header {
         font-size: 2.5rem;
     }
-    .signup_title {
+    .signin_title {
         font-size: 0.8rem;
     }
-    .signup_input {
+    .signin_input {
         width: 200px;
         font-size: 0.7rem;
     }
