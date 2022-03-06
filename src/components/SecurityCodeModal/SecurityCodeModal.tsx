@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useCallback } from 'react'
 import { useSpring, animated } from 'react-spring'
 import styled from 'styled-components';
-import './BasicDetailsModal.css'
+import './SecurityCodeModal.css'
 import { MdClose } from 'react-icons/md'
 
-interface BasicDetailsModalProp {
+interface SecurityCodeModalProp {
   showModal: Boolean,
   setShowModal: React.Dispatch<React.SetStateAction<Boolean>>
 }
@@ -23,7 +23,7 @@ const Background: any = styled.div`
   transition: all 0.3s ease-in-out;
 `
 
-const BasicDetailsModal = ({showModal, setShowModal}: BasicDetailsModalProp) => {
+const SecurityCodeModal = ({showModal, setShowModal}: SecurityCodeModalProp) => {
 
   const modalRef = useRef<HTMLDivElement>();
 
@@ -66,14 +66,13 @@ const BasicDetailsModal = ({showModal, setShowModal}: BasicDetailsModalProp) => 
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="modal" style={animation}>
             <div className="modal_wrapper">
-              <h3 className="header">Let’s confirm it’s really you</h3>
-              <p className="title">Help us secure your account. Please complete the verifications below.</p>
-              <div className="radio_content">
-                <input type="radio" /> Get the code by text message (SMS) at +1 234 567 890
-              </div>
-              <hr className="line" />
-              <div className="radio_content">
-                <input type="radio" /> Get the code by email claireg•••••••@gm•••.com
+              <h3 className="header">Enter your Security Code</h3>
+              <p className="title">We texted your code to +1 234 567 890</p>
+              <div className="input_content">
+                <input type="text" className="code_input" /> 
+                <input type="text" className="code_input" /> 
+                <input type="text" className="code_input" /> 
+                <input type="text" className="code_input" /> 
               </div>
               <div>
                 <button className="button">Continue</button>
@@ -91,4 +90,4 @@ const BasicDetailsModal = ({showModal, setShowModal}: BasicDetailsModalProp) => 
   )
 }
 
-export default BasicDetailsModal
+export default SecurityCodeModal

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+// import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import SecurityCodeModal from '../SecurityCodeModal/SecurityCodeModal';
 
 import './BasicDetails.css'
 
@@ -48,7 +49,7 @@ const BasicDetails: React.FC = () => {
             </div>
           </form>
         </div>
-        <ConfirmationModal showModal={showModal} setShowModal={setShowModal} />
+        <SecurityCodeModal showModal={showModal} setShowModal={setShowModal} />
         <div className="have_account">
           <h3>Already have an account? <a href="/" className="login_text">Login</a></h3>
         </div>
