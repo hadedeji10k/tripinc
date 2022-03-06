@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+
 import './BasicDetails.css'
 
-const BasicDetails = () => {
+const BasicDetails: React.FC = () => {
+
+  const [showModal, setShowModal] = useState<Boolean>(false);
+
+  const toggleShowModal = (e: React.FormEvent): void => {
+    e.preventDefault();
+    setShowModal(!showModal);
+  }
+
   return (
       <div className="basic_details_container">
         <div className="basic_details_word">
@@ -9,7 +19,7 @@ const BasicDetails = () => {
           <h3 className="basic_details_title">It’s all in the details.</h3>
         </div>
         <div>
-          <form>
+          <form onSubmit= {toggleShowModal}>
             <div>
               <label className="basic_details_label">Phone Number</label>
               <input className="basic_details_input" type="text" placeholder='Phone Number'/>
@@ -38,6 +48,7 @@ const BasicDetails = () => {
             </div>
           </form>
         </div>
+        <ConfirmationModal showModal={showModal} setShowModal={setShowModal} />
         <div className="have_account">
           <h3>Already have an account? <a href="/" className="login_text">Login</a></h3>
         </div>
