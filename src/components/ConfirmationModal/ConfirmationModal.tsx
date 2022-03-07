@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import './ConfirmationModal.css'
 import { MdClose } from 'react-icons/md'
 
+// interface for ConfirmationModal
 interface ConfirmationModalProp {
   showModal: Boolean,
   setShowModal: React.Dispatch<React.SetStateAction<Boolean>>
 }
 
+// styled component for the ConfirmationModal
 const Background: any = styled.div`
   width: 100vw;
   height: 100vh;
@@ -23,10 +25,13 @@ const Background: any = styled.div`
   transition: all 0.3s ease-in-out;
 `
 
+// component for the ConfirmationModal
 const ConfirmationModal = ({showModal, setShowModal}: ConfirmationModalProp) => {
 
+  // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
+  // animation for the modal to pop up when the modal is clicked
   const animation = useSpring({
     opacity: showModal ? 1 : 0,
     transform: showModal ? 'translateZ(0)' : 'translateZ(-100%)',
@@ -38,6 +43,7 @@ const ConfirmationModal = ({showModal, setShowModal}: ConfirmationModalProp) => 
     }
   });
 
+  // function for closing the modal
   const closeModal = (e: React.FormEvent): void => {
     e.preventDefault();
     if (modalRef.current === e.target) {
@@ -45,12 +51,14 @@ const ConfirmationModal = ({showModal, setShowModal}: ConfirmationModalProp) => 
     }
   }
 
+  // function for checking for the esc key press
   const keyPress = useCallback((e: React.KeyboardEvent | any) => {
     if (e.key === 'Escape' && showModal) {
       setShowModal(false);
     }
   }, [setShowModal, showModal])
 
+  // useEffect for checking for the esc key press
   useEffect(() => {
     document.addEventListener('keydown', keyPress);
     return () => {
@@ -58,6 +66,7 @@ const ConfirmationModal = ({showModal, setShowModal}: ConfirmationModalProp) => 
     }
   }, [keyPress])
 
+  // return the ConfirmationModal
   return (
     <>
     { showModal ? 

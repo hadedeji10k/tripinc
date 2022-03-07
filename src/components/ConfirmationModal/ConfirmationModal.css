@@ -66,16 +66,18 @@
 .button {
     margin-top: 1rem;
     padding: 10px 24px;
-    background: #141414;
+    background: #92A5EF;
     color: #fff;
     border-radius: 30px;
     border: none;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .button:hover {
-    background: #fff;
-    color: #141414;
+    background: #2b44a8;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
 }
 
 .close_modal_button {

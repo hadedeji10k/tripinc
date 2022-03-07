@@ -7,13 +7,17 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { Nav, NavbarContainer, NavbarLogo, MobileIcon, NavMenu, NavItem, NavLink, NavBtn, NavBtnLink, ReactIcons } from './NavbarElements'
 // import logo from '../../logo.svg'
 
+// Interface for this component
 interface NavbarProps {
     isOpen: Boolean,
     toggleIsOpen: (arg: Boolean) => void
 }
 
+// react component for the NavbarContainer
 const Navbar: React.FC <NavbarProps> = ({isOpen, toggleIsOpen}: NavbarProps) => {
-  return (
+  
+    // return the NavbarContainer
+    return (
     <>
         <Nav>
             <NavbarContainer>
