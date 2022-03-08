@@ -3,7 +3,8 @@ import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 // import Signup from '../components/SignUp';
 // import Signin from '../components/SignIn';
-import BasicDetails from '../components/BasicDetails'
+// import BasicDetails from '../components/BasicDetails'
+import Preferences from '../components/Preferences'
 
 
 const Home: React.FC = () => {
@@ -19,7 +20,8 @@ const Home: React.FC = () => {
             <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
             {/* <Signup /> */}
             {/* <Signin /> */}
-            <BasicDetails />
+            {/* <BasicDetails /> */}
+            <Preferences />
         </>
   )
 }
