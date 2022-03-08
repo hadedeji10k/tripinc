@@ -145,6 +145,7 @@ const Preferences: React.FC = () => {
   const [placesData, setPlacesData] = useState(placesdata)
   const [placesBeenToData, setPlacesBeenToData] = useState(placesBeenTodata)
 
+  // function to handle preference click
   const handleClick = (e: any) => {
     e.preventDefault()
     // console.log(e.target.id)
@@ -155,6 +156,7 @@ const Preferences: React.FC = () => {
     setPreferenceData([...preferenceData])
   }
 
+  // function to handle places click
   const handlePlacesClick = (e: any) => {
     e.preventDefault()
     const id = e.target.id
@@ -163,6 +165,7 @@ const Preferences: React.FC = () => {
     console.log(placesData)
   }
 
+  // function to handle typing of places tag
   const handlePlacesChange = (e: any) => {
     e.preventDefault();
     // console.log(e.keyCode)
@@ -191,6 +194,7 @@ const Preferences: React.FC = () => {
     });
   }
 
+  // function to handle placesBeenTo click
   const handlePlacesBeenToClick = (e: any) => {
     e.preventDefault()
     const id = e.target.id
@@ -199,6 +203,7 @@ const Preferences: React.FC = () => {
     console.log(placesBeenToData)
   }
 
+  // function to handle typing of placesBeenTo tag
   const handlePlacesBeenToChange = (e: any) => {
     e.preventDefault();
     // console.log(e.keyCode)
@@ -227,6 +232,7 @@ const Preferences: React.FC = () => {
     });
   }
   
+  // Function to handle save button
   const handleSubmit = (e: any) => {
     e.preventDefault()
     console.log(placesData)
