@@ -44,3 +44,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+<!-- ABOUT THE FOLDER STRUCTURE -->
+The folder structure in src folder is explained as follows
+1. COMPONENT - it contains folders of components like Navbar, SignUp e.t.c and each folder having functional components in tsx file returning tsx as its component
+2. PAGES - It contains the files going to be used for routing, ex: importing the components from component folder and routing it using pages
+3. IMAGES - It contains the images to be used in these projects along with the public images

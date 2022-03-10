@@ -4,7 +4,8 @@ import Sidebar from '../components/Sidebar'
 // import Signup from '../components/SignUp';
 // import Signin from '../components/SignIn';
 // import BasicDetails from '../components/BasicDetails'
-import Preferences from '../components/Preferences'
+// import Preferences from '../components/Preferences'
+import Profile from '../components/Profile'
 
 
 const Home: React.FC = () => {
@@ -21,7 +22,8 @@ const Home: React.FC = () => {
             {/* <Signup /> */}
             {/* <Signin /> */}
             {/* <BasicDetails /> */}
-            <Preferences />
+            {/* <Preferences /> */}
+            <Profile />
         </>
   )
 }

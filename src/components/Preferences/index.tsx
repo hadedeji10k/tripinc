@@ -146,7 +146,7 @@ const Preferences: React.FC = () => {
   const [placesBeenToData, setPlacesBeenToData] = useState(placesBeenTodata)
 
   // function to handle preference click
-  const handleClick = (e: any) => {
+  const handlePreferencesClick = (e: any) => {
     e.preventDefault()
     // console.log(e.target.id)
     const id = e.target.id
@@ -282,7 +282,7 @@ const Preferences: React.FC = () => {
           <div className="preferences_tag_container">
             {preferenceData.map(item => (
                   // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <span key={item.id} id={item.id.toString()} className={item.stateOfClass ? 'preferences_clicked' : 'preferences_not_clicked'} onClick={handleClick}>{item.title}</span>
+              <span key={item.id} id={item.id.toString()} className={item.stateOfClass ? 'preferences_clicked' : 'preferences_not_clicked'} onClick={handlePreferencesClick}>{item.title}</span>
             ))}
           </div>
         </div>
