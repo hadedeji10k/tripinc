@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import './Profile.css'
-import ProfileModal from './Modal/ProfileModal/ProfileModal'
-import PreferencesModal from './Modal/PreferencesModal/PreferencesModal'
+import './PersonalInfoPage.css'
+import ProfileModal from '../Modal/ProfileModal/ProfileModal'
+import PreferencesModal from '../Modal/PreferencesModal/PreferencesModal'
 
 //  const preferencedata = [
 //     {

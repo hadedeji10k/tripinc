@@ -139,6 +139,7 @@ input[type=number] {
     .modal_wrapper {
         width: 80%;
         transform: translateX(40px);
+        padding: 50px;
     }
     .profile_details_item {
         flex-direction: column;
@@ -161,6 +162,10 @@ input[type=number] {
     }
     .personal_info_input {
         width: 250px;
+    }
+    .profile_modal_header {
+        font-size: 1.2rem;
+        letter-spacing: 0.6px;
     }
 }
 

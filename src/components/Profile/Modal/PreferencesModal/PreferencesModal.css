@@ -177,22 +177,27 @@
         width: 400px;
     }
 }
+
 @media screen and (max-width: 550px) {
     .preferences_input {
         width: 300px;
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 410px) {
     .preferences_input {
-        width: 300px;
+        width: 250px;
+        font-size: 0.8rem;
+    }
+    .location_tag {
+        font-size: 14px;
     }
 }
 
 @media screen and (max-width: 345px) { 
     .preferences_input {
-        width: 250px;
-        font-size: 0.8rem;
+        width: 200px;
+        font-size: 0.6rem;
     }
     .preferences_label {
         font-size: 12px;

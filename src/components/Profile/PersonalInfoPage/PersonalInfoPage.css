@@ -188,9 +188,15 @@
     transition: all 0.3s ease-in-out; 
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1100px) {
     .personal_info_input {
-        width: 350px;
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .profile_details_item {
+        flex-direction: column;
     }
 }
 
@@ -201,17 +207,20 @@
 }
 
 @media screen and (max-width: 700px) {
-    .profile_details_item {
-        flex-direction: column;
-    }
     .personal_info_input {
-        width: 400px;
+        width: 260px;
     }
 }
 
 @media screen and (max-width: 500px) {
-    .personal_info_input {
-        width: 350px;
+    /* .personal_info_input {
+        width: 300px;
+    } */
+}
+
+@media screen and (max-width: 400px) {
+    .preferences_label {
+        font-size: 14px;
     }
 }
 
