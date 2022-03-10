@@ -25,29 +25,6 @@ const Background: any = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-// User dummy data
-// const userData = {
-//   firstName: "Yusuf",
-//   lastName: "Adedeji",
-//   email: "adedejiyusuf26@gmail.com",
-//   phone: "+234 906 2047 667",
-//   country: "Nigeria",
-//   postalCode: "600001",
-//   city: "Lagos",
-//   preferenceData: [
-//     "🎬 Film",
-//     "🗽 Tourist Attractions",
-//     "🏵 Wellness & Spa",
-//     "🏝 Shopping",
-//     "🍹 Food & Drinks",
-//     "🏝 Beach",
-//     "🎨 Arts & Galleries",
-//     "🎢 Adventure",
-//   ],
-//   placesBeenToData: ["Nigeria", "Paris", "Spain", "Italy"],
-//   bucketList: ["Paris", "Spain", "Italy"],
-// };
-
 // preferences dummy userData
 const preferencedata = [
     {

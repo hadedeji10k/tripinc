@@ -1,15 +1,15 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
-import "./ProfileModal.css";
+import "./AccountPageModal.css";
 import { MdClose } from "react-icons/md";
 // user dummy data
 import { userData } from '../../../../currentUserData'
 
 // interface for this Modal
-interface ProfileModalProp {
-  showProfileModal: Boolean;
-  setShowProfileModal: React.Dispatch<React.SetStateAction<Boolean>>;
+interface AccountPageModalProp {
+  showAccountPageModal: Boolean;
+  setShowAccountPageModal: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 // Styled component for background
@@ -28,14 +28,14 @@ const Background: any = styled.div`
 `;
 
 // Component for security Modal
-const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalProp) => {
+const AccountPageModal = ({ showAccountPageModal, setShowAccountPageModal }: AccountPageModalProp) => {
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
   // animation for the modal to pop up when the modal is clicked
   const animation = useSpring({
-    opacity: showProfileModal ? 1 : 0,
-    transform: showProfileModal ? "translateZ(0)" : "translateZ(-100%)",
+    opacity: showAccountPageModal ? 1 : 0,
+    transform: showAccountPageModal ? "translateZ(0)" : "translateZ(-100%)",
     config: {
       // mass: 1,
       // tension: 300,
@@ -48,18 +48,18 @@ const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalPro
   const closeModal = (e: React.FormEvent): void => {
     e.preventDefault();
     if (modalRef.current === e.target) {
-      setShowProfileModal(false);
+      setShowAccountPageModal(false);
     }
   };
 
   // function for checking for the esc key press
   const keyPress = useCallback(
     (e: React.KeyboardEvent | any) => {
-      if (e.key === "Escape" && showProfileModal) {
-        setShowProfileModal(false);
+      if (e.key === "Escape" && showAccountPageModal) {
+        setShowAccountPageModal(false);
       }
     },
-    [setShowProfileModal, showProfileModal]
+    [setShowAccountPageModal, showAccountPageModal]
   );
 
   // useEffect for checking for the esc key press
@@ -77,83 +77,70 @@ const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalPro
   // return the component
   return (
     <>
-      {showProfileModal ? (
+      {showAccountPageModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="modal" style={animation}>
             <div className="modal_wrapper">
-              <h3 className="profile_modal_header">Edit your profile details</h3>
+              <h3 className="profile_modal_header">Edit your Account details</h3>
 
               <div className="profile_details_container">
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">First Name</label>
-                    <input
+                    <label className="personal_info_label">Preferred Currency</label>
+                    <select name="" id="" defaultValue={userData?.preferredCurrency}>
+                      <option value="">USD</option>  
+                      <option value="">NGN</option>  
+                      <option value="">ZAR</option>  
+                    </select>
+                    {/* <input
                       className="personal_info_input"
                       type="text"
-                      placeholder={userData?.firstName}
-                      defaultValue={userData?.firstName}
-                    />
+                      placeholder={userData?.preferredCurrency}
+                      defaultValue={userData?.preferredCurrency}
+                    /> */}
                   </div>
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">Last Name</label>
-                    <input
+                    <label className="personal_info_label">Time Format</label>
+                    <select name="" id="" defaultValue={userData?.timeFormat}>
+                      <option value="">12 hours</option>  
+                      <option value="">24 hours</option>  
+                    </select>
+                    {/* <input
                       className="personal_info_input"
                       type="text"
-                      placeholder={userData?.lastName}
-                      defaultValue={userData?.lastName}
-                    />
+                      placeholder={userData?.timeFormat}
+                      defaultValue={userData?.timeFormat}
+                    /> */}
                   </div>
                 </div>
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">Email Address</label>
+                    <label className="personal_info_label">Current Password</label>
                     <input
                       className="personal_info_input"
-                      type="text"
-                      placeholder={userData?.email}
-                      defaultValue={userData?.email}
+                      type="password"
+                      placeholder={userData?.password}
+                      defaultValue={userData?.password}
                     />
                   </div>
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">Country</label>
+                    <label className="personal_info_label">New Password</label>
                     <input
                       className="personal_info_input"
-                      type="text"
-                      placeholder={userData?.country}
-                      defaultValue={userData?.country}
+                      type="password"
+                      placeholder='Enter your new password'
                     />
                   </div>
                 </div>
             
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">City</label>
+                    <label className="personal_info_label">Confirm Password</label>
                     <input
                       className="personal_info_input"
-                      type="text"
-                      placeholder={userData?.city}
-                      defaultValue={userData?.city}
-                    />
-                  </div>
-                  <div className="profile_details_item_row">
-                    <label className="personal_info_label">Postal Code</label>
-                    <input
-                      className="personal_info_input"
-                      type="text"
-                      placeholder={userData?.postalCode}
-                      defaultValue={userData?.postalCode}
-                    />
-                  </div>
-                </div>
-                <div className="profile_details_item">
-                  <div className="profile_details_item_row">
-                    <label className="personal_info_label">Phone Number</label>
-                    <input
-                      className="personal_info_input"
-                      type="tel"
-                      placeholder={userData?.phone}
-                      defaultValue={userData?.phone}
+                      type="password"
+                      placeholder='Confirm your new Password'
                     />
                   </div>
                 </div>
@@ -166,7 +153,7 @@ const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalPro
               <div>
                 <MdClose
                   className="close_modal_button"
-                  onClick={() => setShowProfileModal((prev) => !prev)}
+                  onClick={() => setShowAccountPageModal((prev) => !prev)}
                 />
               </div>
             </div>
@@ -178,4 +165,4 @@ const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalPro
   );
 };
 
-export default ProfileModal;
+export default AccountPageModal;
