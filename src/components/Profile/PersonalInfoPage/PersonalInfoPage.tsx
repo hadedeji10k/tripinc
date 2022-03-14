@@ -4,11 +4,30 @@ import ProfileModal from '../Modal/ProfileModal/ProfileModal'
 import PreferencesModal from '../Modal/PreferencesModal/PreferencesModal'
 import { userData } from '../../../currentUserData'
 
+// testing 
+import ErrorMessageModal from '../../MessageModal/ErrorMessageModal/ErrorMessageModal'
+import SuccessMessageModal from '../../MessageModal/SuccessMessageModal/SuccessMessageModal'
+
 const PersonalInfoPage = () => {
   // const [preferenceData, setPreferenceData] = useState(preferencedata)
 
   const [showProfileModal, setShowProfileModal] = useState<Boolean>(false);
   const [showPreferencesModal, setShowPreferencesModal] = useState<Boolean>(false);
+  
+  // testing
+  const [showErrorMessageModal, setShowErrorMessageModal] = useState<Boolean>(false);
+  const [showSuccessMessageModal, setShowSuccessMessageModal] = useState<Boolean>(false);
+
+
+  const toggleShowErrorMessageModal = (e: React.FormEvent): void => {
+    e.preventDefault();
+    setShowErrorMessageModal(!showErrorMessageModal);
+  }
+  const toggleShowSuccessMessageModal = (e: React.FormEvent): void => {
+    e.preventDefault();
+    setShowSuccessMessageModal(!showSuccessMessageModal);
+  }
+
 
   const toggleShowProfileModal = (e: React.FormEvent): void => {
     e.preventDefault();
@@ -60,7 +79,7 @@ const PersonalInfoPage = () => {
                 <input className="personal_info_input" type="text" placeholder={userData?.phone} disabled/>
             </div>
             <div className="profile_details_item_row">
-              <button className="personal_info_button" onClick={toggleShowProfileModal} >Edit Profile</button>
+              <button className="personal_info_button" onClick={toggleShowSuccessMessageModal} >Edit Profile</button>
             </div>
           </div>
         </div>
@@ -103,6 +122,10 @@ const PersonalInfoPage = () => {
       </div>
       <ProfileModal showProfileModal={showProfileModal} setShowProfileModal={setShowProfileModal} />
       <PreferencesModal showPreferencesModal={showPreferencesModal} setShowPreferencesModal={setShowPreferencesModal} />
+
+      {/* testing */}
+      <ErrorMessageModal showErrorMessageModal={showErrorMessageModal} setShowErrorMessageModal={setShowErrorMessageModal} />
+      <SuccessMessageModal showSuccessMessageModal={showSuccessMessageModal} setShowSuccessMessageModal={setShowSuccessMessageModal} />
     </div>
   )
 }

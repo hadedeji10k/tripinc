@@ -135,10 +135,6 @@
     justify-content: space-between;
 }
 
-.permission_item_content {
-    /* margin: 0 20px; */
-}
-
 .permission_header {
     text-transform: uppercase;
 }
