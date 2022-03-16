@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
+import Footer from '../components/Footer/Footer'
 // import Signup from '../components/SignUp';
 // import Signin from '../components/SignIn';
 // import BasicDetails from '../components/BasicDetails'
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
             {/* <Preferences /> */}
             {/* <Profile /> */}
             <ExplorePage />
+            <Footer />
         </>
   )
 }

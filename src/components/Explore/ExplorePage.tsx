@@ -1,6 +1,8 @@
+/* eslint-disable array-callback-return */
 import React, { useState } from 'react'
 import './ExplorePage.css'
-import { preferencedata } from '../../currentUserData'
+import { preferencedata, attractiondata } from '../../currentUserData'
+import { attraction } from '../../interfaces'
 
 import { IoIosArrowDown } from 'react-icons/io'
 import { BsSuitHeartFill } from 'react-icons/bs'
@@ -9,6 +11,7 @@ import { BiSearch } from 'react-icons/bi'
 const ExplorePage = () => {
 
   const [preferenceData, setPreferenceData] = useState(preferencedata)
+  const [attractionData, setAttractionData] = useState(attractiondata)
 
     // function to handle preference click
   const handlePreferencesClick = (e: any) => {
@@ -20,6 +23,13 @@ const ExplorePage = () => {
     // preferenceData[index].class = preferenceData[index].stateOfClass ? 'clicked' : 'not-clicked'
     setPreferenceData([...preferenceData])
   }
+
+    const newLocal = { review: 0, }
+    // attractionData.map((item) => {
+    //     item.reviews?.map((item) => {
+    //         review += item.rating
+    //     })
+    // })
 
   return (
     <div className="explore_page_container">
@@ -52,86 +62,33 @@ const ExplorePage = () => {
           </div>
         </div>
         <div className="card">
-            <div className="card_container">
-                <div className="image_container">
-                    <img className="image" src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" />
-                </div>
-                <div className="card_details">
-                    <p className="card_title">The London Eye</p>
-                    <p className="card_description">Not to be missed experience! Get the full English breakfast experience fit for kings!</p>
-                    <hr />
-                    <div className="card_price_review">
-                        <p className="price">from $245</p>
-                        <p className="price">&#9733; 4.7 (12 reviews)</p>
+            {attractionData.map(item => (<>
+                <div className="card_container">
+                    <div className="image_container">
+                        <img className="image" src={item.image.toString()} alt="" />
+                    </div>
+                    <div className="card_details">
+                        <p className="card_title">{item.title}</p>
+                        <p className="card_description">{item.description.slice(0, 100)}...</p>
+                        <hr />
+                        <div className="card_price_review">
+                            <p className="price">from {item.price}</p>
+                           
+                            <p className="price"> {
+                            item.reviews?.map((item) => {
+                                newLocal.review += item.rating
+                            })} {item.reviews?.length} reviews</p>
+                        </div>
+                    </div>
+                    <div className="arrow">
+                        <p className="arrow_tag"><IoIosArrowDown /></p>
+                    </div>
+                    <div className="heart">
+                        <p className="heart_tag"><BsSuitHeartFill /></p>
                     </div>
                 </div>
-                <div className="arrow">
-                    <p className="arrow_tag"><IoIosArrowDown /></p>
-                </div>
-                <div className="heart">
-                    <p className="heart_tag"><BsSuitHeartFill /></p>
-                </div>
-            </div>
-            <div className="card_container">
-                <div className="image_container">
-                    <img className="image" src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" />
-                </div>
-                <div className="card_details">
-                    <p className="card_title">The London Eye</p>
-                    <p className="card_description">Not to be missed experience! Get the full English breakfast experience fit for kings!</p>
-                    <hr />
-                    <div className="card_price_review">
-                        <p className="price">from $245</p>
-                        <p className="price">&#9733; 4.7 (12 reviews)</p>
-                    </div>
-                </div>
-                <div className="arrow">
-                    <p className="arrow_tag"><IoIosArrowDown /></p>
-                </div>
-                <div className="heart">
-                    <p className="heart_tag"><BsSuitHeartFill /></p>
-                </div>
-            </div>
-            <div className="card_container">
-                <div className="image_container">
-                    <img className="image" src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" />
-                </div>
-                <div className="card_details">
-                    <p className="card_title">The London Eye</p>
-                    <p className="card_description">Not to be missed experience! Get the full English breakfast experience fit for kings!</p>
-                    <hr />
-                    <div className="card_price_review">
-                        <p className="price">from $245</p>
-                        <p className="price">&#9733; 4.7 (12 reviews)</p>
-                    </div>
-                </div>
-                <div className="arrow">
-                    <p className="arrow_tag"><IoIosArrowDown /></p>
-                </div>
-                <div className="heart">
-                    <p className="heart_tag"><BsSuitHeartFill /></p>
-                </div>
-            </div>
-            <div className="card_container">
-                <div className="image_container">
-                    <img className="image" src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" />
-                </div>
-                <div className="card_details">
-                    <p className="card_title">The London Eye</p>
-                    <p className="card_description">Not to be missed experience! Get the full English breakfast experience fit for kings!</p>
-                    <hr />
-                    <div className="card_price_review">
-                        <p className="price">from $245</p>
-                        <p className="price">&#9733; 4.7 (12 reviews)</p>
-                    </div>
-                </div>
-                <div className="arrow">
-                    <p className="arrow_tag"><IoIosArrowDown /></p>
-                </div>
-                <div className="heart">
-                    <p className="heart_tag"><BsSuitHeartFill /></p>
-                </div>
-            </div>
+                </>
+            ))}
         </div>
     </div>
   )
