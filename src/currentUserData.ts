@@ -169,7 +169,7 @@ export  const placesBeenTodata = [
     }
   ]
 
-export const attractionData = [
+export const attractiondata = [
   {
     id: 1,
     title: 'Nigeria',
@@ -201,7 +201,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$367",
+    price: 367,
     category: "food & drinks",
   },
   {
@@ -235,7 +235,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$453",
+    price: 453,
     category: "beach"
   },
   {
@@ -269,7 +269,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$636",
+    price: 636,
     category: "adventure"
   },
   {
@@ -303,7 +303,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$234",
+    price: 234,
     category: "adventure"
   },
   {
@@ -337,7 +337,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$235",
+    price: 235,
     category: "beach"
   },
   {
@@ -371,7 +371,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$335",
+    price: 335,
     category: "food & drinks"
   },
   {
@@ -405,7 +405,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$243",
+    price: 243,
     category: "beach"
   },
   {
@@ -439,7 +439,7 @@ export const attractionData = [
         review: "This is a review"
       },
     ],
-    price: "$244",
+    price: 244,
     category: "adventure"
   },
 ]

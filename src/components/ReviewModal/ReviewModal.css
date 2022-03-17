@@ -14,7 +14,7 @@
 
 .modal_wrapper {
     width: 700px;
-    height: 500px;
+    min-height: 500px;
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
     background: #fff;
     color: #000;
@@ -25,6 +25,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* overflow: scroll; */
     align-content: center;
 }
 
@@ -45,12 +46,33 @@
     font-size: 1rem;
     font-weight: 400;
     /* color: #fff; */
+    margin: 1rem;
     margin-bottom: 2.5rem;
     color: #777E90;
     font-size: 16px;
     line-height: 24px;
     word-spacing: 0.6px;
     letter-spacing: 0.3px;
+}
+
+.basic_details_input {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 20px;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid #ccc;
+    width: 500px;
+    color: #000;
+    transition: all 0.3s ease-in-out; 
+
+}
+
+.basic_details_input:focus {
+    border: 2px solid #252748;
+    transition: all 0.3s ease-in-out;
 }
 
 .button {
@@ -84,41 +106,6 @@
     border-radius: 50%;
 }
 
-.input_content {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-.code_input {
-    width: 60px;
-    height: 60px;
-    padding: 15px;
-    margin: 0 15px 20px 0;
-    font-size: 2rem;
-    border-radius: 10px;
-    border: 2px solid #131316;
-    outline: none;
-    transition: all 0.3s ease-in-out;
-}
-
-.code_input:focus {
-    outline: none;
-    border: 2px solid #15154d;
-    transition: all 0.3s ease-in-out;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance: textfield;
-}
 
 @media screen and (max-width: 830px) {
     /* .modal_wrapper {
@@ -148,11 +135,20 @@ input[type=number] {
     .title {
         margin-bottom: 1.5rem;
     }
+    .basic_details_input {
+        width: 400px;
+    }
 }
 
 @media screen and (max-width: 650px) {
     .modal_wrapper {
         padding: 30px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .basic_details_input {
+        width: 300px;
     }
 }
 
@@ -169,12 +165,12 @@ input[type=number] {
     .header {
         font-size: 1.5rem;
     }
-    .code_input {
-        width: 40px;
-        height: 40px;
-        padding: 10px;
-        margin: 0 10px 15px 0;
-        font-size: 1.5rem;
+}
+
+@media screen and (max-width: 400px) {
+    .basic_details_input {
+        width: 250px;
+        font-size: 0.8rem;
     }
 }
 
@@ -182,8 +178,11 @@ input[type=number] {
     .title {
         font-size: 0.8rem;
     }
-    .radio_content {
-        font-size: 0.8rem;
-    }
 }
 
+@media screen and (max-width: 300px) { 
+    .basic_details_input {
+        width: 200px;
+        font-size: 0.7rem;
+    }
+}
