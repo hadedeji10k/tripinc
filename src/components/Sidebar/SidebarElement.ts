@@ -10,7 +10,7 @@ interface SidebarContainerProps {
 
 export const SidebarContainer = styled.aside<SidebarContainerProps | any>`
     position: fixed;
-    z-index: 999;
+    z-index: -100;
     width: 100%;
     height: 100%;
     background: #252748;
@@ -20,6 +20,10 @@ export const SidebarContainer = styled.aside<SidebarContainerProps | any>`
     transition: 0.3s ease-in-out;
     opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')};
     top: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
+
+    @media (max-width: 768px) {
+        z-index: 999;
+    }
 `
 
 export const CloseIcon = styled(FaTimes)`

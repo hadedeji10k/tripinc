@@ -443,3 +443,87 @@ export const attractiondata = [
     category: "adventure"
   },
 ]
+
+
+export const getExplore = {
+  title: "Explore the backstreets with a historian",
+  time: "3 hours | Hosted in English",
+  description: "Explore the world",
+  details: "This walk follows government guidelines on combating covid to ensure guest safety. We will walk around quiet backstreets from Westminster to Vauxhall. Over two hours we will visit a Georgian cathedral town and pleasure garden, a Victorian penal port and graveyard, a Bronze Age port and religious site, and a 21st-century city that is still under construction. You will be immersed in different historical periods and will hear about lots of gossip and scandal. This walk actively encourages your participation. This walk can best be regarded as…",
+  location: "London Central, United Kingdom",
+  location_marker: {
+    lat: 40.416775,
+    lng: -3.703790
+  },
+  images: [
+    {
+      id: 1,
+      image: "https://images.unsplash.com/photo-1558981402-d8f9c9d8f9c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHRvdXJpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+      id: 2,
+      image: "https://images.unsplash.com/photo-1558981402-d8f9c9d8f9c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHRvdXJpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+      id: 3,
+      image: "https://images.unsplash.com/photo-1558981402-d8f9c9d8f9c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHRvdXJpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+  ],
+  termsAndConditions: "Please contact [attraction name] directly to find out more about their Ts & Cs.",
+  cancellationPolicy: "All bookings made via TripInc are subject to the attraction providers’ own cancellation policy. To find out more please contact [attraction name] directly via their website. ",
+  reviews: [
+    {
+      id: 1,
+      name: "John Doe",
+      image: "https://media.istockphoto.com/photos/one-beautiful-woman-looking-at-the-camera-in-profile-picture-id1303539316?k=20&m=1303539316&s=612x612&w=0&h=AkxCcEsFBlQMBbLuc4_ViG_VSw708aggNmwduKjK1s4=",
+      rating: 5,
+      review: "This is a review",
+      time: "1 hour ago",
+      stateOfClass: false
+    },  
+    {
+      id: 2,
+      name: "Jane Doe",
+      image: "https://media.istockphoto.com/photos/pleasant-young-indian-woman-freelancer-consult-client-via-video-call-picture-id1300972573?b=1&k=20&m=1300972573&s=170667a&w=0&h=xuAsEkMkoBbc5Nh-nButyq3DU297V_tnak-60VarrR0=",
+      rating: 4,
+      review: "This is a review",
+      time: "1 hour ago",
+      stateOfClass: false
+    },
+    {
+      id: 3,
+      name: "John Doe",
+      image: "https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo=",
+      rating: 3,
+      review: "This is a review",
+      time: "1 hour ago",
+      stateOfClass: false
+    },
+  ],
+  price: 244,
+  category: "adventure",
+  availableDates: [
+    {
+      id: 1,
+      date: "2020-04-01",
+      available: true
+    },
+    {
+      id: 2,
+      date: "2020-04-02",
+      available: true
+    },
+  ],
+  availableTimes: [
+    {
+      id: 1,
+      time: "10:00",
+      available: true
+    },
+    {
+      id: 2,
+      time: "11:00",
+      available: true
+    }
+  ]
+}

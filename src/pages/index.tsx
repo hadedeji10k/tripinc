@@ -7,7 +7,8 @@ import Footer from '../components/Footer/Footer'
 // import BasicDetails from '../components/BasicDetails'
 // import Preferences from '../components/Preferences'
 // import Profile from '../components/Profile'
-import ExplorePage from '../components/Explore/ExplorePage'
+// import ExplorePage from '../components/Explore/ExplorePage'
+import ExploreDetails from '../components/ExploreDetails/ExploreDetails'
 
 
 const Home: React.FC = () => {
@@ -26,7 +27,8 @@ const Home: React.FC = () => {
             {/* <BasicDetails /> */}
             {/* <Preferences /> */}
             {/* <Profile /> */}
-            <ExplorePage />
+            {/* <ExplorePage /> */}
+            <ExploreDetails />
             <Footer />
         </>
   )
