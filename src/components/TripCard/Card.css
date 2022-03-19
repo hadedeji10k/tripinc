@@ -120,6 +120,16 @@
     color: #000000;
     margin: auto;
     padding-top: 10px;
+    cursor: pointer;
+}
+
+.heart_tag_liked {
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    margin: auto;
+    padding-top: 10px;
+    cursor: pointer;
 }
 
 

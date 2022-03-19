@@ -203,6 +203,7 @@ export const attractiondata = [
     ],
     price: 367,
     category: "food & drinks",
+    liked: true
   },
   {
     id: 2,
@@ -236,7 +237,8 @@ export const attractiondata = [
       },
     ],
     price: 453,
-    category: "beach"
+    category: "beach",
+    liked: true
   },
   {
     id: 3,
@@ -270,7 +272,8 @@ export const attractiondata = [
       },
     ],
     price: 636,
-    category: "adventure"
+    category: "adventure",
+    liked: true
   },
   {
     id: 4,
@@ -304,7 +307,8 @@ export const attractiondata = [
       },
     ],
     price: 234,
-    category: "adventure"
+    category: "adventure",
+    liked: true
   },
   {
     id: 5,
@@ -338,7 +342,8 @@ export const attractiondata = [
       },
     ],
     price: 235,
-    category: "beach"
+    category: "beach",
+    liked: true
   },
   {
     id: 6,
@@ -372,7 +377,8 @@ export const attractiondata = [
       },
     ],
     price: 335,
-    category: "food & drinks"
+    category: "food & drinks",
+    liked: true
   },
   {
     id: 7,
@@ -406,7 +412,8 @@ export const attractiondata = [
       },
     ],
     price: 243,
-    category: "beach"
+    category: "beach",
+    liked: true
   },
   {
     id: 8,
@@ -440,7 +447,8 @@ export const attractiondata = [
       },
     ],
     price: 244,
-    category: "adventure"
+    category: "adventure",
+    liked: true
   },
 ]
 
