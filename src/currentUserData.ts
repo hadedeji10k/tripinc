@@ -169,6 +169,51 @@ export  const placesBeenTodata = [
     }
   ]
 
+export const locationdata = [
+  {
+    id: 1,
+    title: 'Lagos, Nigeria',
+    stateOfClass: false,
+
+  },
+  {
+    id: 2,
+    title: 'London',
+    stateOfClass: false,
+
+  },
+  {
+    id: 3,
+    title: 'Miami',
+    stateOfClass: false,
+
+  },
+  {
+    id: 4,
+    title: 'Los Angeles',
+    stateOfClass: false,
+
+  },
+  {
+    id: 5,
+    title: 'Brazil',
+    stateOfClass: false,
+
+  },
+  {
+    id: 6,
+    title: 'Barcelona',
+    stateOfClass: false,
+
+  },
+  {
+    id: 7,
+    title: 'Madrid',
+    stateOfClass: false,
+
+  },
+]
+
 export const attractiondata = [
   {
     id: 1,
@@ -202,7 +247,7 @@ export const attractiondata = [
       },
     ],
     price: 367,
-    category: "food & drinks",
+    category: '🏛 History & Culture',
     liked: true
   },
   {
@@ -237,7 +282,7 @@ export const attractiondata = [
       },
     ],
     price: 453,
-    category: "beach",
+    category: '🏝 Shopping',
     liked: true
   },
   {

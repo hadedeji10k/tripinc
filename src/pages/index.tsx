@@ -7,8 +7,8 @@ import Footer from "../components/Footer/Footer";
 // import BasicDetails from '../components/BasicDetails'
 // import Preferences from '../components/Preferences'
 // import Profile from '../components/Profile'
-// import ExplorePage from '../components/Explore/ExplorePage'
-// import ExploreDetails from '../components/ExploreDetails/ExploreDetails'
+// import ExplorePage from "../components/Explore/ExplorePage";
+// import ExploreDetails from "../components/ExploreDetails/ExploreDetails";
 import BucketListPage from "../components/BucketList/BucketListPage";
 
 const Home: React.FC = () => {

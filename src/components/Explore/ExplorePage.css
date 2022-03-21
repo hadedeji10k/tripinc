@@ -106,6 +106,10 @@
     outline:none;
 }
 
+.scroll_button {
+    margin-bottom: 20px;
+}
+
 .date_input {
     width: 30%;
     height: 35px;
