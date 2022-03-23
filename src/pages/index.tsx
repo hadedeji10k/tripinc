@@ -4,13 +4,13 @@ import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer/Footer";
 // import Signup from '../components/SignUp';
 // import Signin from '../components/SignIn';
-// import BasicDetails from '../components/BasicDetails'
+// import BasicDetails from "../components/BasicDetails/BasicDetails";
 // import Preferences from '../components/Preferences'
 // import Profile from '../components/Profile'
 // import ExplorePage from "../components/Explore/ExplorePage";
 // import ExploreDetails from "../components/ExploreDetails/ExploreDetails";
 // import BucketListPage from "../components/BucketList/BucketListPage";
-import ShoppingCartPage from "../components/Shopping/ShoppingCartPage/ShoppingCartPage";
+import Shopping from "../components/Shopping";
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
       {/* <ExplorePage /> */}
       {/* <ExploreDetails /> */}
       {/* <BucketListPage /> */}
-      <ShoppingCartPage />
+      <Shopping />
       <Footer />
     </>
   );
