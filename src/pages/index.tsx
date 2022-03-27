@@ -9,8 +9,9 @@ import Footer from "../components/Footer/Footer";
 // import Profile from '../components/Profile'
 // import ExplorePage from "../components/Explore/ExplorePage";
 // import ExploreDetails from "../components/ExploreDetails/ExploreDetails";
-// import BucketListPage from "../components/BucketList/BucketListPage";
+import BucketListPage from "../components/BucketList/BucketListPage";
 import Shopping from "../components/Shopping";
+import LandingPage from "../components/LandingPage/LandingPage";
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -31,7 +32,8 @@ const Home: React.FC = () => {
       {/* <ExplorePage /> */}
       {/* <ExploreDetails /> */}
       {/* <BucketListPage /> */}
-      <Shopping />
+      {/* <Shopping /> */}
+      <LandingPage />
       <Footer />
     </>
   );
