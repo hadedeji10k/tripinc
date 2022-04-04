@@ -226,46 +226,46 @@ const ExplorePage = () => {
               <BiSearch />
             </button>
           </div>
-          <div
-            id="preferences_tag_container"
-            className="preferences_tag_container"
+        </div>
+        <p>Sort using preferences:</p>
+        <div
+          id="preferences_tag_container"
+          className="preferences_tag_container"
+        >
+          <span className="preferences_not_clicked" onClick={handleAllClick}>
+            All
+          </span>
+          {preferenceData.map((item) => (
+            // <span key={item.id} className="preferences_tag">{item.title}</span>
+            <span
+              key={item.id}
+              id={item.id.toString()}
+              className={
+                item.stateOfClass
+                  ? "preferences_clicked"
+                  : "preferences_not_clicked"
+              }
+              onClick={handlePreferencesClick}
+            >
+              {item.title}
+            </span>
+          ))}
+        </div>
+        <div className="scroll_button">
+          <span
+            id="prev"
+            className="navigation_button"
+            onClick={handleScrollLeft}
           >
-            <p>Sort using preferences:</p>
-            <span className="preferences_not_clicked" onClick={handleAllClick}>
-              All
-            </span>
-            {preferenceData.map((item) => (
-              // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <span
-                key={item.id}
-                id={item.id.toString()}
-                className={
-                  item.stateOfClass
-                    ? "preferences_clicked"
-                    : "preferences_not_clicked"
-                }
-                onClick={handlePreferencesClick}
-              >
-                {item.title}
-              </span>
-            ))}
-          </div>
-          <div className="scroll_button">
-            <span
-              id="prev"
-              className="preferences_clicked"
-              onClick={handleScrollLeft}
-            >
-              Prev
-            </span>
-            <span
-              id="next"
-              className="preferences_clicked"
-              onClick={handleScrollRight}
-            >
-              Next
-            </span>
-          </div>
+            Prev
+          </span>
+          <span
+            id="next"
+            className="navigation_button"
+            onClick={handleScrollRight}
+          >
+            Next
+          </span>
         </div>
         <div className="">
           <p>Search Result for: {searchResultField}</p>

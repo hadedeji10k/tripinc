@@ -1,0 +1,261 @@
+.trip_interest_container {
+    max-width: 1000px;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    align-content: center;
+}
+
+.trip_interest_word {
+    /* font-size: 2.5rem;
+    /* color: #fff; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    align-items: center;
+    /* padding: 2rem; */
+    /* margin: auto; */
+    align-self: center;
+}
+
+.trip_interest_header {
+    font-size: 3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    /* color: #fff; */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    line-height: 48px;
+    text-align: center;
+    /* letter-spacing: 1px; */
+    color: #141416;
+}
+
+.trip_interest_title {
+    font-size: 1rem;
+    font-weight: 400;
+    /* color: #fff; */
+    margin-bottom: 0.3rem;
+    color: #777E90;
+    font-size: 16px;
+    line-height: 24px;
+    word-spacing: 0.6px;
+    letter-spacing: 0.3px;
+    text-align: center;
+}
+
+.trip_interest_label {
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.trip_interest_button_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    /* margin-bottom: 1rem; */
+    align-self: center;
+}
+
+.trip_interest_button {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 25px;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    /* border: 2px solid #ccc; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+    width: 170px;
+    height: 48px;
+    background: #92A5EF;
+    border-radius: 90px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.trip_interest_button:hover {
+    background: #2b44a8;
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+}
+
+.trip_interest_tab {
+    margin: 15px 0 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.trip_interest_tag_container {
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    align-self: center;
+}
+
+.trip_interest_not_clicked {
+    display: inline;
+    padding: 0.5rem;
+    border-radius: 20px;
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    margin: 0.5rem;
+    border: 2px solid #ccc;
+    transition: all 0.2s ease-in-out;
+}
+
+.trip_interest_not_clicked:hover {
+    background: #353945;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
+}
+
+.trip_interest_clicked {
+    padding: 0.5rem;
+    border-radius: 20px;
+    background: #353945;
+    color: #fff;
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.trip_interest_clicked:hover {
+    background: #21232b;
+    color: fff;
+    transition: all 0.2s ease-in-out;
+}
+
+.trip_interest_other_text_container {
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #353945;
+    padding: 0 20px;
+    text-align: center;
+}
+
+
+.trip_interest_other_text {
+    color: #92A5EF;
+    text-decoration: none;
+}
+
+.trip_interest_other_text:hover {
+    color: #627ada;
+    text-decoration: none;
+}
+
+
+
+
+.password_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    align-self: center;
+}
+
+.remember_me {
+    color: #353945;
+}
+
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox_input {
+    display: none;
+}
+
+.checkbox_box {
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid #353945;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.checkbox_box::after {
+    content: "\2714";
+    color: #fff;
+    transform: scale(0);
+    transition: transform 0.15s;
+}
+
+.checkbox_input:checked+.checkbox_box {
+    background: #353945;
+}
+
+.checkbox_input:checked+.checkbox_box::after {
+    transform: scale(1);
+}
+
+input[type=checkbox]:checked {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: #f3f3f3;
+    text-align: center;
+    line-height: 15px;
+}
+
+
+
+
+@media screen and (max-width: 550px) {
+    .trip_interest_container {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 345px) {
+    .trip_interest_label {
+        font-size: 12px;
+    }
+
+    .have_account {
+        font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .trip_interest_header {
+        font-size: 2.5rem;
+    }
+
+    .trip_interest_title {
+        font-size: 0.8rem;
+    }
+}

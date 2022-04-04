@@ -219,11 +219,11 @@ const BucketListPage = () => {
             </button>
           </div>
         </div>
+        <p>Sort using Location:</p>
         <div
           id="preferences_tag_container"
           className="preferences_tag_container"
         >
-          <p>Sort using Location:</p>
           <span className="preferences_not_clicked" onClick={handleAllClick}>
             All
           </span>
@@ -247,14 +247,14 @@ const BucketListPage = () => {
         <div className="scroll_button">
           <span
             id="prev"
-            className="preferences_clicked"
+            className="navigation_button"
             onClick={handleScrollLeft}
           >
             Prev
           </span>
           <span
             id="next"
-            className="preferences_clicked"
+            className="navigation_button"
             onClick={handleScrollRight}
           >
             Next
