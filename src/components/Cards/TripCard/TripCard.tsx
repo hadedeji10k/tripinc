@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./Card.css";
+import React from "react";
+import "./TripCard.css";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsSuitHeartFill } from "react-icons/bs";
 

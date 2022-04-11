@@ -40,13 +40,13 @@ const Navbar: React.FC<NavbarProps> = ({
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLink to="/">Explore</NavLink>
+              <NavLink to="/explore">Explore</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/">Bucket List</NavLink>
+              <NavLink to="/bucket-list">Bucket List</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/">My Trips</NavLink>
+              <NavLink to="/my-trips">My Trips</NavLink>
             </NavItem>
             {/* <NavItem>
                         <NavLink to="/">
@@ -69,7 +69,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 <AiOutlineShoppingCart />
               </ReactIcons>
             </NavLink>
-            <NavBtnLink to="/">Sign In</NavBtnLink>
+            <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
           </NavBtn>
         </NavbarContainer>
       </Nav>

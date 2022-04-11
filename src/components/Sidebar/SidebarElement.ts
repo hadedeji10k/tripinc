@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 import { Link as ReactLinkRouter } from 'react-router-dom';
-import { Link as ReactLinkScroll } from 'react-scroll'
+// import { Link as ReactLinkScroll } from 'react-scroll'
 
 interface SidebarContainerProps {
     isOpen: boolean;

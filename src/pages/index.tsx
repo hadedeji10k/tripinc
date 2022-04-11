@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer/Footer";
@@ -29,21 +31,24 @@ const Home: React.FC = () => {
     <>
       <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
       <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
-      {/* <Signup /> */}
-      {/* <Signin /> */}
-      {/* <BasicDetails /> */}
-      {/* <Preferences /> */}
-      <Profile />
-      {/* <AddCard /> */}
-      {/* <ExplorePage /> */}
-      {/* <ExploreDetails /> */}
-      {/* <BucketListPage /> */}
-      {/* <PlanTrip /> */}
-      {/* <SetBudget /> */}
-      {/* <Shopping /> */}
-      {/* <TripInterest /> */}
-      {/* <MyTrip /> */}
-      {/* <LandingPage /> */}
+
+      <Routes>
+        <Route path="/" element={<LandingPage />}></Route>
+        <Route path="/explore" element={<ExplorePage />}></Route>
+        <Route path="/my-trips" element={<MyTrip />}></Route>
+        <Route path="/bucket-list" element={<BucketListPage />}></Route>
+        <Route path="/sign-up" element={<Signup />}></Route>
+        <Route path="/sign-in" element={<Signin />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/basic-details" element={<BasicDetails />}></Route>
+        <Route path="/preferences" element={<Preferences />}></Route>
+        <Route path="/profile/add-card" element={<AddCard />}></Route>
+        <Route path="/explore-details" element={<ExploreDetails />}></Route>
+        <Route path="/plan-trip" element={<PlanTrip />}></Route>
+        <Route path="/set-budget" element={<SetBudget />}></Route>
+        <Route path="/shopping" element={<Shopping />}></Route>
+        <Route path="/trip-interest" element={<TripInterest />}></Route>
+      </Routes>
       <Footer />
     </>
   );

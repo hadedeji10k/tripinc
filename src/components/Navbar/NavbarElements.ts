@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link as ReactLinkRouter } from 'react-router-dom';
-import { Link as ReactLinkScroll } from 'react-scroll'
+// import { Link as ReactLinkScroll } from 'react-scroll'
 
 interface MobileNavbar {
     onClick: React.MouseEventHandler<HTMLDivElement> & ((e: Event) => void)
@@ -75,7 +75,7 @@ export const NavItem = styled.li`
     height: 80px;
 `
 
-export const NavLink = styled(ReactLinkScroll)`
+export const NavLink = styled(ReactLinkRouter)`
     color: #777E90;
     display: flex;
     align-items: center;
