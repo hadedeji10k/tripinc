@@ -196,7 +196,7 @@
 
 .preferences_clicked:hover {
     background: #1b1d22;
-    color: fff;
+    color: #fff;
     transition: all 0.2s ease-in-out;
 }
 

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./TimeConstraintModal.css";
@@ -30,6 +30,9 @@ const TimeConstraintModal = ({
   showReviewModal,
   setShowReviewModal,
 }: ReviewModalProp) => {
+  // to check if the checkbox is clicked
+  const [checkbox, setCheckbox] = useState<boolean>(false);
+
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
@@ -71,6 +74,22 @@ const TimeConstraintModal = ({
     };
   }, [keyPress]);
 
+  // func to handle the custom checkbox, the inpu checkbox not working in modal, so had to use custom one
+  const handleCheckBox = (e: any) => {
+    e.preventDefault();
+    let element = document.getElementById("checkbox_box") as HTMLDivElement;
+    setCheckbox(!checkbox);
+    if (checkbox) {
+      element.style.background = "";
+      element.innerHTML = "";
+    } else {
+      element.style.background = "#353945";
+      element.style.color = "#fff";
+      let str = "&nbsp;&nbsp;&nbsp;✔";
+      element.innerHTML = str;
+    }
+  };
+
   // return the TimeConstraintModal
   return (
     <>
@@ -93,7 +112,7 @@ const TimeConstraintModal = ({
                 <button className="button">Back</button>
               </div>
               <div className="password_box">
-                <span className="remember_me">
+                <span className="remember_me" onClick={handleCheckBox}>
                   <label className="checkbox">
                     <input
                       type="checkbox"

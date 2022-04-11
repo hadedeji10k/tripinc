@@ -5,6 +5,7 @@ import "./TripInterest.css";
 import BudgetWarningModal from "../MessagePopup/BudgetWarningModal/BudgetWarningModal";
 import EventsOverlapModal from "../MessagePopup/EventsOverlapModal/EventsOverlapModal";
 import TimeConstraintModal from "../MessagePopup/TimeConstraintModal/TimeConstraintModal";
+import AddPlaceOfStay from "../MessagePopup/AddPlaceOfPlace/AddPlaceOfStay";
 
 const TripInterest: React.FC = () => {
   // testing
@@ -87,17 +88,20 @@ const TripInterest: React.FC = () => {
               Show me!
             </a>
           </h3>
-
-          {/* testing */}
         </div>
+        {/* testing */}
         {/* <EventsOverlapModal
           showReviewModal={showAccountPageModal}
           setShowReviewModal={setShowAccountPageModal}
         /> */}
-        <TimeConstraintModal
+        <AddPlaceOfStay
           showReviewModal={showAccountPageModal}
           setShowReviewModal={setShowAccountPageModal}
         />
+        {/* <TimeConstraintModal
+          showReviewModal={showAccountPageModal}
+          setShowReviewModal={setShowAccountPageModal}
+        /> */}
         {/* <BudgetWarningModal
           showReviewModal={showAccountPageModal}
           setShowReviewModal={setShowAccountPageModal}

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./BucketListPage.css";
 import { locationdata, attractiondata } from "../../currentUserData";
 // import { attraction } from "../../interfaces";
-import Card from "../TripCard/Card";
+import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
 
@@ -229,7 +229,6 @@ const BucketListPage = () => {
           </span>
           <br />
           {locationData.map((item) => (
-            // <span key={item.id} className="preferences_tag">{item.title}</span>
             <span
               key={item.id}
               id={item.id.toString()}

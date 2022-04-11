@@ -676,3 +676,36 @@ export const getExplore = {
     }
   ]
 }
+
+export const generalFaq = [
+  {
+    id: 1,
+    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nisi, mollitia perspiciatis eius magnam corporis, officia, blanditiis",
+    answer: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem reprehenderit necessitatibus officiis praesentium sit reiciendis vero incidunt dolores voluptatem beatae, ab, minima pariatur, architecto sed molestiae facere magnam accusantium. Sint facere ipsa quod natus ipsum ad labore harum quis tempore quos possimus enim suscipit neque, repellat magni ab doloribus incidunt ullam aspernatur consequuntur cupiditate deserunt error sunt iste. Cupiditate ipsa quia ea ipsam. Natus nihil omnis aliquam quam in, dolore tempore quod, adipisci libero itaque numquam eveniet facilis praesentium, aperiam unde nam neque. Esse provident harum perspiciatis cumque! Optio saepe, deleniti aspernatur possimus laborum dolore omnis ab deserunt alias, corrupti molestias adipisci quasi a qui rerum nulla velit earum et itaque tenetur. Exercitationem et sunt corporis praesentium cumque, porro in eum, veniam maxime repudiandae quae quia quo iure est, ducimus aut nesciunt tempora dicta rem id dolorum a. Nisi corporis consectetur ut repellat officiis maiores reprehenderit id molestias nulla doloribus!",
+    stateOfClass: false
+  },
+  {
+    id: 2,
+    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+    answer: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem reprehenderit necessitatibus officiis praesentium sit reiciendis vero incidunt dolores voluptatem beatae, ab, minima pariatur, architecto sed molestiae facere magnam accusantium. Sint facere ipsa quod natus ipsum ad labore harum quis tempore quos possimus enim suscipit neque, repellat magni ab doloribus incidunt ullam aspernatur consequuntur cupiditate deserunt error sunt iste. Cupiditate ipsa quia ea ipsam. Natus nihil omnis aliquam quam in, dolore tempore quod, adipisci libero itaque numquam eveniet facilis praesentium, aperiam unde nam neque. Esse provident harum perspiciatis cumque! Optio saepe, deleniti aspernatur possimus laborum dolore omnis ab deserunt alias, corrupti molestias adipisci quasi a qui rerum nulla velit earum et itaque tenetur.",
+    stateOfClass: false
+  },
+  {
+    id: 3,
+    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nisi, mollitia perspiciatis eius magnam corporis, officia, blanditiis",
+    answer: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem reprehenderit necessitatibus officiis praesentium sit reiciendis vero incidunt dolores voluptatem beatae, ab, minima pariatur, architecto sed molestiae facere magnam accusantium. Sint facere ipsa quod natus ipsum ad labore harum quis tempore quos possimus enim suscipit neque, repellat magni ab doloribus incidunt ullam aspernatur consequuntur cupiditate deserunt error sunt iste. Cupiditate ipsa quia ea ipsam. Natus nihil omnis aliquam quam in, dolore tempore quod, adipisci libero itaque numquam eveniet facilis praesentium, aperiam unde nam neque. Esse provident harum perspiciatis cumque! Optio saepe, deleniti aspernatur possimus laborum dolore omnis ab deserunt alias, corrupti molestias adipisci quasi a qui rerum nulla velit earum et itaque tenetur. Exercitationem et sunt corporis praesentium cumque, porro in eum, veniam maxime repudiandae quae quia quo iure est, ducimus aut nesciunt tempora dicta rem id dolorum a. Nisi corporis consectetur ut repellat officiis maiores reprehenderit id molestias nulla doloribus!",
+    stateOfClass: false
+  },
+  {
+    id: 4,
+    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nisi, mollitia perspiciatis eius magnam corporis, officia, blanditiis",
+    answer: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem reprehenderit necessitatibus officiis praesentium sit reiciendis vero incidunt dolores voluptatem beatae, ab, minima pariatur, architecto sed molestiae facere magnam accusantium. Sint facere ipsa quod natus ipsum ad labore harum quis tempore quos possimus enim suscipit neque, repellat magni ab doloribus incidunt ullam aspernatur consequuntur cupiditate deserunt error sunt iste.",
+    stateOfClass: false
+  },
+  {
+    id: 5,
+    question: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nisi, mollitia perspiciatis eius magnam corporis, officia, blanditiis",
+    answer: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem reprehenderit necessitatibus officiis praesentium sit reiciendis vero incidunt dolores voluptatem beatae, ab, minima pariatur, architecto sed molestiae facere magnam accusantium. Sint facere ipsa quod natus ipsum ad labore harum quis tempore quos possimus enim suscipit neque, repellat magni ab doloribus incidunt ullam aspernatur consequuntur cupiditate deserunt error sunt iste. Cupiditate ipsa quia ea ipsam. Natus nihil omnis aliquam quam in, dolore tempore quod, adipisci libero itaque numquam eveniet facilis praesentium, aperiam unde nam neque.",
+    stateOfClass: false
+  },
+]

@@ -1,5 +1,5 @@
-
 .card {
+    max-width: 1100px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -9,15 +9,16 @@
     justify-content: space-around;
     border-radius: 10px;
     margin: 2rem;
+    padding: 0 20px;
     /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); */
 }
 
-.card_container {
-    max-width: 400px;
+.past_card_container {
+    max-width: 320px;
     max-height: 430px;
     border: 2px solid #E6E8EC;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     position: relative;
     margin-right: 10px;
     flex: 0 1 calc(30% - 1em);
@@ -25,28 +26,37 @@
     /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); */
 }
 
-.image_container {
+.past_image_container {
     width: 100%;
     height: 200px;
 }
 
-.image {
+.past_image {
     height: 100%;
     width: 100%;
 }
 
-.card_details {
+.past_card_details {
     display: flex;
     flex-direction: column;
-   padding: 20px;
+    padding: 10px 20px;
+    background: #fff;
+    overflow: hidden;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
-.card_title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #000000;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.past_card_title {
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+
+    /* identical to box height, or 150% */
+
+    color: #141416;
 }
 
 .card_description {
@@ -67,90 +77,73 @@
     margin-bottom: 10px;
 }
 
-.price {
+.other_details {
     font-family: 'Poppins';
     font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 400;
+    font-size: 12px;
     line-height: 20px;
-    color: #23262F;
+
+    /* identical to box height, or 167% */
+
+    color: #777E90;
 }
 
-.arrow {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 3;
+.button_container {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    background: linear-gradient(30.13deg, #FCFCFD 14.92%, rgba(252, 252, 253, 0.83) 99.51%);
-    border-radius: 4px;
-}
-
-.arrow_tag {
-    font-size: 30px;
-    font-weight: bold;
-    color: #000000;
-    margin: auto;
-    padding-top: 10px;
-}
-
-.heart {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(30.13deg, #FCFCFD 14.92%, rgba(252, 252, 253, 0.83) 99.51%);
-    border-radius: 4px;
+    align-content: center;
+    align-self: center;
 }
 
-.heart_tag {
-    font-size: 20px;
-    font-weight: bold;
-    color: #000000;
-    margin: auto;
-    padding-top: 10px;
+
+.past_card_button {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    /* border: 2px solid #ccc; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+    background: #92A5EF;
+    border-radius: 90px;
+    border: none;
+    outline: none;
     cursor: pointer;
+    width: 100%;
 }
 
-.heart_tag_liked {
-    font-size: 20px;
-    font-weight: bold;
-    color: red;
-    margin: auto;
-    padding-top: 10px;
-    cursor: pointer;
+.past_card_button:hover {
+    background: #2b44a8;
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
 }
-
 
 @media screen and (max-width: 900px) {
-    .card_container {
+    .past_card_container {
         max-width: 330px;
         flex: 0 1 calc(50% - 1em);
     }
 }
 
 @media screen and (max-width: 600px) {
-    .card_container {
+    .past_card_container {
         max-width: 320px;
         flex: 0 1 calc(100% - 1em);
     }
 }
 
 @media screen and (max-width: 230px) {
-    .card_title {
+    .past_card_title {
         font-size: 16px;
     }
+
     .card_description {
         font-size: 10px;
     }

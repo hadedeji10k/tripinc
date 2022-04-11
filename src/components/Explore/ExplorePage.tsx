@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./ExplorePage.css";
 import { preferencedata, attractiondata } from "../../currentUserData";
 // import { attraction } from "../../interfaces";
-import Card from "../TripCard/Card";
+import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
 

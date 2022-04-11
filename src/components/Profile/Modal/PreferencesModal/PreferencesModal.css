@@ -26,7 +26,7 @@
     border: 2px solid #ccc;
     width: 500px;
     color: #000;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 
 }
 
@@ -60,7 +60,7 @@
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 170px;
     height: 48px;
     background: #92A5EF;
@@ -73,7 +73,7 @@
 .preferences_button:hover {
     background: #2b44a8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 .location_tag {
@@ -135,16 +135,16 @@
 .preferences_clicked {
     padding: 0.5rem;
     border-radius: 20px;
-    background: #adb6da;
-    color: #000;
+    background: #353945;
+    color: #fff;
     cursor: pointer;
     margin: 0.5rem;
     transition: all 0.2s ease-in-out;
 }
 
 .preferences_clicked:hover {
-    background: #6f7eb9;
-    color: black;
+    background: #1b1d22;
+    color: #fff;
     transition: all 0.2s ease-in-out;
 }
 
@@ -189,22 +189,24 @@
         width: 250px;
         font-size: 0.8rem;
     }
+
     .location_tag {
         font-size: 14px;
     }
 }
 
-@media screen and (max-width: 345px) { 
+@media screen and (max-width: 345px) {
     .preferences_input {
         width: 200px;
         font-size: 0.6rem;
     }
+
     .preferences_label {
         font-size: 12px;
     }
 }
 
-@media screen and (max-width: 300px) { 
+@media screen and (max-width: 300px) {
     .preferences_input {
         width: 200px;
         font-size: 0.7rem;

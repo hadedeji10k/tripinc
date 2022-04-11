@@ -1,16 +1,18 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
-import "./EventsOverlapModal.css";
+import "./AddPlaceOfStay.css";
 import { MdClose } from "react-icons/md";
+import { FaFacebookF } from "react-icons/fa";
+import { BsGoogle } from "react-icons/bs";
 
-// interface for EventsOverlapModal
+// interface for AddPlaceOfStay
 interface ReviewModalProp {
   showReviewModal: Boolean;
   setShowReviewModal: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
-// styled component for the EventsOverlapModal
+// styled component for the AddPlaceOfStay
 const Background: any = styled.div`
   width: 100vw;
   height: 100vh;
@@ -25,14 +27,11 @@ const Background: any = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-// component for the EventsOverlapModal
-const EventsOverlapModal = ({
+// component for the AddPlaceOfStay
+const AddPlaceOfStay = ({
   showReviewModal,
   setShowReviewModal,
 }: ReviewModalProp) => {
-  // to check if the checkbox is clicked
-  const [checkbox, setCheckbox] = useState<boolean>(false);
-
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
@@ -74,23 +73,7 @@ const EventsOverlapModal = ({
     };
   }, [keyPress]);
 
-  // func to handle the custom checkbox, the inpu checkbox not working in modal, so had to use custom one
-  const handleCheckBox = (e: any) => {
-    e.preventDefault();
-    let element = document.getElementById("checkbox_box") as HTMLDivElement;
-    setCheckbox(!checkbox);
-    if (checkbox) {
-      element.style.background = "";
-      element.innerHTML = "";
-    } else {
-      element.style.background = "#353945";
-      element.style.color = "#fff";
-      let str = "&nbsp;&nbsp;&nbsp;✔";
-      element.innerHTML = str;
-    }
-  };
-
-  // return the EventsOverlapModal
+  // return the AddPlaceOfStay
   return (
     <>
       {showReviewModal ? (
@@ -98,31 +81,22 @@ const EventsOverlapModal = ({
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="modal" style={animation}>
             <div className="modal_wrapper">
-              <h3 className="header">⏰</h3>
-              <h3 className="header">Ooops!</h3>
+              <h3 className="header">🛏️🏡🛖</h3>
+              <h3 className="header">Add place of stay</h3>
               <p className="title">
-                It looks like you have selected a time slot that overlaps with
-                your other reservations.
-                <br /> <br />
-                Perhaps consider selecting a different time, or visiting
-                [attraction name] on another day?
+                Automatically import your accommodation details by connecting
+                your Gmail. Or search for an address manually.
               </p>
-
-              <div>
-                <button className="button">Back</button>
+              <div className="external_signin_button">
+                <button className="signin_google_button" type="submit">
+                  <BsGoogle /> Google
+                </button>
+                <button className="signin_facebook_button" type="submit">
+                  Search Address
+                </button>
               </div>
-              <div className="password_box">
-                <span className="remember_me" onClick={handleCheckBox}>
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      className="checkbox_input"
-                      id="checkbox_input"
-                    />
-                    <div className="checkbox_box" id="checkbox_box"></div>
-                    Remember Me
-                  </label>
-                </span>
+              <div>
+                <button className="add_place_of_stay_button">Back</button>
               </div>
               <div>
                 <MdClose
@@ -139,4 +113,4 @@ const EventsOverlapModal = ({
   );
 };
 
-export default EventsOverlapModal;
+export default AddPlaceOfStay;

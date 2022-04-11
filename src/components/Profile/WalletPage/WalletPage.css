@@ -1,0 +1,191 @@
+.wallet_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+}
+
+.wallet_page_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fdfdfd;
+    padding-bottom: 10rem;
+    padding-top: 2rem;
+}
+
+.wallet_header_container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 60%;
+}
+
+.wallet_page_header {
+    font-size: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 48px;
+    text-align: center;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 56px;
+    letter-spacing: -0.7px;
+    color: #23262F;
+}
+
+.wallet_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 30px 15px;
+    width: 70%;
+    background: #FFFFFF;
+    box-shadow: 0px 9px 40px -18px rgba(119, 126, 144, 0.499385);
+    border-radius: 12px;
+}
+
+.wallet_label {
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #353945;
+}
+
+.wallet_input_container {
+    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.wallet_input {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 20px;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid #ccc;
+    width: 300px;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+}
+
+.wallet_input:focus {
+    border: 2px solid #252748;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.wallet_page_button {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 25px;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    /* border: 2px solid #ccc; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+    width: 97%;
+    /* height: 40px; */
+    background: #92A5EF;
+    border-radius: 90px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    align-self: center;
+    align-content: center;
+}
+
+.wallet_page_button:hover {
+    background: #7188e0;
+    /* background: #2b44a8; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+}
+
+.wallet_page_button_two {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 25px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    color: #92A5EF;
+    transition: all 0.3s ease-in-out;
+    width: 97%;
+    border-radius: 90px;
+    background: #fff;
+    border: 2px solid #92A5EF;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    align-self: center;
+    align-content: center;
+}
+
+.wallet_page_button_two:hover {
+    background: #7188e0;
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+}
+
+
+@media screen and (max-width: 550px) {
+    .wallet_input {
+        width: 270px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .wallet_container {
+        width: 90%;
+    }
+}
+
+
+@media screen and (max-width: 345px) {
+    .wallet_input {
+        width: 250px;
+        font-size: 0.8rem;
+    }
+
+    .wallet_label {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .wallet_page_header {
+        font-size: 1.2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        line-height: 33px;
+        letter-spacing: -0.7px;
+    }
+
+    .wallet_input {
+        width: 200px;
+        font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .wallet_input {
+        width: 160px;
+        font-size: 0.6rem;
+    }
+}

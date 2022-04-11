@@ -17,7 +17,7 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 2rem;
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
     align-items: center;
     /* padding: 2rem; */
     /* margin: auto; */
@@ -65,7 +65,7 @@
     border: 2px solid #ccc;
     width: 500px;
     color: #000;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 
 }
 
@@ -99,7 +99,7 @@
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 170px;
     height: 48px;
     background: #92A5EF;
@@ -112,7 +112,7 @@
 .preferences_button:hover {
     background: #2b44a8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 .login_text {
@@ -197,16 +197,16 @@
 .preferences_clicked {
     padding: 0.5rem;
     border-radius: 20px;
-    background: #adb6da;
-    color: #000;
+    background: #353945;
+    color: #fff;
     cursor: pointer;
     margin: 0.5rem;
     transition: all 0.2s ease-in-out;
 }
 
 .preferences_clicked:hover {
-    background: #6f7eb9;
-    color: black;
+    background: #1b1d22;
+    color: #fff;
     transition: all 0.2s ease-in-out;
 }
 
@@ -238,59 +238,73 @@
     .preferences_or_line {
         width: 400px;
     }
+
     .preferences_input {
         width: 400px;
     }
 }
+
 @media screen and (max-width: 550px) {
     .preferences_or_line {
         width: 300px;
     }
+
     .preferences_input {
         width: 300px;
     }
 }
 
 @media screen and (max-width: 400px) {
-    .preferences_google_button, .preferences_facebook_button {
+
+    .preferences_google_button,
+    .preferences_facebook_button {
         width: 120px;
         font-size: 0.8rem;
     }
+
     .preferences_input {
         width: 300px;
     }
 }
 
-@media screen and (max-width: 345px) {  
+@media screen and (max-width: 345px) {
     .preferences_or_line {
         width: 250px;
     }
+
     .preferences_input {
         width: 250px;
         font-size: 0.8rem;
     }
-    .preferences_google_button, .preferences_facebook_button {
+
+    .preferences_google_button,
+    .preferences_facebook_button {
         display: block;
         margin-bottom: 0.5rem;
     }
+
     .preferences_label {
         font-size: 12px;
     }
+
     .have_account {
         font-size: 0.7rem;
     }
 }
 
-@media screen and (max-width: 300px) { 
+@media screen and (max-width: 300px) {
     .preferences_or_line {
         width: 150px;
-    } 
+    }
+
     .preferences_header {
         font-size: 2.5rem;
     }
+
     .preferences_title {
         font-size: 0.8rem;
     }
+
     .preferences_input {
         width: 200px;
         font-size: 0.7rem;

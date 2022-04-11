@@ -1,0 +1,245 @@
+.background {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    top: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal_wrapper {
+    width: 700px;
+    min-height: 500px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    color: #000;
+    position: relative;
+    z-index: 10;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* overflow: scroll; */
+    align-content: center;
+}
+
+.header {
+    font-size: 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    /* color: #fff; */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    line-height: 48px;
+    text-align: center;
+    letter-spacing: 1px;
+    color: #141416;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 400;
+    /* color: #fff; */
+    margin: 1rem;
+    margin-bottom: 2.5rem;
+    color: #777E90;
+    font-size: 16px;
+    line-height: 24px;
+    word-spacing: 0.6px;
+    letter-spacing: 0.3px;
+    width: 70%;
+    text-align: center;
+}
+
+.add_place_of_stay_button {
+    width: 300px;
+    padding: 10px 34px;
+    background: #fff;
+    color: #92A5EF;
+    border-radius: 30px;
+    border: 2px solid #92A5EF;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.add_place_of_stay_button:hover {
+    background: #92A5EF;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.close_modal_button {
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    z-index: 10;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.external_signin_button {
+    /* display: flex; */
+    margin-bottom: 1.5rem;
+}
+
+
+.signin_google_button {
+    display: inline-block;
+    margin-top: 7px;
+    margin-right: 20px;
+    margin-bottom: 25px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    /* border: 2px solid #ccc; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+    width: 150px;
+    height: 48px;
+    background: #3B71FE;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.signin_google_button:hover {
+    background: #1c1c6e;
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+}
+
+.signin_facebook_button {
+    display: inline-block;
+    margin-top: 7px;
+    margin-right: 20px;
+    margin-bottom: 25px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    /* border: 2px solid #ccc; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+    width: 150px;
+    height: 48px;
+    background: #313136;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.signin_facebook_button:hover {
+    background: #131314;
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+}
+
+
+@media screen and (max-width: 830px) {
+    .header {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .modal_wrapper {
+        width: 80%;
+        transform: translateX(40px);
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .header {
+        margin-bottom: 0.8rem;
+        line-height: 30px;
+    }
+
+    .title {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .modal_wrapper {
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+
+    .remember_me,
+    .forgot_password {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .close_modal_button {
+        top: 10px;
+        right: 10px;
+        width: 24px;
+        height: 24px;
+    }
+
+    .signin_google_button,
+    .signin_facebook_button {
+        width: 120px;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 415px) {
+    .header {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .add_place_of_stay_button {
+        width: 200px;
+    }
+
+}
+
+@media screen and (max-width: 350px) {
+    .title {
+        font-size: 0.8rem;
+    }
+
+    .basic_details_label {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 345px) {
+
+    .signin_google_button,
+    .signin_facebook_button {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .modal_wrapper {
+        padding: 0;
+    }
+
+    .add_place_of_stay_button {
+        width: 150px;
+    }
+}

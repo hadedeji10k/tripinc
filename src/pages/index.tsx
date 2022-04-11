@@ -15,6 +15,8 @@ import LandingPage from "../components/LandingPage/LandingPage";
 import PlanTrip from "../components/PlanTrip/PlanTrip";
 import SetBudget from "../components/SetBudget/SetBudget";
 import TripInterest from "../components/TripInterest/TripInterest";
+import MyTrip from "../components/MyTripPage/MyTrip";
+import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -31,14 +33,16 @@ const Home: React.FC = () => {
       {/* <Signin /> */}
       {/* <BasicDetails /> */}
       {/* <Preferences /> */}
-      {/* <Profile /> */}
+      <Profile />
+      {/* <AddCard /> */}
       {/* <ExplorePage /> */}
       {/* <ExploreDetails /> */}
       {/* <BucketListPage /> */}
       {/* <PlanTrip /> */}
       {/* <SetBudget /> */}
       {/* <Shopping /> */}
-      <TripInterest />
+      {/* <TripInterest /> */}
+      {/* <MyTrip /> */}
       {/* <LandingPage /> */}
       <Footer />
     </>

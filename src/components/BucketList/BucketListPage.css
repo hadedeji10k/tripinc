@@ -127,6 +127,10 @@
     font-size: 1.5rem;
     border: none;
     outline: none;
+    display: flex;
+    align-content: center;
+    align-self: center;
+    justify-content: center;
     align-items: center;
     margin-left: 15px;
     cursor: pointer;

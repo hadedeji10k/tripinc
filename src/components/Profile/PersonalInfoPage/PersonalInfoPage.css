@@ -1,4 +1,3 @@
-
 /* Personal Info Page */
 .personal_info {
     display: flex;
@@ -75,7 +74,7 @@
     border: 2px solid #ccc;
     width: 400px;
     color: #000;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 
 }
 
@@ -94,7 +93,7 @@
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 170px;
     height: 48px;
     background: #92A5EF;
@@ -107,22 +106,23 @@
 .personal_info_button:hover {
     background: #2b44a8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 .places_been_to {
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    background: #adb6da;
-    color: #000;
+    /* background: #adb6da; */
+    color: #56585e;
+    border: 2px solid #44474d;
     cursor: pointer;
     margin: 0.5rem;
     transition: all 0.2s ease-in-out;
 }
 
 .places_been_to:hover {
-    background: #6f7eb9;
-    color: black;
+    background: #3a3d46;
+    color: #fff;
     transition: all 0.2s ease-in-out;
 }
 
@@ -149,16 +149,16 @@
 .preferences_clicked {
     padding: 0.5rem;
     border-radius: 20px;
-    background: #adb6da;
-    color: #000;
+    background: #353945;
+    color: #fff;
     cursor: pointer;
     margin: 0.5rem;
     transition: all 0.2s ease-in-out;
 }
 
 .preferences_clicked:hover {
-    background: #6f7eb9;
-    color: black;
+    background: #1b1d22;
+    color: #fff;
     transition: all 0.2s ease-in-out;
 }
 
@@ -172,7 +172,7 @@
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 170px;
     height: 48px;
     background: #252748;
@@ -185,7 +185,7 @@
 .preferences_button:hover {
     background: #0f1022;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 @media screen and (max-width: 1100px) {
@@ -223,27 +223,31 @@
         width: 300px;
         font-size: 0.8rem;
     }
+
     .preferences_label {
         font-size: 14px;
     }
 }
 
-@media screen and (max-width: 345px) {  
+@media screen and (max-width: 345px) {
     .personal_info_input {
         width: 250px;
     }
+
     .personal_info_label {
         font-size: 12px;
     }
+
     .preferences_label {
         font-size: 12px;
     }
 }
 
-@media screen and (max-width: 300px) { 
+@media screen and (max-width: 300px) {
     .header {
         font-size: 2.5rem;
     }
+
     /* .personal_info_input {
         width: 200px;
         font-size: 0.7rem;

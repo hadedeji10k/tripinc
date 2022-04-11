@@ -1,11 +1,12 @@
 .profile_top_bar_container {
     background: #F26A4D;
-    height: 48vh;
+    height: 55vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
+    padding: 10px;
 }
 
 .user_profile {
@@ -33,6 +34,15 @@
     letter-spacing: 0.8px;
 }
 
+.user_identity {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FCFCFD;
+}
+
 .menu_bar {
     display: flex;
     flex-direction: row;
@@ -57,7 +67,8 @@
     transition: all 0.3s ease-in-out;
 }
 
-.active:hover, .not_active:hover {
+.active:hover,
+.not_active:hover {
     border-bottom: 2px solid #eee;
     box-shadow: 0px 2px 5px #F26A4D;
     transform: translateY(2px)
@@ -67,14 +78,14 @@
     display: block;
     margin-top: 7px;
     margin-bottom: 25px;
-    padding: 1rem;
+    padding: 0.7rem 1rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
-    /* border: 2px solid #ccc; */
+    border: 2px solid #FCFCFD !important;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
-    background: #92A5EF;
+    transition: all 0.3s ease-in-out;
+    background: transparent;
     border-radius: 50px;
     border: none;
     outline: none;
@@ -85,15 +96,71 @@
 }
 
 .profile_top_bar_button:hover {
-    background: #2b44a8;
+    background: #e44f2e;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     transform: translateY(2px)
 }
+
+.profile_top_bar_select {
+    display: none;
+}
+
 
 @media screen and (max-width: 1000px) {
     .profile_top_bar_button {
         top: 20px;
         right: 20px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .menu_bar {
+        display: none;
+    }
+
+    .profile_top_bar_select {
+        width: 400px;
+        font-family: "Poppins";
+        font-size: 17px;
+        padding: 10px 40px 10px 10px;
+        margin: 1.5rem auto;
+        border: 1px solid #E6E8EC;
+        border-radius: 14px;
+        outline: none;
+        background-color: #fff;
+        display: block;
+        cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .profile_top_bar_select {
+        width: 80%;
+        font-size: 16px;
+    }
+
+    .user_name {
+        margin: 15px 0;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .user_identity {
+        font-size: 14px;
+        line-height: 14px;
+    }
+}
+
+@media screen and (max-width: 290px) {
+    .profile_top_bar_button {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 250px) {
+    .profile_top_bar_select {
+        font-size: 12px;
     }
 }
