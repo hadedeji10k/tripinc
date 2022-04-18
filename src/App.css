@@ -6,3 +6,10 @@
   padding: 0;
   font-family: 'Poppins', sans-serif;
 }
+
+.red_alert {
+  color: red;
+  margin-bottom: 10px;
+  margin-top: -10px;
+  font-size: 14px;
+}

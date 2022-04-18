@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { preferencedata } from "../../currentUserData";
 import "./TripInterest.css";
 // testing
-import BudgetWarningModal from "../MessagePopup/BudgetWarningModal/BudgetWarningModal";
-import EventsOverlapModal from "../MessagePopup/EventsOverlapModal/EventsOverlapModal";
-import TimeConstraintModal from "../MessagePopup/TimeConstraintModal/TimeConstraintModal";
+// import BudgetWarningModal from "../MessagePopup/BudgetWarningModal/BudgetWarningModal";
+// import EventsOverlapModal from "../MessagePopup/EventsOverlapModal/EventsOverlapModal";
+// import TimeConstraintModal from "../MessagePopup/TimeConstraintModal/TimeConstraintModal";
 import AddPlaceOfStay from "../MessagePopup/AddPlaceOfPlace/AddPlaceOfStay";
 
 const TripInterest: React.FC = () => {
@@ -31,14 +31,14 @@ const TripInterest: React.FC = () => {
   };
 
   // Function to handle save button
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    let preferences = preferenceData.filter(
-      (item) => item.stateOfClass === true
-    );
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   let preferences = preferenceData.filter(
+  //     (item) => item.stateOfClass === true
+  //   );
 
-    console.log(preferences);
-  };
+  //   console.log(preferences);
+  // };
 
   return (
     <>

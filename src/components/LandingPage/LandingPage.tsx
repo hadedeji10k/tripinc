@@ -5,6 +5,8 @@ import image from "../../images/illlustration-travel-agent.png";
 import image2 from "../../images/illlustration-bookings-oneplatform.png";
 import image3 from "../../images/illlustration-itenary-lifestyle.png";
 import phoneImage from "../../images/mockup-phones.png";
+import landingPage from "../../images/landing_page.png";
+import { BiSearch } from "react-icons/bi";
 
 // dummy images
 import exploreImage from "../../images/img container (style).png";
@@ -52,7 +54,33 @@ const LandingPage = () => {
   return (
     <>
       <div className="landing_page_container">
-        <div className="landing_page_image_container"></div>
+        <div className="landing_page_image_container">
+          {/* <img
+            src={landingPage}
+            alt="landing_page_image"
+            className="landing_page_image"
+          /> */}
+          <h1 className="landing_page_image_header">
+            Discover all those hidden gems
+          </h1>
+          <p className="landing_page_image_sub_header">
+            Explore and plan your next UK Trip
+          </p>
+        </div>
+        <div className="bucket_list_page_search_container">
+          <div className="bucket_list_page_search_form">
+            <input
+              id="input"
+              className="bucket_list_page_search_input"
+              type="text"
+              autoComplete=""
+              placeholder="Search for a city"
+            />
+            <button className="bucket_list_page_search_button">
+              <BiSearch />
+            </button>
+          </div>
+        </div>
         {/* services */}
         <div className="landing_page_services">
           <h3 className="landing_page_header">

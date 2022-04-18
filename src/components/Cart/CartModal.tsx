@@ -142,7 +142,7 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
 
               <div className="price">
                 <p>Total</p>
-                <p>${price}</p>
+                <p>{price.toString()}</p>
               </div>
 
               <div>
