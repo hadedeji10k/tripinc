@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 import { FaFacebookF } from "react-icons/fa";
@@ -7,12 +8,17 @@ import { SignUpSchema } from "../../schema/yupSchema";
 import { checkIfEmailExists } from "../../api/responseHandlers";
 import { checkAuth } from "../../utils/helpers";
 import { ISignUp } from "../../api/interfaces";
+import { GoogleLogin } from "react-google-login";
+import { remoteGoogleLogin } from "../../api/responseHandlers";
+import { GoogleLoginClientId } from "../../utils/constants";
 
 const Signup = () => {
   document.title = "TripInc - Sign Up";
 
+  const [remoteError, setRemoteError] = useState<null | string>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const navigate = useNavigate();
-  checkAuth();
 
   const initialValues = {
     firstName: "",
@@ -20,8 +26,40 @@ const Signup = () => {
     email: "",
   };
 
+  useEffect(() => {
+    console.log(remoteError);
+  }, []);
+
   const onSubmit = async (data: ISignUp) => {
+    setIsLoading(true);
     await checkIfEmailExists(data);
+  };
+
+  const handleGoogleLogin = (googleData: any) => {
+    setIsLoading(true);
+    console.log(googleData);
+    // remoteGoogleLogin(googleData)
+    //   .then((response: any) => {
+    //     console.log(response);
+    //     // localLogin(response);
+    //     // authContext.login();
+    //     // authContext.setUserId(response.data.user.id);
+    //     // authContext.setUsername(response.data.user.username);
+    //     // navigate("/");
+    //   })
+    //   .catch((error: any) => {
+    //     setIsLoading(false);
+    //     const errors = Object.values(error?.response?.data);
+    //     const merged = errors.flat(1);
+    //     setRemoteError(merged.join(" "));
+    //   }).finally(() => {
+    //     setIsLoading(false);
+    // });
+  };
+
+  const handleGoogleLoginFailed = () => {
+    // (TODO) handle failed
+    setRemoteError("Google Login unsuccessful.");
   };
 
   return (
@@ -31,9 +69,26 @@ const Signup = () => {
         <h3 className="signup_title">Welcome to Tripinc. All aboard.</h3>
       </div>
       <div className="external_signup_button">
-        <button className="signup_google_button" type="submit">
+        <GoogleLogin
+          clientId={GoogleLoginClientId}
+          render={(renderProps) => (
+            <button
+              className="signup_google_button"
+              onClick={renderProps.onClick}
+            >
+              <BsGoogle /> Google
+            </button>
+          )}
+          onSuccess={handleGoogleLogin}
+          onFailure={handleGoogleLoginFailed}
+          cookiePolicy={"single_host_origin"}
+          // isSignedIn={true}
+          // responseType="code"
+        />
+
+        {/* <button className="signup_google_button" type="submit">
           <BsGoogle /> Google
-        </button>
+        </button> */}
         <button className="signup_facebook_button" type="submit">
           <FaFacebookF /> Facebook
         </button>

@@ -7,9 +7,15 @@ import { Formik } from "formik";
 import { ISignIn } from "../../api/interfaces";
 import { SignInSchema } from "../../schema/yupSchema";
 import { signIn } from "../../api/responseHandlers";
+import { GoogleLogin } from "react-google-login";
+import { remoteGoogleLogin } from "../../api/responseHandlers";
+import { GoogleLoginClientId } from "../../utils/constants";
 
 const Signin = () => {
   document.title = "TripInc - Sign In";
+
+  const [remoteError, setRemoteError] = useState<null | string>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [ip, setIP] = useState("");
 
@@ -29,7 +35,8 @@ const Signin = () => {
     password: "",
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
+    setIsLoading(true);
     const formData: ISignIn = {
       username: data.email,
       password: data.password,
@@ -39,6 +46,33 @@ const Signin = () => {
     await signIn(formData);
   };
 
+  const handleGoogleLogin = (googleData: any) => {
+    setIsLoading(true);
+    console.log(googleData);
+    // remoteGoogleLogin(googleData)
+    //   .then((response: any) => {
+    //     console.log(response);
+    //     // localLogin(response);
+    //     // authContext.login();
+    //     // authContext.setUserId(response.data.user.id);
+    //     // authContext.setUsername(response.data.user.username);
+    //     // navigate("/");
+    //   })
+    //   .catch((error: any) => {
+    //     setIsLoading(false);
+    //     const errors = Object.values(error?.response?.data);
+    //     const merged = errors.flat(1);
+    //     setRemoteError(merged.join(" "));
+    //   }).finally(() => {
+    //     setIsLoading(false);
+    // });
+  };
+
+  const handleGoogleLoginFailed = () => {
+    // (TODO) handle failed
+    setRemoteError("Google Login unsuccessful.");
+  };
+
   return (
     <div className="signin_container">
       <div className="signin_word">
@@ -46,9 +80,25 @@ const Signin = () => {
         <h3 className="signin_title">Let’s get you back to planning!</h3>
       </div>
       <div className="external_signin_button">
-        <button className="signin_google_button" type="submit">
+        <GoogleLogin
+          clientId={GoogleLoginClientId}
+          render={(renderProps) => (
+            <button
+              className="signup_google_button"
+              onClick={renderProps.onClick}
+            >
+              <BsGoogle /> Google
+            </button>
+          )}
+          onSuccess={handleGoogleLogin}
+          onFailure={handleGoogleLoginFailed}
+          cookiePolicy={"single_host_origin"}
+          // isSignedIn={true}
+          // responseType="code"
+        />
+        {/* <button className="signin_google_button" type="submit">
           <BsGoogle /> Google
-        </button>
+        </button> */}
         <button className="signin_facebook_button" type="submit">
           <FaFacebookF /> Facebook
         </button>

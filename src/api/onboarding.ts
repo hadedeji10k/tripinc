@@ -14,6 +14,7 @@ REGAPI.interceptors.request.use((req: any) => {
         let token = profile.access_Token
 
         req.headers.Authorization = `Bearer ${token}`;
+        req.headers["x-access-token"] = token;
     }
     return req;
 });

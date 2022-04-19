@@ -20,6 +20,8 @@ import TripInterest from "../components/TripInterest/TripInterest";
 import MyTrip from "../components/MyTripPage/MyTrip";
 import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
 
+import AuthVerify from "./AuthVerify";
+
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
 
@@ -33,21 +35,23 @@ const Home: React.FC = () => {
       <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
 
       <Routes>
-        <Route path="/" element={<LandingPage />}></Route>
-        <Route path="/explore" element={<ExplorePage />}></Route>
-        <Route path="/my-trips" element={<MyTrip />}></Route>
-        <Route path="/bucket-list" element={<BucketListPage />}></Route>
-        <Route path="/sign-up" element={<Signup />}></Route>
-        <Route path="/sign-in" element={<Signin />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/basic-details" element={<BasicDetails />}></Route>
-        <Route path="/preferences" element={<Preferences />}></Route>
-        <Route path="/profile/add-card" element={<AddCard />}></Route>
-        <Route path="/explore-details" element={<ExploreDetails />}></Route>
-        <Route path="/plan-trip" element={<PlanTrip />}></Route>
-        <Route path="/set-budget" element={<SetBudget />}></Route>
-        <Route path="/shopping" element={<Shopping />}></Route>
-        <Route path="/trip-interest" element={<TripInterest />}></Route>
+        <Route element={<AuthVerify />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/my-trips" element={<MyTrip />} />
+          <Route path="/bucket-list" element={<BucketListPage />} />
+          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-in" element={<Signin />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/basic-details" element={<BasicDetails />} />
+          <Route path="/preferences" element={<Preferences />} />
+          <Route path="/profile/add-card" element={<AddCard />} />
+          <Route path="/explore-details" element={<ExploreDetails />} />
+          <Route path="/plan-trip" element={<PlanTrip />} />
+          <Route path="/set-budget" element={<SetBudget />} />
+          <Route path="/shopping" element={<Shopping />} />
+          <Route path="/trip-interest" element={<TripInterest />} />
+        </Route>
       </Routes>
       <Footer />
     </>

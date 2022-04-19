@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -122,6 +122,52 @@ export const signIn = async (formData: ISignIn) => {
       confirmButtonText: "Ok",
     });
   }
+};
+
+export const refreshToken = async (formData: IRefreshToken) => {
+  const response = await api.refreshToken(formData);
+
+  const data: ISignUpAndInResponse = response.data
+
+  if (response.status === 200 && response.data.status === true) {
+    // decode user access access_token
+    // decode token
+    const decoded = jwt_decode(response.data.access_Token) as any;
+    const user = decoded.UserData;
+    const expiry = decoded.exp;
+
+    // extract user details from response
+    let profile: ILocalUserProfile = {
+      access_Token: data.access_Token,
+      refresh_Token: data.refresh_Token,
+      expires_In: data.expires_In,
+      grant_Type: data.grant_Type,
+      user,
+      expiry
+    };
+
+    // save user profile to local storage
+    localStorage.setItem("profile", JSON.stringify(profile));
+  }
+};
+
+// remote google log in
+
+export const remoteGoogleLogin = async (values: any) => {
+  let loginData = {};
+  if ("tokenObj" in values) {
+    const accessToken = values.tokenObj.access_token;
+    loginData = { access_token: accessToken };
+  } else {
+    loginData = values;
+  }
+  return {
+    loginData,
+    values
+  };
+  // const response = await api.remoteGoogleLogin(loginData);
+  // For local testing
+  // return axios.post("http://127.0.0.1:8000/v1/social-auth/google/", loginData);
 };
 
 // {

@@ -52,12 +52,6 @@ const LandingPage = () => {
 
   const handleCategoryClick = (e: any) => {};
 
-  const formData = {
-    refreshToken: "cfa7677e527a477b884edc05744e8678",
-  };
-  const data = refreshToken(formData);
-  console.log(data);
-
   return (
     <>
       <div className="landing_page_container">

@@ -21,6 +21,11 @@ export const signIn = async (formData: ISignIn): Promise<AxiosResponse<any>> => 
     return await USERAPI.post("/api/Auth/Login", formData);
 }
 
+// remote google login
+export const remoteGoogleLogin = async (formData: any): Promise<AxiosResponse<any>> => {
+    return await USERAPI.post("/api/Auth/Login", formData);
+}
+
 export const refreshToken = async (formData: IRefreshToken): Promise<AxiosResponse<any>> => {
     return await USERAPI.post("/api/Auth/RefreshToken", formData);
 }
