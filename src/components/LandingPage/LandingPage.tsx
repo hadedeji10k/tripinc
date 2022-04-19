@@ -12,6 +12,7 @@ import { BiSearch } from "react-icons/bi";
 import exploreImage from "../../images/img container (style).png";
 import exploreImage2 from "../../images/img container (style)(1).png";
 import exploreImage3 from "../../images/img container (style)(2).png";
+import { refreshToken } from "../../api";
 
 const LandingPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
@@ -50,6 +51,12 @@ const LandingPage = () => {
   };
 
   const handleCategoryClick = (e: any) => {};
+
+  const formData = {
+    refreshToken: "cfa7677e527a477b884edc05744e8678",
+  };
+  const data = refreshToken(formData);
+  console.log(data);
 
   return (
     <>

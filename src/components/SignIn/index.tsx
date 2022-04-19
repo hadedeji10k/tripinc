@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "./Signin.css";
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
@@ -10,13 +11,32 @@ import { signIn } from "../../api/responseHandlers";
 const Signin = () => {
   document.title = "TripInc - Sign In";
 
+  const [ip, setIP] = useState("");
+
+  //creating function to load ip address from the geolocation api
+  const getData = async () => {
+    const res = await axios.get("https://geolocation-db.com/json/");
+    setIP(res.data.IPv4);
+  };
+
+  useEffect(() => {
+    // get Ip address
+    getData();
+  }, []);
+
   const initialValues = {
     email: "",
     password: "",
   };
 
-  const onSubmit = async (data: ISignIn) => {
-    await signIn(data);
+  const onSubmit = async (data) => {
+    const formData: ISignIn = {
+      username: data.email,
+      password: data.password,
+      channel: "web",
+      ipAddress: ip,
+    };
+    await signIn(formData);
   };
 
   return (

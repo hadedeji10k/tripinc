@@ -5,7 +5,7 @@ import REGAPI from "./onboarding";
 import USERAPI from "./usersecurity";
 
 import { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken } from './interfaces';
 
 
 export const signUp = async (formData: ISignUpFull): Promise<AxiosResponse<any>> => {
@@ -19,4 +19,8 @@ export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosR
 // sign in 
 export const signIn = async (formData: ISignIn): Promise<AxiosResponse<any>> => {
     return await USERAPI.post("/api/Auth/Login", formData);
+}
+
+export const refreshToken = async (formData: IRefreshToken): Promise<AxiosResponse<any>> => {
+    return await USERAPI.post("/api/Auth/RefreshToken", formData);
 }
