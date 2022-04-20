@@ -84,7 +84,7 @@ const Signin = () => {
           clientId={GoogleLoginClientId}
           render={(renderProps) => (
             <button
-              className="signup_google_button"
+              className="signin_google_button"
               onClick={renderProps.onClick}
             >
               <BsGoogle /> Google
@@ -103,6 +103,9 @@ const Signin = () => {
           <FaFacebookF /> Facebook
         </button>
       </div>
+      <div className="remote_error">
+        {remoteError ? <p className="red_alert">{remoteError} </p> : null}
+      </div>
       <div className="signin_or">
         <hr className="signin_or_line" />
         <h3 className="signin_or_text">Or continue with email</h3>
@@ -119,7 +122,11 @@ const Signin = () => {
           {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
             //  signin form
 
-            <form onSubmit={handleSubmit} autoComplete="off">
+            <form
+              onSubmit={handleSubmit}
+              autoComplete="off"
+              className="sign_in_form"
+            >
               <div>
                 <label className="signin_label">Email</label>
                 <input

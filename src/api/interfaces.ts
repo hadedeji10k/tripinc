@@ -14,6 +14,10 @@ export interface IRefreshToken {
     refreshToken: string
 }
 
+export interface IGetUserByID {
+    id: string
+}
+
 export interface ISignUp {
     firstName: string
     lastName: string

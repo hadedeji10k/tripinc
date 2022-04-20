@@ -87,11 +87,11 @@ const AddPlaceOfStay = ({
                 Automatically import your accommodation details by connecting
                 your Gmail. Or search for an address manually.
               </p>
-              <div className="external_signin_button">
-                <button className="signin_google_button" type="submit">
+              <div className="place_external_signin_button">
+                <button className="place_signin_google_button" type="submit">
                   <BsGoogle /> Google
                 </button>
-                <button className="signin_facebook_button" type="submit">
+                <button className="place_signin_facebook_button" type="submit">
                   Search Address
                 </button>
               </div>

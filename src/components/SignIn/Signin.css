@@ -17,7 +17,7 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 2rem;
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
     align-items: center;
     /* padding: 2rem; */
     /* margin: auto; */
@@ -54,6 +54,16 @@
     font-size: 14px;
 }
 
+.sign_in_form {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    /* margin: auto; */
+}
+
 .signin_input {
     display: block;
     margin-top: 7px;
@@ -65,7 +75,7 @@
     border: 2px solid #ccc;
     width: 500px;
     color: #000;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 
 }
 
@@ -92,14 +102,14 @@
 .signin_button {
     display: block;
     margin-top: 7px;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     padding: 0.8rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 170px;
     height: 48px;
     background: #92A5EF;
@@ -112,26 +122,26 @@
 .signin_button:hover {
     background: #677ed8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 .external_signin_button {
     /* display: flex; */
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
 }
 
 .signin_google_button {
     display: inline-block;
     margin-top: 7px;
     margin-right: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 150px;
     height: 48px;
     background: #3B71FE;
@@ -143,24 +153,24 @@
 .signin_google_button:hover {
     background: #1c1c6e;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 .signin_facebook_button {
     display: inline-block;
     margin-top: 7px;
     margin-right: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 150px;
     height: 48px;
-    background: #1d1d20; 
+    background: #1d1d20;
     border: none;
     outline: none;
     cursor: pointer;
@@ -169,7 +179,12 @@
 .signin_facebook_button:hover {
     background: #677ed8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
+}
+
+.remote_error {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
 }
 
 .signin_or {
@@ -211,11 +226,16 @@
 }
 
 .have_account {
+    margin-top: 1rem;
     margin-bottom: 2.5rem;
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     color: #353945;
+}
+
+.have_account h3 {
+    text-align: center;
 }
 
 .password_box {
@@ -224,17 +244,19 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 2rem;
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
     align-self: center;
+    width: 100%;
 }
 
 .forgot_password a {
     color: #fff;
     text-decoration: none;
     background: #475683;
-    padding: 15px;
+    padding: 15px 10px;
     border-radius: 50px;
     transition: all 0.3s ease-in-out;
+    margin-left: 10px;
 }
 
 .forgot_password a:hover {
@@ -293,12 +315,12 @@
     transition: transform 0.15s;
 }
 
-.checkbox_input:checked + .checkbox_box {
+.checkbox_input:checked+.checkbox_box {
     background: #353945;
-    
+
 }
 
-.checkbox_input:checked + .checkbox_box::after {
+.checkbox_input:checked+.checkbox_box::after {
     transform: scale(1);
 }
 
@@ -319,72 +341,98 @@ input[type=checkbox]:checked {
     .signin_or_line {
         width: 400px;
     }
+
     .signin_or_text {
         font-size: 0.9rem;
         padding: 0.6rem;
     }
+
     .signin_input {
         width: 400px;
     }
 }
+
 @media screen and (max-width: 550px) {
     .signin_or_line {
         width: 300px;
     }
+
     .signin_or_text {
         font-size: 0.9rem;
         width: 200px;
     }
+
     .signin_input {
         width: 300px;
     }
+
     .password_box {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
     }
-    .remember_me, .forgot_password {
+
+    .remember_me,
+    .forgot_password {
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
+    }
+
+    .forgot_password {
+        padding: 10px 7px;
+        font-size: 14px;
     }
 }
 
 @media screen and (max-width: 400px) {
-    .signin_google_button, .signin_facebook_button {
+
+    .signin_google_button,
+    .signin_facebook_button {
         width: 120px;
         font-size: 0.8rem;
     }
+
     .signin_input {
         width: 300px;
     }
 }
 
-@media screen and (max-width: 345px) {  
+@media screen and (max-width: 345px) {
     .signin_input {
         width: 250px;
         font-size: 0.8rem;
     }
-    .signin_google_button, .signin_facebook_button {
+
+    .signin_google_button,
+    .signin_facebook_button {
         display: block;
         margin-bottom: 0.5rem;
     }
+
     .signin_label {
         font-size: 12px;
     }
+
     .have_account {
         font-size: 0.7rem;
     }
 }
 
-@media screen and (max-width: 300px) {  
+@media screen and (max-width: 300px) {
     .signin_header {
         font-size: 2.5rem;
     }
+
     .signin_title {
         font-size: 0.8rem;
+        text-align: center;
     }
+
     .signin_input {
         width: 200px;
         font-size: 0.7rem;

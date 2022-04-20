@@ -93,6 +93,9 @@ const Signup = () => {
           <FaFacebookF /> Facebook
         </button>
       </div>
+      <div className="remote_error">
+        {remoteError ? <p className="red_alert">{remoteError} </p> : null}
+      </div>
       <div className="signup_or">
         <hr className="signup_or_line" />
         <h3 className="signup_or_text">Or continue with email</h3>
@@ -109,7 +112,11 @@ const Signup = () => {
           {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
             //  signup form
 
-            <form onSubmit={handleSubmit} autoComplete="off">
+            <form
+              onSubmit={handleSubmit}
+              autoComplete="off"
+              className="sign_up_form"
+            >
               <div>
                 <label className="signup_label">First Name</label>
                 <input

@@ -222,10 +222,6 @@
     .set_budget_label {
         font-size: 12px;
     }
-
-    .have_account {
-        font-size: 0.7rem;
-    }
 }
 
 @media screen and (max-width: 300px) {

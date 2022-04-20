@@ -17,7 +17,7 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 2rem;
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
     align-items: center;
     /* padding: 2rem; */
     /* margin: auto; */
@@ -47,11 +47,23 @@
     line-height: 24px;
     word-spacing: 0.6px;
     letter-spacing: 0.3px;
+    text-align: center;
 }
 
 .signup_label {
     text-transform: uppercase;
     font-size: 14px;
+}
+
+
+.sign_up_form {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    /* margin: auto; */
 }
 
 .signup_input {
@@ -65,7 +77,7 @@
     border: 2px solid #ccc;
     width: 500px;
     color: #000;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 
 }
 
@@ -92,14 +104,14 @@
 .signup_button {
     display: block;
     margin-top: 7px;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     padding: 0.8rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 170px;
     height: 48px;
     background: #92A5EF;
@@ -112,26 +124,26 @@
 .signup_button:hover {
     background: #677ed8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 .external_signup_button {
     /* display: flex; */
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
 }
 
 .signup_google_button {
     display: inline-block;
     margin-top: 7px;
     margin-right: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 150px;
     height: 48px;
     background: #3B71FE;
@@ -143,24 +155,24 @@
 .signup_google_button:hover {
     background: #1c1c6e;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
 .signup_facebook_button {
     display: inline-block;
     margin-top: 7px;
     margin-right: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 150px;
     height: 48px;
-    background: #1d1d20; 
+    background: #1d1d20;
     border: none;
     outline: none;
     cursor: pointer;
@@ -169,7 +181,13 @@
 .signup_facebook_button:hover {
     background: #677ed8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
+}
+
+
+.remote_error {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
 }
 
 .signup_or {
@@ -211,6 +229,7 @@
 }
 
 .have_account {
+    margin-top: 1rem;
     margin-bottom: 2.5rem;
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
@@ -218,65 +237,83 @@
     color: #353945;
 }
 
+.have_account h3 {
+    text-align: center;
+}
+
 @media screen and (max-width: 700px) {
     .signup_or_line {
         width: 400px;
     }
+
     .signup_or_text {
         font-size: 0.9rem;
         padding: 0.6rem;
     }
+
     .signup_input {
         width: 400px;
     }
 }
+
 @media screen and (max-width: 550px) {
     .signup_or_line {
         width: 300px;
     }
+
     .signup_or_text {
         font-size: 0.9rem;
         width: 200px;
     }
+
     .signup_input {
         width: 300px;
     }
 }
 
 @media screen and (max-width: 400px) {
-    .signup_google_button, .signup_facebook_button {
+
+    .signup_google_button,
+    .signup_facebook_button {
         width: 120px;
         font-size: 0.8rem;
     }
+
     .signup_input {
         width: 300px;
     }
 }
 
-@media screen and (max-width: 345px) {  
+@media screen and (max-width: 345px) {
     .signup_input {
         width: 250px;
         font-size: 0.8rem;
     }
-    .signup_google_button, .signup_facebook_button {
+
+    .signup_google_button,
+    .signup_facebook_button {
         display: block;
         margin-bottom: 0.5rem;
     }
+
     .signup_label {
         font-size: 12px;
     }
+
     .have_account {
         font-size: 0.7rem;
     }
 }
 
-@media screen and (max-width: 300px) {  
+@media screen and (max-width: 300px) {
     .signup_header {
         font-size: 2.5rem;
     }
+
     .signup_title {
         font-size: 0.8rem;
     }
+
     .signup_input {
         width: 200px;
         font-size: 0.7rem;

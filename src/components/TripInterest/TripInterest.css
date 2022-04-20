@@ -167,19 +167,6 @@
     text-decoration: none;
 }
 
-
-
-
-.password_box {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    align-self: center;
-}
-
 .remember_me {
     color: #353945;
 }
@@ -243,10 +230,6 @@ input[type=checkbox]:checked {
 @media screen and (max-width: 345px) {
     .trip_interest_label {
         font-size: 12px;
-    }
-
-    .have_account {
-        font-size: 0.7rem;
     }
 }
 
