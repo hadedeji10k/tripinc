@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ISignUpAndInResponse } from './interfaces';
+import { ISignUpAndInResponse } from '../interfaces';
 
 // swagger api - registration - https://onboarding.tripincmvptest.com/api-docs/index.html
 // swagger api - user - https://usersecurity.tripincmvptest.com/api-docs/index.html

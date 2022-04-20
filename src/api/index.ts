@@ -1,8 +1,8 @@
 // this file contains all api call
 
 // import all api instances
-import REGAPI from "./onboarding";
-import USERAPI from "./usersecurity";
+import REGAPI from "./axiosInstances/onboarding";
+import USERAPI from "./axiosInstances/usersecurity";
 
 import { AxiosResponse } from "axios";
 import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID } from './interfaces';
