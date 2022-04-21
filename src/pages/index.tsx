@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer/Footer";
+import AuthVerify from "./AuthVerify";
 
 const MainLayout: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -14,11 +14,13 @@ const MainLayout: React.FC = () => {
 
   return (
     <>
-      <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
-      <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
+      <AuthVerify>
+        <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
+        <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
 
-      <Outlet />
-      <Footer />
+        <Outlet />
+        <Footer />
+      </AuthVerify>
     </>
   );
 };

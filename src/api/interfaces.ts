@@ -15,8 +15,9 @@ export interface IRefreshToken {
 }
 
 export interface IGetUserByID {
-    id: string
+    id: number
 }
+
 
 export interface ISignUp {
     firstName: string

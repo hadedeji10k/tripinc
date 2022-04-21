@@ -13,6 +13,7 @@ import exploreImage from "../../images/img container (style).png";
 import exploreImage2 from "../../images/img container (style)(1).png";
 import exploreImage3 from "../../images/img container (style)(2).png";
 import { refreshToken } from "../../api";
+import { refreshAccessToken, remoteGetUser } from "../../utils/helpers";
 
 const LandingPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
@@ -51,6 +52,16 @@ const LandingPage = () => {
   };
 
   const handleCategoryClick = (e: any) => {};
+
+  const fetchUser = async () => {
+    const user = await remoteGetUser(17);
+    console.log(user);
+  };
+
+  const refresh = async () => {
+    const user = await refreshAccessToken();
+    console.log(user);
+  };
 
   return (
     <>
@@ -189,7 +200,9 @@ const LandingPage = () => {
                 placeholder="Enter your email address"
               />
               <br />
-              <button className="button">Submit</button>
+              <button onClick={fetchUser} className="button">
+                Submit
+              </button>
             </div>
           </div>
         </div>
@@ -295,7 +308,9 @@ const LandingPage = () => {
                 placeholder="Enter your email address"
               />
               <br />
-              <button className="button">Submit</button>
+              <button className="button" onClick={refresh}>
+                Submit
+              </button>
             </div>
             <div className="early_birds_container_60">
               <div className="how_image_container">

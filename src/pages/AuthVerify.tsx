@@ -1,37 +1,32 @@
-import React, { Component } from "react";
-import { Outlet, Route } from "react-router-dom";
-const parseJwt = (token: any) => {
-  try {
-    return JSON.parse(atob(token.split(".")[1]));
-  } catch (e) {
-    return null;
+import { refreshToken } from "../api/responseHandlers";
+import { checkAuthForRefresh, localLogout } from "../utils/helpers";
+
+const AuthVerify = ({ children }: { children: any }) => {
+  // check for token authentication
+  const data = checkAuthForRefresh();
+
+  // if token is expired, and can still refresh, refresh token
+  if (data.can_still_refresh) {
+    const formData = {
+      refreshToken: data.refreshToken,
+    };
+    refreshToken(formData);
   }
+
+  // if token is null, and can_still_refresh is null, render children, then protected route will handle pages user can view in this case
+  if (data.can_still_refresh === null && data.tokenExpired === null) {
+    return <>{children}</>;
+  }
+
+  // if token is expired and can_still_refresh is false, logout user and redirect to login page
+  if (data.tokenExpired === true) {
+    if (data.can_still_refresh === false) {
+      localLogout();
+      return <>{children}</>;
+    }
+  }
+
+  return <>{children}</>;
 };
 
-// import React from 'react'
-
-// const AuthVerify = () => {
-//   return (
-//     <div>AuthVerify</div>
-//   )
-// }
-
-// export default AuthVerify
-
-const AuthVerify = () => {
-  // constructor(props) {
-  //   super(props);
-  // props.history.listen(() => {
-  //   const user = JSON.parse(localStorage.getItem("user") as any);
-  //   if (user) {
-  //     const decodedJwt = parseJwt(user.accessToken);
-  //     if (decodedJwt.exp * 1000 < Date.now()) {
-  //       props.logOut();
-  //     }
-  //   }
-  // });
-  // }
-  // console.log("reached, authverify");
-  return <Outlet />;
-};
 export default AuthVerify;

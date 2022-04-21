@@ -148,6 +148,7 @@ export const refreshToken = async (formData: IRefreshToken) => {
 
     // save user profile to local storage
     localStorage.setItem("profile", JSON.stringify(profile));
+    return "refreshed"
   }
 };
 
