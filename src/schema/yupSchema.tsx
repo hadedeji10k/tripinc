@@ -44,3 +44,15 @@ export const BasicDetailsSchema = Yup.object().shape({
     })
     .required("Confirm Password is required"),
 });
+
+export const SocialBasicDetailsSchema = Yup.object().shape({
+  phoneNumber: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
+  countryOfOrigin: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Last name is required"),
+  cityOfOrigin: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Last name is required"),
+});

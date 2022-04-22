@@ -7,7 +7,7 @@ import { Formik } from "formik";
 import { SignUpSchema } from "../../schema/yupSchema";
 import { checkIfEmailExists } from "../../api/responseHandlers";
 import { checkAuth } from "../../utils/helpers";
-import { ISignUp } from "../../api/interfaces";
+import { IGoogleSignUp, ISignUp } from "../../api/interfaces";
 import { GoogleLogin } from "react-google-login";
 import { remoteGoogleLogin } from "../../api/responseHandlers";
 import { GoogleLoginClientId } from "../../utils/constants";
@@ -26,10 +26,6 @@ const Signup = () => {
     email: "",
   };
 
-  useEffect(() => {
-    console.log(remoteError);
-  }, []);
-
   const onSubmit = async (data: ISignUp) => {
     setIsLoading(true);
     await checkIfEmailExists(data);
@@ -37,7 +33,23 @@ const Signup = () => {
 
   const handleGoogleLogin = (googleData: any) => {
     setIsLoading(true);
-    console.log(googleData);
+    const profileObj = googleData.profileObj;
+    const tokenObj = googleData.tokenObj;
+
+    const formData: IGoogleSignUp = {
+      email: profileObj.email,
+      lastName: profileObj.familyName,
+      firstName: profileObj.givenName,
+      displayName: profileObj.name,
+      pictureUrl: profileObj.imageUrl,
+      idToken: tokenObj.id_token,
+      providerUserId: googleData.googleId,
+      providerKey: tokenObj.access_token,
+    };
+
+    console.log(formData);
+    localStorage.setItem("socialSignUpData", JSON.stringify(formData));
+    window.location.href = "/social-basic-details";
     // remoteGoogleLogin(googleData)
     //   .then((response: any) => {
     //     console.log(response);

@@ -6,7 +6,7 @@ import { BsGoogle } from "react-icons/bs";
 import { Formik } from "formik";
 import { ISignIn } from "../../api/interfaces";
 import { SignInSchema } from "../../schema/yupSchema";
-import { signIn } from "../../api/responseHandlers";
+import { googleSignIn, signIn } from "../../api/responseHandlers";
 import { GoogleLogin } from "react-google-login";
 import { remoteGoogleLogin } from "../../api/responseHandlers";
 import { GoogleLoginClientId } from "../../utils/constants";
@@ -48,16 +48,29 @@ const Signin = () => {
 
   const handleGoogleLogin = (googleData: any) => {
     setIsLoading(true);
-    console.log(googleData);
-    // remoteGoogleLogin(googleData)
-    //   .then((response: any) => {
-    //     console.log(response);
-    //     // localLogin(response);
-    //     // authContext.login();
-    //     // authContext.setUserId(response.data.user.id);
-    //     // authContext.setUsername(response.data.user.username);
-    //     // navigate("/");
-    //   })
+    const profileObj = googleData.profileObj;
+    const tokenObj = googleData.tokenObj;
+
+    const formData = {
+      // email: profileObj.email,
+      // lastName: profileObj.familyName,
+      // firstName: profileObj.givenName,
+      // displayName: profileObj.name,
+      // pictureUrl: profileObj.imageUrl,
+      // idToken: tokenObj.id_token,
+      // providerUserId: googleData.googleId,
+    };
+
+    // console.log(googleData);
+    googleSignIn(formData);
+    // remoteGoogleLogin(formData).then((response: any) => {
+    //   console.log(response);
+    // localLogin(response);
+    // authContext.login();
+    // authContext.setUserId(response.data.user.id);
+    // authContext.setUsername(response.data.user.username);
+    // navigate("/");
+    // });
     //   .catch((error: any) => {
     //     setIsLoading(false);
     //     const errors = Object.values(error?.response?.data);

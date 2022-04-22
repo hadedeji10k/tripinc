@@ -58,11 +58,6 @@ const LandingPage = () => {
     console.log(user);
   };
 
-  const refresh = async () => {
-    const user = await refreshAccessToken();
-    console.log(user);
-  };
-
   return (
     <>
       <div className="landing_page_container">
@@ -308,9 +303,7 @@ const LandingPage = () => {
                 placeholder="Enter your email address"
               />
               <br />
-              <button className="button" onClick={refresh}>
-                Submit
-              </button>
+              <button className="button">Submit</button>
             </div>
             <div className="early_birds_container_60">
               <div className="how_image_container">

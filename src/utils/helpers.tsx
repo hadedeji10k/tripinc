@@ -95,8 +95,7 @@ export const refreshAccessToken = async () => {
     refreshToken: refresh_token,
   };
 
-  const data = await refreshToken(formData);
-  return data;
+  await refreshToken(formData);
 };
 
 export const cannotRefreshAccessToken = () => {

@@ -54,3 +54,31 @@ export interface ILocalUserProfile {
     user: {},
     expiry: number
 }
+
+export interface IGoogleSignUpFull {
+    provider: string,
+    providerUserId: string,
+    providerKey: string,
+    email: number,
+    phoneNumber?: string,
+    displayName: string,
+    firstName: string,
+    lastName: string,
+    idToken: string,
+    city: string,
+    country: string,
+    pictureUrl: string,
+    signupChannel: string,
+    ipAddress: string
+}
+
+export interface IGoogleSignUp {
+    providerUserId: string,
+    providerKey: string,
+    email: number,
+    displayName: string,
+    firstName: string,
+    lastName: string,
+    idToken: string,
+    pictureUrl: string
+}

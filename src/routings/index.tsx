@@ -22,6 +22,7 @@ import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
 
 import AuthVerify from "../pages/AuthVerify";
 import MainLayout from "../pages";
+import SocialBasicDetails from "../components/SocialBasicDetails/SocialBasicDetails";
 
 const MainRoute: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -43,6 +44,10 @@ const MainRoute: React.FC = () => {
           <Route path="/sign-in" element={<Signin />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/basic-details" element={<BasicDetails />} />
+          <Route
+            path="/social-basic-details"
+            element={<SocialBasicDetails />}
+          />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/profile/add-card" element={<AddCard />} />
           <Route path="/explore-details" element={<ExploreDetails />} />
