@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 // import AccountPage from './AccountPage'
 import PersonalInfoPage from "./PersonalInfoPage/PersonalInfoPage";
 import AccountPage from "./AccountPage/AccountPage";
@@ -7,6 +7,9 @@ import BankingPage from "./BankingPage/BankingPage";
 import BookingsPage from "./BookingsPage/BookingsPage";
 import Wallet from "./WalletPage/WalletPage";
 import HelpCenterPage from "./HelpCenterPage/HelpCenterPage";
+
+import { AuthContext } from "../../stores/Auth";
+import { getFullUserProfile } from "../../utils/helpers";
 
 const menuBarData = [
   {
@@ -49,27 +52,52 @@ const menuBarData = [
 
 const Profile = (): any => {
   const [menuBar, setMenuBar] = useState(menuBarData);
+  const [fullUserProfile, setFullUserProfile] = useState(null);
+
+  const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    getFullUserProfile().then((res) => {
+      setFullUserProfile(res);
+    });
+  }, []);
+
+  // // console.log();
+  console.log(authContext.isLoggedIn ? "logged in" : "logged out");
+  // console.log(authContext.userId);
+
+  // console.log(authContext.user);
+  // console.log(fullUserProfile);
 
   let data = menuBar.filter((item) => item.state === true);
 
   return (
     <>
-      <ProfileTopBar menuBar={menuBar} setMenuBar={setMenuBar} />
-
-      {data[0].slug === "personal_info" ? (
-        <PersonalInfoPage />
-      ) : data[0].slug === "account" ? (
-        <AccountPage />
-      ) : data[0].slug === "bookings" ? (
-        <BookingsPage />
-      ) : data[0].slug === "wallet" ? (
-        <Wallet />
-      ) : data[0].slug === "banking" ? (
-        <BankingPage />
-      ) : data[0].slug === "help_centre" ? (
-        <HelpCenterPage />
-      ) : (
+      {!fullUserProfile ? (
         <></>
+      ) : (
+        <>
+          <ProfileTopBar
+            menuBar={menuBar}
+            setMenuBar={setMenuBar}
+            userProfile={fullUserProfile}
+          />
+          {data[0].slug === "personal_info" ? (
+            <PersonalInfoPage userProfile={fullUserProfile} />
+          ) : data[0].slug === "account" ? (
+            <AccountPage />
+          ) : data[0].slug === "bookings" ? (
+            <BookingsPage />
+          ) : data[0].slug === "wallet" ? (
+            <Wallet />
+          ) : data[0].slug === "banking" ? (
+            <BankingPage />
+          ) : data[0].slug === "help_centre" ? (
+            <HelpCenterPage />
+          ) : (
+            <></>
+          )}
+        </>
       )}
     </>
   );

@@ -12,12 +12,42 @@ import { BiSearch } from "react-icons/bi";
 import exploreImage from "../../images/img container (style).png";
 import exploreImage2 from "../../images/img container (style)(1).png";
 import exploreImage3 from "../../images/img container (style)(2).png";
+
+import { countryData } from "../../currentUserData";
+
 import { refreshToken } from "../../api";
 import { refreshAccessToken, remoteGetUser } from "../../utils/helpers";
+
+interface CountryProps {
+  id: number;
+  name: string;
+  flag: string;
+  capital: string;
+  population: string;
+  area: string;
+  populationDensity: string;
+}
 
 const LandingPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
   const [categoryData, setCategoryData] = useState(categorydata);
+
+  const [city, setCity] = useState("");
+  const [cityFilteredData, setCityFilteredData] = useState<CountryProps[]>([]);
+  let cityInputElement = document.getElementById("city_input") as any;
+
+  useEffect(() => {
+    setCity(cityInputElement?.value);
+    // console.log("reached");
+    const newFilter = countryData.filter((value) => {
+      return value.name
+        .toLowerCase()
+        .includes(cityInputElement?.value.toLowerCase());
+    });
+
+    // setCityFilteredData([...newFilter]);
+    return () => {};
+  }, [cityInputElement?.value, city]);
 
   // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
   useEffect(() => {
@@ -58,6 +88,56 @@ const LandingPage = () => {
     console.log(user);
   };
 
+  // function to handle the search button click
+
+  const handleCountryClick = (e: any) => {
+    e.preventDefault();
+    let value = e.target.innerHTML;
+
+    // setCityFilteredData([]);
+    setCity(value);
+    cityInputElement.value = value;
+
+    const dropDownElement = document.getElementById(
+      "landing_city_dropdown"
+    ) as any;
+    dropDownElement.style.display = "none";
+  };
+
+  const handleCountryBlur = (e: any) => {
+    e.preventDefault();
+    let value = e.target.value;
+
+    setTimeout(() => {
+      const cityDropDownElement = document.getElementById(
+        "landing_city_dropdown"
+      ) as any;
+      cityDropDownElement.style.display = "none";
+    }, 200);
+  };
+
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    const searchWord = e.target.value;
+    setCity(searchWord);
+    const dropDownElement = document.getElementById(
+      "landing_city_dropdown"
+    ) as any;
+    dropDownElement.style.display = "block";
+
+    if (searchWord === "" || searchWord === null || searchWord === undefined) {
+      setCityFilteredData([]);
+      dropDownElement.style.display = "none";
+    } else {
+      const newFilter = countryData.filter((value) => {
+        return value.name.toLowerCase().includes(searchWord.toLowerCase());
+      });
+      console.log(newFilter);
+      // setCityFilteredData([...newFilter]);
+      setCityFilteredData((prev) => [...newFilter]);
+    }
+  };
+
   return (
     <>
       <div className="landing_page_container">
@@ -76,12 +156,32 @@ const LandingPage = () => {
         </div>
         <div className="bucket_list_page_search_container">
           <div className="bucket_list_page_search_form">
+            {countryData.length > 0 && (
+              <div
+                className="landing_dropdown_content"
+                id="landing_city_dropdown"
+              >
+                {cityFilteredData.map((item) => (
+                  <p
+                    key={item.id}
+                    id="country_mapped"
+                    className="pop_up_data_item"
+                    onClick={handleCountryClick}
+                  >
+                    {item.name}
+                  </p>
+                ))}
+              </div>
+            )}
             <input
-              id="input"
+              id="city_input"
               className="bucket_list_page_search_input"
               type="text"
-              autoComplete=""
+              autoComplete="off"
               placeholder="Search for a city"
+              onChange={handleClick}
+              defaultValue={city}
+              onBlur={handleCountryBlur}
             />
             <button className="bucket_list_page_search_button">
               <BiSearch />

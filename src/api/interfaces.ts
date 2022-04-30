@@ -82,3 +82,33 @@ export interface IGoogleSignUp {
     idToken: string,
     pictureUrl: string
 }
+
+export interface IUserProfile {
+    firstName: string,
+    lastName: string,
+    alias?: string,
+    phoneNumber?: string,
+    email: string,
+    city?: string,
+    country?: string,
+    postCode?: string,
+    averageTravelCount?: number,
+    referralCode?: string,
+    accountType?: string,
+    signupChannel?: string,
+    emailVerified?: boolean,
+    phoneVerified?: boolean,
+    status?: string,
+    profilePicture?: string,
+    creatorId?: number,
+    creator?: {
+        id?: number,
+        firstName?: string,
+        lastName?: string,
+        phoneNumber?: string,
+        email?: string
+    },
+    id?: number,
+    createdDate?: Date,
+    updatedDate?: Date
+}

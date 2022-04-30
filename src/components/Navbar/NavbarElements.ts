@@ -122,6 +122,24 @@ export const NavBtnLink = styled(ReactLinkRouter)`
     }
 `
 
+export const NavBtnProfileLink = styled(ReactLinkRouter)`
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+    border: 3px solid #252748;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    
+    &:hover {
+        transition: all 0.2s ease-in-out;
+    }
+`
+
 export const ReactIcons = styled.span`
     font-size: 1.5rem;
 `

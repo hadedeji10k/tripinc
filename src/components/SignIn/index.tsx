@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./Signin.css";
 import { FaFacebookF } from "react-icons/fa";
@@ -11,11 +11,16 @@ import { GoogleLogin } from "react-google-login";
 import { remoteGoogleLogin } from "../../api/responseHandlers";
 import { GoogleLoginClientId } from "../../utils/constants";
 
+import { AuthContext } from "../../stores/Auth";
+import Swal from "sweetalert2";
+
 const Signin = () => {
   document.title = "TripInc - Sign In";
 
   const [remoteError, setRemoteError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const authContext = useContext(AuthContext);
 
   const [ip, setIP] = useState("");
 
@@ -43,7 +48,24 @@ const Signin = () => {
       channel: "web",
       ipAddress: ip,
     };
-    await signIn(formData);
+    const response = await signIn(formData);
+
+    authContext.login();
+    authContext.setUserId(response.userId);
+    // authContext.setUsername(response.username);
+    authContext.setUserProfile();
+
+    // success message
+    Swal.fire({
+      title: "Success!",
+      text: "You have successfully logged in",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then((result) => {
+      if (result.isConfirmed || result.isDenied || result.isDismissed) {
+        window.location.href = "/";
+      }
+    });
   };
 
   const handleGoogleLogin = (googleData: any) => {

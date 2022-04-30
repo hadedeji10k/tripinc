@@ -2,6 +2,8 @@ import React from "react";
 import "./ProfileTopBar.css";
 import image from "../../../images/profile.png";
 import { BsFillPencilFill } from "react-icons/bs";
+import { IUserProfile } from "../../../api/interfaces";
+import defaultImage from "../../../images/default_profile_image.jpg";
 
 interface menuData {
   id: Number;
@@ -13,11 +15,13 @@ interface menuData {
 interface ProfileTopBarProps {
   menuBar: menuData[];
   setMenuBar: any;
+  userProfile: IUserProfile;
 }
 
 const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
   menuBar,
   setMenuBar,
+  userProfile,
 }: ProfileTopBarProps) => {
   // function to handle preference click
   const handleMenuClick = (e: any) => {
@@ -44,14 +48,26 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
     // menuBar[index].class = menuBar[index].stateOfClass ? 'clicked' : 'not-clicked'
     setMenuBar([...menuBar]);
   };
-
+  console.log(userProfile.profilePicture);
   return (
     <>
       <div className="profile_top_bar_container">
         <div className="user_profile">
-          <img className="user_image" src={image} alt="" />
-          <h3 className="user_name">Adedeji Yusuf</h3>
-          <p className="user_identity">Identity verified</p>
+          {userProfile.profilePicture ? (
+            <img
+              className="user_image"
+              src={userProfile.profilePicture}
+              alt=""
+            />
+          ) : (
+            <img className="user_image" src={defaultImage} alt="" />
+          )}
+          <h3 className="user_name">{`${userProfile.firstName} ${userProfile.lastName}`}</h3>
+          {userProfile.emailVerified ? (
+            <p className="user_identity">Identity verified</p>
+          ) : (
+            <p className="user_identity">Identity not verified</p>
+          )}
         </div>
         <div className="menu_bar">
           {menuBar.map((item) => (

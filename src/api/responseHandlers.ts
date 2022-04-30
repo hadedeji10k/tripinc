@@ -154,17 +154,7 @@ export const signIn = async (formData: ISignIn) => {
       // save user profile to local storage
       localStorage.setItem("profile", JSON.stringify(profile));
 
-      // success message
-      Swal.fire({
-        title: "Success!",
-        text: "You have successfully logged in",
-        icon: "success",
-        confirmButtonText: "Ok",
-      }).then((result) => {
-        if (result.isConfirmed || result.isDenied || result.isDismissed) {
-          window.location.href = "/";
-        }
-      });
+      return user;
     }
 
     if (response.status === 200 && response.data.status === false) {

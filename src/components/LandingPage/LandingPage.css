@@ -58,6 +58,25 @@
     width: 80%
 }
 
+
+.landing_dropdown_content {
+    display: none;
+    position: absolute;
+    margin-top: -17rem;
+    background-color: #f9f9f9;
+    width: 100%;
+    max-height: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    overflow-y: auto;
+    /* z-index: 100; */
+    /* border-top-right-radius: 10px; */
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    /* border-bottom-right-radius: 20px; */
+}
+
+
 .bucket_list_page_search_form {
     display: flex;
     flex-direction: row;

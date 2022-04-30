@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ISignUpFull } from "../../api/interfaces";
 
+import { countryData } from "../../currentUserData";
+
 // import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import SecurityCodeModal from "../SecurityCodeModal/SecurityCodeModal";
 import { Formik } from "formik";
@@ -15,6 +17,24 @@ const BasicDetails: React.FC = () => {
   //creating IP state
   const [ip, setIP] = useState("");
   const [signUpData, setSignUpData] = useState({} as any);
+
+  // country states
+  const [countryFilteredData, setCountryFilteredData] = useState<any>([]);
+
+  const [country, setCountry] = useState("");
+  const [countryError, setCountryError] = useState("");
+
+  // city states
+  const [cityFilteredData, setCityFilteredData] = useState<any>([]);
+
+  const [city, setCity] = useState("");
+  const [cityError, setCityError] = useState("");
+
+  // select country input
+  let countryInputElement = document.getElementById("country_input") as any;
+  let cityInputElement = document.getElementById(
+    "city_input"
+  ) as HTMLInputElement;
 
   const navigate = useNavigate();
 
@@ -37,10 +57,31 @@ const BasicDetails: React.FC = () => {
     setSignUpData(sign_up_data);
   }, []);
 
+  useEffect(() => {
+    setCountry(countryInputElement?.value);
+    setCity(cityInputElement?.value);
+    // console.log("reached");
+    console.log(country);
+
+    const isCountry = countryData.filter((item) => {
+      return item.name.toLowerCase() === country?.toLowerCase();
+    });
+    console.log(isCountry);
+    let elementToDisabled = cityInputElement?.disabled;
+    if (isCountry.length > 0) {
+      setCountryError("");
+      elementToDisabled = false;
+    } else {
+      elementToDisabled = true;
+    }
+
+    return () => {};
+  }, [countryInputElement, cityInputElement, country]);
+
   const initialValues = {
     phoneNumber: "",
-    countryOfOrigin: "",
-    cityOfOrigin: "",
+    // countryOfOrigin: "",
+    // cityOfOrigin: "",
     password: "",
     confirmPassword: "",
   };
@@ -59,7 +100,9 @@ const BasicDetails: React.FC = () => {
     };
 
     // send data to backend
-    signUp(formData);
+    // signUp(formData);
+    console.log(formData);
+    console.log(country);
   };
 
   const [showModal, setShowModal] = useState<Boolean>(false);
@@ -67,6 +110,138 @@ const BasicDetails: React.FC = () => {
   const toggleShowModal = (e: React.FormEvent): void => {
     e.preventDefault();
     setShowModal(!showModal);
+  };
+
+  const handleCountryClick = (e: any) => {
+    e.preventDefault();
+    let value = e.target.innerHTML;
+
+    switch (e.target.id) {
+      case "country_mapped":
+        // setCountryFilteredData([]);
+        setCountry(value);
+        countryInputElement.value = value;
+
+        const dropDownElement = document.getElementById(
+          "country_dropdown"
+        ) as any;
+        dropDownElement.style.display = "none";
+
+        setCountryError("");
+        cityInputElement.disabled = false;
+
+        const isCountry = countryData.filter((item) => {
+          return item.name.toLowerCase() === country?.toLowerCase();
+        });
+
+        if (isCountry.length > 0) {
+          setCountryError("");
+          cityInputElement.disabled = false;
+        } else {
+          setCountryError("Please select a country");
+          cityInputElement.disabled = true;
+        }
+
+        break;
+      case "city_mapped":
+        // setCountryFilteredData([]);
+        setCity(value);
+        cityInputElement.value = value;
+
+        const cityDropDownElement = document.getElementById(
+          "city_dropdown"
+        ) as any;
+        cityDropDownElement.style.display = "none";
+
+        setCityError("");
+        break;
+    }
+  };
+
+  const handleCountryBlur = (e: any) => {
+    e.preventDefault();
+    let value = e.target.value;
+    switch (e.target.id) {
+      case "country_input":
+        setTimeout(() => {
+          const dropDownElement = document.getElementById(
+            "country_dropdown"
+          ) as any;
+          dropDownElement.style.display = "none";
+
+          const isCountry = countryData.filter((item) => {
+            return item.name.toLowerCase() === country?.toLowerCase();
+          });
+
+          if (isCountry.length > 0) {
+            setCountryError("");
+            cityInputElement.disabled = false;
+          } else {
+            setCountryError("Please select a country");
+            cityInputElement.disabled = true;
+          }
+        }, 200);
+        break;
+      case "city_input":
+        setTimeout(() => {
+          const cityDropDownElement = document.getElementById(
+            "city_dropdown"
+          ) as any;
+          cityDropDownElement.style.display = "none";
+        }, 200);
+        break;
+    }
+  };
+
+  // function to handle country when changing
+  const handleClick = (e: any) => {
+    console.log(country);
+    e.preventDefault();
+    const searchWord = e.target.value;
+    switch (e.target.id) {
+      case "country_input":
+        setCountry(searchWord);
+        const dropDownElement = document.getElementById(
+          "country_dropdown"
+        ) as any;
+        dropDownElement.style.display = "block";
+
+        if (
+          searchWord === "" ||
+          searchWord === null ||
+          searchWord === undefined
+        ) {
+          setCountryFilteredData([]);
+        } else {
+          const newFilter = countryData.filter((value) => {
+            return value.name.toLowerCase().includes(searchWord.toLowerCase());
+          });
+
+          setCountryFilteredData(newFilter);
+        }
+        break;
+      case "city_input":
+        setCity(searchWord);
+        const cityDropDownElement = document.getElementById(
+          "city_dropdown"
+        ) as any;
+        cityDropDownElement.style.display = "block";
+        console.log("clicked");
+
+        if (
+          searchWord === "" ||
+          searchWord === null ||
+          searchWord === undefined
+        ) {
+          setCityFilteredData([]);
+        } else {
+          const newFilter = countryData.filter((value) => {
+            return value.name.toLowerCase().includes(searchWord.toLowerCase());
+          });
+
+          setCityFilteredData(newFilter);
+        }
+    }
   };
 
   return (
@@ -87,7 +262,7 @@ const BasicDetails: React.FC = () => {
           {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
             //  signup form
 
-            <form onSubmit={handleSubmit} autoComplete="off">
+            <form onSubmit={handleSubmit} autoComplete="none">
               <div>
                 <label className="basic_details_label">Phone Number</label>
                 <input
@@ -103,22 +278,99 @@ const BasicDetails: React.FC = () => {
                 ) : null}
               </div>
               <div>
-                <label className="basic_details_label">Country of Origin</label>
-                <input
-                  className="basic_details_input"
-                  type="text"
-                  placeholder="Select Country"
-                  name="countryOfOrigin"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.countryOfOrigin && touched.countryOfOrigin ? (
-                  <p className="red_alert">{errors.countryOfOrigin}</p>
-                ) : null}
+                <div className="dropdown">
+                  <label className="basic_details_label">
+                    Country of Origin
+                  </label>
+                  <input
+                    id="country_input"
+                    className="basic_details_input"
+                    type="text"
+                    placeholder="Select Country"
+                    name="countryOfOrigin"
+                    onChange={handleClick}
+                    defaultValue={country}
+                    onBlur={handleCountryBlur}
+                    onClick={handleClick}
+                  />
+                  {countryData.length > 0 && (
+                    <div className="dropdown-content" id="country_dropdown">
+                      {countryFilteredData.map((item) => (
+                        <p
+                          key={item.id}
+                          id="country_mapped"
+                          className="pop_up_data_item"
+                          onClick={handleCountryClick}
+                        >
+                          {item.name}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                  {countryError ? (
+                    <p className="red_alert">{countryError}</p>
+                  ) : null}
+                </div>
               </div>
               <div>
+                <div className="dropdown">
+                  <label className="basic_details_label">City of Origin</label>
+                  <input
+                    id="city_input"
+                    className="basic_details_input"
+                    type="text"
+                    placeholder="Select City"
+                    name="cityOfOrigin"
+                    onChange={handleClick}
+                    defaultValue={city}
+                    onBlur={handleCountryBlur}
+                    // onClick={handleClick}
+                    disabled={true}
+                  />
+                  {countryData.length > 0 && (
+                    <div className="dropdown-content" id="city_dropdown">
+                      {cityFilteredData.map((item) => (
+                        <p
+                          key={item.id}
+                          id="city_mapped"
+                          className="pop_up_data_item"
+                          onClick={handleCountryClick}
+                        >
+                          {item.name}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                  {cityError ? <p className="red_alert">{cityError}</p> : null}
+                </div>
+              </div>
+              {/* <div>
+                <label className="basic_details_label">City</label>
+                <select
+                  name=""
+                  id="city_input"
+                  onClick={selectClick}
+                  disabled={true}
+                  className="basic_details_input basic_details_select"
+                >
+                  <option className="city_option" value="">
+                    Select City
+                  </option>
+                  <option className="city_option" value="city_1">
+                    City 1
+                  </option>
+                  <option className="city_option" value="city_2">
+                    City 2
+                  </option>
+                  <option className="city_option" value="city_3">
+                    City 3
+                  </option>
+                </select>
+              </div> */}
+              {/* <div>
                 <label className="basic_details_label">City of Origin</label>
                 <input
+                  id="city_input"
                   className="basic_details_input"
                   type="text"
                   placeholder="Enter city of Origin"
@@ -129,7 +381,7 @@ const BasicDetails: React.FC = () => {
                 {errors.cityOfOrigin && touched.cityOfOrigin ? (
                   <p className="red_alert">{errors.cityOfOrigin}</p>
                 ) : null}
-              </div>
+              </div> */}
               <div className="basic_details_line">
                 <hr className="basic_details_or_line" />
               </div>

@@ -1,11 +1,11 @@
 import { useState, createContext } from "react";
-import { checkAuth, localGetUser } from "../utils/helpers";
+import { checkAuth, localGetUser, localGetUserId } from "../utils/helpers";
 
 export const AuthContext = createContext({
-  isLoggedIn: false,
+  isLoggedIn: checkAuth(),
   username: "",
-  userId: 0,
-  user: {},
+  userId: localGetUserId(),
+  user: localGetUser() || {},
   login: () => {},
   logout: () => {},
   setUsername: (user: string) => {},

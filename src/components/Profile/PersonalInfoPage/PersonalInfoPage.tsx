@@ -7,9 +7,16 @@ import { userData } from "../../../currentUserData";
 // testing
 import ErrorMessageModal from "../../MessageModal/ErrorMessageModal/ErrorMessageModal";
 import SuccessMessageModal from "../../MessageModal/SuccessMessageModal/SuccessMessageModal";
+import { IUserProfile } from "../../../api/interfaces";
 
-const PersonalInfoPage = () => {
+interface NavbarProps {
+  userProfile: IUserProfile;
+}
+
+const PersonalInfoPage = ({ userProfile }: NavbarProps) => {
   // const [preferenceData, setPreferenceData] = useState(preferencedata)
+
+  console.log(userProfile);
 
   const [showProfileModal, setShowProfileModal] = useState<Boolean>(false);
   const [showPreferencesModal, setShowPreferencesModal] =
@@ -50,7 +57,7 @@ const PersonalInfoPage = () => {
               <input
                 className="personal_info_input"
                 type="text"
-                placeholder={userData?.firstName}
+                placeholder={userProfile?.firstName}
                 disabled
               />
             </div>
@@ -59,7 +66,7 @@ const PersonalInfoPage = () => {
               <input
                 className="personal_info_input"
                 type="text"
-                placeholder={userData?.lastName}
+                placeholder={userProfile?.lastName}
                 disabled
               />
             </div>
@@ -70,7 +77,7 @@ const PersonalInfoPage = () => {
               <input
                 className="personal_info_input"
                 type="text"
-                placeholder={userData?.email}
+                placeholder={userProfile?.email}
                 disabled
               />
             </div>
@@ -79,7 +86,7 @@ const PersonalInfoPage = () => {
               <input
                 className="personal_info_input"
                 type="text"
-                placeholder={userData?.country}
+                placeholder={userProfile?.country}
                 disabled
               />
             </div>
@@ -90,7 +97,7 @@ const PersonalInfoPage = () => {
               <input
                 className="personal_info_input"
                 type="text"
-                placeholder={userData?.city}
+                placeholder={userProfile?.city}
                 disabled
               />
             </div>
@@ -99,7 +106,7 @@ const PersonalInfoPage = () => {
               <input
                 className="personal_info_input"
                 type="text"
-                placeholder={userData?.postalCode}
+                placeholder={userProfile?.postCode}
                 disabled
               />
             </div>
@@ -110,7 +117,7 @@ const PersonalInfoPage = () => {
               <input
                 className="personal_info_input"
                 type="text"
-                placeholder={userData?.phone}
+                placeholder={userProfile?.phoneNumber}
                 disabled
               />
             </div>

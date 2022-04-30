@@ -3,6 +3,7 @@
 // import all api instances
 import REGAPI from "./axiosInstances/onboarding";
 import USERAPI from "./axiosInstances/usersecurity";
+import axios from "axios";
 
 import { AxiosResponse } from "axios";
 import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull } from './interfaces';
@@ -50,6 +51,11 @@ export const remoteGoogleLogin = async (formData: any): Promise<AxiosResponse<an
 // get user by ID
 export const getUserByID = async (id: IGetUserByID): Promise<AxiosResponse<any>> => {
     return await REGAPI.get(`/api/Users/${id}`);
+}
+
+// get user profile picture by ID
+export const getUserProfilePictureByID = async (userId: IGetUserByID): Promise<AxiosResponse<any>> => {
+    return await axios.get(`/api/Users/GetProfilePicture/${userId}`);
 }
 
 

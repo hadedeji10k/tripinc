@@ -65,13 +65,14 @@ const SocialBasicDetails: React.FC = () => {
     console.log(formData);
 
     // send data to backend
-    googleSignUp(formData);
+    // googleSignUp(formData);
+    toggleShowModal();
   };
 
   const [showModal, setShowModal] = useState<Boolean>(false);
 
-  const toggleShowModal = (e: React.FormEvent): void => {
-    e.preventDefault();
+  const toggleShowModal = (): void => {
+    // e.preventDefault();
     setShowModal(!showModal);
   };
 

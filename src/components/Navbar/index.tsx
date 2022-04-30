@@ -1,6 +1,9 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../stores/Auth";
+import { getUserProfilePicture } from "../../utils/helpers";
+import defaultImage from "../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
 import { MdOutlineLanguage } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -15,6 +18,7 @@ import {
   NavBtn,
   NavBtnLink,
   ReactIcons,
+  NavBtnProfileLink,
 } from "./NavbarElements";
 // import logo from '../../logo.svg'
 
@@ -29,6 +33,24 @@ const Navbar: React.FC<NavbarProps> = ({
   isOpen,
   toggleIsOpen,
 }: NavbarProps) => {
+  const [profilePicture, setProfilePicture] = useState("");
+
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext.isLoggedIn ? "logged in" : "logged out");
+  // console.log(authContext.userId);
+
+  // console.log(authContext.user);
+  // console.log(fullUserProfile);
+
+  useEffect(() => {
+    getUserProfilePicture().then((res) => {
+      setProfilePicture(res);
+    });
+  }, []);
+
+  console.log(profilePicture);
+
   // return the NavbarContainer
   return (
     <>
@@ -69,7 +91,24 @@ const Navbar: React.FC<NavbarProps> = ({
                 <AiOutlineShoppingCart />
               </ReactIcons>
             </NavLink>
-            <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
+            {authContext.isLoggedIn ? (
+              // <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
+              profilePicture !== "" ? (
+                <NavBtnProfileLink to="/profile">
+                  <img src={profilePicture} alt="profile pic" />
+                </NavBtnProfileLink>
+              ) : (
+                <NavBtnProfileLink to="/profile">
+                  <img
+                    className="navbar_profile_pics"
+                    src={defaultImage}
+                    alt="profile pic"
+                  />
+                </NavBtnProfileLink>
+              )
+            ) : (
+              <NavBtnLink to="/sign-up">Try Beta</NavBtnLink>
+            )}
           </NavBtn>
         </NavbarContainer>
       </Nav>

@@ -6,7 +6,7 @@ import {
 } from "../api/interfaces";
 import { refreshToken } from "../api/responseHandlers";
 import Swal from "sweetalert2";
-import { getUserByID } from "../api";
+import { getUserByID, getUserProfilePictureByID } from "../api";
 
 export const checkAuth = (): boolean => {
   let valid = false;
@@ -16,13 +16,14 @@ export const checkAuth = (): boolean => {
         localStorage.getItem("profile") as any
       );
 
-      let token = profile.access_Token;
-      const decoded: any = jwt_decode(token);
-      const expires: Date = new Date(decoded?.exp * 1000);
+      // let token = profile.access_Token;
+      // const decoded: any = jwt_decode(token);
+      // const expires: Date = new Date(decoded?.exp * 1000);
 
-      if (expires > new Date()) valid = true;
-      console.log(expires);
-      console.log(new Date());
+      // if (expires > new Date()) valid = true;
+      // console.log(expires);
+      // console.log(new Date());
+      if (profile.access_Token) valid = true;
     } catch {
       valid = false;
     }
@@ -99,7 +100,7 @@ export const refreshAccessToken = async () => {
 };
 
 export const cannotRefreshAccessToken = () => {
-  // localStorage.removeItem("profile");
+  localStorage.removeItem("profile");
   Swal.fire({
     title: "Error!",
     text: "You are logged out! Cannot process any request, kindly log in again to continue",
@@ -119,20 +120,48 @@ export const cannotRefreshAccessToken = () => {
 // get user data
 export const localGetUser = () => {
   try {
-    const user = JSON.parse(localStorage.getItem("profile") as any).user;
-    return user;
+    const user = JSON.parse(localStorage.getItem("profile") as any)?.user;
+
+    if (!user) {
+      return null;
+    }
+    const parsedUser = JSON.parse(user);
+
+    return parsedUser;
   } catch {
     return null;
   }
 };
 
+export const getFullUserProfile = async () => {
+  const userId = localGetUserId() as any;
+
+  if (!userId) return {};
+
+  const user = await getUserByID(userId);
+  console.log(user);
+  return user.data;
+};
+
+export const getUserProfilePicture = async () => {
+  const userId = localGetUserId() as any;
+
+  if (!userId) return null;
+
+  const user = await getUserProfilePictureByID(userId);
+  return user.data;
+};
+
 // get user id
 export const localGetUserId = (): number | null => {
-  const user = JSON.parse(localStorage.getItem("profile") as any).user;
-  if (user === null) {
+  const user = JSON.parse(localStorage.getItem("profile") as any)?.user;
+
+  if (!user) {
     return null;
   }
-  return user.userId;
+  const parsedUser = JSON.parse(user);
+
+  return parsedUser.userId;
 };
 
 // get user id

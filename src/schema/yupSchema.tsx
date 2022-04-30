@@ -22,14 +22,14 @@ export const SignUpSchema = Yup.object().shape({
 
 export const BasicDetailsSchema = Yup.object().shape({
   phoneNumber: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
-  countryOfOrigin: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Last name is required"),
-  cityOfOrigin: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Last name is required"),
+  // countryOfOrigin: Yup.string()
+  //   .min(2, "Too Short!")
+  //   .max(50, "Too Long!")
+  //   .required("Last name is required"),
+  // cityOfOrigin: Yup.string()
+  //   .min(2, "Too Short!")
+  //   .max(50, "Too Long!")
+  //   .required("Last name is required"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("Password Required"),
