@@ -45,6 +45,18 @@ export interface ISignUpFull {
     ipAddress: string
 }
 
+export interface IUpdateProfile {
+    userId: number | undefined
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    email?: string
+    alias?: string
+    city: string
+    country: string
+    postCode: string
+}
+
 
 export interface ILocalUserProfile {
     access_Token: string,

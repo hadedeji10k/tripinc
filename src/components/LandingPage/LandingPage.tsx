@@ -289,14 +289,9 @@ const LandingPage = () => {
                 your email address below and we will send you the link to your
                 inbox.{" "}
               </p>
-              <input
-                type="text"
-                className="input"
-                placeholder="Enter your email address"
-              />
               <br />
-              <button onClick={fetchUser} className="button">
-                Submit
+              <button className="button">
+                <a href="/sign-up">Try Beta </a>
               </button>
             </div>
           </div>

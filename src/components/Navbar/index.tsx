@@ -19,6 +19,7 @@ import {
   NavBtnLink,
   ReactIcons,
   NavBtnProfileLink,
+  NavBtnLinkLogout,
 } from "./NavbarElements";
 // import logo from '../../logo.svg'
 
@@ -50,6 +51,10 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   console.log(profilePicture);
+
+  const handleLogout = () => {
+    console.log("logout");
+  };
 
   // return the NavbarContainer
   return (
@@ -94,17 +99,27 @@ const Navbar: React.FC<NavbarProps> = ({
             {authContext.isLoggedIn ? (
               // <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
               profilePicture !== "" ? (
-                <NavBtnProfileLink to="/profile">
-                  <img src={profilePicture} alt="profile pic" />
-                </NavBtnProfileLink>
+                <>
+                  <NavBtnProfileLink to="/profile">
+                    <img src={profilePicture} alt="profile pic" />
+                  </NavBtnProfileLink>
+                  <NavBtnLinkLogout onClick={handleLogout}>
+                    Log out
+                  </NavBtnLinkLogout>
+                </>
               ) : (
-                <NavBtnProfileLink to="/profile">
-                  <img
-                    className="navbar_profile_pics"
-                    src={defaultImage}
-                    alt="profile pic"
-                  />
-                </NavBtnProfileLink>
+                <>
+                  <NavBtnProfileLink to="/profile">
+                    <img
+                      className="navbar_profile_pics"
+                      src={defaultImage}
+                      alt="profile pic"
+                    />
+                  </NavBtnProfileLink>
+                  <NavBtnLinkLogout onClick={handleLogout}>
+                    Log out
+                  </NavBtnLinkLogout>
+                </>
               )
             ) : (
               <NavBtnLink to="/sign-up">Try Beta</NavBtnLink>

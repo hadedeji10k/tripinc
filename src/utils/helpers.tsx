@@ -59,7 +59,7 @@ export const checkAuthForRefresh = () => {
     const decoded: any = jwt_decode(token);
     const expired = new Date(decoded?.exp * 1000);
     const expires = new Date(decoded?.exp * 1000).getTime();
-    const maxRefToken = new Date(expires + 1000 * 60 * 5);
+    const maxRefToken = new Date(expires + 1000 * 60 * 15);
     const timeFromExpires = new Date(expires - 1000 * 60 * 2);
     let time = new Date();
     // let time = new Date(Date.now() - 1000 * 60 * 2);

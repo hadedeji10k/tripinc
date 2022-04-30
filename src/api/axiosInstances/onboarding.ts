@@ -13,7 +13,6 @@ const ENDPOINTS_NO_TOKEN = ['/api/Auth/CheckIfEmailExist', '/api/Auth/Register',
 const REGAPI = axios.create({ baseURL: "https://onboarding.tripincmvptest.com" });
 
 REGAPI.interceptors.request.use(async (req: any) => {
-    console.log(req.url)
 
     if (ENDPOINTS_NO_TOKEN.includes(req.url)) {
         return req

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import Swal from "sweetalert2";
 // import AccountPage from './AccountPage'
 import PersonalInfoPage from "./PersonalInfoPage/PersonalInfoPage";
 import AccountPage from "./AccountPage/AccountPage";
@@ -53,17 +54,22 @@ const menuBarData = [
 const Profile = (): any => {
   const [menuBar, setMenuBar] = useState(menuBarData);
   const [fullUserProfile, setFullUserProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
+    setIsLoading(false);
     getFullUserProfile().then((res) => {
       setFullUserProfile(res);
+      // setIsLoading(true);
     });
+    setIsLoading(false);
   }, []);
 
   // // console.log();
   console.log(authContext.isLoggedIn ? "logged in" : "logged out");
+
   // console.log(authContext.userId);
 
   // console.log(authContext.user);
@@ -73,8 +79,28 @@ const Profile = (): any => {
 
   return (
     <>
-      {!fullUserProfile ? (
-        <></>
+      {/* {isLoading ? Swal.fireSwal.showLoading() : null} */}
+      {isLoading
+        ? Swal.fire({
+            title: "Loading...",
+            text: "Please wait while we load your profile",
+            didOpen: () => {
+              Swal.showLoading();
+            },
+            allowOutsideClick: () => !Swal.isLoading(),
+          })
+        : null}
+
+      {/* {!fullUserProfile ? ( */}
+      {!authContext.isLoggedIn ? (
+        <>
+          <h3>You must sign in before you can access this page</h3>
+        </>
+      ) : !fullUserProfile ? (
+        <>
+          {" "}
+          <h3>Something wrong </h3>{" "}
+        </>
       ) : (
         <>
           <ProfileTopBar

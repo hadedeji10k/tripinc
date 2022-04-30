@@ -1,15 +1,19 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./ProfileModal.css";
 import { MdClose } from "react-icons/md";
 // user dummy data
-import { userData } from '../../../../currentUserData'
+import { userData } from "../../../../currentUserData";
+import { IUserProfile, IUpdateProfile } from "../../../../api/interfaces";
+import { updateUser } from "../../../../api/responseHandlers";
+import Swal from "sweetalert2";
 
 // interface for this Modal
 interface ProfileModalProp {
   showProfileModal: Boolean;
   setShowProfileModal: React.Dispatch<React.SetStateAction<Boolean>>;
+  userProfile: IUserProfile;
 }
 
 // Styled component for background
@@ -28,9 +32,15 @@ const Background: any = styled.div`
 `;
 
 // Component for security Modal
-const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalProp) => {
+const ProfileModal = ({
+  showProfileModal,
+  setShowProfileModal,
+  userProfile,
+}: ProfileModalProp) => {
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // animation for the modal to pop up when the modal is clicked
   const animation = useSpring({
@@ -70,38 +80,79 @@ const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalPro
     };
   }, [keyPress]);
 
-  const handleContinue = (): void => {
-    
+  const handleContinue = (): void => {};
+
+  const onClick = async (e: any) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    const firstName = (
+      document.getElementById("first_name") as HTMLInputElement
+    )?.value;
+    const lastName = (document.getElementById("last_name") as HTMLInputElement)
+      ?.value;
+    const email = (document.getElementById("email") as HTMLInputElement)?.value;
+    const country = (document.getElementById("country") as HTMLInputElement)
+      ?.value;
+    const city = (document.getElementById("city") as HTMLInputElement)?.value;
+    const postCode = (
+      document.getElementById("postal_code") as HTMLInputElement
+    )?.value;
+    const phoneNumber = (
+      document.getElementById("phone_number") as HTMLInputElement
+    )?.value;
+
+    const formData: IUpdateProfile = {
+      userId: userProfile?.id,
+      firstName,
+      lastName,
+      email,
+      country,
+      city,
+      postCode,
+      phoneNumber,
+    };
+
+    console.log(formData);
+    await updateUser(formData);
+    setIsLoading(false);
   };
 
   // return the component
   return (
     <>
+      {isLoading ? Swal.showLoading() : null}
+
       {showProfileModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="modal" style={animation}>
-            <div className="modal_wrapper">
-              <h3 className="profile_modal_header">Edit your profile details</h3>
+            <div className="profile_modal_wrapper">
+              <h3 className="profile_modal_header">
+                Edit your profile details
+              </h3>
 
               <div className="profile_details_container">
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">First Name</label>
                     <input
-                      className="personal_info_input"
+                      id="first_name"
+                      className="profile_personal_info_input"
                       type="text"
-                      placeholder={userData?.firstName}
-                      defaultValue={userData?.firstName}
+                      placeholder={userProfile?.firstName}
+                      defaultValue={userProfile?.firstName}
                     />
                   </div>
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">Last Name</label>
                     <input
-                      className="personal_info_input"
+                      id="last_name"
+                      className="profile_personal_info_input"
                       type="text"
-                      placeholder={userData?.lastName}
-                      defaultValue={userData?.lastName}
+                      placeholder={userProfile?.lastName}
+                      defaultValue={userProfile?.lastName}
                     />
                   </div>
                 </div>
@@ -109,40 +160,44 @@ const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalPro
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">Email Address</label>
                     <input
-                      className="personal_info_input"
+                      id="email"
+                      className="profile_personal_info_input"
                       type="text"
-                      placeholder={userData?.email}
-                      defaultValue={userData?.email}
+                      placeholder={userProfile?.email}
+                      defaultValue={userProfile?.email}
                     />
                   </div>
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">Country</label>
                     <input
-                      className="personal_info_input"
+                      id="country"
+                      className="profile_personal_info_input"
                       type="text"
-                      placeholder={userData?.country}
-                      defaultValue={userData?.country}
+                      placeholder={userProfile?.country}
+                      defaultValue={userProfile?.country}
                     />
                   </div>
                 </div>
-            
+
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">City</label>
                     <input
-                      className="personal_info_input"
+                      id="city"
+                      className="profile_personal_info_input"
                       type="text"
-                      placeholder={userData?.city}
-                      defaultValue={userData?.city}
+                      placeholder={userProfile?.city}
+                      defaultValue={userProfile?.city}
                     />
                   </div>
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">Postal Code</label>
                     <input
-                      className="personal_info_input"
+                      id="postal_code"
+                      className="profile_personal_info_input"
                       type="text"
-                      placeholder={userData?.postalCode}
-                      defaultValue={userData?.postalCode}
+                      placeholder={userProfile?.postCode}
+                      defaultValue={userProfile?.postCode}
                     />
                   </div>
                 </div>
@@ -150,16 +205,17 @@ const ProfileModal = ({ showProfileModal, setShowProfileModal }: ProfileModalPro
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">Phone Number</label>
                     <input
-                      className="personal_info_input"
+                      id="phone_number"
+                      className="profile_personal_info_input"
                       type="tel"
-                      placeholder={userData?.phone}
-                      defaultValue={userData?.phone}
+                      placeholder={userProfile?.phoneNumber}
+                      defaultValue={userProfile?.phoneNumber}
                     />
                   </div>
                 </div>
               </div>
               <div>
-                <button className="button" onClick={handleContinue}>
+                <button className="button" onClick={onClick}>
                   Continue
                 </button>
               </div>

@@ -122,6 +122,27 @@ export const NavBtnLink = styled(ReactLinkRouter)`
     }
 `
 
+export const NavBtnLinkLogout = styled.p`
+    border-radius: 50px;
+    background-color: #252748;
+    white-space: nowrap;
+    padding: 7px 15px;
+    color: #fff;
+    font-size: 1rem;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background-color: #d4d5e4;
+        color: #252748;
+    }
+`
+
 export const NavBtnProfileLink = styled(ReactLinkRouter)`
     border-radius: 50%;
     width: 50px;

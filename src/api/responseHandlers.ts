@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -185,6 +185,53 @@ export const signIn = async (formData: ISignIn) => {
     });
   }
 };
+
+export const updateUser = async (formData: IUpdateProfile) => {
+  try {
+    const response = await api.updateProfile(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully updated your profile",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/profile";
+        }
+      });
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Updating profile was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
+
 
 export const googleSignIn = async (formData: any) => {
   try {

@@ -12,7 +12,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.modal_wrapper {
+.profile_modal_wrapper {
     width: 80vw;
     height: 80vh;
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
@@ -53,6 +53,27 @@
     line-height: 24px;
     word-spacing: 0.6px;
     letter-spacing: 0.3px;
+}
+
+
+.profile_personal_info_input {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 20px;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid #ccc;
+    width: 400px;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.profile_personal_info_input:focus {
+    border: 2px solid #252748;
+    transition: all 0.3s ease-in-out;
 }
 
 .button {
@@ -102,27 +123,28 @@
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 @media screen and (max-width: 1100px) {
-    .personal_info_input {
+    .profile_personal_info_input {
         width: 300px;
     }
 }
 
 @media screen and (max-width: 850px) {
-    .personal_info_input {
+    .profile_personal_info_input {
         width: 250px;
     }
 }
 
 @media screen and (max-width: 830px) {
+
     /* .modal_wrapper {
         width: 80%;
         transform: translateX(80px);
@@ -130,6 +152,7 @@ input[type=number] {
     .title {
         font-size: 0.8rem;
     }
+
     .header {
         font-size: 2rem;
     }
@@ -141,6 +164,7 @@ input[type=number] {
         transform: translateX(40px);
         padding: 50px;
     }
+
     .profile_details_item {
         flex-direction: column;
     }
@@ -151,6 +175,7 @@ input[type=number] {
         margin-bottom: 0.8rem;
         line-height: 30px;
     }
+
     .title {
         margin-bottom: 1.5rem;
     }
@@ -160,12 +185,15 @@ input[type=number] {
     .modal_wrapper {
         padding: 30px;
     }
-    .personal_info_input {
+
+    .profile_personal_info_input {
         width: 250px;
     }
+
     .profile_modal_header {
         font-size: 1.2rem;
         letter-spacing: 0.6px;
+        line-height: 20;
     }
 }
 
@@ -176,12 +204,17 @@ input[type=number] {
         width: 24px;
         height: 24px;
     }
+
+    .profile_personal_info_input {
+        width: 300px;
+    }
 }
 
-@media screen and (max-width: 415px) {  
+@media screen and (max-width: 415px) {
     .header {
         font-size: 1.5rem;
     }
+
     .code_input {
         width: 40px;
         height: 40px;
@@ -192,23 +225,53 @@ input[type=number] {
 }
 
 @media screen and (max-width: 400px) {
-    .personal_info_input {
-        width: 300px;
+    .profile_personal_info_input {
+        width: 260px;
         font-size: 0.8rem;
     }
-}  
+}
 
-@media screen and (max-width: 350px) {  
+@media screen and (max-width: 350px) {
     .title {
         font-size: 0.8rem;
     }
+
     .radio_content {
         font-size: 0.8rem;
     }
 }
 
-@media screen and (max-width: 345px) {  
-    .personal_info_input {
-        width: 250px;
+@media screen and (max-width: 345px) {
+    .profile_personal_info_input {
+        width: 220px;
+    }
+}
+
+@media screen and (max-width: 310px) {
+    .profile_personal_info_input {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 290px) {
+    .profile_modal_header {
+        font-size: 1rem;
+        /* letter-spacing: 0.3px; */
+    }
+
+    .profile_personal_info_input {
+        width: 180px;
+    }
+}
+
+@media screen and (max-width: 255px) {
+    .profile_personal_info_input {
+        width: 160px;
+    }
+}
+
+@media screen and (max-width: 220px) {
+    .profile_personal_info_input {
+        width: 130px;
     }
 }

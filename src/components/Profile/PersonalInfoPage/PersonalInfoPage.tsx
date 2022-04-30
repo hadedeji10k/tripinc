@@ -184,6 +184,7 @@ const PersonalInfoPage = ({ userProfile }: NavbarProps) => {
       <ProfileModal
         showProfileModal={showProfileModal}
         setShowProfileModal={setShowProfileModal}
+        userProfile={userProfile}
       />
       <PreferencesModal
         showPreferencesModal={showPreferencesModal}

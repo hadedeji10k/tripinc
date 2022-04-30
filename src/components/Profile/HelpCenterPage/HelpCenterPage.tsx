@@ -113,14 +113,14 @@ const HelpCenterPage = () => {
           </div>
 
           {/* search result */}
-          <div className="faq_container">
+          {/* <div className="faq_container">
             <h3 className="help_center_page_header">We have the answers!</h3>
             <GeneralFaq />
             <p className="help_center_page_answer_text">
               Still got some unanswered questions? <br /> No problem, contact
               our Support team.{" "}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
