@@ -43,6 +43,7 @@ export const signUp = async (formData: ISignUpFull) => {
           window.location.href = "/";
         }
       });
+      return user
     }
 
     // if there is error

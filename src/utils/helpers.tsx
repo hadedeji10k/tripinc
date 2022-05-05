@@ -32,6 +32,10 @@ export const checkAuth = (): boolean => {
 };
 
 // log out user
+export const localLogoutProfile = () => {
+  localStorage.removeItem("profile");
+};
+
 export const localLogout = () => {
   localStorage.removeItem("profile");
   Swal.fire({

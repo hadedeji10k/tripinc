@@ -2,7 +2,8 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../stores/Auth";
-import { getUserProfilePicture } from "../../utils/helpers";
+import { getUserProfilePicture, localLogoutProfile } from "../../utils/helpers";
+import { useGoogleLogout } from "react-google-login";
 import defaultImage from "../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
 import { MdOutlineLanguage } from "react-icons/md";
@@ -21,6 +22,9 @@ import {
   NavBtnProfileLink,
   NavBtnLinkLogout,
 } from "./NavbarElements";
+import { GoogleLoginClientId } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 // import logo from '../../logo.svg'
 
 // Interface for this component
@@ -38,6 +42,8 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const authContext = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   console.log(authContext.isLoggedIn ? "logged in" : "logged out");
   // console.log(authContext.userId);
 
@@ -52,8 +58,38 @@ const Navbar: React.FC<NavbarProps> = ({
 
   console.log(profilePicture);
 
+  const handleGoogleLogoutSuccess = () => {
+    // navigate("/");
+  };
+  const handleGoogleLogoutFailure = () => {
+    // TODO: Handle failure scenario
+    console.log("Logout failure");
+  };
+
+  const { signOut } = useGoogleLogout({
+    clientId: GoogleLoginClientId,
+    onLogoutSuccess: handleGoogleLogoutSuccess,
+    onFailure: handleGoogleLogoutFailure,
+  });
+
   const handleLogout = () => {
-    console.log("logout");
+    Swal.fire({
+      title: "Are you sure you want to log out?",
+      // text: "You will be logged out from this session.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, log out!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("logout");
+        signOut();
+        authContext.logout();
+        localLogoutProfile();
+        window.location.href = "/";
+      }
+    });
   };
 
   // return the NavbarContainer
