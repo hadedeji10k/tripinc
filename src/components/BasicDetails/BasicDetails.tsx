@@ -108,12 +108,12 @@ const BasicDetails: React.FC = () => {
     };
 
     // send data to backend
-    console.log(formData);
+    // console.log(formData);
     signUp(formData).then((res) => {
       authContext.login();
       authContext.setUserId(res.userId);
-      setIsLoading(false);
     });
+    setIsLoading(false);
   };
 
   const [showModal, setShowModal] = useState<Boolean>(false);
@@ -206,7 +206,6 @@ const BasicDetails: React.FC = () => {
 
   // function to handle country when changing
   const handleClick = (e: any) => {
-    console.log(country);
     e.preventDefault();
     const searchWord = e.target.value;
     switch (e.target.id) {

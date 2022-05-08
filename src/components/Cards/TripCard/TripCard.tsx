@@ -18,7 +18,7 @@ const Card = ({ image, title, description, price, reviews, liked }) => {
   return (
     <>
       <div className="card_container">
-        <div className="image_container">
+        <div className="trip_card_image_container">
           <img className="image" src={image.toString()} alt="" />
         </div>
         <div className="card_details">

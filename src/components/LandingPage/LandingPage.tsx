@@ -15,8 +15,9 @@ import exploreImage3 from "../../images/img container (style)(2).png";
 
 import { countryData } from "../../currentUserData";
 
-import { refreshToken } from "../../api";
+import { getAllCategories, getTopDeals, refreshToken } from "../../api";
 import { refreshAccessToken, remoteGetUser } from "../../utils/helpers";
+import { ICategory, IDeal } from "../../api/interfaces";
 
 interface CountryProps {
   id: number;
@@ -30,11 +31,23 @@ interface CountryProps {
 
 const LandingPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
-  const [categoryData, setCategoryData] = useState(categorydata);
+  const [categoryData, setCategoryData] = useState<ICategory[]>();
+  const [topDeals, setTopDeals] = useState<IDeal[]>();
 
   const [city, setCity] = useState("");
   const [cityFilteredData, setCityFilteredData] = useState<CountryProps[]>([]);
+
   let cityInputElement = document.getElementById("city_input") as any;
+
+  useEffect(() => {
+    getTopDeals().then((res) => {
+      console.log(res.data);
+      setTopDeals(res.data);
+    });
+    getAllCategories().then((res) => {
+      setCategoryData(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     setCity(cityInputElement?.value);
@@ -51,18 +64,26 @@ const LandingPage = () => {
 
   // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
   useEffect(() => {
-    let element = document.getElementById(
+    let categoryElement = document.getElementById(
       "category_tag_container"
     ) as HTMLElement;
-    if (
-      element.clientWidth === element.scrollWidth ||
-      element.clientWidth > element.scrollWidth
-    ) {
-      let prev = document.getElementById("prev") as HTMLElement;
-      let next = document.getElementById("next") as HTMLElement;
-      prev.style.display = "none";
-      next.style.display = "none";
-    }
+    let prev = document.getElementById("prev") as HTMLElement;
+    let next = document.getElementById("next") as HTMLElement;
+    setTimeout(() => {
+      console.log(categoryElement.clientWidth, categoryElement.scrollWidth);
+      if (
+        categoryElement?.clientWidth === categoryElement?.scrollWidth ||
+        categoryElement?.clientWidth > categoryElement?.scrollWidth
+      ) {
+        // hide this for now till fix
+        // console.log(prev, next);
+        // prev.style.display = "inline-block";
+        // next.style.display = "inline-block";
+        prev.style.display = "none";
+        next.style.display = "none";
+      } else {
+      }
+    }, 1000);
   }, []);
 
   // function to handle next button scroll of location if there is overflow in the element's data
@@ -83,13 +104,7 @@ const LandingPage = () => {
 
   const handleCategoryClick = (e: any) => {};
 
-  const fetchUser = async () => {
-    const user = await remoteGetUser(17);
-    console.log(user);
-  };
-
   // function to handle the search button click
-
   const handleCountryClick = (e: any) => {
     e.preventDefault();
     let value = e.target.innerHTML;
@@ -136,6 +151,15 @@ const LandingPage = () => {
       // setCityFilteredData([...newFilter]);
       setCityFilteredData((prev) => [...newFilter]);
     }
+  };
+
+  const handleCat = () => {
+    getTopDeals().then((res) => {
+      console.log(res.data);
+    });
+    getAllCategories().then((res) => {
+      console.log(res.data);
+    });
   };
 
   return (
@@ -304,16 +328,20 @@ const LandingPage = () => {
             Top features we want to show you.
           </p>
           <div className="explore_card_container">
-            <div className="explore_card">
-              <div className="explore_image_container">
-                <img src={exploreImage} alt="" className="explore_image" />
+            {topDeals?.map((item) => (
+              <div className="explore_card">
+                <div className="explore_image_container">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title + "'s image"}
+                    className="explore_image"
+                  />
+                </div>
+                <p className="explore_card_title">{item.title}</p>
+                <p className="explore_card_location">{item.city}</p>
               </div>
-              <p className="explore_card_title">
-                Tommy Live comedy at Tall Horse Pub
-              </p>
-              <p className="explore_card_location">London, United Kingdom</p>
-            </div>
-            <div className="explore_card">
+            ))}
+            {/* <div className="explore_card">
               <div className="explore_image_container">
                 <img src={exploreImage2} alt="" className="explore_image" />
               </div>
@@ -330,9 +358,11 @@ const LandingPage = () => {
                 Tommy Live comedy at Tall Horse Pub
               </p>
               <p className="explore_card_location">London, United Kingdom</p>
-            </div>
+            </div> */}
           </div>
-          <button className="button">Explore more!</button>
+          <button className="button" onClick={handleCat}>
+            <a href="/explore">Explore more!</a>
+          </button>
         </div>
 
         {/* find your next stop */}
@@ -342,7 +372,7 @@ const LandingPage = () => {
             See how Tripinc can help your plan your next UK Trip!
           </p>
           <div id="category_tag_container" className="category_tag_container">
-            {categoryData.map((item) => (
+            {categoryData?.map((item) => (
               // <span key={item.id} className="preferences_tag">{item.title}</span>
               <div
                 key={item.id}
@@ -350,9 +380,9 @@ const LandingPage = () => {
                 className="category_clicked"
                 onClick={handleCategoryClick}
               >
-                <p className="category_symbol">{item.symbol}</p>
-                <p className="category_title">{item.title}</p>
-                <p className="number_of_cat_list">20+</p>
+                {/* <p className="category_symbol">{item.symbol}</p> */}
+                <p className="category_title">{item.name}</p>
+                {/* <p className="number_of_cat_list">20+</p> */}
               </div>
             ))}
           </div>

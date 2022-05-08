@@ -3,9 +3,9 @@
 // import all api instances
 import REGAPI from "./axiosInstances/onboarding";
 import USERAPI from "./axiosInstances/usersecurity";
-import axios from "axios";
+import TRIPAPI from "./axiosInstances/tripservice";
 
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile } from './interfaces';
 
 // checks if email exists
@@ -18,7 +18,6 @@ export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosR
 export const refreshToken = async (formData: IRefreshToken): Promise<AxiosResponse<any>> => {
     return await USERAPI.post("/api/Auth/RefreshToken", formData);
 }
-
 
 
 // Registration and logging in
@@ -62,5 +61,19 @@ export const getUserProfilePictureByID = async (userId: IGetUserByID): Promise<A
     return await REGAPI.get(`/api/Users/GetProfilePicture/${userId}`);
 }
 
+export const getTopDeals = async (): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get('/api/Attractions/GetTopDeals');
+}
 
+export const getAllCategories = async (): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get('/api/Categories/GetList');
+}
+
+export const getCategories = async (query: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Categories/GetList?${query}`);
+}
+
+export const googleApiProfile = async (tokenId: any): Promise<AxiosResponse<any>> => {
+    return await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${tokenId}`);
+}
 

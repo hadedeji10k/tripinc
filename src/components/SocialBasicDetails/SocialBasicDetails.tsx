@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { IGoogleSignUpFull } from "../../api/interfaces";
+import { IGoogleSignUp, IGoogleSignUpFull } from "../../api/interfaces";
 
 // import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import SecurityCodeModal from "../SecurityCodeModal/SecurityCodeModal";
@@ -14,7 +14,9 @@ import "./SocialBasicDetails.css";
 const SocialBasicDetails: React.FC = () => {
   //creating IP state
   const [ip, setIP] = useState("");
-  const [socialSignUpData, setSocialSignUpData] = useState({} as any);
+  const [socialSignUpData, setSocialSignUpData] = useState<IGoogleSignUp>(
+    {} as any
+  );
 
   const navigate = useNavigate();
 
@@ -47,7 +49,7 @@ const SocialBasicDetails: React.FC = () => {
 
   const onSubmit = (data: any) => {
     const formData = {
-      provider: "google",
+      provider: socialSignUpData.provider,
       providerUserId: socialSignUpData.providerUserId,
       providerKey: socialSignUpData.providerKey,
       displayName: socialSignUpData.displayName,
@@ -59,14 +61,14 @@ const SocialBasicDetails: React.FC = () => {
       email: socialSignUpData?.email,
       city: data.cityOfOrigin,
       country: data.countryOfOrigin,
-      signupChannel: "web",
+      signupChannel: "WEB",
       ipAddress: ip,
     };
     console.log(formData);
 
     // send data to backend
-    // googleSignUp(formData);
-    toggleShowModal();
+    googleSignUp(formData);
+    // toggleShowModal();
   };
 
   const [showModal, setShowModal] = useState<Boolean>(false);
@@ -153,7 +155,7 @@ const SocialBasicDetails: React.FC = () => {
       <div className="have_account">
         <h3>
           Already have an account?{" "}
-          <a href="/" className="login_text">
+          <a href="/sign-in" className="login_text">
             Login
           </a>
         </h3>

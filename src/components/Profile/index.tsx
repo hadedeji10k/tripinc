@@ -59,7 +59,7 @@ const Profile = (): any => {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    setIsLoading(false);
+    setIsLoading(true);
     getFullUserProfile().then((res) => {
       setFullUserProfile(res);
       // setIsLoading(true);
@@ -97,10 +97,7 @@ const Profile = (): any => {
           <h3>You must sign in before you can access this page</h3>
         </>
       ) : !fullUserProfile ? (
-        <>
-          {" "}
-          <h3>Something wrong </h3>{" "}
-        </>
+        <> {/* <h3>Something wrong </h3>{" "} */}</>
       ) : (
         <>
           <ProfileTopBar

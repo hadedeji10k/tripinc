@@ -72,7 +72,7 @@ export interface IGoogleSignUpFull {
     providerUserId: string,
     providerKey: string,
     email: number,
-    phoneNumber?: string,
+    phoneNumber: string,
     displayName: string,
     firstName: string,
     lastName: string,
@@ -86,6 +86,7 @@ export interface IGoogleSignUpFull {
 
 export interface IGoogleSignUp {
     providerUserId: string,
+    provider: string,
     providerKey: string,
     email: number,
     displayName: string,
@@ -123,4 +124,158 @@ export interface IUserProfile {
     id?: number,
     createdDate?: Date,
     updatedDate?: Date
+}
+
+export interface ICategory {
+    code: string | null
+    createdDate: string | null
+    id: number
+    name: string
+    updatedDate: string | null
+}
+
+export interface IDeal {
+    id?: number,
+    createdDate?: Date,
+    updatedDate?: Date,
+    itemType?: string,
+    title?: string,
+    postalCode?: string,
+    price?: number,
+    currency?: string,
+    location?: string,
+    city?: string,
+    country?: string,
+    longitude?: number,
+    latitude?: number,
+    distance?: number,
+    openingHour?: {
+        ticks: number,
+        days: number,
+        hours: number,
+        milliseconds: number,
+        minutes: number,
+        seconds: number,
+        totalDays: number,
+        totalHours: number,
+        totalMilliseconds: number,
+        totalMinutes: number,
+        totalSeconds: number
+    },
+    closingHour?: {
+        ticks: number,
+        days: number,
+        hours: number,
+        milliseconds: number,
+        minutes: number,
+        seconds: number,
+        totalDays: number,
+        totalHours: number,
+        totalMilliseconds: number,
+        totalMinutes: number,
+        totalSeconds: number
+    },
+    bestVisitingTime?: [
+        {
+            ticks: number,
+            days: number,
+            hours: number,
+            milliseconds: number,
+            minutes: number,
+            seconds: number,
+            totalDays: number,
+            totalHours: number,
+            totalMilliseconds: number,
+            totalMinutes: number,
+            totalSeconds: number
+        }
+    ],
+    openingDaysList?: string[],
+    availableDates?: Date[],
+    typicalTimeSpent?: number,
+    description?: string,
+    averageRating?: number,
+    numberOfRatings?: number,
+    imageUrl?: string,
+    termsAndConditions?: string,
+    greatForList?: string[],
+    thingsToPackList?: string[],
+    creatorUserId?: number,
+    creatorName?: string,
+    updatedBy?: string,
+    isActive?: true,
+    isCovidFriendly?: true,
+    isPublished?: true,
+    featured?: true,
+    liked?: true,
+    photos?: [
+        {
+            id: number,
+            photoUrl: string
+        }
+    ],
+    categories?: [
+        {
+            id: number,
+            name: string,
+            code: string
+        }
+    ],
+    tags?: [
+        {
+            id: number,
+            name: string
+        }
+    ],
+    ratings?: [
+        {
+            userId: number,
+            fullName: string,
+            attractionId: number,
+            rating: number,
+            comment: string
+        }
+    ],
+    abstract?: string,
+    highlights?: string[],
+    inclusions?: string,
+    exclusions?: string,
+    additionalInformation?: string,
+    bestseller?: true,
+    certified?: true,
+    tourUrl?: string,
+    supplierId?: number,
+    provider?: string,
+    tourId?: number,
+    tourCode?: string,
+    freeSale?: true,
+    locationList?: [
+        {
+            locationId: number,
+            type: string,
+            name: string,
+            englishName: string,
+            city: string,
+            country: string,
+            coordinates: {
+                lat: number,
+                long: number
+            },
+            parentId: number,
+            viewport: {
+                swLat: number,
+                swLong: number,
+                neLat: number,
+                neLong: number
+            }
+        }
+    ],
+    durationList?: [
+        {
+            duration: number,
+            unit: string
+        }
+    ],
+    cancellationPolicyText?: string,
+    expiryDate?: Date
 }

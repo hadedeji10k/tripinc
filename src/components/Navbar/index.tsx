@@ -75,7 +75,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure you want to log out?",
-      // text: "You will be logged out from this session.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, log out!",
