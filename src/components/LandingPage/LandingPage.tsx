@@ -329,7 +329,7 @@ const LandingPage = () => {
           </p>
           <div className="explore_card_container">
             {topDeals?.map((item) => (
-              <div className="explore_card">
+              <div className="explore_card" key={item.id}>
                 <div className="explore_image_container">
                   <img
                     src={item.imageUrl}
