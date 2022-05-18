@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Spin, Switch, Alert } from "antd";
 import "./Signup.css";
+import "antd/dist/antd.css";
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
 import { Formik } from "formik";
@@ -29,8 +31,12 @@ const Signup = () => {
   };
 
   const onSubmit = async (data: ISignUp) => {
-    setIsLoading(true);
-    await checkIfEmailExists(data);
+    setIsLoading((prev) => !prev);
+    await checkIfEmailExists(data).then((res) => {
+      // setIsLoading(false);
+      setIsLoading((prev) => !prev);
+      window.location.href = "/#/basic-details";
+    });
   };
 
   const handleGoogleLogin = async (googleData: any) => {
@@ -57,7 +63,7 @@ const Signup = () => {
 
     localStorage.setItem("socialSignUpData", JSON.stringify(formData));
     setIsLoading(false);
-    window.location.href = "/social-basic-details";
+    window.location.href = "/#/social-basic-details";
     // remoteGoogleLogin(googleData)
     //   .then((response: any) => {
     //     console.log(response);
@@ -84,8 +90,7 @@ const Signup = () => {
 
   return (
     <>
-      {isLoading ? Swal.showLoading() : null}
-
+      {/* {isLoading ? Swal.showLoading() : null} */}
       <div className="signup_container">
         <div className="signup_word">
           <h1 className="signup_header">Sign up</h1>
@@ -182,11 +187,13 @@ const Signup = () => {
                     <p className="red_alert">{errors.email}</p>
                   ) : null}
                 </div>
-                <div className="signup_button_container">
-                  <button className="signup_button" type="submit">
-                    Create Profile
-                  </button>
-                </div>
+                <Spin spinning={isLoading}>
+                  <div className="signup_button_container">
+                    <button className="signup_button" type="submit">
+                      Create Profile
+                    </button>
+                  </div>
+                </Spin>
               </form>
               // End of signup form
             )}
@@ -196,7 +203,7 @@ const Signup = () => {
         <div className="have_account">
           <h3>
             Already have an account?{" "}
-            <a href="/sign-in" className="login_text">
+            <a href="/#/sign-in" className="login_text">
               Login
             </a>
           </h3>

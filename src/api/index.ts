@@ -65,8 +65,16 @@ export const getTopDeals = async (): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get('/api/Attractions/GetTopDeals');
 }
 
-export const getAllDeals = async (query: string): Promise<AxiosResponse<any>> => {
+export const getAllDeals = async (query?: string): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/Attractions?${query}`);
+}
+
+export const getAllCountries = async (): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get('/api/GeoCountries?PageSize=300');
+}
+
+export const getCities = async (query?: string): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/GeoCities?${query}`);
 }
 
 export const getAllCategories = async (): Promise<AxiosResponse<any>> => {

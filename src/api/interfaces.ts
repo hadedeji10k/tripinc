@@ -133,21 +133,29 @@ export interface ICategory {
     name: string
     updatedDate: string | null
 }
+export interface IFormattedCategory {
+    code: string | null
+    createdDate: string | null
+    updatedDate: string | null
+    id: number
+    title: string
+    stateOfClass: boolean,
+}
 
 export interface IDeal {
-    id?: number,
-    createdDate?: Date,
+    id: number,
+    createdDate: Date,
     updatedDate?: Date,
-    itemType?: string,
-    title?: string,
+    itemType: string,
+    title: string,
     postalCode?: string,
-    price?: number,
-    currency?: string,
-    location?: string,
-    city?: string,
-    country?: string,
-    longitude?: number,
-    latitude?: number,
+    price: number,
+    currency: string,
+    location: string,
+    city: string,
+    country: string,
+    longitude: number,
+    latitude: number,
     distance?: number,
     openingHour?: {
         ticks: number,
@@ -193,7 +201,7 @@ export interface IDeal {
     openingDaysList?: string[],
     availableDates?: Date[],
     typicalTimeSpent?: number,
-    description?: string,
+    description: string,
     averageRating?: number,
     numberOfRatings?: number,
     imageUrl?: string,
@@ -214,7 +222,7 @@ export interface IDeal {
             photoUrl: string
         }
     ],
-    categories?: [
+    categories: [
         {
             id: number,
             name: string,

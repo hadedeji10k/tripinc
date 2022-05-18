@@ -19,6 +19,7 @@ import SetBudget from "../components/SetBudget/SetBudget";
 import TripInterest from "../components/TripInterest/TripInterest";
 import MyTrip from "../components/MyTripPage/MyTrip";
 import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
+import ExploreCategoryPage from "../components/ExploreCategory/ExploreCategoryPage";
 
 import AuthVerify from "../pages/AuthVerify";
 import MainLayout from "../pages";
@@ -38,6 +39,7 @@ const MainRoute: React.FC = () => {
           {/* <Route element={<AuthVerify />}> */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/explore/:catName" element={<ExploreCategoryPage />} />
           <Route path="/my-trips" element={<MyTrip />} />
           <Route path="/bucket-list" element={<BucketListPage />} />
           <Route path="/sign-up" element={<Signup />} />

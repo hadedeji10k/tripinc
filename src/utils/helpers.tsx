@@ -6,7 +6,14 @@ import {
 } from "../api/interfaces";
 import { refreshToken } from "../api/responseHandlers";
 import Swal from "sweetalert2";
-import { getUserByID, getUserProfilePictureByID } from "../api";
+import {
+  getAllCountries,
+  getCities,
+  getUserByID,
+  getUserProfilePictureByID,
+} from "../api";
+import { CitiesPageSize } from "./constants";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
 export const checkAuth = (): boolean => {
   let valid = false;
@@ -36,6 +43,64 @@ export const localLogoutProfile = () => {
   localStorage.removeItem("profile");
 };
 
+export const cities = async () => {
+  let cities = JSON.parse(localStorage.getItem("cities") as any);
+
+  if (!cities && !cities?.hasNext) {
+    console.log("cities not");
+    let query = `PageSize=${CitiesPageSize}`;
+    const citiesFetched = await getCities(query);
+    const countriesData = {
+      ...citiesFetched.data,
+      date: new Date(),
+    };
+    localStorage.setItem("cities", JSON.stringify(countriesData));
+    cities = JSON.parse(localStorage.getItem("cities") as any);
+    if (cities?.hasNext) {
+      // for (let i = 0; i < cities.totalPages.length; i++) {
+      //   const element = cities.totalPages[i];
+      //   await citiesHelper(element);
+      // }
+    }
+  }
+
+  if (cities?.hasNext) {
+    console.log("has next");
+
+    // for (let i = 0; i < cities.totalPages; i++) {
+    //   // await citiesHelper(cities);
+    // }
+  }
+};
+
+export const citiesHelper = async (citiesData: any) => {
+  console.log("reaching helper");
+  const query = `PageSize=${CitiesPageSize}&PageNumber=${
+    citiesData.currentPage + 1
+  }`;
+  const newCitiesFetched = await getCities(query);
+  let existingData = JSON.parse(localStorage.getItem("cities") as any);
+  const newCountriesData = {
+    ...newCitiesFetched.data,
+    date: new Date(),
+  };
+  newCountriesData.items = [...existingData.items, newCountriesData.items];
+  localStorage.setItem("cities", JSON.stringify(newCountriesData));
+};
+
+export const countries = async () => {
+  const countries = localStorage.getItem("countries");
+  if (!countries) {
+    const countriesFetched = await getAllCountries();
+    console.log("countries");
+    const countriesData = {
+      data: countriesFetched.data.items,
+      date: new Date(),
+    };
+    localStorage.setItem("countries", JSON.stringify(countriesData));
+  }
+};
+
 export const localLogout = () => {
   localStorage.removeItem("profile");
   Swal.fire({
@@ -45,7 +110,7 @@ export const localLogout = () => {
     confirmButtonText: "Ok",
   }).then((result) => {
     if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      window.location.href = "/sign-in";
+      window.location.href = "/#/sign-in";
     }
   });
 };
@@ -112,7 +177,7 @@ export const cannotRefreshAccessToken = () => {
     confirmButtonText: "Ok",
   }).then((result) => {
     if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      window.location.href = "/sign-in";
+      window.location.href = "/#/sign-in";
     }
   });
 };

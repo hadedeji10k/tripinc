@@ -6,3 +6,4 @@ export const userServiceUrl = "https://usersecurity.tripinc.co";
 export const onboardingServiceUrl = "https://onboarding.tripinc.co";
 export const GoogleLoginClientId = "889082544764-3krlffvkl28vom2efda98r5m4vm3scsd.apps.googleusercontent.com";
 export const GoogleProviderKey = "Em-vDxa3hunSvByFWyUocmYX";
+export const CitiesPageSize = 100

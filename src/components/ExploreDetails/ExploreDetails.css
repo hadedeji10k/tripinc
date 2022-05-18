@@ -11,6 +11,25 @@
     align-content: center;
 }
 
+.explore_details_image_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+}
+
+.explore_details_image {
+    width: 90%;
+    height: 100%;
+}
+
+.explore_image {
+    width: 100%;
+    height: 100%;
+}
+
 .details_container {
     display: flex;
     flex-direction: column;
@@ -33,7 +52,7 @@
     flex-wrap: wrap;
 }
 
-.heart {
+.explore_heart {
     width: 2rem;
     height: 2rem;
     margin: 0.5rem;
@@ -73,7 +92,8 @@
     margin-bottom: 10px;
 }
 
-.description p button, .review_card_details_name button {
+.description p button,
+.review_card_details_name button {
     padding: 5px;
     color: #172e68;
     outline: none;
@@ -83,7 +103,8 @@
     transition: all 0.3s ease-in-out;
 }
 
-.description p button:hover, .review_card_details_name button:hover {
+.description p button:hover,
+.review_card_details_name button:hover {
     background-color: #172e68;
     color: #fff;
     transition: all 0.3s ease-in-out;
@@ -222,7 +243,7 @@
     outline: none;
     /* border: 2px solid #ccc; */
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     width: 170px;
     height: 48px;
     background: #92A5EF;
@@ -235,10 +256,10 @@
 .explore_detail_button:hover {
     background: #2b44a8;
     color: #FCFCFD;
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
 }
 
-@media screen and  (max-width: 750px) {
+@media screen and (max-width: 750px) {
     .explore_container {
         display: flex;
         flex-direction: column;
@@ -247,47 +268,57 @@
         align-content: center; */
         width: 90%;
     }
+
     .explore_container_review {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
 }
-@media screen and  (max-width: 650px) {
+
+@media screen and (max-width: 650px) {
     .description {
         width: 80%;
     }
 }
-@media screen and  (max-width: 550px) {
+
+@media screen and (max-width: 550px) {
     .location_image {
         width: 95%;
         height: 95%;
-    }  
+    }
+
     .review_card_details_review {
         font-size: 13px;
-    } 
+    }
+
     .review_card_image {
         margin-right: 20px;
     }
+
     .review_card_details_name_time {
         font-size: 10px;
     }
+
     .review_card_details_name_title {
         font-size: 15px;
     }
+
     .review_card_details_name_rating {
         font-size: 10px;
     }
-    
+
 }
 
-@media screen and  (max-width: 405px) {
+@media screen and (max-width: 405px) {
     .review_card_details_name_time {
         font-size: 9px;
     }
+
     .review_card_details_name_title {
         font-size: 12px;
     }
+
     .review_card_details_name_rating {
         font-size: 10px;
     }

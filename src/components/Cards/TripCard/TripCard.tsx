@@ -19,7 +19,7 @@ const Card = ({ image, title, description, price, reviews, liked }) => {
     <>
       <div className="card_container">
         <div className="trip_card_image_container">
-          <img className="image" src={image.toString()} alt="" />
+          <img className="image" src={image?.toString()} alt={title} />
         </div>
         <div className="card_details">
           <p className="card_title">{title}</p>

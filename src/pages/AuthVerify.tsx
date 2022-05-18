@@ -1,7 +1,18 @@
+import { useEffect } from "react";
 import { refreshToken } from "../api/responseHandlers";
-import { checkAuthForRefresh, localLogout } from "../utils/helpers";
+import {
+  checkAuthForRefresh,
+  cities,
+  countries,
+  localLogout,
+} from "../utils/helpers";
 
 const AuthVerify = ({ children }: { children: any }) => {
+  useEffect(() => {
+    cities();
+    countries();
+  });
+
   // check for token authentication
   const data = checkAuthForRefresh();
 

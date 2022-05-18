@@ -269,14 +269,16 @@ const BucketListPage = () => {
         {attractionData.length > 0 ? (
           <div className="card">
             {attractionData.map((item) => (
-              <Card
-                image={item.image}
-                title={item.title}
-                description={item.description}
-                price={item.price}
-                reviews={item.reviews}
-                liked={item.liked}
-              />
+              <div key={item.id}>
+                <Card
+                  image={item.image}
+                  title={item.title}
+                  description={item.description}
+                  price={item.price}
+                  reviews={item.reviews}
+                  liked={item.liked}
+                />
+              </div>
             ))}
           </div>
         ) : (

@@ -102,7 +102,10 @@ const LandingPage = () => {
     element.scrollLeft -= 70;
   };
 
-  const handleCategoryClick = (e: any) => {};
+  const handleCategoryClick = (e: any) => {
+    console.log(e);
+    // window.location.href = "";
+  };
 
   // function to handle the search button click
   const handleCountryClick = (e: any) => {
@@ -151,15 +154,6 @@ const LandingPage = () => {
       // setCityFilteredData([...newFilter]);
       setCityFilteredData((prev) => [...newFilter]);
     }
-  };
-
-  const handleCat = () => {
-    getTopDeals().then((res) => {
-      console.log(res.data);
-    });
-    getAllCategories().then((res) => {
-      console.log(res.data);
-    });
   };
 
   return (
@@ -314,9 +308,9 @@ const LandingPage = () => {
                 inbox.{" "}
               </p>
               <br />
-              <button className="button">
-                <a href="/sign-up">Try Beta </a>
-              </button>
+              <a href="/#/sign-up">
+                <button className="button">Try Beta</button>
+              </a>
             </div>
           </div>
         </div>
@@ -360,9 +354,9 @@ const LandingPage = () => {
               <p className="explore_card_location">London, United Kingdom</p>
             </div> */}
           </div>
-          <button className="button" onClick={handleCat}>
-            <a href="/explore">Explore more!</a>
-          </button>
+          <a href="/#/explore">
+            <button className="button">Explore more!</button>
+          </a>
         </div>
 
         {/* find your next stop */}
@@ -374,16 +368,17 @@ const LandingPage = () => {
           <div id="category_tag_container" className="category_tag_container">
             {categoryData?.map((item) => (
               // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <div
-                key={item.id}
-                id={item.id.toString()}
-                className="category_clicked"
-                onClick={handleCategoryClick}
-              >
-                {/* <p className="category_symbol">{item.symbol}</p> */}
-                <p className="category_title">{item.name}</p>
-                {/* <p className="number_of_cat_list">20+</p> */}
-              </div>
+              <a href={`/#/explore/${item.name}`} key={item.id}>
+                <div
+                  id={item.id.toString()}
+                  className="category_clicked"
+                  onClick={handleCategoryClick}
+                >
+                  {/* <p className="category_symbol">{item.symbol}</p> */}
+                  <p className="category_title">{item.name}</p>
+                  {/* <p className="number_of_cat_list">20+</p> */}
+                </div>
+              </a>
             ))}
           </div>
 

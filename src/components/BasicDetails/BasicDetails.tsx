@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { Spin } from "antd";
+import "antd/dist/antd.css";
 import axios from "axios";
 import { ISignUpFull } from "../../api/interfaces";
 import { AuthContext } from "../../stores/Auth";
 
-import { countryData } from "../../currentUserData";
+// import { countryData } from "../../currentUserData";
 
 // import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import SecurityCodeModal from "../SecurityCodeModal/SecurityCodeModal";
@@ -14,6 +16,7 @@ import { noSignUpData, signUp } from "../../api/responseHandlers";
 
 import "./BasicDetails.css";
 import Swal from "sweetalert2";
+import { getAllCountries, getCities } from "../../api";
 
 const BasicDetails: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -23,14 +26,17 @@ const BasicDetails: React.FC = () => {
   const [signUpData, setSignUpData] = useState({} as any);
 
   // country states
+  const [countries, setCountries] = useState<any>([]);
   const [countryFilteredData, setCountryFilteredData] = useState<any>([]);
-
   const [country, setCountry] = useState("");
   const [countryError, setCountryError] = useState("");
 
-  // city states
-  const [cityFilteredData, setCityFilteredData] = useState<any>([]);
+  // country code
+  const [countryCode, setCountryCode] = useState("");
 
+  // city states
+  const [cities, setCities] = useState<any>([]);
+  const [cityFilteredData, setCityFilteredData] = useState<any>([]);
   const [city, setCity] = useState("");
   const [cityError, setCityError] = useState("");
 
@@ -50,6 +56,36 @@ const BasicDetails: React.FC = () => {
     setIP(res.data.IPv4);
   };
 
+  // to fetch all countries
+  useEffect(() => {
+    const localStorageCountries = JSON.parse(
+      localStorage.getItem("countries") as any
+    );
+    if (localStorageCountries.data.length > 0) {
+      setCountries(localStorageCountries.data);
+    } else {
+      getAllCountries().then((res) => {
+        setCountries(res.data.items);
+      });
+    }
+  }, []);
+
+  // to fetch all cities
+  useEffect(() => {
+    const localStorageCities = JSON.parse(
+      localStorage.getItem("cities") as any
+    );
+    if (localStorageCities?.items.length > 0) {
+      setCities(localStorageCities.items);
+    } else {
+      const query = `CountryCode=${countryCode}`;
+      getCities(query).then((res) => {
+        console.log(res.data);
+        setCities(res.data.items);
+      });
+    }
+  }, [countryCode]);
+
   useEffect(() => {
     // get previous data of sign up from localstorage
     const sign_up_data = JSON.parse(localStorage.getItem("signUpData") as any);
@@ -66,13 +102,11 @@ const BasicDetails: React.FC = () => {
   useEffect(() => {
     setCountry(countryInputElement?.value);
     setCity(cityInputElement?.value);
-    // console.log("reached");
-    console.log(country);
 
-    const isCountry = countryData.filter((item) => {
-      return item.name.toLowerCase() === country?.toLowerCase();
+    const isCountry = countries.filter((item) => {
+      return item.countryName.toLowerCase() === country?.toLowerCase();
     });
-    console.log(isCountry);
+
     let elementToDisabled = cityInputElement?.disabled;
     if (isCountry.length > 0) {
       setCountryError("");
@@ -82,7 +116,7 @@ const BasicDetails: React.FC = () => {
     }
 
     return () => {};
-  }, [countryInputElement, cityInputElement, country]);
+  }, [countryInputElement, cityInputElement, country, countries]);
 
   const initialValues = {
     phoneNumber: "",
@@ -129,7 +163,6 @@ const BasicDetails: React.FC = () => {
 
     switch (e.target.id) {
       case "country_mapped":
-        // setCountryFilteredData([]);
         setCountry(value);
         countryInputElement.value = value;
 
@@ -141,18 +174,20 @@ const BasicDetails: React.FC = () => {
         setCountryError("");
         cityInputElement.disabled = false;
 
-        const isCountry = countryData.filter((item) => {
-          return item.name.toLowerCase() === country?.toLowerCase();
+        const isCountry = countries.filter((item) => {
+          return item.countryName.toLowerCase() === value.toLowerCase();
         });
 
+        console.log(isCountry);
+
         if (isCountry.length > 0) {
+          setCountryCode(isCountry[0].isoCode);
           setCountryError("");
           cityInputElement.disabled = false;
         } else {
-          setCountryError("Please select a valid country");
+          // setCountryError("Please select a valid country");
           cityInputElement.disabled = true;
         }
-
         break;
       case "city_mapped":
         // setCountryFilteredData([]);
@@ -171,24 +206,29 @@ const BasicDetails: React.FC = () => {
 
   const handleCountryBlur = (e: any) => {
     e.preventDefault();
-    let value = e.target.value;
     switch (e.target.id) {
       case "country_input":
         setTimeout(() => {
+          let countryInputElement = document.getElementById(
+            "country_input"
+          ) as any;
           const dropDownElement = document.getElementById(
             "country_dropdown"
           ) as any;
           dropDownElement.style.display = "none";
 
-          const isCountry = countryData.filter((item) => {
-            return item.name.toLowerCase() === country?.toLowerCase();
+          const isCountry = countries.filter((item) => {
+            return (
+              item.countryName.toLowerCase() ===
+              countryInputElement.value.toLowerCase()
+            );
           });
 
           if (isCountry.length > 0) {
             setCountryError("");
             cityInputElement.disabled = false;
           } else {
-            setCountryError("Please select a valid country");
+            // setCountryError("Please select a valid country");
             cityInputElement.disabled = true;
           }
         }, 200);
@@ -223,8 +263,10 @@ const BasicDetails: React.FC = () => {
         ) {
           setCountryFilteredData([]);
         } else {
-          const newFilter = countryData.filter((value) => {
-            return value.name.toLowerCase().includes(searchWord.toLowerCase());
+          const newFilter = countries.filter((value) => {
+            return value.countryName
+              .toLowerCase()
+              .includes(searchWord.toLowerCase());
           });
 
           setCountryFilteredData(newFilter);
@@ -245,7 +287,8 @@ const BasicDetails: React.FC = () => {
         ) {
           setCityFilteredData([]);
         } else {
-          const newFilter = countryData.filter((value) => {
+          const newFilter = cities.filter((value) => {
+            console.log(value.name);
             return value.name.toLowerCase().includes(searchWord.toLowerCase());
           });
 
@@ -256,112 +299,117 @@ const BasicDetails: React.FC = () => {
 
   return (
     <>
-      {isLoading ? Swal.showLoading() : null}
+      <Spin spinning={isLoading}>
+        <div className="basic_details_container">
+          <div className="basic_details_word">
+            <h1 className="basic_details_header">Basic Details</h1>
+            <h3 className="basic_details_title">It’s all in the details.</h3>
+          </div>
+          <div>
+            {/* Formik */}
+            <Formik
+              initialValues={initialValues}
+              validationSchema={BasicDetailsSchema}
+              onSubmit={(values) => {
+                onSubmit(values);
+              }}
+            >
+              {({
+                errors,
+                touched,
+                handleSubmit,
+                handleChange,
+                handleBlur,
+              }) => (
+                //  signup form
 
-      <div className="basic_details_container">
-        <div className="basic_details_word">
-          <h1 className="basic_details_header">Basic Details</h1>
-          <h3 className="basic_details_title">It’s all in the details.</h3>
-        </div>
-        <div>
-          {/* Formik */}
-          <Formik
-            initialValues={initialValues}
-            validationSchema={BasicDetailsSchema}
-            onSubmit={(values) => {
-              onSubmit(values);
-            }}
-          >
-            {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
-              //  signup form
-
-              <form onSubmit={handleSubmit} autoComplete="none">
-                <div>
-                  <label className="basic_details_label">Phone Number</label>
-                  <input
-                    className="basic_details_input"
-                    type="text"
-                    placeholder="Phone Number"
-                    name="phoneNumber"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  {errors.phoneNumber && touched.phoneNumber ? (
-                    <p className="red_alert">{errors.phoneNumber}</p>
-                  ) : null}
-                </div>
-                <div>
-                  <div className="dropdown">
-                    <label className="basic_details_label">
-                      Country of Origin
-                    </label>
+                <form onSubmit={handleSubmit} autoComplete="none">
+                  <div>
+                    <label className="basic_details_label">Phone Number</label>
                     <input
-                      id="country_input"
                       className="basic_details_input"
                       type="text"
-                      placeholder="Select Country"
-                      name="countryOfOrigin"
-                      onChange={handleClick}
-                      defaultValue={country}
-                      onBlur={handleCountryBlur}
-                      onClick={handleClick}
+                      placeholder="Phone Number"
+                      name="phoneNumber"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
-                    {countryData.length > 0 && (
-                      <div className="dropdown-content" id="country_dropdown">
-                        {countryFilteredData.map((item) => (
-                          <p
-                            key={item.id}
-                            id="country_mapped"
-                            className="pop_up_data_item"
-                            onClick={handleCountryClick}
-                          >
-                            {item.name}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                    {countryError ? (
-                      <p className="red_alert">{countryError}</p>
+                    {errors.phoneNumber && touched.phoneNumber ? (
+                      <p className="red_alert">{errors.phoneNumber}</p>
                     ) : null}
                   </div>
-                </div>
-                <div>
-                  <div className="dropdown">
-                    <label className="basic_details_label">
-                      City of Origin
-                    </label>
-                    <input
-                      id="city_input"
-                      className="basic_details_input"
-                      type="text"
-                      placeholder="Select City"
-                      name="cityOfOrigin"
-                      onChange={handleClick}
-                      defaultValue={city}
-                      onBlur={handleCountryBlur}
-                      // onClick={handleClick}
-                      disabled={true}
-                    />
-                    {countryData.length > 0 && (
-                      <div className="dropdown-content" id="city_dropdown">
-                        {cityFilteredData.map((item) => (
-                          <p
-                            key={item.id}
-                            id="city_mapped"
-                            className="pop_up_data_item"
-                            onClick={handleCountryClick}
-                          >
-                            {item.name}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                    {cityError ? (
-                      <p className="red_alert">{cityError}</p>
-                    ) : null}
+                  <div>
+                    <div className="dropdown">
+                      <label className="basic_details_label">
+                        Country of Origin
+                      </label>
+                      <input
+                        id="country_input"
+                        className="basic_details_input"
+                        type="text"
+                        placeholder="Select Country"
+                        name="countryOfOrigin"
+                        onChange={handleClick}
+                        defaultValue={country}
+                        onBlur={handleCountryBlur}
+                        onClick={handleClick}
+                      />
+                      {countries.length > 0 && (
+                        <div className="dropdown-content" id="country_dropdown">
+                          {countryFilteredData.map((item) => (
+                            <p
+                              key={item.id}
+                              id="country_mapped"
+                              className="pop_up_data_item"
+                              onClick={handleCountryClick}
+                            >
+                              {item.countryName}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                      {countryError ? (
+                        <p className="red_alert">{countryError}</p>
+                      ) : null}
+                    </div>
                   </div>
-                </div>
-                {/* <div>
+                  <div>
+                    <div className="dropdown">
+                      <label className="basic_details_label">
+                        City of Origin
+                      </label>
+                      <input
+                        id="city_input"
+                        className="basic_details_input"
+                        type="text"
+                        placeholder="Select City"
+                        name="cityOfOrigin"
+                        onChange={handleClick}
+                        defaultValue={city}
+                        onBlur={handleCountryBlur}
+                        // onClick={handleClick}
+                        disabled={true}
+                      />
+                      {cities.length > 0 && (
+                        <div className="dropdown-content" id="city_dropdown">
+                          {cityFilteredData.map((item) => (
+                            <p
+                              key={item.id}
+                              id="city_mapped"
+                              className="pop_up_data_item"
+                              onClick={handleCountryClick}
+                            >
+                              {item.name}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                      {cityError ? (
+                        <p className="red_alert">{cityError}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                  {/* <div>
                 <label className="basic_details_label">City</label>
                 <select
                   name=""
@@ -384,7 +432,7 @@ const BasicDetails: React.FC = () => {
                   </option>
                 </select>
               </div> */}
-                {/* <div>
+                  {/* <div>
                 <label className="basic_details_label">City of Origin</label>
                 <input
                   id="city_input"
@@ -399,61 +447,67 @@ const BasicDetails: React.FC = () => {
                   <p className="red_alert">{errors.cityOfOrigin}</p>
                 ) : null}
               </div> */}
-                <div className="basic_details_line">
-                  <hr className="basic_details_or_line" />
-                </div>
-                <div>
-                  <label className="basic_details_label">Create Password</label>
-                  <input
-                    className="basic_details_input"
-                    type="password"
-                    placeholder="Enter your password"
-                    name="password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  {errors.password && touched.password ? (
-                    <p className="red_alert">{errors.password}</p>
-                  ) : null}
-                </div>
-                <div>
-                  <label className="basic_details_label">
-                    Confirm Password
-                  </label>
-                  <input
-                    className="basic_details_input"
-                    type="password"
-                    placeholder="Confirm your password"
-                    name="confirmPassword"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  {errors.confirmPassword && touched.confirmPassword ? (
-                    <p className="red_alert">{errors.confirmPassword}</p>
-                  ) : null}
-                </div>
-                <div className="basic_details_button_container">
-                  <button className="basic_details_button" type="submit">
-                    Next!
-                  </button>
-                </div>
-              </form>
+                  <div className="basic_details_line">
+                    <hr className="basic_details_or_line" />
+                  </div>
+                  <div>
+                    <label className="basic_details_label">
+                      Create Password
+                    </label>
+                    <input
+                      className="basic_details_input"
+                      type="password"
+                      placeholder="Enter your password"
+                      name="password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.password && touched.password ? (
+                      <p className="red_alert">{errors.password}</p>
+                    ) : null}
+                  </div>
+                  <div>
+                    <label className="basic_details_label">
+                      Confirm Password
+                    </label>
+                    <input
+                      className="basic_details_input"
+                      type="password"
+                      placeholder="Confirm your password"
+                      name="confirmPassword"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.confirmPassword && touched.confirmPassword ? (
+                      <p className="red_alert">{errors.confirmPassword}</p>
+                    ) : null}
+                  </div>
+                  <div className="basic_details_button_container">
+                    <button className="basic_details_button" type="submit">
+                      Next!
+                    </button>
+                  </div>
+                </form>
 
-              // End of signup form
-            )}
-          </Formik>
-          {/* End of Formik */}
+                // End of signup form
+              )}
+            </Formik>
+            {/* End of Formik */}
+          </div>
+          <SecurityCodeModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+          <div className="have_account">
+            <h3>
+              Already have an account?{" "}
+              <a href="/" className="login_text">
+                Login
+              </a>
+            </h3>
+          </div>
         </div>
-        <SecurityCodeModal showModal={showModal} setShowModal={setShowModal} />
-        <div className="have_account">
-          <h3>
-            Already have an account?{" "}
-            <a href="/" className="login_text">
-              Login
-            </a>
-          </h3>
-        </div>
-      </div>
+      </Spin>
     </>
   );
 };

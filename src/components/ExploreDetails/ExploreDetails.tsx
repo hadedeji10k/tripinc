@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import GoogleMapReact from "google-map-react";
 import "./ExploreDetails.css";
 import { FiFlag } from "react-icons/fi";
 import { GoStar } from "react-icons/go";
@@ -11,6 +12,9 @@ const ExploreDetails = () => {
   const [showCartModal, setShowCartModal] = useState<Boolean>(false);
   const [showDetails, setShowDetails] = useState(false);
   const [reviewsData, setReviewsData] = useState(getExplore.reviews);
+
+  // fetch attractiondata from remote or local storage
+  useEffect(() => {});
 
   const toggleShowCartModal = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,9 +50,20 @@ const ExploreDetails = () => {
     setReviewsData([...reviewsData]);
   };
 
+  const AnyReactComponent = ({ text, lat, lng }) => <div>{text}</div>;
+
   return (
     <>
       <div className="explore_details_container">
+        <div className="explore_details_image_container">
+          <div className="explore_details_image">
+            <img
+              className="explore_image"
+              src="http://test-tripservice.tripinc.co/Uploads/Attractions/2/801374f9-7b34-4506-906c-ed8f8c461420.jpg"
+              alt=""
+            />
+          </div>
+        </div>
         <div className="details_container">
           <div className="inner_container">
             <div className="title_container">
@@ -56,7 +71,7 @@ const ExploreDetails = () => {
             </div>
             <div>
               <p>
-                <BsSuitHeartFill className="heart" />
+                <BsSuitHeartFill className="explore_heart" />
               </p>
             </div>
           </div>
@@ -78,8 +93,6 @@ const ExploreDetails = () => {
             </div>
           </div>
         </div>
-        <div className="image_container"></div>
-
         <div className="description">
           <p>
             {showDetails
@@ -104,8 +117,25 @@ const ExploreDetails = () => {
 
         <div className="explore_container">
           <h3 className="sub_heading">Location</h3>
-          <div className="location_image">
-            <img src={image} alt="" className="location_image" />
+          <div
+            className="location_image"
+            style={{ height: "60vh", width: "100%" }}
+          >
+            {/* <img src={image} alt="" className="location_image" /> */}
+            <GoogleMapReact
+              // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+              defaultCenter={{
+                lat: 59.95,
+                lng: 30.33,
+              }}
+              defaultZoom={11}
+            >
+              <AnyReactComponent
+                lat={59.955413}
+                lng={30.337844}
+                text="My Marker"
+              />
+            </GoogleMapReact>
           </div>
         </div>
 

@@ -140,36 +140,48 @@ const PersonalInfoPage = ({ userProfile }: NavbarProps) => {
           Where you have been to before:
         </label>
         <div className="preferences_tag_container">
-          {userData?.placesBeenToData.map((item, index) => (
-            // <span key={item.id} className="preferences_tag">{item.title}</span>
-            <span key={index} className="places_been_to">
-              {item}
-            </span>
-          ))}
+          {userData?.placesBeenToData.length < 0 ? (
+            userData?.placesBeenToData.map((item, index) => (
+              // <span key={item.id} className="preferences_tag">{item.title}</span>
+              <span key={index} className="places_been_to">
+                {item}
+              </span>
+            ))
+          ) : (
+            <p>You have no places selected yet</p>
+          )}
         </div>
       </div>
 
       <div className="preferences_tab">
         <label className="preferences_label">Your bucket list(s):</label>
         <div className="preferences_tag_container">
-          {userData?.bucketList.map((item, index) => (
-            // <span key={item.id} className="preferences_tag">{item.title}</span>
-            <span key={index} className="places_been_to">
-              {item}
-            </span>
-          ))}
+          {userData?.bucketList.length < 0 ? (
+            userData?.bucketList.map((item, index) => (
+              // <span key={item.id} className="preferences_tag">{item.title}</span>
+              <span key={index} className="places_been_to">
+                {item}
+              </span>
+            ))
+          ) : (
+            <p>You have no bucket list selected yet</p>
+          )}
         </div>
       </div>
 
       <div className="preferences_tab">
         <label className="preferences_label">Your travel interests:</label>
         <div className="preferences_tag_container">
-          {userData?.preferenceData.map((item, index) => (
-            // <span key={item.id} className="preferences_tag">{item.title}</span>
-            <span key={index} className="preferences_clicked">
-              {item}
-            </span>
-          ))}
+          {userData?.preferenceData.length < 0 ? (
+            userData?.preferenceData.map((item, index) => (
+              // <span key={item.id} className="preferences_tag">{item.title}</span>
+              <span key={index} className="preferences_clicked">
+                {item}
+              </span>
+            ))
+          ) : (
+            <p>You have no interest selected yet</p>
+          )}
         </div>
       </div>
       <br />

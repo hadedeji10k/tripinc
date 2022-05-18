@@ -310,6 +310,10 @@ export const locationdata = [
   },
 ]
 
+// reviews = ratings
+// image = imageUrl
+// location_marker = longitude and latitude
+// cancellationPolicy = cancellationPolicyText
 export const attractiondata = [
   {
     id: 1,

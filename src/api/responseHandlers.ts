@@ -199,7 +199,7 @@ export const updateUser = async (formData: IUpdateProfile) => {
         confirmButtonText: "Ok",
       }).then((result) => {
         if (result.isConfirmed || result.isDenied || result.isDismissed) {
-          window.location.href = "/profile";
+          window.location.href = "/#/profile";
         }
       });
     }
@@ -371,7 +371,6 @@ export const checkIfEmailExists = async (formData: ISignUp) => {
 
     if (response.status === 200 && response.data.status === false) {
       localStorage.setItem("signUpData", JSON.stringify(formData));
-      window.location.href = "/basic-details";
     }
   } catch (error) {
     console.log(error);
@@ -386,7 +385,7 @@ export const noSignUpData = () => {
     confirmButtonText: "Ok",
   }).then((result) => {
     if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      window.location.href = "/sign-up";
+      window.location.href = "/#/sign-up";
     }
   });
 };
