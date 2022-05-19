@@ -16,8 +16,12 @@ import exploreImage3 from "../../images/img container (style)(2).png";
 import { countryData } from "../../currentUserData";
 
 import { getAllCategories, getTopDeals, refreshToken } from "../../api";
-import { refreshAccessToken, remoteGetUser } from "../../utils/helpers";
-import { ICategory, IDeal } from "../../api/interfaces";
+import {
+  refreshAccessToken,
+  remoteGetUser,
+  symbolHelper,
+} from "../../utils/helpers";
+import { IFormattedCategory, IDeal } from "../../api/interfaces";
 
 interface CountryProps {
   id: number;
@@ -31,7 +35,7 @@ interface CountryProps {
 
 const LandingPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
-  const [categoryData, setCategoryData] = useState<ICategory[]>();
+  const [categoryData, setCategoryData] = useState<IFormattedCategory[]>();
   const [topDeals, setTopDeals] = useState<IDeal[]>();
 
   const [city, setCity] = useState("");
@@ -45,7 +49,18 @@ const LandingPage = () => {
       setTopDeals(res.data);
     });
     getAllCategories().then((res) => {
-      setCategoryData(res.data);
+      const arrayTopush: any = [];
+      for (let i = 0; i < res.data.length; i++) {
+        const element = res.data[i];
+        const data = {
+          id: element.id,
+          title: element.name,
+          symbol: symbolHelper(element.name),
+          stateOfClass: false,
+        };
+        arrayTopush.push(data);
+      }
+      setCategoryData(arrayTopush);
     });
   }, []);
 
@@ -368,14 +383,14 @@ const LandingPage = () => {
           <div id="category_tag_container" className="category_tag_container">
             {categoryData?.map((item) => (
               // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <a href={`/#/explore/${item.name}`} key={item.id}>
+              <a href={`/#/explore/${item.title}`} key={item.id}>
                 <div
                   id={item.id.toString()}
                   className="category_clicked"
                   onClick={handleCategoryClick}
                 >
-                  {/* <p className="category_symbol">{item.symbol}</p> */}
-                  <p className="category_title">{item.name}</p>
+                  <p className="category_symbol">{item.symbol}</p>
+                  <p className="category_title">{item.title}</p>
                   {/* <p className="number_of_cat_list">20+</p> */}
                 </div>
               </a>

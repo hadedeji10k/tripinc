@@ -187,6 +187,38 @@ export const cannotRefreshAccessToken = () => {
 // })();
 
 // get user data
+export const symbolHelper = (name) => {
+  if (name.toLowerCase().includes("beach")) {
+    return "🏝";
+  } else if (name.toLowerCase().includes("adventure")) {
+    return "🎢";
+  } else if (name.toLowerCase().includes("arts")) {
+    return "🎨";
+  } else if (name.toLowerCase().includes("food")) {
+    return "🍹";
+  } else if (name.toLowerCase().includes("shopping")) {
+    return "🏝";
+  } else if (name.toLowerCase().includes("history")) {
+    return "🏛";
+  } else if (name.toLowerCase().includes("iconic")) {
+    return "⛩";
+  } else if (name.toLowerCase().includes("sporting")) {
+    return "⚽️";
+  } else if (name.toLowerCase().includes("wellness")) {
+    return "🏵";
+  } else if (name.toLowerCase().includes("outdoors")) {
+    return "🌲";
+  } else if (name.toLowerCase().includes("nightlife")) {
+    return "🎷";
+  } else if (name.toLowerCase().includes("tourist")) {
+    return "🗽";
+  } else if (name.toLowerCase().includes("film")) {
+    return "🎬";
+  } else {
+    return "";
+  }
+};
+
 export const localGetUser = () => {
   try {
     const user = JSON.parse(localStorage.getItem("profile") as any)?.user;

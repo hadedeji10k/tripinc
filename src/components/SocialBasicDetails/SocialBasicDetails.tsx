@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { IGoogleSignUp, IGoogleSignUpFull } from "../../api/interfaces";
+import { IGoogleSignUp } from "../../api/interfaces";
 
 // import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import SecurityCodeModal from "../SecurityCodeModal/SecurityCodeModal";
 import { Formik } from "formik";
 import { SocialBasicDetailsSchema } from "../../schema/yupSchema";
-import { googleSignUp, noSignUpData, signUp } from "../../api/responseHandlers";
+import { googleSignUp, noSignUpData } from "../../api/responseHandlers";
 
 import "./SocialBasicDetails.css";
 
@@ -18,7 +18,7 @@ const SocialBasicDetails: React.FC = () => {
     {} as any
   );
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   //creating function to load ip address from the geolocation api
   const getData = async () => {
@@ -73,10 +73,10 @@ const SocialBasicDetails: React.FC = () => {
 
   const [showModal, setShowModal] = useState<Boolean>(false);
 
-  const toggleShowModal = (): void => {
-    // e.preventDefault();
-    setShowModal(!showModal);
-  };
+  // const toggleShowModal = (): void => {
+  //   // e.preventDefault();
+  //   setShowModal(!showModal);
+  // };
 
   return (
     <div className="basic_details_container">

@@ -6,8 +6,8 @@ import "antd/dist/antd.css";
 import "./ExploreCategoryPage.css";
 import Card from "../Cards/TripCard/TripCard";
 
-import { getAllCategories, getAllDeals } from "../../api";
-import { ICategory, IDeal, IFormattedCategory } from "../../api/interfaces";
+import { getAllDeals } from "../../api";
+import { IDeal } from "../../api/interfaces";
 
 const ExploreCategoryPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,12 +23,15 @@ const ExploreCategoryPage = () => {
       setAttractionData(res.data.items);
       setIsLoading(false);
     });
-  }, []);
+  }, [catName]);
 
   return (
     <>
       <Spin spinning={isLoading}>
         <div className="explore_category_page_container">
+          <div className="explore_category_page_header">
+            <h1 className="explore_category_page_title">{catName}</h1>
+          </div>
           {/* <Card data={attractionData} /> */}
           {attractionData ? (
             attractionData.length > 0 ? (

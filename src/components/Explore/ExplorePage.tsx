@@ -10,6 +10,7 @@ import Card from "../Cards/TripCard/TripCard";
 import { BiSearch } from "react-icons/bi";
 import { getAllCategories, getAllDeals } from "../../api";
 import { ICategory, IDeal, IFormattedCategory } from "../../api/interfaces";
+import { symbolHelper } from "../../utils/helpers";
 
 const ExplorePage = () => {
   // Defining states of this page
@@ -42,6 +43,7 @@ const ExplorePage = () => {
         const data = {
           id: element.id,
           title: element.name,
+          symbol: symbolHelper(element.name),
           stateOfClass: false,
         };
         arrayTopush.push(data);
@@ -286,7 +288,7 @@ const ExplorePage = () => {
                 }
                 onClick={handlePreferencesClick}
               >
-                {item.title}
+                {item.symbol} {item.title}
               </span>
             ))}
           </div>

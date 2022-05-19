@@ -140,6 +140,7 @@ export interface IFormattedCategory {
     id: number
     title: string
     stateOfClass: boolean,
+    symbol?: string
 }
 
 export interface IDeal {
