@@ -383,7 +383,7 @@ const LandingPage = () => {
           <div id="category_tag_container" className="category_tag_container">
             {categoryData?.map((item) => (
               // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <a href={`/#/explore/${item.title}`} key={item.id}>
+              <a href={`/#/explore?catName=${item.title}`} key={item.id}>
                 <div
                   id={item.id.toString()}
                   className="category_clicked"

@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect } from "react";
+// import { useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import "antd/dist/antd.css";
 import "./ExplorePage.css";
@@ -12,7 +13,28 @@ import { getAllCategories, getAllDeals } from "../../api";
 import { ICategory, IDeal, IFormattedCategory } from "../../api/interfaces";
 import { symbolHelper } from "../../utils/helpers";
 
+// function useQuery() {
+//   const { search } = useLocation();
+
+//   return React.useMemo(() => new URLSearchParams(search), [search]);
+// }
+
+function containsEncodedComponents(x) {
+  // ie ?,=,&,/ etc
+  return decodeURIComponent(x);
+}
+
 const ExplorePage = () => {
+  // use query to get the search
+  // const query = useQuery();
+  // get the current search category name
+
+  // this is a temporary fix to the search params to filter the search query and get category name
+  // this is not quite ideal cos it might break sometimes
+  const url = new URL(document.URL);
+  const newQuery = containsEncodedComponents(url);
+  const catName = newQuery.split("=")[1];
+
   // Defining states of this page
   const [isLoading, setIsLoading] = useState(false);
   // state to manage preference data (to sort out clicked and unclicked preference)
@@ -29,15 +51,32 @@ const ExplorePage = () => {
   // state to manage the search result in the page
   const [inputField, setInputField] = useState("");
 
+  // useEffect to get the attraction data and category as preferenceData
   useEffect(() => {
     setIsLoading(true);
-    getAllDeals().then((res) => {
-      setAttractionData(res.data.items);
-      setInitialAttractionData(res.data.items);
-      setIsLoading(false);
-    });
+    // if cat name is not undefined get the attraction based on the category name
+    if (catName) {
+      const query = `Interests=${catName}`;
+      getAllDeals(query).then((res) => {
+        setAttractionData(res.data.items);
+      });
+      // also get the initial data in case the user unselect the category, it will filter to all
+      getAllDeals().then((res) => {
+        setInitialAttractionData(res.data.items);
+        setIsLoading(false);
+      });
+    } else {
+      // if cat name is undefined get all the attraction
+      getAllDeals().then((res) => {
+        setAttractionData(res.data.items);
+        setInitialAttractionData(res.data.items);
+        setIsLoading(false);
+      });
+    }
+    // get all categories as preferenceData
     getAllCategories().then((res) => {
       const arrayTopush: any = [];
+      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
       for (let i = 0; i < res.data.length; i++) {
         const element = res.data[i];
         const data = {
@@ -48,10 +87,17 @@ const ExplorePage = () => {
         };
         arrayTopush.push(data);
       }
+      // if there is catName, therefore, the state of the category is clicked
+      if (catName) {
+        const index = arrayTopush.findIndex((x) => x.title === catName);
+        arrayTopush[index].stateOfClass = true;
+      }
+      // set the preference data
       setPreferenceData(arrayTopush);
     });
-  }, []);
+  }, [catName]);
 
+  // useEffect to set preference data when the user click on the preference
   useEffect(() => {
     // select the preference tags clicked
     let preferences = preferenceData.filter(
@@ -80,6 +126,8 @@ const ExplorePage = () => {
   }, [preferenceData, inputField]);
 
   // useEffect to manage the prev and next buttons, it determines if there are preferences tags more than the screen width and hide them (the buttons) if there is no preferences tags more than the screen width
+
+  /* 
   useEffect(() => {
     let element = document.getElementById(
       "preferences_tag_container"
@@ -110,6 +158,7 @@ const ExplorePage = () => {
     ) as HTMLElement;
     element.scrollLeft -= 70;
   };
+  */
 
   // function to manage the preference button when it is clicked
   const handlePreferencesClick = (e: any) => {
@@ -133,7 +182,7 @@ const ExplorePage = () => {
     const clickedPreferences = preferenceData.filter(
       (item) => item.stateOfClass === true
     );
-    // console.log(clickedPreferences);
+
     let newData: any = [];
     let searchResultField1: string = "";
 
@@ -142,20 +191,26 @@ const ExplorePage = () => {
     for (let i = 0; i < clickedPreferences.length; i++) {
       const element = clickedPreferences[i];
       const catArray: any = [];
+      // loop through the initial attractions
       for (let index = 0; index < initialAttractionData.length; index++) {
+        // get one attraction
         const attraction = initialAttractionData[index];
+        // get the categories of the attraction
         const data = attraction?.categories.filter(
           (catItem) => catItem.name === element.title
         );
+        // if category selected matches any of the categories of the attraction, push the attraction id to the catArray
         if (data.length > 0) {
           catArray.push(attraction.id);
         }
       }
+      // loop through the catArray and filter the result with the attraction id
       for (let i = 0; i < catArray.length; i++) {
         const element = catArray[i];
         const filtered = initialAttractionData.filter(
           (item) => item.id === element
         );
+        // push the result into the preferences array
         preferences.push(filtered[0]);
       }
 
@@ -217,12 +272,6 @@ const ExplorePage = () => {
       item.stateOfClass = false;
     });
   };
-
-  // attractionData.map((item) => {
-  //     item.reviews?.map((item) => {
-  //         review += item.rating
-  //     })
-  // })
 
   return (
     <>
@@ -292,7 +341,7 @@ const ExplorePage = () => {
               </span>
             ))}
           </div>
-          <div className="scroll_button">
+          {/* <div className="scroll_button">
             <span
               id="prev"
               className="navigation_button"
@@ -307,7 +356,7 @@ const ExplorePage = () => {
             >
               Next
             </span>
-          </div>
+          </div> */}
           <div className="">
             <p>Search Result for: {searchResultField}</p>
           </div>
