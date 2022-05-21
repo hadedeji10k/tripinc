@@ -19,9 +19,29 @@ export interface IGetUserByID {
 }
 
 
+export interface IUpdateUserCurrency {
+    userId: string
+    preferedCurrency: string
+}
+
+export interface IUpdateUserTimeFormat {
+    userId: string
+    preferedTimeFormat: string
+}
+
+export interface IUpdateUserPassword {
+    userId: string
+    oldPassword: string
+    newPassword: string
+}
+
 export interface ISignUp {
     firstName: string
     lastName: string
+    email: string
+}
+
+export interface ISignUpNewsLetter {
     email: string
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Spin, Switch, Alert } from "antd";
+import { Spin } from "antd";
 import "./Signup.css";
 import "antd/dist/antd.css";
 import { FaFacebookF } from "react-icons/fa";

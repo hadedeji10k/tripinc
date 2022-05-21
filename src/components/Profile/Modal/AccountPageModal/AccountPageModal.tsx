@@ -4,12 +4,12 @@ import styled from "styled-components";
 import "./AccountPageModal.css";
 import { MdClose } from "react-icons/md";
 // user dummy data
-import { userData } from '../../../../currentUserData'
+import { userData } from "../../../../currentUserData";
 
 // interface for this Modal
 interface AccountPageModalProp {
-  showAccountPageModal: Boolean;
-  setShowAccountPageModal: React.Dispatch<React.SetStateAction<Boolean>>;
+  showAccountPageModal: boolean;
+  setShowAccountPageModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Styled component for background
@@ -28,7 +28,10 @@ const Background: any = styled.div`
 `;
 
 // Component for security Modal
-const AccountPageModal = ({ showAccountPageModal, setShowAccountPageModal }: AccountPageModalProp) => {
+const AccountPageModal = ({
+  showAccountPageModal,
+  setShowAccountPageModal,
+}: AccountPageModalProp) => {
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
@@ -70,9 +73,7 @@ const AccountPageModal = ({ showAccountPageModal, setShowAccountPageModal }: Acc
     };
   }, [keyPress]);
 
-  const handleContinue = (): void => {
-    
-  };
+  const handleContinue = (): void => {};
 
   // return the component
   return (
@@ -82,16 +83,24 @@ const AccountPageModal = ({ showAccountPageModal, setShowAccountPageModal }: Acc
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="modal" style={animation}>
             <div className="modal_wrapper">
-              <h3 className="profile_modal_header">Edit your Account details</h3>
+              <h3 className="profile_modal_header">
+                Edit your Account details
+              </h3>
 
               <div className="profile_details_container">
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">Preferred Currency</label>
-                    <select name="" id="" defaultValue={userData?.preferredCurrency}>
-                      <option value="">USD</option>  
-                      <option value="">NGN</option>  
-                      <option value="">ZAR</option>  
+                    <label className="personal_info_label">
+                      Preferred Currency
+                    </label>
+                    <select
+                      name=""
+                      id=""
+                      defaultValue={userData?.preferredCurrency}
+                    >
+                      <option value="">USD</option>
+                      <option value="">NGN</option>
+                      <option value="">ZAR</option>
                     </select>
                     {/* <input
                       className="personal_info_input"
@@ -103,8 +112,8 @@ const AccountPageModal = ({ showAccountPageModal, setShowAccountPageModal }: Acc
                   <div className="profile_details_item_row">
                     <label className="personal_info_label">Time Format</label>
                     <select name="" id="" defaultValue={userData?.timeFormat}>
-                      <option value="">12 hours</option>  
-                      <option value="">24 hours</option>  
+                      <option value="">12 hours</option>
+                      <option value="">24 hours</option>
                     </select>
                     {/* <input
                       className="personal_info_input"
@@ -116,7 +125,9 @@ const AccountPageModal = ({ showAccountPageModal, setShowAccountPageModal }: Acc
                 </div>
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">Current Password</label>
+                    <label className="personal_info_label">
+                      Current Password
+                    </label>
                     <input
                       className="personal_info_input"
                       type="password"
@@ -129,18 +140,20 @@ const AccountPageModal = ({ showAccountPageModal, setShowAccountPageModal }: Acc
                     <input
                       className="personal_info_input"
                       type="password"
-                      placeholder='Enter your new password'
+                      placeholder="Enter your new password"
                     />
                   </div>
                 </div>
-            
+
                 <div className="profile_details_item">
                   <div className="profile_details_item_row">
-                    <label className="personal_info_label">Confirm Password</label>
+                    <label className="personal_info_label">
+                      Confirm Password
+                    </label>
                     <input
                       className="personal_info_input"
                       type="password"
-                      placeholder='Confirm your new Password'
+                      placeholder="Confirm your new Password"
                     />
                   </div>
                 </div>

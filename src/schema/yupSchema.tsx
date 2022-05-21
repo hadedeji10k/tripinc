@@ -56,3 +56,25 @@ export const SocialBasicDetailsSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Last name is required"),
 });
+
+export const ProfileDetailsPreferenceSchema = Yup.object().shape({
+  preferedCurrency: Yup.string().required("Preferred currency is Required"),
+  preferedTimeFormat: Yup.string().required("Time format is Required"),
+});
+
+export const ProfileDetailsSchema = Yup.object().shape({
+  password: Yup.string().required("Old Password Required"),
+  newPassword: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password Required"),
+  confirmPassword: Yup.string()
+    .min(6, "Confirm password must be at least 6 characters")
+    .when("password", {
+      is: (val: any) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("newPassword")],
+        "Both password need to be the same"
+      ),
+    })
+    .required("Confirm Password is required"),
+});

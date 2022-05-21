@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Spin } from "antd";
+import "antd/dist/antd.css";
 import "./LandingPage.css";
 import { categorydata } from "../../currentUserData";
 import image from "../../images/illlustration-travel-agent.png";
@@ -22,6 +24,7 @@ import {
   symbolHelper,
 } from "../../utils/helpers";
 import { IFormattedCategory, IDeal } from "../../api/interfaces";
+import { signUpToNewsLetter } from "../../api/responseHandlers";
 
 interface CountryProps {
   id: number;
@@ -37,6 +40,10 @@ const LandingPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
   const [categoryData, setCategoryData] = useState<IFormattedCategory[]>();
   const [topDeals, setTopDeals] = useState<IDeal[]>();
+
+  // state for loading of newsletter
+  const [isNewsLetterLoading, setIsNewsLetterLoading] =
+    useState<boolean>(false);
 
   const [city, setCity] = useState("");
   const [cityFilteredData, setCityFilteredData] = useState<CountryProps[]>([]);
@@ -169,6 +176,21 @@ const LandingPage = () => {
       // setCityFilteredData([...newFilter]);
       setCityFilteredData((prev) => [...newFilter]);
     }
+  };
+
+  // function to handle newsletter subscription
+  const handleNewsletterSubmit = async () => {
+    setIsNewsLetterLoading(true);
+    const email = document.getElementById(
+      "newsletter-input"
+    ) as HTMLInputElement;
+    console.log(email.value);
+    const formData = {
+      email: email.value,
+    };
+    await signUpToNewsLetter(formData);
+    email.value = "";
+    setIsNewsLetterLoading(false);
   };
 
   return (
@@ -433,12 +455,17 @@ const LandingPage = () => {
                 minute
               </div>
               <input
+                id="newsletter-input"
                 type="text"
                 className="input"
                 placeholder="Enter your email address"
               />
               <br />
-              <button className="button">Submit</button>
+              <Spin spinning={isNewsLetterLoading}>
+                <button className="button" onClick={handleNewsletterSubmit}>
+                  Submit
+                </button>
+              </Spin>
             </div>
             <div className="early_birds_container_60">
               <div className="how_image_container">

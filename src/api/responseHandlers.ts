@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -224,6 +224,179 @@ export const updateUser = async (formData: IUpdateProfile) => {
     }
   } catch (error) {
     console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Updating profile was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
+
+export const signUpToNewsLetter = async (formData: ISignUpNewsLetter) => {
+  try {
+    const response = await api.signUpToNewsletter(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully sign up to our newsletter, we will send you updates",
+        icon: "success",
+        confirmButtonText: "Ok",
+      })
+      // .then((result) => {
+      //   if (result.isConfirmed || result.isDenied || result.isDismissed) {
+      //     window.location.href = "/";
+      //   }
+      // });
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Error signing up in the newsletter, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Error signing up in the newsletter. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Error signing up in the newsletter. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
+
+export const updateUserPassword = async (values, userId) => {
+  const { password, newPassword } = values;
+
+  const passwordData: IUpdateUserPassword = {
+    userId: userId,
+    oldPassword: password,
+    newPassword
+  };
+  console.log(passwordData)
+  try {
+    const response = await api.updateUserPassword(passwordData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully updated your profile",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/#/profile";
+        }
+      });
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      title: "Error!",
+      text: `Updating profile was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
+
+export const updateUserPreference = async (values, userId) => {
+  const { preferedTimeFormat, preferedCurrency } = values;
+  const timeFormData: IUpdateUserTimeFormat = {
+    userId: userId,
+    preferedTimeFormat,
+  };
+  const currencyFormData: IUpdateUserCurrency = {
+    userId: userId,
+    preferedCurrency,
+  };
+  try {
+    const response = await api.updateUserTimeFormat(timeFormData);
+    const response2 = await api.updateUserCurrency(currencyFormData);
+
+    if (response.status === 200 && response.data.status === true && response2.status === 200 && response2.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully updated your profile",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/#/profile";
+        }
+      });
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    if (response2.status === 200 && response2.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful, ${response2.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+    // if there is error
+    if (response2.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  } catch (error) {
     Swal.fire({
       title: "Error!",
       text: `Updating profile was not successful. Please try again later`,

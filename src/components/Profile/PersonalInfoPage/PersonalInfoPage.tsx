@@ -9,11 +9,11 @@ import ErrorMessageModal from "../../MessageModal/ErrorMessageModal/ErrorMessage
 import SuccessMessageModal from "../../MessageModal/SuccessMessageModal/SuccessMessageModal";
 import { IUserProfile } from "../../../api/interfaces";
 
-interface NavbarProps {
+interface PersonalInfoPageProps {
   userProfile: IUserProfile;
 }
 
-const PersonalInfoPage = ({ userProfile }: NavbarProps) => {
+const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
   // const [preferenceData, setPreferenceData] = useState(preferencedata)
 
   console.log(userProfile);

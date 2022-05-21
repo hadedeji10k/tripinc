@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -83,6 +83,31 @@ export const getAllCategories = async (): Promise<AxiosResponse<any>> => {
 
 export const getCategories = async (query: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/Categories/GetList?${query}`);
+}
+
+// get user preference
+export const getUserPreferences = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/UserPreferences/GetUserPreference/${userId}`);
+}
+
+// update user currency
+export const updateUserCurrency = async (formData: IUpdateUserCurrency): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/UserPreferences/UpdateUserCurrency`, formData);
+}
+
+// update user time format
+export const updateUserTimeFormat = async (formData: IUpdateUserTimeFormat): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/UserPreferences/UpdateUserTimeFormat`, formData);
+}
+
+// update user time format
+export const updateUserPassword = async (formData: IUpdateUserPassword): Promise<AxiosResponse<any>> => {
+    return await USERAPI.post(`/api/Auth/ChangePassword`, formData);
+}
+
+// signup to newsletter
+export const signUpToNewsletter = async (formData: ISignUpNewsLetter): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/NewsletterSubscriptions`, formData);
 }
 
 export const googleApiProfile = async (tokenId: any): Promise<AxiosResponse<any>> => {
