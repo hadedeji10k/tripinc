@@ -45,6 +45,10 @@ const ExplorePage = () => {
   const [initialAttractionData, setInitialAttractionData] = useState<IDeal[]>(
     []
   );
+  const [catExistingData, setCatExistingData] = useState<IDeal[]>([]);
+  const [preferenceExistingData, setPreferenceExistingData] = useState<IDeal[]>(
+    []
+  );
   const [attractionData, setAttractionData] = useState<IDeal[]>([]);
   // state to manage the search result data, so using this when user filter and it get it for the "Result for:" in the page
   const [searchResultField, setSearchResultField] = useState("All");
@@ -59,6 +63,7 @@ const ExplorePage = () => {
       const query = `Interests=${catName}`;
       getAllDeals(query).then((res) => {
         setAttractionData(res.data.items);
+        setCatExistingData(res.data.items);
       });
       // also get the initial data in case the user unselect the category, it will filter to all
       getAllDeals().then((res) => {
@@ -225,6 +230,7 @@ const ExplorePage = () => {
     // if the preference is not undefined, it should push the filtered data into a new array
     if (preferences.length >= 1 && preferences !== undefined) {
       setAttractionData(preferences);
+      setPreferenceExistingData(preferences);
     }
   };
 
@@ -238,18 +244,26 @@ const ExplorePage = () => {
     let data = attractionData.filter((item) =>
       item.location.toLowerCase().includes(input.value.toLowerCase())
     );
-    // if the data is not empty
-    if (data.length !== 0) {
-      // set the attractiondata to the new data filtered
-      setAttractionData(data);
-      // set the search result to the input value
-      // setSearchResultField("input.value");
-      // set all preferences to false so it won't be filtered
-      preferenceData.forEach((item) => {
-        item.stateOfClass = false;
-      });
+
+    if (input.value !== "") {
+      // if the data is not empty
+      if (data.length !== 0) {
+        console.log("here");
+        // set the attractiondata to the new data filtered
+        setAttractionData(data);
+        // set the search result to the input value
+        // setSearchResultField("input.value");
+        // set all preferences to false so it won't be filtered
+        // preferenceData.forEach((item) => {
+        //   item.stateOfClass = false;
+        // });
+      }
     } else {
-      setAttractionData([]);
+      if (catName) {
+        setAttractionData(catExistingData);
+      } else {
+        setAttractionData(preferenceExistingData);
+      }
     }
     setSearchResultField(input.value);
     // setAttractionData([...data]);
