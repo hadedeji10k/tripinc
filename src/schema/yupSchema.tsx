@@ -8,6 +8,10 @@ export const SignInSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
 });
 
+export const newsLetterSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email required"),
+});
+
 export const SignUpSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "Too Short!")

@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "antd/dist/antd.css";
 import "./LandingPage.css";
-import { categorydata } from "../../currentUserData";
+import { Formik } from "formik";
+
+import { newsLetterSchema } from "../../schema/yupSchema";
+
 import image from "../../images/illlustration-travel-agent.png";
 import image2 from "../../images/illlustration-bookings-oneplatform.png";
 import image3 from "../../images/illlustration-itenary-lifestyle.png";
@@ -179,18 +182,19 @@ const LandingPage = () => {
   };
 
   // function to handle newsletter subscription
-  const handleNewsletterSubmit = async () => {
+  const handleNewsletterSubmit = async (values: any) => {
     setIsNewsLetterLoading(true);
-    const email = document.getElementById(
-      "newsletter-input"
-    ) as HTMLInputElement;
-    console.log(email.value);
+    console.log(values);
+    const { email } = values;
     const formData = {
-      email: email.value,
+      email,
     };
     await signUpToNewsLetter(formData);
-    email.value = "";
     setIsNewsLetterLoading(false);
+  };
+
+  const initialValues = {
+    email: "",
   };
 
   return (
@@ -254,7 +258,7 @@ const LandingPage = () => {
           </p>
           <div className="landing_page_services_row_container">
             <div className="landing_page_services_row">
-              <div className="image_container">
+              <div className="image_container move-Y">
                 <img src={image} alt="" className="image" />
               </div>
               <div className="text">
@@ -262,7 +266,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="landing_page_services_row">
-              <div className="image_container">
+              <div className="image_container move-X">
                 <img src={image2} alt="" className="image" />
               </div>
               <div className="text">
@@ -270,7 +274,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="landing_page_services_row">
-              <div className="image_container">
+              <div className="image_container move-Z">
                 <img src={image3} alt="" className="image" />
               </div>
               <div className="text">
@@ -454,18 +458,50 @@ const LandingPage = () => {
                 <span className="number_tag_2">02</span>Make the most of every
                 minute
               </div>
-              <input
-                id="newsletter-input"
-                type="text"
-                className="input"
-                placeholder="Enter your email address"
-              />
-              <br />
-              <Spin spinning={isNewsLetterLoading}>
-                <button className="button" onClick={handleNewsletterSubmit}>
-                  Submit
-                </button>
-              </Spin>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={newsLetterSchema}
+                onSubmit={(values) => {
+                  handleNewsletterSubmit(values);
+                }}
+              >
+                {({
+                  errors,
+                  touched,
+                  handleSubmit,
+                  handleChange,
+                  handleBlur,
+                }) => (
+                  //  signin form
+
+                  <form
+                    onSubmit={handleSubmit}
+                    autoComplete="off"
+                    className="sign_in_form"
+                  >
+                    <input
+                      name="email"
+                      id="newsletter-input"
+                      type="email"
+                      className="input"
+                      placeholder="Enter your email address"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.email && touched.email ? (
+                      <p className="red_alert">{errors.email}</p>
+                    ) : null}
+
+                    <Spin spinning={isNewsLetterLoading}>
+                      <button className="button" type="submit">
+                        Submit
+                      </button>
+                    </Spin>
+                  </form>
+
+                  // End of signup form
+                )}
+              </Formik>
             </div>
             <div className="early_birds_container_60">
               <div className="how_image_container">
