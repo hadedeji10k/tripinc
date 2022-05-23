@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 // import { useLocation } from "react-router-dom";
 import { Spin } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./ExplorePage.css";
 // import { preferencedata, attractiondata } from "../../currentUserData";
 // import { attraction } from "../../interfaces";
@@ -10,7 +10,7 @@ import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
 import { getAllCategories, getAllDeals } from "../../api";
-import { ICategory, IDeal, IFormattedCategory } from "../../api/interfaces";
+import { IDeal, IFormattedCategory } from "../../api/interfaces";
 import { symbolHelper } from "../../utils/helpers";
 
 // function useQuery() {
@@ -128,7 +128,7 @@ const ExplorePage = () => {
     }
 
     return () => {};
-  }, [preferenceData, inputField]);
+  }, [preferenceData, inputField, initialAttractionData]);
 
   // useEffect to manage the prev and next buttons, it determines if there are preferences tags more than the screen width and hide them (the buttons) if there is no preferences tags more than the screen width
 
@@ -188,7 +188,7 @@ const ExplorePage = () => {
       (item) => item.stateOfClass === true
     );
 
-    let newData: any = [];
+    // let newData: any = [];
     let searchResultField1: string = "";
 
     // loop through all clicked preferences and filter the attraction data to the clicked preferences

@@ -3,7 +3,7 @@ import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./AddPlaceOfStay.css";
 import { MdClose } from "react-icons/md";
-import { FaFacebookF } from "react-icons/fa";
+// import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
 
 // interface for AddPlaceOfStay

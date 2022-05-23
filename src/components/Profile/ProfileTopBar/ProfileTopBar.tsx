@@ -1,6 +1,6 @@
 import React from "react";
 import "./ProfileTopBar.css";
-import image from "../../../images/profile.png";
+// import image from "../../../images/profile.png";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IUserProfile } from "../../../api/interfaces";
 import defaultImage from "../../../images/default_profile_image.jpg";

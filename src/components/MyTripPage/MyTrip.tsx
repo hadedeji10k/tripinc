@@ -48,7 +48,7 @@ const MyTrip = () => {
       let newData = attractiondata.filter((item) => item.location === "Lonn");
       setAttractionData(newData);
     }
-  }, [currentData]);
+  }, [currentData, menuData]);
 
   // function to manage the trip button when it is clicked (for select)
   const handleLocationsClickSelect = (e: any) => {

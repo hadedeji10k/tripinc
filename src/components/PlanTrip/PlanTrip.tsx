@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./PlanTrip.css";
-import { locationdata, attractiondata } from "../../currentUserData";
+// import { locationdata, attractiondata } from "../../currentUserData";
 
 const tripTypedata = [
   {
@@ -77,9 +77,9 @@ const BasicDetails: React.FC = () => {
     if (tripType === "Family") {
       // family_number
       familyDiv.style.display = "block";
-      let familyInput = document.getElementById(
-        "family_input"
-      ) as HTMLInputElement;
+      // let familyInput = document.getElementById(
+      //   "family_input"
+      // ) as HTMLInputElement;
     } else {
       familyDiv.style.display = "none";
     }

@@ -13,7 +13,6 @@ import {
   getUserProfilePictureByID,
 } from "../api";
 import { CitiesPageSize } from "./constants";
-import { AiOutlineConsoleSql } from "react-icons/ai";
 
 export const checkAuth = (): boolean => {
   let valid = false;
@@ -110,7 +109,7 @@ export const localLogout = () => {
     confirmButtonText: "Ok",
   }).then((result) => {
     if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      window.location.href = "/#/sign-in";
+      window.location.href = "/";
     }
   });
 };
@@ -129,7 +128,7 @@ export const checkAuthForRefresh = () => {
     const expired = new Date(decoded?.exp * 1000);
     const expires = new Date(decoded?.exp * 1000).getTime();
     const maxRefToken = new Date(expires + 1000 * 60 * 15);
-    const timeFromExpires = new Date(expires - 1000 * 60 * 2);
+    // const timeFromExpires = new Date(expires - 1000 * 60 * 2);
     let time = new Date();
     // let time = new Date(Date.now() - 1000 * 60 * 2);
     if (expired > time) {
@@ -177,7 +176,7 @@ export const cannotRefreshAccessToken = () => {
     confirmButtonText: "Ok",
   }).then((result) => {
     if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      window.location.href = "/#/sign-in";
+      window.location.href = "/";
     }
   });
 };

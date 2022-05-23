@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Spin } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./Signin.css";
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
@@ -10,7 +10,7 @@ import { ISignIn } from "../../api/interfaces";
 import { SignInSchema } from "../../schema/yupSchema";
 import { googleSignIn, signIn } from "../../api/responseHandlers";
 import { GoogleLogin } from "react-google-login";
-import { remoteGoogleLogin } from "../../api/responseHandlers";
+// import { remoteGoogleLogin } from "../../api/responseHandlers";
 import { GoogleLoginClientId } from "../../utils/constants";
 
 import { AuthContext } from "../../stores/Auth";
@@ -86,8 +86,8 @@ const Signin = () => {
 
   const handleGoogleLogin = (googleData: any) => {
     setIsLoading(true);
-    const profileObj = googleData.profileObj;
-    const tokenObj = googleData.tokenObj;
+    // const profileObj = googleData.profileObj;
+    // const tokenObj = googleData.tokenObj;
 
     const formData = {
       // email: profileObj.email,

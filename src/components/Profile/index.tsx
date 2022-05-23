@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Spin } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 // import AccountPage from './AccountPage'
 import PersonalInfoPage from "./PersonalInfoPage/PersonalInfoPage";
 import AccountPage from "./AccountPage/AccountPage";
@@ -72,7 +72,7 @@ const Profile = (): any => {
       setUserPreferenceData(res.data);
     });
     setIsLoading(false);
-  }, []);
+  }, [authContext.userId]);
 
   // // console.log();
   console.log(authContext.isLoggedIn ? "logged in" : "logged out");

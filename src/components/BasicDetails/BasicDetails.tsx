@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
 import { Spin } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import axios from "axios";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+
 import { ISignUpFull } from "../../api/interfaces";
 import { AuthContext } from "../../stores/Auth";
 
@@ -17,9 +19,12 @@ import { noSignUpData, signUp } from "../../api/responseHandlers";
 import "./BasicDetails.css";
 import Swal from "sweetalert2";
 import { getAllCountries, getCities } from "../../api";
+import Box from "@mui/material/Box";
 
 const BasicDetails: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [showModal, setShowModal] = useState<Boolean>(false);
 
   //creating IP state
   const [ip, setIP] = useState("");
@@ -27,7 +32,6 @@ const BasicDetails: React.FC = () => {
 
   // country states
   const [countries, setCountries] = useState<any>([]);
-  const [countryFilteredData, setCountryFilteredData] = useState<any>([]);
   const [country, setCountry] = useState("");
   const [countryError, setCountryError] = useState("");
 
@@ -36,19 +40,17 @@ const BasicDetails: React.FC = () => {
 
   // city states
   const [cities, setCities] = useState<any>([]);
-  const [cityFilteredData, setCityFilteredData] = useState<any>([]);
   const [city, setCity] = useState("");
-  const [cityError, setCityError] = useState("");
+  const [cityDisabled, setCityDisabled] = useState(true);
+  const [cityError, setCityError] = useState("Select country to enable cities");
 
   const authContext = useContext(AuthContext);
 
   // select country input
-  let countryInputElement = document.getElementById("country_input") as any;
-  let cityInputElement = document.getElementById(
-    "city_input"
-  ) as HTMLInputElement;
-
-  const navigate = useNavigate();
+  // let countryInputElement = document.getElementById("country_input") as any;
+  // let cityInputElement = document.getElementById(
+  //   "city_input"
+  // ) as HTMLInputElement;
 
   //creating function to load ip address from the geolocation api
   const getData = async () => {
@@ -84,10 +86,11 @@ const BasicDetails: React.FC = () => {
         setCities(res.data.items);
       });
     }
-  }, [countryCode]);
+    console.log(cities);
+  }, [countryCode, cities]);
 
   useEffect(() => {
-    // get previous data of sign up from localstorage
+    // get previous data of sign up from localStorage
     const sign_up_data = JSON.parse(localStorage.getItem("signUpData") as any);
     // if no data prompt back to sign up page
     if (sign_up_data === undefined || sign_up_data === null) {
@@ -99,35 +102,27 @@ const BasicDetails: React.FC = () => {
     setSignUpData(sign_up_data);
   }, []);
 
-  useEffect(() => {
-    setCountry(countryInputElement?.value);
-    setCity(cityInputElement?.value);
-
-    const isCountry = countries.filter((item) => {
-      return item.countryName.toLowerCase() === country?.toLowerCase();
-    });
-
-    let elementToDisabled = cityInputElement?.disabled;
-    if (isCountry.length > 0) {
-      setCountryError("");
-      elementToDisabled = false;
-    } else {
-      elementToDisabled = true;
-    }
-
-    return () => {};
-  }, [countryInputElement, cityInputElement, country, countries]);
-
   const initialValues = {
     phoneNumber: "",
-    // countryOfOrigin: "",
-    // cityOfOrigin: "",
+    countryOfOrigin: "",
+    cityOfOrigin: "",
     password: "",
     confirmPassword: "",
   };
 
   const onSubmit = (data: any) => {
     setIsLoading(true);
+
+    if (!country || !city) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error, please make sure you select country and city.",
+        showConfirmButton: false,
+      });
+      setIsLoading(false);
+      return;
+    }
 
     const formData: ISignUpFull = {
       firstName: signUpData?.firstName,
@@ -142,7 +137,6 @@ const BasicDetails: React.FC = () => {
     };
 
     // send data to backend
-    // console.log(formData);
     signUp(formData).then((res) => {
       authContext.login();
       authContext.setUserId(res.userId);
@@ -150,151 +144,28 @@ const BasicDetails: React.FC = () => {
     setIsLoading(false);
   };
 
-  const [showModal, setShowModal] = useState<Boolean>(false);
-
-  const toggleShowModal = (e: React.FormEvent): void => {
-    e.preventDefault();
-    setShowModal(!showModal);
-  };
-
-  const handleCountryClick = (e: any) => {
-    e.preventDefault();
-    let value = e.target.innerHTML;
-
-    switch (e.target.id) {
-      case "country_mapped":
-        setCountry(value);
-        countryInputElement.value = value;
-
-        const dropDownElement = document.getElementById(
-          "country_dropdown"
-        ) as any;
-        dropDownElement.style.display = "none";
-
-        setCountryError("");
-        cityInputElement.disabled = false;
-
-        const isCountry = countries.filter((item) => {
-          return item.countryName.toLowerCase() === value.toLowerCase();
-        });
-
-        console.log(isCountry);
-
-        if (isCountry.length > 0) {
-          setCountryCode(isCountry[0].isoCode);
-          setCountryError("");
-          cityInputElement.disabled = false;
-        } else {
-          // setCountryError("Please select a valid country");
-          cityInputElement.disabled = true;
-        }
-        break;
-      case "city_mapped":
-        // setCountryFilteredData([]);
-        setCity(value);
-        cityInputElement.value = value;
-
-        const cityDropDownElement = document.getElementById(
-          "city_dropdown"
-        ) as any;
-        cityDropDownElement.style.display = "none";
-
-        setCityError("");
-        break;
-    }
-  };
-
-  const handleCountryBlur = (e: any) => {
-    e.preventDefault();
-    switch (e.target.id) {
-      case "country_input":
-        setTimeout(() => {
-          let countryInputElement = document.getElementById(
-            "country_input"
-          ) as any;
-          const dropDownElement = document.getElementById(
-            "country_dropdown"
-          ) as any;
-          dropDownElement.style.display = "none";
-
-          const isCountry = countries.filter((item) => {
-            return (
-              item.countryName.toLowerCase() ===
-              countryInputElement.value.toLowerCase()
-            );
-          });
-
-          if (isCountry.length > 0) {
-            setCountryError("");
-            cityInputElement.disabled = false;
-          } else {
-            // setCountryError("Please select a valid country");
-            cityInputElement.disabled = true;
-          }
-        }, 200);
-        break;
-      case "city_input":
-        setTimeout(() => {
-          const cityDropDownElement = document.getElementById(
-            "city_dropdown"
-          ) as any;
-          cityDropDownElement.style.display = "none";
-        }, 200);
-        break;
-    }
-  };
+  // const toggleShowModal = (e: React.FormEvent): void => {
+  //   e.preventDefault();
+  //   setShowModal(!showModal);
+  // };
 
   // function to handle country when changing
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    const searchWord = e.target.value;
-    switch (e.target.id) {
-      case "country_input":
-        setCountry(searchWord);
-        const dropDownElement = document.getElementById(
-          "country_dropdown"
-        ) as any;
-        dropDownElement.style.display = "block";
-
-        if (
-          searchWord === "" ||
-          searchWord === null ||
-          searchWord === undefined
-        ) {
-          setCountryFilteredData([]);
-        } else {
-          const newFilter = countries.filter((value) => {
-            return value.countryName
-              .toLowerCase()
-              .includes(searchWord.toLowerCase());
-          });
-
-          setCountryFilteredData(newFilter);
-        }
-        break;
-      case "city_input":
-        setCity(searchWord);
-        const cityDropDownElement = document.getElementById(
-          "city_dropdown"
-        ) as any;
-        cityDropDownElement.style.display = "block";
-        console.log("clicked");
-
-        if (
-          searchWord === "" ||
-          searchWord === null ||
-          searchWord === undefined
-        ) {
-          setCityFilteredData([]);
-        } else {
-          const newFilter = cities.filter((value) => {
-            console.log(value.name);
-            return value.name.toLowerCase().includes(searchWord.toLowerCase());
-          });
-
-          setCityFilteredData(newFilter);
-        }
+  const handleCountryClick = (e: any) => {
+    if (e) {
+      setCountry(e.countryName);
+      setCountryCode(e.isoCode);
+      setCountryError("");
+      setCityDisabled(false);
+      setCityError("");
     }
+    console.log(e);
+  };
+  const handleCityClick = (e: any) => {
+    if (e) {
+      setCity(e.countryName);
+      setCityError("");
+    }
+    console.log(e);
   };
 
   return (
@@ -327,10 +198,10 @@ const BasicDetails: React.FC = () => {
                   <div>
                     <label className="basic_details_label">Phone Number</label>
                     <input
+                      name="phoneNumber"
                       className="basic_details_input"
                       type="text"
                       placeholder="Phone Number"
-                      name="phoneNumber"
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -338,7 +209,7 @@ const BasicDetails: React.FC = () => {
                       <p className="red_alert">{errors.phoneNumber}</p>
                     ) : null}
                   </div>
-                  <div>
+                  {/* <div>
                     <div className="dropdown">
                       <label className="basic_details_label">
                         Country of Origin
@@ -372,8 +243,88 @@ const BasicDetails: React.FC = () => {
                         <p className="red_alert">{countryError}</p>
                       ) : null}
                     </div>
+                  </div> */}
+                  <div className="basic_details_country">
+                    <Autocomplete
+                      disabled={false}
+                      disablePortal
+                      disableClearable
+                      onChange={(event: any, newValue: string | null) => {
+                        event.preventDefault();
+                        handleCountryClick(newValue);
+                      }}
+                      options={countries}
+                      getOptionLabel={(option: any) => option.countryName}
+                      id="combo-box-demo"
+                      sx={{}}
+                      renderOption={(props, option) => (
+                        <Box
+                          component="li"
+                          sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                          {...props}
+                        >
+                          <img
+                            loading="lazy"
+                            width="20"
+                            src={`https://flagcdn.com/w20/${option.isoCode.toLowerCase()}.png`}
+                            srcSet={`https://flagcdn.com/w40/${option.isoCode.toLowerCase()}.png 2x`}
+                            alt=""
+                          />
+                          {option.countryName} ({option.isoCode})
+                        </Box>
+                      )}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Country" />
+                      )}
+                    />
+                    {countryError ? (
+                      <>
+                        <br />
+                        <p className="red_alert">{countryError}</p>
+                      </>
+                    ) : null}
                   </div>
-                  <div>
+                  <div className="basic_details_country">
+                    <Autocomplete
+                      disabled={cityDisabled}
+                      disablePortal
+                      disableClearable
+                      onChange={(event: any, newValue: string | null) => {
+                        event.preventDefault();
+                        handleCityClick(newValue);
+                      }}
+                      options={countries}
+                      getOptionLabel={(option: any) => option.countryName}
+                      id="combo-box-demo"
+                      sx={{}}
+                      renderOption={(props, option) => (
+                        <Box
+                          component="li"
+                          sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                          {...props}
+                        >
+                          <img
+                            loading="lazy"
+                            width="20"
+                            src={`https://flagcdn.com/w20/${option.isoCode.toLowerCase()}.png`}
+                            srcSet={`https://flagcdn.com/w40/${option.isoCode.toLowerCase()}.png 2x`}
+                            alt=""
+                          />
+                          {option.countryName} ({option.isoCode})
+                        </Box>
+                      )}
+                      renderInput={(params) => (
+                        <TextField {...params} label="City" />
+                      )}
+                    />
+                    {cityError ? (
+                      <>
+                        <br />
+                        <p className="red_alert">{cityError}</p>
+                      </>
+                    ) : null}
+                  </div>
+                  {/* <div>
                     <div className="dropdown">
                       <label className="basic_details_label">
                         City of Origin
@@ -408,7 +359,7 @@ const BasicDetails: React.FC = () => {
                         <p className="red_alert">{cityError}</p>
                       ) : null}
                     </div>
-                  </div>
+                  </div> */}
                   {/* <div>
                 <label className="basic_details_label">City</label>
                 <select

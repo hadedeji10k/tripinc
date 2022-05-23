@@ -23,7 +23,6 @@ import {
   NavBtnLinkLogout,
 } from "./NavbarElements";
 import { GoogleLoginClientId } from "../../utils/constants";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 // import logo from '../../logo.svg'
 
@@ -41,8 +40,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const [profilePicture, setProfilePicture] = useState("");
 
   const authContext = useContext(AuthContext);
-
-  const navigate = useNavigate();
 
   console.log(authContext.isLoggedIn ? "logged in" : "logged out");
   // console.log(authContext.userId);

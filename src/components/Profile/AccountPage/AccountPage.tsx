@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { Spin, Switch } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./AccountPage.css";
 import { Formik } from "formik";
-import {
-  ISignIn,
-  IUpdateUserCurrency,
-  IUpdateUserTimeFormat,
-} from "../../../api/interfaces";
 import {
   ProfileDetailsPreferenceSchema,
   ProfileDetailsSchema,
@@ -31,10 +26,10 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
   const [showPasswordEdit, setShowPasswordEdit] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const toggleShowAccountModal = (e: React.FormEvent): void => {
-    e.preventDefault();
-    setShowAccountPageModal(!showAccountPageModal);
-  };
+  // const toggleShowAccountModal = (e: React.FormEvent): void => {
+  //   e.preventDefault();
+  //   setShowAccountPageModal(!showAccountPageModal);
+  // };
   const handlePasswordSubmit = async (values: any) => {
     // e.preventDefault();
     setIsLoading(true);

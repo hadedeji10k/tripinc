@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Spin } from "antd";
 import "./Signup.css";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
 import { Formik } from "formik";
 import { SignUpSchema } from "../../schema/yupSchema";
 import { checkIfEmailExists } from "../../api/responseHandlers";
-import { checkAuth } from "../../utils/helpers";
+// import { checkAuth } from "../../utils/helpers";
 import { IGoogleSignUp, ISignUp } from "../../api/interfaces";
 import { GoogleLogin } from "react-google-login";
-import { remoteGoogleLogin } from "../../api/responseHandlers";
+// import { remoteGoogleLogin } from "../../api/responseHandlers";
 import { GoogleLoginClientId } from "../../utils/constants";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { googleApiProfile } from "../../api";
 
 const Signup = () => {
@@ -21,8 +20,6 @@ const Signup = () => {
 
   const [remoteError, setRemoteError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const navigate = useNavigate();
 
   const initialValues = {
     firstName: "",

@@ -5,8 +5,8 @@ import PreferencesModal from "../Modal/PreferencesModal/PreferencesModal";
 import { userData } from "../../../currentUserData";
 
 // testing
-import ErrorMessageModal from "../../MessageModal/ErrorMessageModal/ErrorMessageModal";
-import SuccessMessageModal from "../../MessageModal/SuccessMessageModal/SuccessMessageModal";
+// import ErrorMessageModal from "../../MessageModal/ErrorMessageModal/ErrorMessageModal";
+// import SuccessMessageModal from "../../MessageModal/SuccessMessageModal/SuccessMessageModal";
 import { IUserProfile } from "../../../api/interfaces";
 
 interface PersonalInfoPageProps {
@@ -28,14 +28,14 @@ const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
   const [showSuccessMessageModal, setShowSuccessMessageModal] =
     useState<Boolean>(false);
 
-  const toggleShowErrorMessageModal = (e: React.FormEvent): void => {
-    e.preventDefault();
-    setShowErrorMessageModal(!showErrorMessageModal);
-  };
-  const toggleShowSuccessMessageModal = (e: React.FormEvent): void => {
-    e.preventDefault();
-    setShowSuccessMessageModal(!showSuccessMessageModal);
-  };
+  // const toggleShowErrorMessageModal = (e: React.FormEvent): void => {
+  //   e.preventDefault();
+  //   setShowErrorMessageModal(!showErrorMessageModal);
+  // };
+  // const toggleShowSuccessMessageModal = (e: React.FormEvent): void => {
+  //   e.preventDefault();
+  //   setShowSuccessMessageModal(!showSuccessMessageModal);
+  // };
 
   const toggleShowProfileModal = (e: React.FormEvent): void => {
     e.preventDefault();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Footer.css";
 import { Spin } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { Formik } from "formik";
 import { BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
 import { signUpToNewsLetter } from "../../api/responseHandlers";

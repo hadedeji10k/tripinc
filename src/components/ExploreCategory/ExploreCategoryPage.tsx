@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Spin } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./ExploreCategoryPage.css";
 import Card from "../Cards/TripCard/TripCard";
 

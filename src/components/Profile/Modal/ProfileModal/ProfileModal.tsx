@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "./ProfileModal.css";
 import { MdClose } from "react-icons/md";
 // user dummy data
-import { userData } from "../../../../currentUserData";
+// import { userData } from "../../../../currentUserData";
 import { IUserProfile, IUpdateProfile } from "../../../../api/interfaces";
 import { updateUser } from "../../../../api/responseHandlers";
 import Swal from "sweetalert2";
@@ -80,7 +80,7 @@ const ProfileModal = ({
     };
   }, [keyPress]);
 
-  const handleContinue = (): void => {};
+  // const handleContinue = (): void => {};
 
   const onClick = async (e: any) => {
     e.preventDefault();

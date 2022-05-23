@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Spin } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./LandingPage.css";
 import { Formik } from "formik";
 
@@ -10,22 +10,18 @@ import image from "../../images/illlustration-travel-agent.png";
 import image2 from "../../images/illlustration-bookings-oneplatform.png";
 import image3 from "../../images/illlustration-itenary-lifestyle.png";
 import phoneImage from "../../images/mockup-phones.png";
-import landingPage from "../../images/landing_page.png";
+// import landingPage from "../../images/landing_page.png";
 import { BiSearch } from "react-icons/bi";
 
 // dummy images
-import exploreImage from "../../images/img container (style).png";
-import exploreImage2 from "../../images/img container (style)(1).png";
-import exploreImage3 from "../../images/img container (style)(2).png";
+// import exploreImage from "../../images/img container (style).png";
+// import exploreImage2 from "../../images/img container (style)(1).png";
+// import exploreImage3 from "../../images/img container (style)(2).png";
 
 import { countryData } from "../../currentUserData";
 
-import { getAllCategories, getTopDeals, refreshToken } from "../../api";
-import {
-  refreshAccessToken,
-  remoteGetUser,
-  symbolHelper,
-} from "../../utils/helpers";
+import { getAllCategories, getTopDeals } from "../../api";
+import { symbolHelper } from "../../utils/helpers";
 import { IFormattedCategory, IDeal } from "../../api/interfaces";
 import { signUpToNewsLetter } from "../../api/responseHandlers";
 
@@ -77,11 +73,11 @@ const LandingPage = () => {
   useEffect(() => {
     setCity(cityInputElement?.value);
     // console.log("reached");
-    const newFilter = countryData.filter((value) => {
-      return value.name
-        .toLowerCase()
-        .includes(cityInputElement?.value.toLowerCase());
-    });
+    // const newFilter = countryData.filter((value) => {
+    //   return value.name
+    //     .toLowerCase()
+    //     .includes(cityInputElement?.value.toLowerCase());
+    // });
 
     // setCityFilteredData([...newFilter]);
     return () => {};
@@ -149,7 +145,7 @@ const LandingPage = () => {
 
   const handleCountryBlur = (e: any) => {
     e.preventDefault();
-    let value = e.target.value;
+    // let value = e.target.value;
 
     setTimeout(() => {
       const cityDropDownElement = document.getElementById(

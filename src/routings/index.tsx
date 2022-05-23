@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
-import Footer from "../components/Footer/Footer";
+// import Navbar from "../components/Navbar";
+// import Sidebar from "../components/Sidebar";
+// import Footer from "../components/Footer/Footer";
 import Signup from "../components/SignUp";
 import Signin from "../components/SignIn";
 import BasicDetails from "../components/BasicDetails/BasicDetails";
@@ -21,16 +21,16 @@ import MyTrip from "../components/MyTripPage/MyTrip";
 import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
 import ExploreCategoryPage from "../components/ExploreCategory/ExploreCategoryPage";
 
-import AuthVerify from "../pages/AuthVerify";
+// import AuthVerify from "../pages/AuthVerify";
 import MainLayout from "../pages";
 import SocialBasicDetails from "../components/SocialBasicDetails/SocialBasicDetails";
 
 const MainRoute: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
 
-  const toggleIsOpen = (): void => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleIsOpen = (): void => {
+  //   setIsOpen(!isOpen);
+  // };
 
   return (
     <>
