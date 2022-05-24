@@ -42,7 +42,7 @@ USERAPI.interceptors.request.use(async (req: any) => {
             req.headers["x-access-token"] = token;
         }
     } else if (result.can_still_refresh === null && result.tokenExpired === null) {
-        cannotRefreshAccessToken()
+        // cannotRefreshAccessToken()
         Promise.reject("Access token expired")
     }
 

@@ -24,6 +24,7 @@ import { getAllCategories, getTopDeals } from "../../api";
 import { symbolHelper } from "../../utils/helpers";
 import { IFormattedCategory, IDeal } from "../../api/interfaces";
 import { signUpToNewsLetter } from "../../api/responseHandlers";
+import { Link } from "react-router-dom";
 
 interface CountryProps {
   id: number;
@@ -362,13 +363,17 @@ const LandingPage = () => {
             {topDeals?.map((item) => (
               <div className="explore_card" key={item.id}>
                 <div className="explore_image_container">
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title + "'s image"}
-                    className="explore_image"
-                  />
+                  <Link to={`/explore-details/${item.id}`}>
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title + "'s image"}
+                      className="explore_image"
+                    />
+                  </Link>
                 </div>
-                <p className="explore_card_title">{item.title}</p>
+                <Link to={`/explore-details/${item.id}`}>
+                  <p className="explore_card_title">{item.title}</p>
+                </Link>
                 <p className="explore_card_location">{item.city}</p>
               </div>
             ))}

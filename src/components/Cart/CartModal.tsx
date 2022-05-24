@@ -3,7 +3,7 @@ import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./CartModal.css";
 import { MdClose } from "react-icons/md";
-import { FiStar } from "react-icons/fi";
+// import { FiStar } from "react-icons/fi";
 
 // interface for CartModal
 interface CartModalProp {
@@ -93,11 +93,11 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="modal" style={animation}>
-            <div className="modal_wrapper">
-              <h3 className="header">
+            <div className="cart_modal_wrapper">
+              <h3 className="cart_modal_header">
                 $300 <small className="small">/ person</small>
               </h3>
-              <div className="select_container">
+              <div className="cart_select_container">
                 <select name="date" id="date">
                   <option value="Friday 21st, January">
                     Friday 21st, January
@@ -110,7 +110,7 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
                   </option>
                 </select>
               </div>
-              <div className="select_container">
+              <div className="cart_select_container">
                 <select name="people" id="people" onClick={handlePeople}>
                   <option value="0">0 adult</option>
                   <option value="1">1 adult</option>
@@ -125,7 +125,7 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
                   <option value="10">10 adults</option>
                 </select>
               </div>
-              <div className="select_container">
+              <div className="cart_select_container">
                 <select name="time" id="time">
                   <option value="12:00 - 16:00">12:00 - 16:00</option>
                   <option value="13:00 - 19:00">13:00 - 19:00</option>

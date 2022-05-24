@@ -86,8 +86,7 @@ const BasicDetails: React.FC = () => {
         setCities(res.data.items);
       });
     }
-    console.log(cities);
-  }, [countryCode, cities]);
+  }, [countryCode]);
 
   useEffect(() => {
     // get previous data of sign up from localStorage
@@ -255,7 +254,7 @@ const BasicDetails: React.FC = () => {
                       }}
                       options={countries}
                       getOptionLabel={(option: any) => option.countryName}
-                      id="combo-box-demo"
+                      id="combo-box"
                       sx={{}}
                       renderOption={(props, option) => (
                         <Box
@@ -295,7 +294,7 @@ const BasicDetails: React.FC = () => {
                       }}
                       options={countries}
                       getOptionLabel={(option: any) => option.countryName}
-                      id="combo-box-demo"
+                      id="combo-box2"
                       sx={{}}
                       renderOption={(props, option) => (
                         <Box

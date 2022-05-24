@@ -243,8 +243,13 @@ export const getFullUserProfile = async () => {
   return user.data;
 };
 
-export const getUserProfilePicture = async () => {
-  const userId = localGetUserId() as any;
+export const getUserProfilePicture = async (id?: any) => {
+  let userId: any;
+  if (id) {
+    userId = id;
+  } else {
+    userId = localGetUserId() as any;
+  }
 
   if (!userId) return null;
 

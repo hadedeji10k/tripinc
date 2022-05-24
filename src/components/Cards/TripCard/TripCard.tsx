@@ -2,8 +2,9 @@ import React from "react";
 import "./TripCard.css";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsSuitHeartFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
-const Card = ({ image, title, description, price, reviews, liked }) => {
+const Card = ({ id, image, title, description, price, reviews, liked }) => {
   // const newLocal = { review: 0, }
   // const [attractionData, setAttractionData] = useState(data);
 
@@ -19,10 +20,14 @@ const Card = ({ image, title, description, price, reviews, liked }) => {
     <>
       <div className="card_container">
         <div className="trip_card_image_container">
-          <img className="image" src={image?.toString()} alt={title} />
+          <Link to={`/explore-details/${id}`}>
+            <img className="image" src={image?.toString()} alt={title} />
+          </Link>
         </div>
         <div className="card_details">
-          <p className="card_title">{title}</p>
+          <Link to={`/explore-details/${id}`}>
+            <p className="card_title">{title}</p>
+          </Link>
           <p className="card_description">{description.slice(0, 100)}...</p>
           <hr />
           <div className="card_price_review">

@@ -52,7 +52,7 @@ const MainRoute: React.FC = () => {
           />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/profile/add-card" element={<AddCard />} />
-          <Route path="/explore-details" element={<ExploreDetails />} />
+          <Route path="/explore-details/:id" element={<ExploreDetails />} />
           <Route path="/plan-trip" element={<PlanTrip />} />
           <Route path="/set-budget" element={<SetBudget />} />
           <Route path="/shopping" element={<Shopping />} />

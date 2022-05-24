@@ -163,6 +163,16 @@ export interface IFormattedCategory {
     symbol?: string
 }
 
+export interface IRatings {
+    id: number,
+    userId: number,
+    fullName: string,
+    attractionId: number,
+    rating: number,
+    comment: string,
+    stateOfClass: boolean,
+    image: string
+}
 export interface IDeal {
     id: number,
     createdDate: Date,
@@ -256,7 +266,7 @@ export interface IDeal {
             name: string
         }
     ],
-    ratings?: [
+    ratings: [
         {
             userId: number,
             fullName: string,

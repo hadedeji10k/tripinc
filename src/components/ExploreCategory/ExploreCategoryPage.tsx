@@ -39,6 +39,7 @@ const ExploreCategoryPage = () => {
                 {attractionData.map((item) => (
                   <div key={item.id}>
                     <Card
+                      id={item.id}
                       image={item.imageUrl}
                       title={item.title}
                       description={item.description}
