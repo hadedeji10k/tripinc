@@ -106,7 +106,7 @@ const LandingPage = () => {
       } else {
       }
     }, 1000);
-  }, []);
+  }, [categoryData]);
 
   // function to handle next button scroll of location if there is overflow in the element's data
   const handleScrollRight = (e: any) => {

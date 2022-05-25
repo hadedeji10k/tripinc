@@ -274,7 +274,7 @@ const ExploreDetails = () => {
                         <p className="review_card_details_review">
                           {item.stateOfClass
                             ? item.comment
-                            : item.comment.slice(0, 2)}
+                            : item.comment.slice(0, 20)}
                           {}...
                         </p>
                         <button
