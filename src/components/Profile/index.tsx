@@ -76,28 +76,18 @@ const Profile = (): any => {
     getFullUserProfile().then((res) => {
       setFullUserProfile(res);
       // setIsLoading(true);
+      getUserPreferences(userId).then((response) => {
+        setUserPreferenceData(response.data);
+        setIsLoading(false);
+      });
     });
-    getUserPreferences(userId).then((res) => {
-      console.log(res.data);
-      setUserPreferenceData(res.data);
-    });
-    setIsLoading(false);
   }, [userId]);
-
-  // // console.log();
-  console.log(authContext.isLoggedIn ? "logged in" : "logged out");
-  console.log(authContext.userId);
-
-  // console.log(authContext.userId);
-
-  // console.log(authContext.user);
-  // console.log(fullUserProfile);
 
   let data = menuBar.filter((item) => item.state === true);
 
   return (
     <>
-      <Spin spinning={isLoading}>
+      <Spin spinning={isLoading} size="large">
         {/* {!fullUserProfile ? ( */}
         {!isLoggedIn ? (
           <>
@@ -105,8 +95,17 @@ const Profile = (): any => {
           </>
         ) : !fullUserProfile ? (
           <>
-            {" "}
-            <Spin spinning={isLoading} size="large"></Spin>{" "}
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <Spin spinning={isLoading} size="large"></Spin>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </>
         ) : (
           <>

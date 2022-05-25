@@ -49,27 +49,20 @@ const Navbar: React.FC<NavbarProps> = ({
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log(checkAuth(), "checkauth nav");
     checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
   }, [pathname]);
-  // console.log(authContext.userId);
-
-  // console.log(authContext.user);
-  // console.log(fullUserProfile);
 
   useEffect(() => {
     getUserProfilePicture().then((res) => {
       setProfilePicture(res);
     });
   }, [isLoggedIn]);
-  console.log(profilePicture);
 
   const handleGoogleLogoutSuccess = () => {
     // navigate("/");
   };
   const handleGoogleLogoutFailure = () => {
     // TODO: Handle failure scenario
-    console.log("Logout failure");
   };
 
   const { signOut } = useGoogleLogout({

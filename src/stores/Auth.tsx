@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const [userId, setUserId] = useState<number | null>(0);
 
   const { pathname } = useLocation();
+  const checkAuthFunc = checkAuth();
 
   useEffect(() => {
     checkAuth() ? login() : logout();
@@ -30,7 +31,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
   useEffect(() => {
     setUserProfile();
     setUserId(localGetUserId());
-  }, [checkAuth]);
+  }, [checkAuthFunc]);
 
   const login = () => {
     setLoggedIn(true);

@@ -14,7 +14,7 @@ export default function ScrollToTop() {
     checkAuth() ? authContext.login() : authContext.logout();
     authContext.setLoggedIn(true);
     // console.log(checkAuth(), "checkAuth");
-  }, [pathname]);
+  }, [pathname, authContext]);
 
   return null;
 }

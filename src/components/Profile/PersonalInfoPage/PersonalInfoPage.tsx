@@ -16,8 +16,6 @@ interface PersonalInfoPageProps {
 const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
   // const [preferenceData, setPreferenceData] = useState(preferencedata)
 
-  console.log(userProfile);
-
   const [showProfileModal, setShowProfileModal] = useState<Boolean>(false);
   const [showPreferencesModal, setShowPreferencesModal] =
     useState<Boolean>(false);

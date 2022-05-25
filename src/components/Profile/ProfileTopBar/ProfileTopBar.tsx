@@ -48,7 +48,7 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
     // menuBar[index].class = menuBar[index].stateOfClass ? 'clicked' : 'not-clicked'
     setMenuBar([...menuBar]);
   };
-  console.log(userProfile.profilePicture);
+
   return (
     <>
       <div className="profile_top_bar_container">
