@@ -2,7 +2,11 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../stores/Auth";
-import { getUserProfilePicture, localLogoutProfile } from "../../utils/helpers";
+import {
+  checkAuth,
+  getUserProfilePicture,
+  localLogoutProfile,
+} from "../../utils/helpers";
 import { useGoogleLogout } from "react-google-login";
 import defaultImage from "../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
@@ -24,6 +28,7 @@ import {
 } from "./NavbarElements";
 import { GoogleLoginClientId } from "../../utils/constants";
 import Swal from "sweetalert2";
+import { useLocation } from "react-router-dom";
 // import logo from '../../logo.svg'
 
 // Interface for this component
@@ -37,11 +42,16 @@ const Navbar: React.FC<NavbarProps> = ({
   isOpen,
   toggleIsOpen,
 }: NavbarProps) => {
-  const [profilePicture, setProfilePicture] = useState("");
-
   const authContext = useContext(AuthContext);
+  const [profilePicture, setProfilePicture] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(authContext.isLoggedIn);
 
-  console.log(authContext.isLoggedIn ? "logged in" : "logged out");
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    console.log(checkAuth(), "checkauth nav");
+    checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
+  }, [pathname]);
   // console.log(authContext.userId);
 
   // console.log(authContext.user);
@@ -51,8 +61,7 @@ const Navbar: React.FC<NavbarProps> = ({
     getUserProfilePicture().then((res) => {
       setProfilePicture(res);
     });
-  }, []);
-
+  }, [isLoggedIn]);
   console.log(profilePicture);
 
   const handleGoogleLogoutSuccess = () => {
@@ -128,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 <AiOutlineShoppingCart />
               </ReactIcons>
             </NavLink>
-            {authContext.isLoggedIn ? (
+            {isLoggedIn ? (
               // <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
               profilePicture !== "" ? (
                 <>

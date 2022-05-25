@@ -52,7 +52,6 @@ const LandingPage = () => {
 
   useEffect(() => {
     getTopDeals().then((res) => {
-      console.log(res.data);
       setTopDeals(res.data);
     });
     getAllCategories().then((res) => {
@@ -92,7 +91,7 @@ const LandingPage = () => {
     let prev = document.getElementById("prev") as HTMLElement;
     let next = document.getElementById("next") as HTMLElement;
     setTimeout(() => {
-      console.log(categoryElement.clientWidth, categoryElement.scrollWidth);
+      // console.log(categoryElement.clientWidth, categoryElement.scrollWidth);
       if (
         categoryElement?.clientWidth === categoryElement?.scrollWidth ||
         categoryElement?.clientWidth > categoryElement?.scrollWidth

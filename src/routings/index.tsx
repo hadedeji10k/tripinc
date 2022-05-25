@@ -24,6 +24,7 @@ import ExploreCategoryPage from "../components/ExploreCategory/ExploreCategoryPa
 // import AuthVerify from "../pages/AuthVerify";
 import MainLayout from "../pages";
 import SocialBasicDetails from "../components/SocialBasicDetails/SocialBasicDetails";
+import RequireAuth from "../pages/RequiredAuth";
 
 const MainRoute: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -41,7 +42,14 @@ const MainRoute: React.FC = () => {
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/explore/:catName" element={<ExploreCategoryPage />} />
           <Route path="/my-trips" element={<MyTrip />} />
-          <Route path="/bucket-list" element={<BucketListPage />} />
+          <Route
+            path="/bucket-list"
+            element={
+              <RequireAuth>
+                <BucketListPage />
+              </RequireAuth>
+            }
+          />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<Signin />} />
           <Route path="/profile" element={<Profile />} />

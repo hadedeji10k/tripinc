@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
@@ -21,7 +22,8 @@ const Signin = () => {
 
   const [remoteError, setRemoteError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const navigate = useNavigate();
+  const { state }: { state: any } = useLocation();
   const authContext = useContext(AuthContext);
 
   const [ip, setIP] = useState("");
@@ -66,22 +68,29 @@ const Signin = () => {
     };
     const response = await signIn(formData);
 
-    authContext.login();
-    authContext.setUserId(response.userId);
-    // authContext.setUsername(response.username);
-    authContext.setUserProfile();
+    if (response !== false) {
+      authContext.login();
+      authContext.setLoggedIn(true);
+      authContext.setUserId(response.userId);
+      // authContext.setUsername(response.username);
+      authContext.setUserProfile();
 
-    // success message
-    Swal.fire({
-      title: "Success!",
-      text: "You have successfully logged in",
-      icon: "success",
-      confirmButtonText: "Ok",
-    }).then((result) => {
-      if (result.isConfirmed || result.isDenied || result.isDismissed) {
-        window.location.href = "/";
-      }
-    });
+      // success message
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully logged in",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          // window.location.href = "/";
+          const path = state ? state?.from : "/";
+          navigate(path);
+        }
+      });
+    } else {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = (googleData: any) => {

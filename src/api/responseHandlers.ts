@@ -165,6 +165,7 @@ export const signIn = async (formData: ISignIn) => {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      return false
     }
 
     // if there is error
@@ -175,6 +176,7 @@ export const signIn = async (formData: ISignIn) => {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      return false
     }
   } catch (error) {
     console.log(error);

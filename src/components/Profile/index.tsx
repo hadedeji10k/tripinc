@@ -11,7 +11,11 @@ import Wallet from "./WalletPage/WalletPage";
 import HelpCenterPage from "./HelpCenterPage/HelpCenterPage";
 
 import { AuthContext } from "../../stores/Auth";
-import { getFullUserProfile } from "../../utils/helpers";
+import {
+  checkAuth,
+  getFullUserProfile,
+  localGetUserId,
+} from "../../utils/helpers";
 import { getUserPreferences } from "../../api";
 
 const menuBarData = [
@@ -58,8 +62,14 @@ const Profile = (): any => {
   const [fullUserProfile, setFullUserProfile] = useState<any>(null);
   const [userPreferenceData, setUserPreferenceData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [userId, setUserId] = useState<number | null>(() => localGetUserId());
 
   const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -67,15 +77,16 @@ const Profile = (): any => {
       setFullUserProfile(res);
       // setIsLoading(true);
     });
-    getUserPreferences(authContext.userId).then((res) => {
+    getUserPreferences(userId).then((res) => {
       console.log(res.data);
       setUserPreferenceData(res.data);
     });
     setIsLoading(false);
-  }, [authContext.userId]);
+  }, [userId]);
 
   // // console.log();
   console.log(authContext.isLoggedIn ? "logged in" : "logged out");
+  console.log(authContext.userId);
 
   // console.log(authContext.userId);
 
@@ -88,12 +99,15 @@ const Profile = (): any => {
     <>
       <Spin spinning={isLoading}>
         {/* {!fullUserProfile ? ( */}
-        {!authContext.isLoggedIn ? (
+        {!isLoggedIn ? (
           <>
             <h3>You must sign in before you can access this page</h3>
           </>
         ) : !fullUserProfile ? (
-          <> {/* <h3>Something wrong </h3>{" "} */}</>
+          <>
+            {" "}
+            <Spin spinning={isLoading} size="large"></Spin>{" "}
+          </>
         ) : (
           <>
             <ProfileTopBar
