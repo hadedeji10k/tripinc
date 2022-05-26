@@ -17,7 +17,7 @@ const WalletPage = () => {
                   className="wallet_input"
                   type="text"
                   disabled
-                  placeholder="$200"
+                  placeholder="$0"
                 />
                 <button className="wallet_page_button">Go Explore!</button>
               </div>

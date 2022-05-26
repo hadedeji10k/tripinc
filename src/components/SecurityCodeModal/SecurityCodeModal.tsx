@@ -1,8 +1,10 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./SecurityCodeModal.css";
 import { MdClose } from "react-icons/md";
+import OtpInput from "react-otp-input";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 // interface for this Modal
 interface SecurityCodeModalProp {
@@ -30,6 +32,9 @@ const SecurityCodeModal = ({
   showModal,
   setShowModal,
 }: SecurityCodeModalProp) => {
+  const [otp, setOtp] = useState<string>("");
+  const [hideOtp, setHideOtp] = useState<boolean>(true);
+
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
@@ -71,38 +76,19 @@ const SecurityCodeModal = ({
     };
   }, [keyPress]);
 
-  // function for checking the inputs for code, one for each input, and moves to the next input
-  const handleCodeInput = (e) => {
-    let { value } = e.target;
-    if (value.length === 1) {
-      // setShowModal(false);
-      if (e.target.id === "code1") {
-        document.getElementById("code2")?.focus();
-      } else if (e.target.id === "code2") {
-        document.getElementById("code3")?.focus();
-      } else if (e.target.id === "code3") {
-        document.getElementById("code4")?.focus();
-      }
-    } else if (value.length > 1) {
-      console.log(value[0]);
-      value = value[0];
-    }
-    console.log(e.key);
+  const handleChange = (otp) => {
+    console.log(otp);
+    setOtp(otp);
+  };
+
+  const handleOtpHide = (e) => {
+    e.preventDefault();
+    // console.log(otp);
+    setHideOtp((prev) => !prev);
   };
 
   const handleContinue = (): void => {
-    let inputCode1 = document.getElementById("code1") as HTMLInputElement;
-    let inputCode2 = document.getElementById("code2") as HTMLInputElement;
-    let inputCode3 = document.getElementById("code3") as HTMLInputElement;
-    let inputCode4 = document.getElementById("code4") as HTMLInputElement;
-    let code1 = inputCode1?.value;
-    let code2 = inputCode2?.value;
-    let code3 = inputCode3?.value;
-    let code4 = inputCode4?.value;
-    if (code1 && code2 && code3 && code4) {
-      console.log(code1 + code2 + code3 + code4);
-      // setShowModal(false);
-    }
+    console.log(otp);
   };
 
   // return the component
@@ -112,11 +98,11 @@ const SecurityCodeModal = ({
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="modal" style={animation}>
-            <div className="modal_wrapper">
+            <div className="security_modal_wrapper">
               <h3 className="header">Enter your Security Code</h3>
               <p className="title">We texted your code to +1 234 567 890</p>
               <div className="input_content">
-                <input
+                {/* <input
                   type="number"
                   id="code1"
                   className="code_input"
@@ -145,8 +131,28 @@ const SecurityCodeModal = ({
                   className="code_input"
                   autoComplete="off"
                   onChange={handleCodeInput}
+                /> */}
+                <OtpInput
+                  value={otp}
+                  onChange={handleChange}
+                  numInputs={6}
+                  isInputSecure={hideOtp}
+                  inputStyle="inputStyle"
+                  shouldAutoFocus={true}
+                  placeholder={hideOtp ? "******" : "123456"}
                 />
               </div>
+              <br />
+              {hideOtp ? (
+                <p className="code_eyes_icon" onClick={handleOtpHide}>
+                  <AiFillEye />
+                </p>
+              ) : (
+                <p className="code_eyes_icon" onClick={handleOtpHide}>
+                  <AiFillEyeInvisible />
+                </p>
+              )}
+              <br />
               <div>
                 <button className="button" onClick={handleContinue}>
                   Continue

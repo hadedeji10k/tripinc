@@ -244,6 +244,7 @@ const BasicDetails: React.FC = () => {
                     </div>
                   </div> */}
                   <div className="basic_details_country">
+                    <label className="basic_details_label">Country</label>
                     <Autocomplete
                       disabled={false}
                       disablePortal
@@ -284,6 +285,7 @@ const BasicDetails: React.FC = () => {
                     ) : null}
                   </div>
                   <div className="basic_details_country">
+                    <label className="basic_details_label">City</label>
                     <Autocomplete
                       disabled={cityDisabled}
                       disablePortal

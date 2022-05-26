@@ -15,11 +15,14 @@ import { GoogleLoginClientId } from "../../utils/constants";
 // import Swal from "sweetalert2";
 import { googleApiProfile } from "../../api";
 
+import SecurityCodeModal from "../SecurityCodeModal/SecurityCodeModal";
+
 const Signup = () => {
   document.title = "TripInc - Sign Up";
 
   const [remoteError, setRemoteError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showSecurityModal, setShowSecurityModal] = useState<Boolean>(false);
 
   const initialValues = {
     firstName: "",
@@ -33,6 +36,7 @@ const Signup = () => {
       // setIsLoading(false);
       setIsLoading((prev) => !prev);
       window.location.href = "/#/basic-details";
+      // setShowSecurityModal(true);
     });
   };
 
@@ -197,6 +201,10 @@ const Signup = () => {
           </Formik>
           {/* End of Formik */}
         </div>
+        <SecurityCodeModal
+          showModal={showSecurityModal}
+          setShowModal={setShowSecurityModal}
+        />
         <div className="have_account">
           <h3>
             Already have an account?{" "}

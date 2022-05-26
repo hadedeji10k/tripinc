@@ -301,6 +301,25 @@
     color: #353945;
 }
 
+.MuiOutlinedInput-notchedOutline {
+    margin-top: 10px !important;
+    margin-bottom: 25px !important;
+    padding: 0.6rem !important;
+    font-size: 1rem !important;
+    border-radius: 10px !important;
+    outline: none !important;
+    border: 2.3px solid #ccc !important;
+    width: 500px !important;
+    color: #000 !important;
+    transition: all 0.3s ease-in-out !important;
+    height: 55px !important;
+}
+
+.MuiOutlinedInput-notchedOutline:focus {
+    border: 2px solid #252748 !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
 @media screen and (max-width: 700px) {
     .basic_details_or_line {
         width: 400px;
