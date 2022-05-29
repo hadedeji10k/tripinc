@@ -10,20 +10,26 @@ import image from "../../images/location.png";
 import { getExplore } from "../../currentUserData";
 import CartModal from "../Cart/CartModal";
 import { useParams } from "react-router-dom";
-import { getAttractionByID } from "../../api";
+import { getAttractionByID, getUserWishList } from "../../api";
 import { IDeal, IRatings } from "../../api/interfaces";
-import { getUserProfilePicture } from "../../utils/helpers";
+import { getUserProfilePicture, localGetUserId } from "../../utils/helpers";
 import Swal from "sweetalert2";
+import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
 
 const ExploreDetails = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showCartModal, setShowCartModal] = useState<Boolean>(false);
   const [showDetails, setShowDetails] = useState(false);
+
+  const [userLikedPost, setUserLikedPost] = useState(false);
   const [attractionData, setAttractionData] = useState<IDeal>();
   const [ratings, setRatings] = useState<IRatings[]>([]);
   const [averageRatings, setAverageRatings] = useState<number>(0);
 
+  const [wishListData, setWishListData] = useState<IDeal[]>([]);
+
   const { id } = useParams();
+  const userId = localGetUserId();
 
   // checking of network connectivity
   let condition = navigator.onLine ? "online" : "offline";
@@ -60,6 +66,24 @@ const ExploreDetails = () => {
       }
     });
   }
+
+  useEffect(() => {
+    getUserWishList(userId)
+      .then((res) => {
+        setWishListData(res.data.items);
+        const item = res.data.items.find(
+          (item) => item?.id.toString() === id?.toString()
+        );
+        if (item) {
+          setUserLikedPost(true);
+        } else {
+          setUserLikedPost(false);
+        }
+      })
+      .catch((err) => {
+        setWishListData([]);
+      });
+  }, []);
 
   // fetch attractiondata from remote or local storage
   useEffect(() => {
@@ -127,6 +151,33 @@ const ExploreDetails = () => {
 
   const AnyReactComponent = ({ text, lat, lng }) => <div>{text}</div>;
 
+  // like
+
+  const handleLikeButton = async (id: any) => {
+    const formData = {
+      userId,
+      itemId: attractionData?.id,
+      itemType: attractionData?.itemType,
+      provider: attractionData?.provider,
+      tripId: attractionData?.tourId,
+    };
+
+    const response = await addToWishList(formData);
+    if (response === true) {
+      setUserLikedPost(true);
+    }
+  };
+
+  const handleUnLikeButton = async (id: any) => {
+    console.log(id);
+
+    // remove from database, if successful, remove from state
+    const response = await removeFromWishList(attractionData?.id, userId);
+    if (response === true) {
+      setUserLikedPost(false);
+    }
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -147,10 +198,20 @@ const ExploreDetails = () => {
                   {attractionData?.title}
                 </h2>
               </div>
-              <div>
-                <p>
-                  <BsSuitHeartFill className="explore_heart" />
-                </p>
+              <div
+                onClick={userLikedPost ? handleUnLikeButton : handleLikeButton}
+              >
+                {userId ? (
+                  userLikedPost ? (
+                    <p>
+                      <BsSuitHeartFill className="explore_heart" />
+                    </p>
+                  ) : (
+                    <p>
+                      <BsSuitHeartFill className="explore_heart_not_liked" />
+                    </p>
+                  )
+                ) : null}
               </div>
             </div>
             <div className="inner_container">

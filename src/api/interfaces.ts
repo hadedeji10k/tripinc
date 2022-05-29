@@ -146,6 +146,32 @@ export interface IUserProfile {
     updatedDate?: Date
 }
 
+export interface ICart {
+    id: number,
+    createdDate: Date,
+    updatedDate: Date,
+    userId: number | null,
+    itemId: number,
+    itemName: string,
+    unitPrice: number,
+    quantity: number,
+    totalAmount: number,
+    imageUrl: string,
+    sessionId: string,
+    associatedTripId: number,
+    date: Date
+}
+export interface IAddCart {
+    userId: number | null,
+    itemId: number,
+    itemType: string,
+    itemName: string,
+    currency: string,
+    unitPrice: number,
+    quantity: number,
+    imageUrl: string,
+    date: Date
+}
 export interface ICategory {
     code: string | null
     createdDate: string | null
@@ -163,6 +189,13 @@ export interface IFormattedCategory {
     symbol?: string
 }
 
+export interface IWishList {
+    userId?: number | null
+    itemId?: number
+    itemType?: string
+    provider?: string
+    tripId?: number
+}
 export interface IRatings {
     id: number,
     userId: number,
@@ -247,7 +280,7 @@ export interface IDeal {
     isPublished?: true,
     featured?: true,
     liked?: true,
-    photos?: [
+    photos: [
         {
             id: number,
             photoUrl: string

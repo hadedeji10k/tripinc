@@ -1,5 +1,5 @@
 import React from "react";
-import { MdOutlineLanguage } from "react-icons/md";
+// import { MdOutlineLanguage } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import {
   SidebarContainer,
@@ -38,11 +38,11 @@ const Sidebar = ({ isOpen, toggleIsOpen }: SidebarProps) => {
             <SidebarLink to="/explore">Explore</SidebarLink>
             <SidebarLink to="/bucket-list">Bucket List</SidebarLink>
             <SidebarLink to="/my-trips">My Trips</SidebarLink>
-            <SidebarLink to="/">
+            {/* <SidebarLink to="/">
               <MdOutlineLanguage />
               &nbsp; Language
-            </SidebarLink>
-            <SidebarLink to="/">
+            </SidebarLink> */}
+            <SidebarLink to="/shopping">
               <AiOutlineShoppingCart />
             </SidebarLink>
             <SidebarLink to="/sign-up">Sign Up</SidebarLink>

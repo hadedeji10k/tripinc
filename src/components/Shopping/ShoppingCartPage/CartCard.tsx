@@ -1,22 +1,40 @@
-import React from "react";
+import { useState } from "react";
 import "./ShoppingCartPage.css";
-import image from "../../../images/location.png";
+import { ICart } from "../../../api/interfaces";
 
-const CartCard = () => {
+interface Props {
+  item: ICart;
+  handleRemove: any;
+  addToWishList: any;
+  inWishList: boolean;
+  removeFromWishList?: any;
+}
+
+const CartCard = ({
+  item,
+  handleRemove,
+  addToWishList,
+  inWishList,
+  removeFromWishList,
+}: Props) => {
   return (
     <>
       <div className="cart_card_container">
         <div className="image_container">
-          <img src={image} alt="" className="image" />
+          <img src={item.imageUrl} alt="" className="image" />
         </div>
         <div className="card_details_container">
           <div className="details">
-            <p className="short_title">London's Amazing Palaces & Parliament</p>
-            <p className="description">
+            <p className="short_title">{item.itemName}</p>
+            {/* <p className="description">
               This part of London is a must see for all visitors…
-            </p>
-            <div className="select_container">
+            </p> */}
+            <div className="shopping_select_container">
               <select name="date" id="date">
+                <option value="Friday 21st, January">
+                  {/* {new Date(item.date)} */}
+                  {item.date}
+                </option>
                 <option value="Friday 21st, January">
                   Friday 21st, January
                 </option>
@@ -30,9 +48,10 @@ const CartCard = () => {
             </div>
           </div>
           <div className="side_details">
-            <p className="price">£ 50 /p</p>
-            <div className="select_container">
+            <p className="shopping_cart_price">$ {item.totalAmount}</p>
+            <div className="shopping_select_container">
               <select name="date" id="date">
+                <option>{item.quantity}</option>
                 <option value="1">Qty: 1</option>
                 <option value="2">Qty: 2</option>
                 <option value="4">Qty: 4</option>
@@ -45,9 +64,21 @@ const CartCard = () => {
               </select>
             </div>
             <div className="">
-              <button className="shopping_cart_button">Delete</button>
-              <button className="shopping_cart_button">
-                Add to Bucket List
+              <button
+                className="shopping_cart_button"
+                onClick={() => handleRemove(item.id)}
+              >
+                Delete
+              </button>
+              <button
+                className="shopping_cart_button"
+                onClick={
+                  inWishList
+                    ? () => removeFromWishList(item.itemId)
+                    : () => addToWishList(item.itemId)
+                }
+              >
+                {inWishList ? "Remove from Bucket List" : "Add to Bucket List"}
               </button>
             </div>
           </div>

@@ -1,6 +1,4 @@
-import React from "react";
 import "./PaymentPage.css";
-import CartSummary from "../CartSummary/CartSummary";
 
 const PaymentPage = () => {
   const atmCardHandle = (event: any): any => {
@@ -20,14 +18,6 @@ const PaymentPage = () => {
     <>
       <div className="payment_page_container">
         <div className="info_container">
-          <p className="navigation">
-            <span>
-              01 Cart View &nbsp;&nbsp; &gt; &nbsp; 02 Customer Info
-              &nbsp;&nbsp;{" "}
-            </span>{" "}
-            &gt; &nbsp; 03 Payment
-          </p>
-          <hr className="cart_line" />
           <h3 className="payment_page_title">Payment Portal</h3>
           <div className="saved_contact_info">
             <h3>Pay with: </h3>
@@ -97,7 +87,6 @@ const PaymentPage = () => {
             </a>
           </p>
         </div>
-        <CartSummary />
       </div>
     </>
   );

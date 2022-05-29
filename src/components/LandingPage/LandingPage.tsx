@@ -206,7 +206,7 @@ const LandingPage = () => {
             Discover all those hidden gems
           </h1>
           <p className="landing_page_image_sub_header">
-            Explore and plan your next UK Trip
+            Explore and plan your next Trip
           </p>
         </div>
         <div className="bucket_list_page_search_container">
@@ -249,8 +249,7 @@ const LandingPage = () => {
             Personalised weekend and holiday plans sorted in minutes
           </h3>
           <p className="landing_page_sub_header">
-            Imagine one platform, with so many experiences, that helped you make
-            the most of your trip!
+            One platform, millions of experience, yet personalised to you
           </p>
           <div className="landing_page_services_row_container">
             <div className="landing_page_services_row">
@@ -282,9 +281,9 @@ const LandingPage = () => {
 
         {/* how it works */}
         <div className="how_container">
-          <h3 className="landing_page_header">How it works</h3>
+          <h3 className="landing_page_header">Find what floats your boat</h3>
           <p className="landing_page_sub_header">
-            See how Tripinc can help your plan your next UK Trip!
+            Explore experiences tailored to your interest!
           </p>
           <div className="how_inner_container">
             <div className="how_inner_container_40">
@@ -309,13 +308,11 @@ const LandingPage = () => {
               <div className="how_card">
                 <p className="red_tag">03</p>
                 <p className="how_card_header">
-                  Build an itenary that looks at the bigger picture.{" "}
+                  Make every minute counts... Optimise your trip and time.{" "}
                 </p>
                 <p className="how_card_sub_heading">
-                  With so many means to customise your trip you can add and move
-                  items whilst seeing real life travel distances between spots.
-                  Simplifying planning whilst giving you the flexiblity to
-                  explore.{" "}
+                  Simplify planning while giving you the flexibility to do what
+                  matters most.{" "}
                 </p>
               </div>
             </div>
@@ -404,7 +401,7 @@ const LandingPage = () => {
         <div className="next_stop">
           <h3 className="landing_page_header">How it works</h3>
           <p className="landing_page_sub_header">
-            See how Tripinc can help your plan your next UK Trip!
+            See how Tripinc can help you plan your next Trip!
           </p>
           <div id="category_tag_container" className="category_tag_container">
             {categoryData?.map((item) => (

@@ -9,9 +9,11 @@ import "./ExplorePage.css";
 import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
-import { getAllCategories, getAllDeals } from "../../api";
+import { getAllCategories, getAllDeals, getUserWishList } from "../../api";
 import { IDeal, IFormattedCategory } from "../../api/interfaces";
-import { symbolHelper } from "../../utils/helpers";
+import { localGetUserId, symbolHelper } from "../../utils/helpers";
+import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
+import { FaLessThanEqual } from "react-icons/fa";
 
 // function useQuery() {
 //   const { search } = useLocation();
@@ -34,13 +36,14 @@ const ExplorePage = () => {
   const url = new URL(document.URL);
   const newQuery = containsEncodedComponents(url);
   const catName = newQuery.split("=")[1];
-
+  const userId = localGetUserId();
   // Defining states of this page
   const [isLoading, setIsLoading] = useState(false);
   // state to manage preference data (to sort out clicked and unclicked preference)
   const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
     []
   );
+  const [wishList, setWishList] = useState<any[]>([]);
   // state to manage the attraction data to be mapped into cards (using this in order to manage the attraction data in case it is filtered)
   const [initialAttractionData, setInitialAttractionData] = useState<IDeal[]>(
     []
@@ -58,6 +61,16 @@ const ExplorePage = () => {
   // useEffect to get the attraction data and category as preferenceData
   useEffect(() => {
     setIsLoading(true);
+
+    if (userId) {
+      getUserWishList(userId)
+        .then((res) => {
+          setWishList(res.data.items);
+        })
+        .catch((err) => {
+          setWishList([]);
+        });
+    }
     // if cat name is not undefined get the attraction based on the category name
     if (catName) {
       const query = `Interests=${catName}`;
@@ -68,6 +81,7 @@ const ExplorePage = () => {
       // also get the initial data in case the user unselect the category, it will filter to all
       getAllDeals().then((res) => {
         setInitialAttractionData(res.data.items);
+        console.log(res.data.items);
         setIsLoading(false);
       });
     } else {
@@ -100,7 +114,7 @@ const ExplorePage = () => {
       // set the preference data
       setPreferenceData(arrayTopush);
     });
-  }, [catName]);
+  }, [catName, userId]);
 
   // useEffect to set preference data when the user click on the preference
   useEffect(() => {
@@ -287,6 +301,53 @@ const ExplorePage = () => {
     });
   };
 
+  const handleLike = (a: any) => {
+    // console.log(a);
+    // console.log(wishList);
+    let returnState: boolean = false;
+    if (wishList.length > 0) {
+      let index = wishList.find((item) => item?.id === a.id);
+      if (index) {
+        returnState = true;
+      } else {
+        returnState = false;
+      }
+    }
+    return returnState;
+  };
+
+  const handleLikeButton = async (id: any) => {
+    setIsLoading(true);
+    const data = attractionData.filter((item) => item.id === id);
+    const formData = {
+      userId,
+      itemId: data[0].id,
+      itemType: data[0].itemType,
+      provider: data[0].provider,
+      tripId: data[0].tourId,
+    };
+
+    const response = await addToWishList(formData);
+    if (response === true) {
+      setWishList([...wishList, data[0]]);
+    }
+    setIsLoading(false);
+  };
+
+  const handleUnLikeButton = async (id: any) => {
+    setIsLoading(true);
+    console.log(id);
+    const data = attractionData.filter((item) => item.id === id);
+    const wishListData = wishList.filter((item) => item.id !== id);
+
+    // remove from database, if successful, remove from state
+    const response = await removeFromWishList(data[0].id, userId);
+    if (response === true) {
+      setWishList([...wishListData]);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -380,15 +441,23 @@ const ExplorePage = () => {
               <div className="card">
                 {attractionData.map((item) => (
                   <div key={item.id}>
-                    <Card
-                      id={item.id}
-                      image={item.imageUrl}
-                      title={item.title}
-                      description={item.description}
-                      price={item.price}
-                      reviews={item.ratings}
-                      liked={item.liked}
-                    />
+                    <Spin spinning={isLoading}>
+                      <Card
+                        id={item.id}
+                        image={
+                          item.imageUrl
+                            ? item.imageUrl
+                            : item?.photos[0]?.photoUrl
+                        }
+                        title={item.title}
+                        description={item.description}
+                        price={item.price}
+                        reviews={item.ratings}
+                        liked={handleLike(item)}
+                        handleLikeButton={handleLikeButton}
+                        handleUnLikeButton={handleUnLikeButton}
+                      />
+                    </Spin>
                   </div>
                 ))}
               </div>

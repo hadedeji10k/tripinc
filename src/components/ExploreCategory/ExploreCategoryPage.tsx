@@ -25,6 +25,10 @@ const ExploreCategoryPage = () => {
     });
   }, [catName]);
 
+  const handleLikeButton = (e: any) => {
+    console.log(e);
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -46,6 +50,7 @@ const ExploreCategoryPage = () => {
                       price={item.price}
                       reviews={item.ratings}
                       liked={item.liked}
+                      handleLikeButton={handleLikeButton}
                     />
                   </div>
                 ))}

@@ -10,7 +10,7 @@ import {
 import { useGoogleLogout } from "react-google-login";
 import defaultImage from "../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
-import { MdOutlineLanguage } from "react-icons/md";
+// import { MdOutlineLanguage } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import {
   Nav,
@@ -121,11 +121,11 @@ const Navbar: React.FC<NavbarProps> = ({
                     </NavItem> */}
           </NavMenu>
           <NavBtn>
-            <NavLink to="/">
+            {/* <NavLink to="/">
               <MdOutlineLanguage />
               &nbsp; Language
-            </NavLink>
-            <NavLink to="/">
+            </NavLink> */}
+            <NavLink to="/shopping">
               <ReactIcons>
                 <AiOutlineShoppingCart />
               </ReactIcons>

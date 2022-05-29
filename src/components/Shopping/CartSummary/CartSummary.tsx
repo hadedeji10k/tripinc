@@ -1,7 +1,12 @@
 import React from "react";
+import { BooleanSchema } from "yup";
 import "./CartSummary.css";
-
-const CartSummary = () => {
+interface Props {
+  totalAmountOfItems: number;
+  itemsInCart: boolean;
+}
+const CartSummary = ({ totalAmountOfItems, itemsInCart }: Props) => {
+  const serviceFee = itemsInCart ? 200 : 0;
   return (
     <>
       <div className="cart_summary_container">
@@ -11,15 +16,15 @@ const CartSummary = () => {
         <div className="shopping_cart_price">
           <div className="shopping_price">
             <p>Subtotal</p>
-            <p>$455</p>
+            <p>${totalAmountOfItems}</p>
           </div>
           <div className="shopping_price">
             <p>Service fee</p>
-            <p>$455</p>
+            <p>${serviceFee}</p>
           </div>
           <div className="total_shopping_price">
             <p>Total</p>
-            <p>$455</p>
+            <p>${serviceFee + totalAmountOfItems}</p>
           </div>
         </div>
 

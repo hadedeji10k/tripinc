@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { refreshToken } from "../api/responseHandlers";
 import {
   checkAuthForRefresh,
@@ -12,6 +13,10 @@ const AuthVerify = ({ children }: { children: any }) => {
     cities();
     countries();
   });
+
+  const navigate = useNavigate();
+
+  const location = useLocation();
 
   // check for token authentication
   const data = checkAuthForRefresh();
@@ -32,7 +37,7 @@ const AuthVerify = ({ children }: { children: any }) => {
   // if token is expired and can_still_refresh is false, logout user and redirect to login page
   if (data.tokenExpired === true) {
     if (data.can_still_refresh === false) {
-      localLogout();
+      localLogout(navigate, location);
       return <>{children}</>;
     }
   }

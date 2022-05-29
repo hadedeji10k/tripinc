@@ -1,17 +1,10 @@
-import React from "react";
 import "./CustomerInfoPage.css";
-import CartSummary from "../CartSummary/CartSummary";
 
 const CustomerInfoPage = () => {
   return (
     <>
       <div className="customer_info_container">
         <div className="info_container">
-          <p className="navigation">
-            <span>01 Cart View &nbsp;&nbsp; </span> &gt; &nbsp; 02 Customer Info
-            &nbsp;&nbsp; <span> &gt; &nbsp; 03 Payment</span>
-          </p>
-          <hr className="cart_line" />
           <h3 className="customer_info_title">Customer Info</h3>
           <div>
             <label className="customer_info_label">First Name</label>
@@ -76,7 +69,6 @@ const CustomerInfoPage = () => {
             </a>
           </p>
         </div>
-        <CartSummary />
       </div>
     </>
   );

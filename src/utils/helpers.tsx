@@ -100,7 +100,7 @@ export const countries = async () => {
   }
 };
 
-export const localLogout = () => {
+export const localLogout = (navigate?: any, location?: any) => {
   localStorage.removeItem("profile");
   Swal.fire({
     title: "Error!",
@@ -109,7 +109,11 @@ export const localLogout = () => {
     confirmButtonText: "Ok",
   }).then((result) => {
     if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      window.location.href = "/";
+      navigate("/sign-in", {
+        replace: true,
+        state: { from: location?.pathname },
+      });
+      window.location.href = "/#/sign-in";
     }
   });
 };
@@ -176,7 +180,7 @@ export const cannotRefreshAccessToken = () => {
     confirmButtonText: "Ok",
   }).then((result) => {
     if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      window.location.href = "/";
+      window.location.href = "/#/sign-in";
     }
   });
 };

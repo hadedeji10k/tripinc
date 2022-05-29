@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -118,3 +118,32 @@ export const googleApiProfile = async (tokenId: any): Promise<AxiosResponse<any>
     return await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${tokenId}`);
 }
 
+// add to wishlist
+export const addToWishList = async (formData: IWishList): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/WishLists`, formData);
+}
+
+// remove from wishlist
+export const removeFromWishList = async (id: any, userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.delete(`/api/WishLists/${id}/${userId}`);
+}
+
+// get user wishlist
+export const getUserWishList = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/WishLists/GetByUser/${userId}`);
+}
+
+// add to cart
+export const addToCart = async (formData: IAddCart): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/Carts/AddToCart`, formData);
+}
+
+// remove from cart
+export const removeFromCart = async (cartId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.delete(`/api/Carts/RemoveFromCart/${cartId}`);
+}
+
+// get user cart
+export const getUserCart = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Carts/GetByUser/${userId}`);
+}

@@ -1,24 +1,117 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "./ShoppingCartPage.css";
+import { Spin } from "antd";
+import "antd/dist/antd.min.css";
 import CartCard from "./CartCard";
-import CartSummary from "../CartSummary/CartSummary";
+import { ICart } from "../../../api/interfaces";
+import { addToWishList, removeFromCart } from "../../../api/responseHandlers";
+import Swal from "sweetalert2";
+import { getAttractionByID, getUserWishList } from "../../../api";
 
-const ShoppingCartPage = () => {
+interface Props {
+  cartData: ICart[];
+  setCartData: any;
+  userId: any;
+}
+
+const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [wishList, setWishList] = useState<any[]>([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (userId) {
+      getUserWishList(userId)
+        .then((res) => {
+          setWishList(res.data.items);
+        })
+        .catch((err) => {
+          setWishList([]);
+        });
+    }
+    setIsLoading(false);
+  }, [userId]);
+
+  const handleRemove = async (id) => {
+    setIsLoading(true);
+    Swal.fire({
+      title: "Are you sure you want to remove this from your cart?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, log out!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await removeFromCart(id);
+        if (response === true) {
+          const newCartData = cartData.filter(
+            (item) => Number(item.id) !== Number(id)
+          );
+          setCartData([...newCartData]);
+        }
+      }
+    });
+    setIsLoading(false);
+  };
+
+  const handleLikeButton = async (id: any) => {
+    setIsLoading(true);
+    const attractionData = await (await getAttractionByID(id)).data;
+    const formData = {
+      userId,
+      itemId: attractionData.id,
+      itemType: attractionData.itemType,
+      provider: attractionData.provider,
+      tripId: attractionData.tourId,
+    };
+
+    await addToWishList(formData);
+    setIsLoading(false);
+  };
+
+  const handleLike = (a: any) => {
+    let returnState: boolean = false;
+    if (wishList.length > 0) {
+      let index = wishList.find((item) => item?.id === a.itemId);
+      if (index) {
+        returnState = true;
+      } else {
+        returnState = false;
+      }
+    }
+    return returnState;
+  };
+
   return (
     <>
-      <div className="shopping_cart_container">
+      <Spin spinning={isLoading}>
         <div className="cart_container">
-          <p className="navigation">
-            01 Cart View &nbsp;&nbsp; &gt; &nbsp;
-            <span> 02 Customer Info &nbsp;&nbsp; &gt; &nbsp; 03 Payment</span>
-          </p>
-          <hr className="cart_line" />
           <h3 className="shopping_cart_title">Shopping Cart</h3>
-          <CartCard />
-          <CartCard />
+          {cartData.length > 0 ? (
+            cartData.map((item) => (
+              <div key={item.id}>
+                <CartCard
+                  item={item}
+                  handleRemove={handleRemove}
+                  addToWishList={handleLikeButton}
+                  inWishList={handleLike(item)}
+                />
+              </div>
+            ))
+          ) : (
+            <div>
+              <br />
+              <br />
+              <br />
+              <p>No item in cart</p>
+              <br />
+              <br />
+              <br />
+            </div>
+          )}
         </div>
-        <CartSummary />
-      </div>
+      </Spin>
     </>
   );
 };

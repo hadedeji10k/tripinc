@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -232,6 +232,266 @@ export const updateUser = async (formData: IUpdateProfile) => {
       icon: "error",
       confirmButtonText: "Ok",
     });
+  }
+};
+
+// add to wishlist
+export const addToWishList = async (formData: IWishList) => {
+  try {
+    const response = await api.addToWishList(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully added item to your wish list.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      })
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Adding to wishlist was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Adding to wishlist was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Adding to wishlist was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+
+// remove from wishlist
+export const removeFromWishList = async (id: any, userId: any) => {
+  try {
+    const response = await api.removeFromWishList(Number(id), Number(userId));
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully removed item from your wish list.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      })
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Removing from wishlist was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Removing from wishlist was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Removing from wishlist was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+
+// add to cart
+export const addToCart = async (formData: IAddCart) => {
+  try {
+    const response = await api.addToCart(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully added item to Cart.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      })
+      const cart = JSON.parse(
+        localStorage.getItem("cart_data") as any
+      );
+      if (cart.length > 0) {
+        const newCart = [...cart, response.data.data]
+        localStorage.setItem("cart_data", JSON.stringify(newCart));
+      } else {
+        const newCart = [response.data.data]
+        localStorage.setItem("cart_data", JSON.stringify(newCart));
+      }
+
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Adding to Cart was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Adding to Cart was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Adding to Cart was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+
+// update cart
+export const updateCart = async (formData: IAddCart) => {
+  try {
+    const response = await api.addToCart(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully updated item in your Cart.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      })
+      const cart = JSON.parse(
+        localStorage.getItem("cart_data") as any
+      );
+      const filterCart = cart.filter(item => item.id.toString() !== formData.itemId.toString())
+      const newCart = [...filterCart, response.data.data[0]]
+      localStorage.setItem("cart_data", JSON.stringify(newCart));
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating Cart was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating Cart was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Updating Cart was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+
+
+// remove from cart
+export const removeFromCart = async (id: any) => {
+  try {
+    const response = await api.removeFromCart(Number(id));
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully removed item from your Cart.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      })
+
+      const cart = JSON.parse(
+        localStorage.getItem("cart_data") as any
+      );
+
+      const newCart = cart?.filter(item => Number(item.id) !== Number(id))
+      localStorage.setItem("cart_data", JSON.stringify(newCart));
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Removing from Cart was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Removing from Cart was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Removing from Cart was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
   }
 };
 

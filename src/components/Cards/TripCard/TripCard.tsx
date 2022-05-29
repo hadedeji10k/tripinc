@@ -3,8 +3,31 @@ import "./TripCard.css";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { localGetUserId } from "../../../utils/helpers";
 
-const Card = ({ id, image, title, description, price, reviews, liked }) => {
+interface Props {
+  id: any;
+  image: any;
+  title: any;
+  description: any;
+  price: any;
+  reviews: any;
+  liked: any;
+  handleLikeButton: any;
+  handleUnLikeButton?: any;
+}
+
+const Card = ({
+  id,
+  image,
+  title,
+  description,
+  price,
+  reviews,
+  liked,
+  handleLikeButton,
+  handleUnLikeButton,
+}: Props) => {
   // const newLocal = { review: 0, }
   // const [attractionData, setAttractionData] = useState(data);
 
@@ -15,7 +38,7 @@ const Card = ({ id, image, title, description, price, reviews, liked }) => {
   //     console.log(data1);
   //     setAttractionData([...attractionData]);
   //   };
-
+  const userId = localGetUserId();
   return (
     <>
       <div className="card_container">
@@ -44,11 +67,18 @@ const Card = ({ id, image, title, description, price, reviews, liked }) => {
             <IoIosArrowDown />
           </p>
         </div>
-        <div className="heart">
-          <p className={liked ? "heart_tag_liked" : "heart_tag"}>
-            <BsSuitHeartFill />
-          </p>
-        </div>
+        {userId ? (
+          <div
+            className="heart"
+            onClick={
+              liked ? () => handleUnLikeButton(id) : () => handleLikeButton(id)
+            }
+          >
+            <p className={liked ? "heart_tag_liked" : "heart_tag"}>
+              <BsSuitHeartFill />
+            </p>
+          </div>
+        ) : null}
       </div>
     </>
   );

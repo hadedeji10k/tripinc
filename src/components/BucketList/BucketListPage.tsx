@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from "react";
 import "./BucketListPage.css";
 import { locationdata, attractiondata } from "../../currentUserData";
-// import { attraction } from "../../interfaces";
+// import { attraction } from '../../interfaces';
 import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
+import { localGetUserId } from "../../utils/helpers";
+import { getUserWishList } from "../../api";
+import { IDeal } from "../../api/interfaces";
+import { addToWishList } from "../../api/responseHandlers";
 
 // React component of this page
 const BucketListPage = () => {
@@ -14,11 +18,28 @@ const BucketListPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
   const [locationData, setLocationData] = useState(locationdata);
   // state to manage the attraction data to be mapped into cards (using this in order to manage the attraction data in case it is filtered)
-  const [attractionData, setAttractionData] = useState(attractiondata);
+  const [wishListData, setWishListData] = useState<IDeal[]>([]);
+  const [initialWishListData, setInitialWishListData] = useState<IDeal[]>([]);
   // state to manage the search result data, so using this when user filter and it get it for the "Result for:" in the page
   const [searchResultField, setSearchResultField] = useState("All");
   // state to manage the search result in the page
   const [inputField, setInputField] = useState("");
+
+  const userId = localGetUserId();
+
+  useEffect(() => {
+    if (userId) {
+      getUserWishList(userId)
+        .then((res) => {
+          setWishListData(res.data.items);
+          setInitialWishListData(res.data.items);
+        })
+        .catch((err) => {
+          setWishListData([]);
+          setInitialWishListData([]);
+        });
+    }
+  }, [userId]);
 
   // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
   useEffect(() => {
@@ -80,7 +101,7 @@ const BucketListPage = () => {
     // loop through all clicked locations and filter the attraction data to the clicked locations
     for (let i = 0; i < clickedLocations.length; i++) {
       const element = clickedLocations[i];
-      let locations = attractiondata.filter(
+      let locations = initialWishListData.filter(
         (item) => item.location === element.title
       );
       // if the location is not undefined, it should push the filtered data into a new array
@@ -102,12 +123,12 @@ const BucketListPage = () => {
 
     // set the attraction data to the new array
     if (newData.length > 0) {
-      setAttractionData(newData);
+      setWishListData(newData);
       // clicked
-      // console.log(attractionData);
+      // console.log(wishListData);
     } else {
-      setAttractionData(attractiondata);
-      // console.log(attractionData);
+      setWishListData([]);
+      // console.log(wishListData);
     }
   };
 
@@ -118,13 +139,13 @@ const BucketListPage = () => {
     // console.log(input.value);
 
     // filter the original attraction data fetched from external using the input data
-    let data = attractiondata.filter((item) =>
+    let data = initialWishListData.filter((item) =>
       item.location.toLowerCase().includes(input.value.toLowerCase())
     );
     // if the data is not empty
     if (data.length !== 0) {
       // set the attractiondata to the new data filtered
-      setAttractionData(data);
+      setWishListData(data);
       // set the search result to the input value
       // setSearchResultField("input.value");
       // set all locations to false so it won't be filtered
@@ -132,17 +153,17 @@ const BucketListPage = () => {
         item.stateOfClass = false;
       });
     } else {
-      setAttractionData([]);
+      setWishListData([]);
     }
     setSearchResultField(input.value);
-    // setAttractionData([...data]);
-    // console.log(attractionData);
+    // setWishListData([...data]);
+    // console.log(wishListData);
   };
 
   // use this function to handle when the all button is clicked
   const handleAllClick = (e: any) => {
     // therefore setting the attractiondata to the original data fetched from external
-    setAttractionData(attractiondata);
+    setWishListData(initialWishListData);
     // set the search result  to ALl
     setSearchResultField("All");
     // set the input field to empty
@@ -168,7 +189,7 @@ const BucketListPage = () => {
 
     // if the location tag clicked is empty, set the search result field to the "All"
     if (locations.length === 0 && input.value === "") {
-      setAttractionData(attractiondata);
+      setWishListData(initialWishListData);
       setSearchResultField("All");
     }
 
@@ -178,17 +199,35 @@ const BucketListPage = () => {
       input.value = "";
     }
 
-    console.log(attractionData);
     return () => {};
-  }, [attractionData, locationData, inputField]);
+  }, [wishListData, locationData, inputField]);
 
   // to check if the
 
-  // attractionData.map((item) => {
+  // wishListData.map((item) => {
   //     item.reviews?.map((item) => {
   //         review += item.rating
   //     })
   // })
+
+  const handleLikeButton = async (id: any) => {};
+
+  const handleUnLikeButton = async (id: any) => {
+    // remove from wishLis state
+    const data = wishListData.filter((item) => item.id !== id);
+    const data2 = initialWishListData.filter((item) => item.id !== id);
+
+    // remove from database
+    // await removeFromWishList(data[0].id, userId).then((res) => {
+    //   console.log(res);
+    //   if (res.status === 200 && res.data.status === true) {
+    //     setWishList([...wishListData]);
+    // set the wishListData to the new data after removing
+    setInitialWishListData([...data2]);
+    setWishListData([...data]);
+    //   }
+    // });
+  };
 
   return (
     <>
@@ -260,33 +299,35 @@ const BucketListPage = () => {
           </span>
         </div>
         {/* Data to be passed here must be from user's bucket list, i.e the item user liked, so it will have the heart red */}
-        {/* <Card data={attractionData} preferencesData={preferencesData} /> */}
+        {/* <Card data={wishListData} preferencesData={preferencesData} /> */}
 
         <div className="">
           <p>Search Result for: {searchResultField}</p>
         </div>
 
-        {attractionData.length > 0 ? (
+        {wishListData.length > 0 ? (
           <div className="card">
-            {attractionData.map((item) => (
+            {wishListData.map((item) => (
               <div key={item.id}>
                 <Card
                   id={item.id}
-                  image={item.image}
+                  image={item.imageUrl}
                   title={item.title}
                   description={item.description}
                   price={item.price}
-                  reviews={item.reviews}
-                  liked={item.liked}
+                  reviews={item.ratings}
+                  liked={true}
+                  handleLikeButton={handleLikeButton}
+                  handleUnLikeButton={handleUnLikeButton}
                 />
               </div>
             ))}
           </div>
-        ) : (
+        ) : initialWishListData.length > 0 ? (
           <>
             <br />
             <br />
-            <h3>No search Result</h3>
+            <h3>No Result</h3>
             <br />
             <span
               id="next"
@@ -295,6 +336,14 @@ const BucketListPage = () => {
             >
               See all
             </span>
+          </>
+        ) : (
+          <>
+            <br />
+            <br />
+            <h3>You have no attraction in bucket list</h3>
+            <br />
+            <br />
           </>
         )}
       </div>
