@@ -25,6 +25,7 @@ import ExploreCategoryPage from "../components/ExploreCategory/ExploreCategoryPa
 import MainLayout from "../pages";
 import SocialBasicDetails from "../components/SocialBasicDetails/SocialBasicDetails";
 import RequireAuth from "../pages/RequiredAuth";
+import VerifyAccount from "../components/VerifyAccount/VerifyAccount";
 
 const MainRoute: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -54,6 +55,14 @@ const MainRoute: React.FC = () => {
             element={
               <RequireAuth>
                 <BucketListPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/verify-account"
+            element={
+              <RequireAuth>
+                <VerifyAccount />
               </RequireAuth>
             }
           />

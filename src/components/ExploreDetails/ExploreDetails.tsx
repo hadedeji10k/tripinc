@@ -370,6 +370,7 @@ const ExploreDetails = () => {
         <CartModal
           showCartModal={showCartModal}
           setShowCartModal={setShowCartModal}
+          item={attractionData}
         />
       </Spin>
     </>

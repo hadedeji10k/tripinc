@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -25,6 +25,16 @@ export const refreshToken = async (formData: IRefreshToken): Promise<AxiosRespon
 // sign up
 export const signUp = async (formData: ISignUpFull): Promise<AxiosResponse<any>> => {
     return await REGAPI.post("/api/Auth/Register", formData);
+}
+
+// verify account
+export const verifyAccount = async (formData: IVerifyAccount): Promise<AxiosResponse<any>> => {
+    return await USERAPI.post("/api/Auth/VerifyAccount", formData);
+}
+
+// verify account
+export const resendVerification = async (formData: IResendVerification): Promise<AxiosResponse<any>> => {
+    return await USERAPI.post("/api/Auth/ResendVerification", formData);
 }
 
 // update user profile

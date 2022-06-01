@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -11,6 +11,10 @@ const MainLayout: React.FC = () => {
   const toggleIsOpen = (): void => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    console.log("I'm here ");
+  });
 
   return (
     <>

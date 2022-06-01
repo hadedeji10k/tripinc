@@ -164,4 +164,5 @@ export const NavBtnProfileLink = styled(ReactLinkRouter)`
 
 export const ReactIcons = styled.span`
     font-size: 1.5rem;
+    position: relative;
 `

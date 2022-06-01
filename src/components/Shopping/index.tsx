@@ -33,9 +33,14 @@ const Shopping = () => {
   const [userId, setUserId] = useState<number | null>(() => localGetUserId());
 
   useEffect(() => {
-    getUserCart(userId).then((res) => {
-      setCartData(res.data);
-    });
+    const cart = JSON.parse(localStorage.getItem("cart_data") as any);
+    if (cart) {
+      setCartData(cart);
+    } else {
+      getUserCart(userId).then((res) => {
+        setCartData(res.data);
+      });
+    }
   }, [userId]);
 
   const handleNextButton = (id: any) => {

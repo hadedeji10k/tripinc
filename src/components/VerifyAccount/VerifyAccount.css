@@ -1,0 +1,94 @@
+.verify_account_page_container {
+    max-width: 1000px;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    align-content: center;
+    padding: 30px;
+}
+
+.verify_account_word {
+    /* font-size: 2.5rem;
+    /* color: #fff; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    align-items: center;
+    /* padding: 2rem; */
+    /* margin: auto; */
+    align-self: center;
+}
+
+.verify_account_header {
+    font-size: 3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    /* color: #fff; */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    line-height: 48px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    color: #141416;
+}
+
+
+.verify_account_title {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+    color: #777E90;
+    font-size: 16px;
+    line-height: 24px;
+    word-spacing: 0.6px;
+    letter-spacing: 0.3px;
+    text-align: center;
+}
+
+.verify_account_button {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 10px 24px;
+    background: #92A5EF;
+    color: #fff;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.verify_account_button:hover {
+    background: #2b44a8;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.code_eyes_icon {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 550px) {
+    .verify_account_header {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .verify_account_header {
+        font-size: 2rem;
+        line-height: 34px;
+    }
+
+    .verify_account_title {
+        font-size: 0.8rem;
+        line-height: 20px;
+    }
+
+}

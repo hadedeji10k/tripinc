@@ -4,6 +4,7 @@ import "./ProfileTopBar.css";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IUserProfile } from "../../../api/interfaces";
 import defaultImage from "../../../images/default_profile_image.jpg";
+import { resendVerification } from "../../../api/responseHandlers";
 
 interface menuData {
   id: Number;
@@ -49,6 +50,14 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
     setMenuBar([...menuBar]);
   };
 
+  const handleVerifyAccount = async () => {
+    const formData = {
+      recipient: userProfile.email,
+      verificationType: "Email",
+    };
+    await resendVerification(formData);
+  };
+
   return (
     <>
       <div className="profile_top_bar_container">
@@ -66,7 +75,14 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
           {userProfile.emailVerified ? (
             <p className="user_identity">Identity verified</p>
           ) : (
-            <p className="user_identity">Identity not verified</p>
+            <>
+              <p className="user_identity">Identity not verified</p>
+              <p className="user_identity" onClick={handleVerifyAccount}>
+                <small style={{ cursor: "pointer" }}>
+                  Click to verify your account
+                </small>
+              </p>
+            </>
           )}
         </div>
         <div className="menu_bar">

@@ -3,10 +3,14 @@ import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./CartModal.css";
 import { MdClose } from "react-icons/md";
+import { IAddCart, IDeal } from "../../api/interfaces";
+import { localGetUserId } from "../../utils/helpers";
+import { addToCart } from "../../api/responseHandlers";
 // import { FiStar } from "react-icons/fi";
 
 // interface for CartModal
 interface CartModalProp {
+  item: IDeal | any;
   showCartModal: Boolean;
   setShowCartModal: React.Dispatch<React.SetStateAction<Boolean>>;
 }
@@ -27,46 +31,18 @@ const Background: any = styled.div`
 `;
 
 // component for the CartModal
-const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
+const CartModal = ({
+  item,
+  showCartModal,
+  setShowCartModal,
+}: CartModalProp) => {
   const [price, setPrice] = useState<Number>(0);
+  const [numOfPeople, setNumOfPeople] = useState<Number>(0);
+  const [date, setDate] = useState<string>("");
+  const [time, setTime] = useState<string>("");
 
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
-
-  // animation for the modal to pop up when the modal is clicked
-  const animation = useSpring({
-    opacity: showCartModal ? 1 : 0,
-    transform: showCartModal ? "translateZ(0)" : "translateZ(-100%)",
-    config: {
-      // mass: 1,
-      // tension: 300,
-      // friction: 20,
-      duration: 800,
-    },
-  });
-
-  const handlePeople = (e: React.FormEvent): void => {
-    let peopleSelect = document.getElementById("people") as HTMLSelectElement;
-    let people = peopleSelect?.value;
-    let price = parseInt(people) * 300;
-    setPrice(price);
-  };
-  const submitData = (e: React.FormEvent): void => {
-    let dateSelect = document.getElementById("date") as HTMLSelectElement;
-    let date = dateSelect?.value;
-    let timeSelect = document.getElementById("time") as HTMLSelectElement;
-    let time = timeSelect?.value;
-    let peopleSelect = document.getElementById("people") as HTMLSelectElement;
-    let people = peopleSelect?.value;
-    console.log(date, time, people);
-  };
-  // function for closing the modal
-  const closeModal = (e: React.FormEvent): void => {
-    e.preventDefault();
-    if (modalRef.current === e.target) {
-      setShowCartModal(false);
-    }
-  };
 
   // function for checking for the esc key press
   const keyPress = useCallback(
@@ -86,6 +62,59 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
     };
   }, [keyPress]);
 
+  // animation for the modal to pop up when the modal is clicked
+  const animation = useSpring({
+    opacity: showCartModal ? 1 : 0,
+    transform: showCartModal ? "translateZ(0)" : "translateZ(-100%)",
+    config: {
+      // mass: 1,
+      // tension: 300,
+      // friction: 20,
+      duration: 800,
+    },
+  });
+
+  const handlePeople = (e: any): void => {
+    const people = e.target.value;
+    setNumOfPeople(Number(people));
+    let price = parseInt(people) * item.price;
+    setPrice(price);
+  };
+
+  const handleDate = (e: any): void => {
+    const date = e.target.value;
+    setDate(date);
+  };
+
+  const handleTime = (e: any): void => {
+    const time = e.target.value;
+    setTime(time);
+  };
+
+  // function for closing the modal
+  const closeModal = (e: React.FormEvent): void => {
+    e.preventDefault();
+    if (modalRef.current === e.target) {
+      setShowCartModal(false);
+    }
+  };
+
+  const handleAddToCart = async (e: React.FormEvent) => {
+    const formData: IAddCart = {
+      userId: localGetUserId(),
+      itemId: item.id,
+      itemType: item.itemType,
+      itemName: item.title,
+      currency: item.currency,
+      unitPrice: item.price,
+      quantity: 2,
+      imageUrl: item.imageUrl ? item.imageUrl : item.photos[0].photoUrl,
+      date: new Date(),
+    };
+    console.log(formData);
+    await addToCart(formData);
+  };
+
   // return the CartModal
   return (
     <>
@@ -95,10 +124,10 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
           <animated.div className="modal" style={animation}>
             <div className="cart_modal_wrapper">
               <h3 className="cart_modal_header">
-                $300 <small className="small">/ person</small>
+                ${item.price} <small className="small">/ person</small>
               </h3>
               <div className="cart_select_container">
-                <select name="date" id="date">
+                <select name="date" id="date" onClick={handleDate}>
                   <option value="Friday 21st, January">
                     Friday 21st, January
                   </option>
@@ -126,14 +155,14 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
                 </select>
               </div>
               <div className="cart_select_container">
-                <select name="time" id="time">
+                <select name="time" id="time" onClick={handleTime}>
                   <option value="12:00 - 16:00">12:00 - 16:00</option>
                   <option value="13:00 - 19:00">13:00 - 19:00</option>
                   <option value="11:00 - 13:00">11:00 - 13:00</option>
                 </select>
               </div>
               <div>
-                <button className="button" onClick={submitData}>
+                <button className="button" onClick={handleAddToCart}>
                   Continue
                 </button>
               </div>
@@ -142,7 +171,7 @@ const CartModal = ({ showCartModal, setShowCartModal }: CartModalProp) => {
 
               <div className="price">
                 <p>Total</p>
-                <p>{price.toString()}</p>
+                <p>${price.toString()}</p>
               </div>
 
               <div>

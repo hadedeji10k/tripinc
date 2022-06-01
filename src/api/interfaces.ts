@@ -53,6 +53,17 @@ export interface ISignUpAndInResponse {
     status: boolean,
     message: string
 }
+export interface IResendVerification {
+    recipient: string,
+    verificationType: string,
+}
+
+export interface IVerifyAccount {
+    userId: number | null,
+    token: string,
+    verificationType: string,
+}
+
 export interface ISignUpFull {
     firstName: string
     lastName: string

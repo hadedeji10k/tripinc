@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -189,6 +189,98 @@ export const signIn = async (formData: ISignIn) => {
   }
 };
 
+export const verifyAccount = async (formData: IVerifyAccount) => {
+  try {
+    const response = await api.verifyAccount(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully verified your account.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/#/profile";
+        }
+      });
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Verifying account was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Verifying account was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Verifying account was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
+
+export const resendVerification = async (formData: IResendVerification) => {
+  try {
+    const response = await api.resendVerification(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "A verification code has been sent to your mail.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/#/verify-account";
+        }
+      });
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Error sending verification code to your email, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Error sending verification code to your email. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Error sending verification code to your email. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
+
 export const updateUser = async (formData: IUpdateProfile) => {
   try {
     const response = await api.updateProfile(formData);
@@ -344,7 +436,7 @@ export const addToCart = async (formData: IAddCart) => {
       const cart = JSON.parse(
         localStorage.getItem("cart_data") as any
       );
-      if (cart.length > 0) {
+      if (cart?.length > 0) {
         const newCart = [...cart, response.data.data]
         localStorage.setItem("cart_data", JSON.stringify(newCart));
       } else {

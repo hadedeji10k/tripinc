@@ -320,3 +320,14 @@ export const setUser = (user: any) => {
 export const removeUser = () => {
   localStorage.removeItem("user");
 };
+
+// get cart length
+export const localGetCartLength = (): number => {
+  const cart = JSON.parse(localStorage.getItem("cart_data") as any);
+
+  if (!cart) {
+    return 0;
+  } else {
+    return cart.length;
+  }
+};

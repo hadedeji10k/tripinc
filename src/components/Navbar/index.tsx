@@ -30,6 +30,7 @@ import { GoogleLoginClientId } from "../../utils/constants";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 // import logo from '../../logo.svg'
+import { localGetCartLength } from "../../utils/helpers";
 
 // Interface for this component
 interface NavbarProps {
@@ -45,6 +46,11 @@ const Navbar: React.FC<NavbarProps> = ({
   const authContext = useContext(AuthContext);
   const [profilePicture, setProfilePicture] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(authContext.isLoggedIn);
+  const [cartLength, setCartLength] = useState<number>(0);
+
+  useEffect(() => {
+    setCartLength(localGetCartLength());
+  });
 
   const { pathname } = useLocation();
 
@@ -128,6 +134,7 @@ const Navbar: React.FC<NavbarProps> = ({
             <NavLink to="/shopping">
               <ReactIcons>
                 <AiOutlineShoppingCart />
+                <span className="cart_number">{cartLength}</span>
               </ReactIcons>
             </NavLink>
             {isLoggedIn ? (
