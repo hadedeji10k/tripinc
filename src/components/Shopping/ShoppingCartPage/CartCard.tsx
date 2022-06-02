@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./ShoppingCartPage.css";
 import { ICart } from "../../../api/interfaces";
 import { updateCart } from "../../../api";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface Props {
   item: ICart;
@@ -29,7 +31,25 @@ const CartCard = ({
 }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const handleQuantityChange = async (e: any) => {
+    if (!userId) {
+      Swal.fire({
+        title: "Please Login",
+        text: "You need to login to update your cart",
+        icon: "warning",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          navigate("/sign-in", {
+            replace: true,
+            state: { from: location.pathname },
+          });
+        }
+      });
+    }
     setIsLoading(true);
     console.log(e.target.value);
     const formData = {
@@ -103,13 +123,17 @@ const CartCard = ({
               </div>
               <div className="">
                 <button
-                  className="shopping_cart_button"
+                  className="shopping_cart_button_remove"
                   onClick={() => handleRemove(item.id)}
                 >
                   Delete
                 </button>
                 <button
-                  className="shopping_cart_button"
+                  className={
+                    inWishList
+                      ? "shopping_cart_button_remove"
+                      : "shopping_cart_button"
+                  }
                   onClick={
                     inWishList
                       ? () => removeFromWishList(item.itemId)

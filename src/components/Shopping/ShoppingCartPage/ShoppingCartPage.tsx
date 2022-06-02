@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./ShoppingCartPage.css";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
@@ -22,6 +23,9 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [wishList, setWishList] = useState<any[]>([]);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
     setIsLoading(true);
     if (userId) {
@@ -38,6 +42,21 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
 
   const handleRemove = async (id) => {
     setIsLoading(true);
+    if (!userId) {
+      Swal.fire({
+        title: "Please Login",
+        text: "You need to login to update your cart",
+        icon: "warning",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          navigate("/sign-in", {
+            replace: true,
+            state: { from: location.pathname },
+          });
+        }
+      });
+    }
     Swal.fire({
       title: "Are you sure you want to remove this from your cart?",
       icon: "warning",

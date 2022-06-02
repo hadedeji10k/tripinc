@@ -125,6 +125,23 @@
     transition: all 0.3s ease-in-out;
 }
 
+.shopping_cart_button_remove {
+    padding: 5px;
+    margin-bottom: 10px;
+    outline: none;
+    border: 1px solid #dce0e6;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+    background-color: rgb(206, 39, 39);
+    color: #fff;
+}
+
+.shopping_cart_button_remove:hover {
+    background-color: rgb(156, 0, 0);
+    transition: all 0.3s ease-in-out;
+}
+
 .cart_line {
     height: 1px;
     width: 70%;
@@ -191,6 +208,10 @@
     }
 
     .shopping_cart_button {
+        margin-right: 10px;
+    }
+
+    .shopping_cart_button_remove {
         margin-right: 10px;
     }
 }

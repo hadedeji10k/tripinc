@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import { useSpring, animated } from "react-spring";
@@ -51,6 +52,9 @@ const CartModal = ({
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const prevPrice =
@@ -117,6 +121,23 @@ const CartModal = ({
   };
 
   const handleAddToCart = async (e: React.FormEvent) => {
+    if (!userId) {
+      Swal.fire({
+        title: "Please Login",
+        text: `You need to login to ${
+          itemInCart ? "update your" : "add to"
+        } cart`,
+        icon: "warning",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          navigate("/sign-in", {
+            replace: true,
+            state: { from: location.pathname },
+          });
+        }
+      });
+    }
     setIsLoading(true);
     if (itemInCart) {
       const formData = {
