@@ -34,10 +34,11 @@ const Shopping = () => {
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart_data") as any);
-    if (cart) {
+    if (cart && cart.length > 0) {
       setCartData(cart);
     } else {
       getUserCart(userId).then((res) => {
+        localStorage.setItem("cart_data", JSON.stringify(res.data));
         setCartData(res.data);
       });
     }

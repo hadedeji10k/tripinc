@@ -11,7 +11,7 @@ import { getExplore } from "../../currentUserData";
 import CartModal from "../Cart/CartModal";
 import { useParams } from "react-router-dom";
 import { getAttractionByID, getUserWishList } from "../../api";
-import { IDeal, IRatings } from "../../api/interfaces";
+import { ICart, IDeal, IRatings } from "../../api/interfaces";
 import { getUserProfilePicture, localGetUserId } from "../../utils/helpers";
 import Swal from "sweetalert2";
 import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
@@ -21,6 +21,8 @@ const ExploreDetails = () => {
   const [showCartModal, setShowCartModal] = useState<Boolean>(false);
   const [showDetails, setShowDetails] = useState(false);
 
+  const [itemInCart, setItemInCart] = useState(false);
+  const [cartItem, setCartItem] = useState<ICart>();
   const [userLikedPost, setUserLikedPost] = useState(false);
   const [attractionData, setAttractionData] = useState<IDeal>();
   const [ratings, setRatings] = useState<IRatings[]>([]);
@@ -68,6 +70,14 @@ const ExploreDetails = () => {
   }
 
   useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart_data") as any);
+    cart &&
+      cart?.map((item) => {
+        if (Number(item.itemId) === Number(id)) {
+          setItemInCart(true);
+          setCartItem(item);
+        }
+      });
     getUserWishList(userId)
       .then((res) => {
         setWishListData(res.data.items);
@@ -153,7 +163,8 @@ const ExploreDetails = () => {
 
   // like
 
-  const handleLikeButton = async (id: any) => {
+  const handleLikeButton = async () => {
+    setIsLoading(true);
     const formData = {
       userId,
       itemId: attractionData?.id,
@@ -165,17 +176,42 @@ const ExploreDetails = () => {
     const response = await addToWishList(formData);
     if (response === true) {
       setUserLikedPost(true);
+      setIsLoading(false);
     }
   };
 
-  const handleUnLikeButton = async (id: any) => {
-    console.log(id);
-
-    // remove from database, if successful, remove from state
-    const response = await removeFromWishList(attractionData?.id, userId);
-    if (response === true) {
-      setUserLikedPost(false);
-    }
+  const handleUnLikeButton = async () => {
+    setIsLoading(true);
+    // remove from wishList state
+    const data = wishListData.filter(
+      (item) => item.id.toString() !== attractionData?.id.toString()
+    );
+    Swal.fire({
+      title: "Are you sure you want to remove this from your bucket list?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, remove!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          // remove from database
+          await removeFromWishList(id, userId).then((res) => {
+            if (res === true) {
+              // set the wishListData to the new data after removing
+              setWishListData([...data]);
+              setIsLoading(false);
+              setUserLikedPost(false);
+            } else {
+              setIsLoading(false);
+            }
+          });
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -308,7 +344,6 @@ const ExploreDetails = () => {
             </div>
 
             {/* <hr className="line"/> */}
-
             <div className="explore_container_review">
               <h3 className="sub_heading">Reviews</h3>
               {ratings.map((item, index) => (
@@ -317,7 +352,7 @@ const ExploreDetails = () => {
                     <div className="review_card_image">
                       <img
                         src={item.image}
-                        alt=""
+                        alt={item.fullName}
                         className="review_card_image"
                       />
                     </div>
@@ -362,7 +397,7 @@ const ExploreDetails = () => {
                 className="explore_detail_button"
                 onClick={toggleShowCartModal}
               >
-                Add to Cart
+                {itemInCart ? "Update Cart" : "Add to Cart"}
               </button>
             </div>
           </div>
@@ -371,6 +406,9 @@ const ExploreDetails = () => {
           showCartModal={showCartModal}
           setShowCartModal={setShowCartModal}
           item={attractionData}
+          itemInCart={itemInCart}
+          cartData={cartItem}
+          userId={userId}
         />
       </Spin>
     </>

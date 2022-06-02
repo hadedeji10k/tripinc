@@ -186,6 +186,7 @@ export const signIn = async (formData: ISignIn) => {
       icon: "error",
       confirmButtonText: "Ok",
     });
+    return false
   }
 };
 
@@ -427,12 +428,6 @@ export const addToCart = async (formData: IAddCart) => {
     const response = await api.addToCart(formData);
 
     if (response.status === 200 && response.data.status === true) {
-      Swal.fire({
-        title: "Success!",
-        text: "You have successfully added item to Cart.",
-        icon: "success",
-        confirmButtonText: "Ok",
-      })
       const cart = JSON.parse(
         localStorage.getItem("cart_data") as any
       );
@@ -478,60 +473,6 @@ export const addToCart = async (formData: IAddCart) => {
     return false
   }
 };
-
-// update cart
-export const updateCart = async (formData: IAddCart) => {
-  try {
-    const response = await api.addToCart(formData);
-
-    if (response.status === 200 && response.data.status === true) {
-      Swal.fire({
-        title: "Success!",
-        text: "You have successfully updated item in your Cart.",
-        icon: "success",
-        confirmButtonText: "Ok",
-      })
-      const cart = JSON.parse(
-        localStorage.getItem("cart_data") as any
-      );
-      const filterCart = cart.filter(item => item.id.toString() !== formData.itemId.toString())
-      const newCart = [...filterCart, response.data.data[0]]
-      localStorage.setItem("cart_data", JSON.stringify(newCart));
-      return true
-    }
-
-    if (response.status === 200 && response.data.status === false) {
-      Swal.fire({
-        title: "Error!",
-        text: `Updating Cart was not successful, ${response.data.message}`,
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-      return false
-    }
-
-    // if there is error
-    if (response.status !== 200) {
-      Swal.fire({
-        title: "Error!",
-        text: `Updating Cart was not successful. Please try again later`,
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-      return false
-    }
-  } catch (error) {
-    console.log(error);
-    Swal.fire({
-      title: "Error!",
-      text: `Updating Cart was not successful. Please try again later`,
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-    return false
-  }
-};
-
 
 // remove from cart
 export const removeFromCart = async (id: any) => {

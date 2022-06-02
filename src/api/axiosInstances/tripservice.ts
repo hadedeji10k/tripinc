@@ -4,8 +4,12 @@ import { ISignUpAndInResponse } from '../interfaces';
 
 // swagger api - registration - `${tripServiceUrl}/api-docs/index.html`
 
+
+const testingEnvironment = true
+const baseURL = testingEnvironment ? testTripServiceUrl : tripServiceUrl
+
 // TRIP SERVICE api
-const TRIPAPI = axios.create({ baseURL: testTripServiceUrl });
+const TRIPAPI = axios.create({ baseURL });
 
 TRIPAPI.interceptors.request.use(async (req: any) => {
 

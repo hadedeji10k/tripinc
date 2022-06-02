@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -135,7 +135,7 @@ export const addToWishList = async (formData: IWishList): Promise<AxiosResponse<
 
 // remove from wishlist
 export const removeFromWishList = async (id: any, userId: any): Promise<AxiosResponse<any>> => {
-    return await TRIPAPI.delete(`/api/WishLists/${id}/${userId}`);
+    return await TRIPAPI.delete(`/api/WishLists/${id}/${userId}?useItemId=true`);
 }
 
 // get user wishlist
@@ -146,6 +146,11 @@ export const getUserWishList = async (userId: any): Promise<AxiosResponse<any>> 
 // add to cart
 export const addToCart = async (formData: IAddCart): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.post(`/api/Carts/AddToCart`, formData);
+}
+
+// update to cart
+export const updateCart = async (formData: IUpdateCart): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/Carts/UpdateCart`, formData);
 }
 
 // remove from cart

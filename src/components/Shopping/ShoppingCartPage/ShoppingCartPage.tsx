@@ -4,7 +4,11 @@ import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import CartCard from "./CartCard";
 import { ICart } from "../../../api/interfaces";
-import { addToWishList, removeFromCart } from "../../../api/responseHandlers";
+import {
+  addToWishList,
+  removeFromCart,
+  removeFromWishList,
+} from "../../../api/responseHandlers";
 import Swal from "sweetalert2";
 import { getAttractionByID, getUserWishList } from "../../../api";
 
@@ -38,24 +42,29 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
       title: "Are you sure you want to remove this from your cart?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, log out!",
+      confirmButtonText: "Yes, remove!",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const response = await removeFromCart(id);
-        if (response === true) {
-          const newCartData = cartData.filter(
-            (item) => Number(item.id) !== Number(id)
-          );
-          setCartData([...newCartData]);
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await removeFromCart(id);
+          if (response === true) {
+            const newCartData = cartData.filter(
+              (item) => Number(item.id) !== Number(id)
+            );
+            setCartData([...newCartData]);
+            setIsLoading(false);
+          }
         }
-      }
-    });
-    setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleLikeButton = async (id: any) => {
+    console.log(wishList);
     setIsLoading(true);
     const attractionData = await (await getAttractionByID(id)).data;
     const formData = {
@@ -66,8 +75,47 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
       tripId: attractionData.tourId,
     };
 
-    await addToWishList(formData);
+    const response = await addToWishList(formData);
+    if (response === true) {
+      setWishList([...wishList, attractionData]);
+    }
     setIsLoading(false);
+  };
+
+  const handleUnLikeButton = async (id: any) => {
+    setIsLoading(true);
+    // remove from wishList state
+    const data = wishList.filter(
+      (item) => item.id.toString() !== id.toString()
+    );
+    Swal.fire({
+      title: "Are you sure you want to remove this from your bucket list?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, remove!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          // remove from database
+          await removeFromWishList(id, userId).then((res) => {
+            if (res === true) {
+              // set the wishListData to the new data after removing
+              const data = wishList.filter(
+                (item) => item.id.toString() !== id.toString()
+              );
+              setWishList([...data]);
+              setIsLoading(false);
+            } else {
+              setIsLoading(false);
+            }
+          });
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleLike = (a: any) => {
@@ -96,6 +144,10 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
                   handleRemove={handleRemove}
                   addToWishList={handleLikeButton}
                   inWishList={handleLike(item)}
+                  removeFromWishList={handleUnLikeButton}
+                  userId={userId}
+                  cartData={cartData}
+                  setCartData={setCartData}
                 />
               </div>
             ))

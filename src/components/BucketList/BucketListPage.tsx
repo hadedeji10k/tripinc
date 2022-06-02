@@ -1,7 +1,9 @@
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Spin } from "antd";
+import "antd/dist/antd.min.css";
 import "./BucketListPage.css";
-import { locationdata, attractiondata } from "../../currentUserData";
+import { locationdata } from "../../currentUserData";
 // import { attraction } from '../../interfaces';
 import Card from "../Cards/TripCard/TripCard";
 
@@ -9,7 +11,8 @@ import { BiSearch } from "react-icons/bi";
 import { localGetUserId } from "../../utils/helpers";
 import { getUserWishList } from "../../api";
 import { IDeal } from "../../api/interfaces";
-import { addToWishList } from "../../api/responseHandlers";
+import { removeFromWishList } from "../../api/responseHandlers";
+import Swal from "sweetalert2";
 
 // React component of this page
 const BucketListPage = () => {
@@ -25,53 +28,83 @@ const BucketListPage = () => {
   // state to manage the search result in the page
   const [inputField, setInputField] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const userId = localGetUserId();
 
   useEffect(() => {
+    setIsLoading(true);
     if (userId) {
       getUserWishList(userId)
         .then((res) => {
           setWishListData(res.data.items);
           setInitialWishListData(res.data.items);
+          setIsLoading(false);
         })
         .catch((err) => {
           setWishListData([]);
           setInitialWishListData([]);
+          setIsLoading(false);
         });
     }
   }, [userId]);
 
-  // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
   useEffect(() => {
-    let element = document.getElementById(
-      "preferences_tag_container"
-    ) as HTMLElement;
-    if (
-      element.clientWidth === element.scrollWidth ||
-      element.clientWidth > element.scrollWidth
-    ) {
-      let prev = document.getElementById("prev") as HTMLElement;
-      let next = document.getElementById("next") as HTMLElement;
-      prev.style.display = "none";
-      next.style.display = "none";
+    // select the location tags clicked
+    let locations = locationData.filter((item) => item.stateOfClass === true);
+    // getting the input element
+    let input = document.getElementById("input") as HTMLInputElement;
+    // if the input value is not null, set the search result field to the input's value
+    if (input.value !== "") {
+      setSearchResultField(input.value);
     }
-  }, []);
+
+    // if the location tag clicked is empty, set the search result field to the "All"
+    if (locations.length === 0 && input.value === "") {
+      setWishListData(initialWishListData);
+      setSearchResultField("All");
+    }
+
+    // if the location tag clicked is not empty, set the input field back to empty, i.e since at least one of the location tag has been clicked then the input field should be set to empty
+    if (locations.length > 0) {
+      setInputField("");
+      input.value = "";
+    }
+
+    return () => {};
+  }, [wishListData, locationData, inputField]);
+
+  // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
+  // useEffect(() => {
+  //   let element = document.getElementById(
+  //     "preferences_tag_container"
+  //   ) as HTMLElement;
+  //   if (
+  //     element.clientWidth === element.scrollWidth ||
+  //     element.clientWidth > element.scrollWidth
+  //   ) {
+  //     let prev = document.getElementById("prev") as HTMLElement;
+  //     let next = document.getElementById("next") as HTMLElement;
+  //     prev.style.display = "none";
+  //     next.style.display = "none";
+  //   }
+  // }, []);
 
   // function to handle next button scroll of location if there is overflow in the element's data
-  const handleScrollRight = (e: any) => {
-    let element = document.getElementById(
-      "preferences_tag_container"
-    ) as HTMLElement;
-    element.scrollLeft += 70;
-  };
+  // const handleScrollRight = (e: any) => {
+  //   let element = document.getElementById(
+  //     "preferences_tag_container"
+  //   ) as HTMLElement;
+  //   element.scrollLeft += 70;
+  // };
 
   // function to handle prev button scroll of location if there is overflow in the element's data
-  const handleScrollLeft = (e: any) => {
-    let element = document.getElementById(
-      "preferences_tag_container"
-    ) as HTMLElement;
-    element.scrollLeft -= 70;
-  };
+  // const handleScrollLeft = (e: any) => {
+  //   let element = document.getElementById(
+  //     "preferences_tag_container"
+  //   ) as HTMLElement;
+  //   element.scrollLeft -= 70;
+  // };
 
   // function to manage the locations button when it is clicked
   const handleLocationsClick = (e: any) => {
@@ -177,176 +210,161 @@ const BucketListPage = () => {
     });
   };
 
-  useEffect(() => {
-    // select the location tags clicked
-    let locations = locationData.filter((item) => item.stateOfClass === true);
-    // getting the input element
-    let input = document.getElementById("input") as HTMLInputElement;
-    // if the input value is not null, set the search result field to the input's value
-    if (input.value !== "") {
-      setSearchResultField(input.value);
-    }
-
-    // if the location tag clicked is empty, set the search result field to the "All"
-    if (locations.length === 0 && input.value === "") {
-      setWishListData(initialWishListData);
-      setSearchResultField("All");
-    }
-
-    // if the location tag clicked is not empty, set the input field back to empty, i.e since at least one of the location tag has been clicked then the input field should be set to empty
-    if (locations.length > 0) {
-      setInputField("");
-      input.value = "";
-    }
-
-    return () => {};
-  }, [wishListData, locationData, inputField]);
-
-  // to check if the
-
-  // wishListData.map((item) => {
-  //     item.reviews?.map((item) => {
-  //         review += item.rating
-  //     })
-  // })
-
   const handleLikeButton = async (id: any) => {};
 
   const handleUnLikeButton = async (id: any) => {
-    // remove from wishLis state
+    setIsLoading(true);
+    // remove from wishList state
     const data = wishListData.filter((item) => item.id !== id);
     const data2 = initialWishListData.filter((item) => item.id !== id);
-
-    // remove from database
-    // await removeFromWishList(data[0].id, userId).then((res) => {
-    //   console.log(res);
-    //   if (res.status === 200 && res.data.status === true) {
-    //     setWishList([...wishListData]);
-    // set the wishListData to the new data after removing
-    setInitialWishListData([...data2]);
-    setWishListData([...data]);
-    //   }
-    // });
+    Swal.fire({
+      title: "Are you sure you want to remove this from your bucket list?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, remove!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          // remove from database
+          await removeFromWishList(id, userId).then((res) => {
+            if (res === true) {
+              // set the wishListData to the new data after removing
+              setInitialWishListData([...data2]);
+              setWishListData([...data]);
+              setIsLoading(false);
+            } else {
+              setIsLoading(false);
+            }
+          });
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
     <>
-      <div className="bucket_list_page_container">
-        <div className="bucket_list_page_header">
-          <div className="bucket_list_page_header_text">
-            <h3 className="bucket_list_page_header_title">Bucket List</h3>
-            {/* <p className="bucket_list_page_header_description">
+      <Spin spinning={isLoading}>
+        <div className="bucket_list_page_container">
+          <div className="bucket_list_page_header">
+            <div className="bucket_list_page_header_text">
+              <h3 className="bucket_list_page_header_title">Bucket List</h3>
+              {/* <p className="bucket_list_page_header_description">
               You can search cities you wish on this page using the search form.
             </p> */}
+            </div>
           </div>
-        </div>
-        <div className="bucket_list_page_search_container">
-          <div className="bucket_list_page_search_form">
-            <input
-              id="input"
-              className="bucket_list_page_search_input"
-              type="text"
-              placeholder="Search for a city"
-              defaultValue={inputField}
-              onChange={handleInput}
-            />
-            <button
-              className="bucket_list_page_search_button"
-              onClick={handleInput}
-            >
-              <BiSearch />
-            </button>
+          <div className="bucket_list_page_search_container">
+            <div className="bucket_list_page_search_form">
+              <input
+                id="input"
+                className="bucket_list_page_search_input"
+                type="text"
+                placeholder="Search for a city"
+                defaultValue={inputField}
+                onChange={handleInput}
+              />
+              <button
+                className="bucket_list_page_search_button"
+                onClick={handleInput}
+              >
+                <BiSearch />
+              </button>
+            </div>
           </div>
-        </div>
-        <p>Sort using Location:</p>
-        <div
-          id="preferences_tag_container"
-          className="preferences_tag_container"
-        >
-          <span className="preferences_not_clicked" onClick={handleAllClick}>
-            All
-          </span>
-          <br />
-          {locationData.map((item) => (
+          {/* <p>Sort using Location:</p> */}
+          <div
+            id="preferences_tag_container"
+            className="preferences_tag_container"
+          >
+            {/* <span className="preferences_not_clicked" onClick={handleAllClick}>
+              All
+            </span> */}
+            <br />
+            {/* {locationData.map((item) => (
+              <span
+                key={item.id}
+                id={item.id.toString()}
+                className={
+                  item.stateOfClass
+                    ? "preferences_clicked"
+                    : "preferences_not_clicked"
+                }
+                onClick={handleLocationsClick}
+              >
+                {item.title}
+              </span>
+            ))} */}
+          </div>
+          {/* <div className="scroll_button">
             <span
-              key={item.id}
-              id={item.id.toString()}
-              className={
-                item.stateOfClass
-                  ? "preferences_clicked"
-                  : "preferences_not_clicked"
-              }
-              onClick={handleLocationsClick}
+              id="prev"
+              className="navigation_button"
+              onClick={handleScrollLeft}
             >
-              {item.title}
+              Prev
             </span>
-          ))}
-        </div>
-        <div className="scroll_button">
-          <span
-            id="prev"
-            className="navigation_button"
-            onClick={handleScrollLeft}
-          >
-            Prev
-          </span>
-          <span
-            id="next"
-            className="navigation_button"
-            onClick={handleScrollRight}
-          >
-            Next
-          </span>
-        </div>
-        {/* Data to be passed here must be from user's bucket list, i.e the item user liked, so it will have the heart red */}
-        {/* <Card data={wishListData} preferencesData={preferencesData} /> */}
-
-        <div className="">
-          <p>Search Result for: {searchResultField}</p>
-        </div>
-
-        {wishListData.length > 0 ? (
-          <div className="card">
-            {wishListData.map((item) => (
-              <div key={item.id}>
-                <Card
-                  id={item.id}
-                  image={item.imageUrl}
-                  title={item.title}
-                  description={item.description}
-                  price={item.price}
-                  reviews={item.ratings}
-                  liked={true}
-                  handleLikeButton={handleLikeButton}
-                  handleUnLikeButton={handleUnLikeButton}
-                />
-              </div>
-            ))}
-          </div>
-        ) : initialWishListData.length > 0 ? (
-          <>
-            <br />
-            <br />
-            <h3>No Result</h3>
-            <br />
             <span
               id="next"
-              className="preferences_clicked"
-              onClick={handleAllClick}
+              className="navigation_button"
+              onClick={handleScrollRight}
             >
-              See all
+              Next
             </span>
-          </>
-        ) : (
-          <>
-            <br />
-            <br />
-            <h3>You have no attraction in bucket list</h3>
-            <br />
-            <br />
-          </>
-        )}
-      </div>
+          </div> */}
+          {/* Data to be passed here must be from user's bucket list, i.e the item user liked, so it will have the heart red */}
+          {/* <Card data={wishListData} preferencesData={preferencesData} /> */}
+
+          {/* <div className="">
+            <p>Search Result for: {searchResultField}</p>
+          </div> */}
+
+          {wishListData.length > 0 ? (
+            <div className="card">
+              {wishListData.map((item) => (
+                <div key={item.id}>
+                  <Card
+                    id={item.id}
+                    image={item.imageUrl}
+                    title={item.title}
+                    description={item.description}
+                    price={item.price}
+                    reviews={item.ratings}
+                    liked={true}
+                    handleLikeButton={handleLikeButton}
+                    handleUnLikeButton={handleUnLikeButton}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : initialWishListData.length > 0 ? (
+            <>
+              <br />
+              <br />
+              <h3>No Result</h3>
+              <br />
+              <span
+                id="next"
+                className="preferences_clicked"
+                onClick={handleAllClick}
+              >
+                See all
+              </span>
+            </>
+          ) : (
+            <>
+              <br />
+              <br />
+              <h3>You have no attraction in bucket list</h3>
+              <br />
+              <br />
+            </>
+          )}
+        </div>
+      </Spin>
     </>
   );
 };

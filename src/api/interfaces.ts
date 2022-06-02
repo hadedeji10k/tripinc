@@ -183,6 +183,17 @@ export interface IAddCart {
     imageUrl: string,
     date: Date
 }
+
+export interface IUpdateCart {
+    userId: number | null,
+    tripId?: number,
+    items?:
+    {
+        cartId: number,
+        quantity: number
+    }[]
+}
+
 export interface ICategory {
     code: string | null
     createdDate: string | null

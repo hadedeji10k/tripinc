@@ -2,15 +2,15 @@ import axios from "axios";
 import { IRefreshToken, ISignUpAndInResponse } from '../interfaces';
 import { cannotRefreshAccessToken, checkAuthForRefresh, refreshAccessToken } from '../../utils/helpers'
 import { refreshToken } from "../responseHandlers";
-
-// swagger api - registration - https://onboarding.tripincmvptest.com/api-docs/index.html
-// swagger api - user - https://usersecurity.tripincmvptest.com/api-docs/index.html
+import { testOnboardingServiceUrl, onboardingServiceUrl } from "../../utils/constants";
 
 const ENDPOINTS_NO_TOKEN = ['/api/Auth/CheckIfEmailExist', '/api/Auth/Register', '/api/Auth/SocialSignup', '/api/Users/GetProfilePicture/:userId'];
 
+const testingEnvironment = true
+const baseURL = testingEnvironment ? testOnboardingServiceUrl : onboardingServiceUrl
 
 // registration api
-const REGAPI = axios.create({ baseURL: "https://onboarding.tripincmvptest.com" });
+const REGAPI = axios.create({ baseURL });
 
 REGAPI.interceptors.request.use(async (req: any) => {
 
