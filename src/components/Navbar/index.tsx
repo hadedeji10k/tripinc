@@ -47,12 +47,24 @@ const Navbar: React.FC<NavbarProps> = ({
   const [profilePicture, setProfilePicture] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(authContext.isLoggedIn);
   const [cartLength, setCartLength] = useState<number>(0);
+  // this isused to check if the user has scrolled more than the nav bar
+  const [navBarScrolled, setNavBarScrolled] = useState<boolean>(false);
 
   useEffect(() => {
     setCartLength(localGetCartLength());
   });
 
   const { pathname } = useLocation();
+
+  const changeNavbarBackground = () => {
+    if (window.scrollY >= 80) {
+      setNavBarScrolled(true);
+    } else {
+      setNavBarScrolled(false);
+    }
+  };
+
+  window.addEventListener("scroll", changeNavbarBackground);
 
   useEffect(() => {
     checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
@@ -99,21 +111,51 @@ const Navbar: React.FC<NavbarProps> = ({
   // return the NavbarContainer
   return (
     <>
-      <Nav>
+      <Nav className={navBarScrolled ? "navbar_active" : "navbar_nature"}>
         <NavbarContainer>
-          <NavbarLogo to="/">TripInc</NavbarLogo>
+          <NavbarLogo
+            className={
+              navBarScrolled
+                ? "navbar_active_logo_color"
+                : "navbar_nature_logo_color"
+            }
+            to="/"
+          >
+            TripInc
+          </NavbarLogo>
           <MobileIcon onClick={toggleIsOpen}>
             <GoThreeBars />
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLink to="/explore">Explore</NavLink>
+              <NavLink
+                className={
+                  navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
+                }
+                to="/explore"
+              >
+                Explore
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/bucket-list">Bucket List</NavLink>
+              <NavLink
+                className={
+                  navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
+                }
+                to="/bucket-list"
+              >
+                Bucket List
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/my-trips">My Trips</NavLink>
+              <NavLink
+                className={
+                  navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
+                }
+                to="/my-trips"
+              >
+                My Trips
+              </NavLink>
             </NavItem>
             {/* <NavItem>
                         <NavLink to="/">
@@ -131,17 +173,35 @@ const Navbar: React.FC<NavbarProps> = ({
               <MdOutlineLanguage />
               &nbsp; Language
             </NavLink> */}
-            <NavLink to="/shopping">
+            <NavLink
+              className={
+                navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
+              }
+              to="/shopping"
+            >
               <ReactIcons>
                 <AiOutlineShoppingCart />
-                <span className="cart_number">{cartLength}</span>
+                <span
+                  className={
+                    navBarScrolled ? "cart_number_active" : "cart_number"
+                  }
+                >
+                  {cartLength}
+                </span>
               </ReactIcons>
             </NavLink>
             {isLoggedIn ? (
               // <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
               profilePicture !== "" ? (
                 <>
-                  <NavBtnProfileLink to="/profile">
+                  <NavBtnProfileLink
+                    className={
+                      navBarScrolled
+                        ? "navbar_active_color"
+                        : "navbar_nature_color"
+                    }
+                    to="/profile"
+                  >
                     <img src={profilePicture} alt="profile pic" />
                   </NavBtnProfileLink>
                   <NavBtnLinkLogout onClick={handleLogout}>
@@ -150,7 +210,14 @@ const Navbar: React.FC<NavbarProps> = ({
                 </>
               ) : (
                 <>
-                  <NavBtnProfileLink to="/profile">
+                  <NavBtnProfileLink
+                    className={
+                      navBarScrolled
+                        ? "navbar_active_color"
+                        : "navbar_nature_color"
+                    }
+                    to="/profile"
+                  >
                     <img
                       className="navbar_profile_pics"
                       src={defaultImage}
@@ -163,7 +230,16 @@ const Navbar: React.FC<NavbarProps> = ({
                 </>
               )
             ) : (
-              <NavBtnLink to="/sign-up">Try Beta</NavBtnLink>
+              <NavBtnLink
+                className={
+                  navBarScrolled
+                    ? "navbar_head_active_button"
+                    : "navbar_head_button"
+                }
+                to="/sign-up"
+              >
+                Try Beta
+              </NavBtnLink>
             )}
           </NavBtn>
         </NavbarContainer>

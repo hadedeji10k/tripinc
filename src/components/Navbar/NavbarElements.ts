@@ -6,17 +6,26 @@ interface MobileNavbar {
     onClick: React.MouseEventHandler<HTMLDivElement> & ((e: Event) => void)
 }
 
-export const Nav = styled.nav`
-    background-color: #fff;
+interface NavProps {
+    isScrolled?: any;
+}
+
+
+export const Nav = styled.nav<NavProps>`
+    max-width: 97%;
     height: 80px;
     // margin-top: -80px;
-    display : flex;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    aligh-items: center;
+    align-items: center;
+    align-content: center;
     font-size: 1rem;
     position: sticky;
     top: 0;
     z-index: 10;
+    margin: auto;
 
     @media screen and (max-width: 960px) {
         transition: 0.8s all ease;
@@ -30,11 +39,10 @@ export const NavbarContainer = styled.div`
     width: 100%;
     z-index: 1;
     padding: 0 24px;
-    max-width: 1100px;
+    max-width: 97%;
 `
 
 export const NavbarLogo = styled(ReactLinkRouter)`
-    color: #252748;
     justify-self: flex-start;
     cursor: pointer;
     font-size: 1.5rem;
@@ -77,7 +85,7 @@ export const NavItem = styled.li`
 `
 
 export const NavLink = styled(ReactLinkRouter)`
-    color: #777E90;
+    // color: #777E90;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -91,7 +99,6 @@ export const NavLink = styled(ReactLinkRouter)`
     }
     &:hover {
         transition: all 0.2s ease-in-out;
-        color: #252748;
     }
 `
 
@@ -108,7 +115,7 @@ export const NavBtnLink = styled(ReactLinkRouter)`
     background-color: #252748;
     white-space: nowrap;
     padding: 10px 20px;
-    color: #fff;
+    // color: #fff;
     font-size: 1rem;
     outline: none;
     border: none;
@@ -118,8 +125,6 @@ export const NavBtnLink = styled(ReactLinkRouter)`
     
     &:hover {
         transition: all 0.2s ease-in-out;
-        background-color: #d4d5e4;
-        color: #252748;
     }
 `
 

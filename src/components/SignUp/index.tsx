@@ -31,11 +31,14 @@ const Signup = () => {
   };
 
   const onSubmit = async (data: ISignUp) => {
-    setIsLoading((prev) => !prev);
+    setIsLoading(true);
     await checkIfEmailExists(data).then((res) => {
-      // setIsLoading(false);
-      setIsLoading((prev) => !prev);
-      window.location.href = "/#/basic-details";
+      if (res === true) {
+        setIsLoading(false);
+        window.location.href = "/#/basic-details";
+      } else {
+        setIsLoading(false);
+      }
       // setShowSecurityModal(true);
     });
   };

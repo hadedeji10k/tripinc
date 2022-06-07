@@ -835,10 +835,12 @@ export const checkIfEmailExists = async (formData: ISignUp) => {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      return false
     }
 
     if (response.status === 200 && response.data.status === false) {
       localStorage.setItem("signUpData", JSON.stringify(formData));
+      return true
     }
   } catch (error) {
     console.log(error);
