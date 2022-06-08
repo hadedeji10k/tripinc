@@ -15,6 +15,7 @@ import { ICart, IDeal, IRatings } from "../../api/interfaces";
 import { getUserProfilePicture, localGetUserId } from "../../utils/helpers";
 import Swal from "sweetalert2";
 import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
+import { GOOGLEAPIKEY } from "../../utils/constants";
 
 const ExploreDetails = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -159,7 +160,9 @@ const ExploreDetails = () => {
     setRatings([...ratings]);
   };
 
-  const AnyReactComponent = ({ text, lat, lng }) => <div>{text}</div>;
+  const AnyReactComponent = ({ text, lat, lng }) => (
+    <div style={{ color: "red" }}>{text}</div>
+  );
 
   // like
 
@@ -309,7 +312,7 @@ const ExploreDetails = () => {
                 {isLoading ? null : (
                   <>
                     <GoogleMapReact
-                      // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+                      bootstrapURLKeys={{ key: GOOGLEAPIKEY }}
                       defaultCenter={{
                         lat: attractionData?.latitude,
                         lng: attractionData?.longitude,
@@ -319,7 +322,7 @@ const ExploreDetails = () => {
                       <AnyReactComponent
                         lat={attractionData?.latitude}
                         lng={attractionData?.longitude}
-                        text="My Marker"
+                        text={attractionData?.title}
                       />
                     </GoogleMapReact>
                   </>
