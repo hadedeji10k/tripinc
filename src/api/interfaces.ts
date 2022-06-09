@@ -194,6 +194,14 @@ export interface IUpdateCart {
     }[]
 }
 
+export interface IAddReview {
+    userId: number | null,
+    fullName: string | null,
+    attractionId: number,
+    rating: number,
+    comment: string
+}
+
 export interface ICategory {
     code: string | null
     createdDate: string | null

@@ -5,6 +5,7 @@ import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./Signin.css";
 import { FaFacebookF } from "react-icons/fa";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { Formik } from "formik";
 import { ISignIn } from "../../api/interfaces";
@@ -22,6 +23,7 @@ const Signin = () => {
 
   const [remoteError, setRemoteError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
   const { state }: { state: any } = useLocation();
   const authContext = useContext(AuthContext);
@@ -210,11 +212,19 @@ const Signin = () => {
                     ) : null}
                   </div>
                   <div>
-                    <label className="signin_label">Password</label>
+                    <div className="password_div">
+                      <label className="signin_label">Password</label>
+                      <span
+                        className="sign_in_code_eyes_icon"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                      </span>
+                    </div>
                     <input
                       name="password"
                       className="signin_input"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       onChange={handleChange}
                       onBlur={handleBlur}

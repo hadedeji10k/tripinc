@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import GoogleMapReact from "google-map-react";
+import ReactStars from "react-rating-stars-component";
 import "./ExploreDetails.css";
 import { FiFlag } from "react-icons/fi";
 import { GoStar } from "react-icons/go";
@@ -11,16 +12,28 @@ import { getExplore } from "../../currentUserData";
 import CartModal from "../Cart/CartModal";
 import { useParams } from "react-router-dom";
 import { getAttractionByID, getUserWishList } from "../../api";
-import { ICart, IDeal, IRatings } from "../../api/interfaces";
-import { getUserProfilePicture, localGetUserId } from "../../utils/helpers";
+import { IAddReview, ICart, IDeal, IRatings } from "../../api/interfaces";
+import {
+  getUserProfilePicture,
+  localGetUserFullName,
+  localGetUserId,
+} from "../../utils/helpers";
 import Swal from "sweetalert2";
-import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
+import {
+  addReview,
+  addToWishList,
+  removeFromWishList,
+} from "../../api/responseHandlers";
 import { GOOGLEAPIKEY } from "../../utils/constants";
 
 const ExploreDetails = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showCartModal, setShowCartModal] = useState<Boolean>(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [showReviewTextArea, setShowReviewTextArea] = useState(false);
+
+  const [userRating, setUserRating] = useState<number>(0);
+  const [userReview, setUserReview] = useState<string>("");
 
   const [itemInCart, setItemInCart] = useState(false);
   const [cartItem, setCartItem] = useState<ICart>();
@@ -217,6 +230,32 @@ const ExploreDetails = () => {
       });
   };
 
+  const handleReviewTextChange = (e) => {
+    console.log(e.target.value);
+    setUserReview(e.target.value);
+  };
+
+  const ratingChanged = (newRating) => {
+    setUserRating(newRating);
+  };
+
+  const handleReviewSubmit = async (e) => {
+    setIsLoading(true);
+    const formData: IAddReview = {
+      userId,
+      fullName: localGetUserFullName(),
+      attractionId: Number(id),
+      rating: userRating,
+      comment: userReview,
+    };
+    console.log(formData);
+    await addReview(formData).then((res) => {
+      if (res !== true) {
+        setIsLoading(false);
+      }
+    });
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -366,7 +405,13 @@ const ExploreDetails = () => {
                         </span>{" "}
                         &nbsp; &nbsp; &nbsp; &nbsp;
                         <span className="review_card_details_name_rating">
-                          {item.rating} star{item.rating > 0 ? "s" : ""}
+                          {/* {item.rating} star{item.rating > 0 ? "s" : ""} */}
+                          <ReactStars
+                            count={item.rating}
+                            edit={false}
+                            size={24}
+                            color="#ffd700"
+                          />
                         </span>
                       </div>
                       <div className="review_card_details_name">
@@ -393,6 +438,55 @@ const ExploreDetails = () => {
                   <p>No reviews yet.</p>
                 </>
               ) : null}
+              <br />
+              {userId ? (
+                <div className="leave_review">
+                  <p
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setShowReviewTextArea((prev) => !prev)}
+                  >
+                    {showReviewTextArea
+                      ? "Cancel review"
+                      : "Click to leave a review"}
+                  </p>
+                  {showReviewTextArea ? (
+                    <>
+                      <ReactStars
+                        count={5}
+                        size={24}
+                        activeColor="#ffd700"
+                        onChange={ratingChanged}
+                        isHalf={true}
+                        emptyIcon={<i className="far fa-star"></i>}
+                        halfIcon={<i className="fa fa-star-half-alt"></i>}
+                        fullIcon={<i className="fa fa-star"></i>}
+                      />
+                      <textarea
+                        onChange={handleReviewTextChange}
+                        style={{
+                          resize: "none",
+                          width: "80%",
+                          height: "100px",
+                          borderRadius: "5px",
+                          border: "2px solid gray",
+                        }}
+                      ></textarea>
+                      <button
+                        className="explore_detail_button"
+                        onClick={handleReviewSubmit}
+                      >
+                        Submit
+                      </button>
+                    </>
+                  ) : null}
+                </div>
+              ) : (
+                <>
+                  <p>Want to leave a review? Kindly login</p>
+                </>
+              )}
             </div>
 
             <div className="explore_detail_button_container">

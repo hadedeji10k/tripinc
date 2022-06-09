@@ -215,6 +215,18 @@
     align-items: center;
 }
 
+.password_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sign_in_code_eyes_icon {
+    font-size: 1.5rem;
+    margin-top: 0;
+    cursor: pointer;
+}
+
 .login_text {
     color: #92A5EF;
     text-decoration: none;

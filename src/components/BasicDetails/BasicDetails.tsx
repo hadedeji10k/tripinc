@@ -4,6 +4,7 @@ import "antd/dist/antd.min.css";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import { ISignUpFull } from "../../api/interfaces";
 import { AuthContext } from "../../stores/Auth";
@@ -25,6 +26,9 @@ const BasicDetails: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [showModal, setShowModal] = useState<Boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
 
   //creating IP state
   const [ip, setIP] = useState("");
@@ -403,12 +407,20 @@ const BasicDetails: React.FC = () => {
                     <hr className="basic_details_or_line" />
                   </div>
                   <div>
-                    <label className="basic_details_label">
-                      Create Password
-                    </label>
+                    <div className="password_div">
+                      <label className="basic_details_label">
+                        Create Password
+                      </label>
+                      <span
+                        className="sign_in_code_eyes_icon"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                      </span>
+                    </div>
                     <input
                       className="basic_details_input"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       name="password"
                       onChange={handleChange}
@@ -419,12 +431,24 @@ const BasicDetails: React.FC = () => {
                     ) : null}
                   </div>
                   <div>
-                    <label className="basic_details_label">
-                      Confirm Password
-                    </label>
+                    <div className="password_div">
+                      <label className="basic_details_label">
+                        Confirm Password
+                      </label>
+                      <span
+                        className="sign_in_code_eyes_icon"
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
+                      >
+                        {showConfirmPassword ? (
+                          <AiFillEyeInvisible />
+                        ) : (
+                          <AiFillEye />
+                        )}
+                      </span>
+                    </div>
                     <input
                       className="basic_details_input"
-                      type="password"
+                      type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm your password"
                       name="confirmPassword"
                       onChange={handleChange}

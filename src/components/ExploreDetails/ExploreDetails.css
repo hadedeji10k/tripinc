@@ -202,6 +202,12 @@
     margin-right: 40px;
 }
 
+.review_card_details {
+    max-width: 90%;
+    width: 90%;
+    word-break: break-word;
+}
+
 .review_card_details_name:first-child {
     display: flex;
     flex-direction: row;
@@ -214,9 +220,20 @@
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 20px;
     color: #23262F;
+    margin: 5px 0;
+}
+
+.review_card_details_review {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    color: #23262F;
+    margin: 5px 0;
 }
 
 .review_card_details_name_time {
@@ -235,6 +252,14 @@
     font-size: 14px;
     line-height: 24px;
     color: #23262F;
+}
+
+.leave_review {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .explore_detail_button_container {

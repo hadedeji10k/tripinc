@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -161,4 +161,9 @@ export const removeFromCart = async (cartId: any): Promise<AxiosResponse<any>> =
 // get user cart
 export const getUserCart = async (userId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/Carts/GetByUser/${userId}`);
+}
+
+// add review
+export const addReview = async (formData: IAddReview): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/Ratings`, formData);
 }

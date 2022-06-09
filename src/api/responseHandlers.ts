@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -858,4 +858,65 @@ export const noSignUpData = () => {
       window.location.href = "/#/sign-up";
     }
   });
+};
+
+// add to cart
+export const addReview = async (formData: IAddReview) => {
+  try {
+    const response = await api.addReview(formData);
+
+    if (!formData.attractionId || !formData.comment || !formData.fullName || !formData.rating || !formData.userId) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error, please try again",
+        icon: "error",
+        confirmButtonText: "Ok",
+      })
+      return false
+    }
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully added a review on this attraction",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.reload();
+        }
+      });
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Adding review was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Adding review was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Adding review was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
 };
