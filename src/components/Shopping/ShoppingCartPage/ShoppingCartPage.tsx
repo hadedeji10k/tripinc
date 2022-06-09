@@ -103,10 +103,6 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
 
   const handleUnLikeButton = async (id: any) => {
     setIsLoading(true);
-    // remove from wishList state
-    const data = wishList.filter(
-      (item) => item.id.toString() !== id.toString()
-    );
     Swal.fire({
       title: "Are you sure you want to remove this from your bucket list?",
       icon: "warning",

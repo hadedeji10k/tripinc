@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 // import AccountPage from './AccountPage'
@@ -10,7 +10,6 @@ import BookingsPage from "./BookingsPage/BookingsPage";
 import Wallet from "./WalletPage/WalletPage";
 import HelpCenterPage from "./HelpCenterPage/HelpCenterPage";
 
-import { AuthContext } from "../../stores/Auth";
 import {
   checkAuth,
   getFullUserProfile,
@@ -63,24 +62,26 @@ const Profile = (): any => {
   const [userPreferenceData, setUserPreferenceData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [userId, setUserId] = useState<number | null>(() => localGetUserId());
+  const [userId] = useState<number | null>(() => localGetUserId());
 
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    localGetUserId() ? setIsLoggedIn(true) : setIsLoggedIn(false);
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
-    getFullUserProfile().then((res) => {
-      setFullUserProfile(res);
-      // setIsLoading(true);
-      getUserPreferences(userId).then((response) => {
-        setUserPreferenceData(response.data);
-        setIsLoading(false);
+    if (userId) {
+      setIsLoading(true);
+      getFullUserProfile().then((res) => {
+        setFullUserProfile(res);
+        // setIsLoading(true);
+        getUserPreferences(userId).then((response) => {
+          setUserPreferenceData(response.data);
+          setIsLoading(false);
+        });
       });
-    });
+    }
   }, [userId]);
 
   let data = menuBar.filter((item) => item.state === true);
@@ -90,9 +91,26 @@ const Profile = (): any => {
       <Spin spinning={isLoading} size="large">
         {/* {!fullUserProfile ? ( */}
         {!isLoggedIn ? (
-          <>
+          <div
+            style={{
+              alignItems: "center",
+              margin: "auto",
+              justifyContent: "center",
+              display: "flex",
+            }}
+          >
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <h3>You must sign in before you can access this page</h3>
-          </>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
         ) : !fullUserProfile ? (
           <>
             <br />
@@ -113,6 +131,7 @@ const Profile = (): any => {
               menuBar={menuBar}
               setMenuBar={setMenuBar}
               userProfile={fullUserProfile}
+              userId={userId}
             />
             {data[0].slug === "personal_info" ? (
               <PersonalInfoPage userProfile={fullUserProfile} />

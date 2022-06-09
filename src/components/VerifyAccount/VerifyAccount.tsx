@@ -6,7 +6,6 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import "./VerifyAccount.css";
 import { localGetUserId } from "../../utils/helpers";
 import { verifyAccount } from "../../api/responseHandlers";
-import { isLabeledStatement } from "typescript";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState<string>("");

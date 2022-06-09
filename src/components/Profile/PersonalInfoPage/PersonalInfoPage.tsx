@@ -21,10 +21,10 @@ const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
     useState<Boolean>(false);
 
   // testing
-  const [showErrorMessageModal, setShowErrorMessageModal] =
-    useState<Boolean>(false);
-  const [showSuccessMessageModal, setShowSuccessMessageModal] =
-    useState<Boolean>(false);
+  // const [showErrorMessageModal, setShowErrorMessageModal] =
+  //   useState<Boolean>(false);
+  // const [showSuccessMessageModal, setShowSuccessMessageModal] =
+  //   useState<Boolean>(false);
 
   // const toggleShowErrorMessageModal = (e: React.FormEvent): void => {
   //   e.preventDefault();

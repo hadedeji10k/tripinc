@@ -1,5 +1,3 @@
-import React from "react";
-import { BooleanSchema } from "yup";
 import "./CartSummary.css";
 interface Props {
   totalAmountOfItems: number;

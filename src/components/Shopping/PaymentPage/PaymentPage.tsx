@@ -82,7 +82,7 @@ const PaymentPage = () => {
           </div>
           <button className="payment_page_button">Proceed to Payment</button>
           <p>
-            <a href="#" className="return_to_explore">
+            <a href="/explore" className="return_to_explore">
               &larr; Return to Exploring
             </a>
           </p>

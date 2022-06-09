@@ -860,7 +860,7 @@ export const noSignUpData = () => {
   });
 };
 
-// add to cart
+// add review to attraction
 export const addReview = async (formData: IAddReview) => {
   try {
     const response = await api.addReview(formData);
@@ -920,3 +920,55 @@ export const addReview = async (formData: IAddReview) => {
     return false
   }
 };
+
+// update user picture
+export const updateUserPicture = async (formData: any) => {
+  try {
+    const response = await api.updateUserProfilePicture(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully updated your profile picture",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.reload();
+        }
+      });
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating Picture was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating Picture was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Updating Picture was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+

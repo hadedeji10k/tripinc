@@ -30,7 +30,7 @@ const Shopping = () => {
   const [menuBar, setMenuBar] = useState(menuBarData);
   const [cartData, setCartData] = useState<ICart[]>([]);
   let data = menuBar.filter((item) => item.state === true);
-  const [userId, setUserId] = useState<number | null>(() => localGetUserId());
+  const [userId] = useState<number | null>(() => localGetUserId());
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart_data") as any);
@@ -44,29 +44,29 @@ const Shopping = () => {
     }
   }, [userId]);
 
-  const handleNextButton = (id: any) => {
-    const nextId = Number(id) + 1;
-    for (let i = 0; i < menuBar.length; i++) {
-      const element = menuBar[i];
-      element.state = false;
-    }
-    const index = menuBar.findIndex((item) => item.id === parseInt(id));
-    menuBar[index].state = true;
-    setMenuBar([...menuBar]);
-  };
+  // const handleNextButton = (id: any) => {
+  //   const nextId = Number(id) + 1;
+  //   for (let i = 0; i < menuBar.length; i++) {
+  //     const element = menuBar[i];
+  //     element.state = false;
+  //   }
+  //   const index = menuBar.findIndex((item) => item.id === parseInt(id));
+  //   menuBar[index].state = true;
+  //   setMenuBar([...menuBar]);
+  // };
 
-  const handlePrevButton = (id: any) => {
-    const nextId = Number(id) - 1;
-    if (nextId >= 1) {
-      for (let i = 0; i < menuBar.length; i++) {
-        const element = menuBar[i];
-        element.state = false;
-      }
-      const index = menuBar.findIndex((item) => item.id === nextId);
-      menuBar[index].state = true;
-      setMenuBar([...menuBar]);
-    }
-  };
+  // const handlePrevButton = (id: any) => {
+  //   const nextId = Number(id) - 1;
+  //   if (nextId >= 1) {
+  //     for (let i = 0; i < menuBar.length; i++) {
+  //       const element = menuBar[i];
+  //       element.state = false;
+  //     }
+  //     const index = menuBar.findIndex((item) => item.id === nextId);
+  //     menuBar[index].state = true;
+  //     setMenuBar([...menuBar]);
+  //   }
+  // };
 
   const handleClickMenu = (id: any) => {
     for (let i = 0; i < menuBar.length; i++) {

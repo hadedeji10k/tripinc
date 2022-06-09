@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // import Navbar from "../components/Navbar";
@@ -26,14 +25,9 @@ import MainLayout from "../pages";
 import SocialBasicDetails from "../components/SocialBasicDetails/SocialBasicDetails";
 import RequireAuth from "../pages/RequiredAuth";
 import VerifyAccount from "../components/VerifyAccount/VerifyAccount";
+import PageNotFound from "../components/PageNotFound/PageNotFound";
 
 const MainRoute: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<Boolean>(false);
-
-  // const toggleIsOpen = (): void => {
-  //   setIsOpen(!isOpen);
-  // };
-
   return (
     <>
       <Routes>
@@ -81,6 +75,7 @@ const MainRoute: React.FC = () => {
           <Route path="/set-budget" element={<SetBudget />} />
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/trip-interest" element={<TripInterest />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
         {/* </Route> */}
       </Routes>

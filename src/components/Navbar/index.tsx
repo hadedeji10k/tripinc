@@ -202,7 +202,15 @@ const Navbar: React.FC<NavbarProps> = ({
                     }
                     to="/profile"
                   >
-                    <img src={profilePicture} alt="profile pic" />
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "inherit",
+                      }}
+                      src={profilePicture}
+                      alt="profile pic"
+                    />
                   </NavBtnProfileLink>
                   <NavBtnLinkLogout onClick={handleLogout}>
                     Log out

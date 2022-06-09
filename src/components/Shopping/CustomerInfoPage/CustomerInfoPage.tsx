@@ -64,7 +64,7 @@ const CustomerInfoPage = () => {
           </div>
           <button className="customer_info_button">Proceed to Payment</button>
           <p>
-            <a href="#" className="return_to_explore">
+            <a href="/explore" className="return_to_explore">
               &larr; Return to Exploring
             </a>
           </p>

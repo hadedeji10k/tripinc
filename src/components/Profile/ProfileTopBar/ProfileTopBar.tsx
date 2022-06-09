@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProfileTopBar.css";
+import { Spin } from "antd";
+import "antd/dist/antd.min.css";
+import ImageUploading, { ImageListType } from "react-images-uploading";
 // import image from "../../../images/profile.png";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IUserProfile } from "../../../api/interfaces";
 import defaultImage from "../../../images/default_profile_image.jpg";
-import { resendVerification } from "../../../api/responseHandlers";
+import {
+  resendVerification,
+  updateUserPicture,
+} from "../../../api/responseHandlers";
 
 interface menuData {
   id: Number;
@@ -17,13 +23,18 @@ interface ProfileTopBarProps {
   menuBar: menuData[];
   setMenuBar: any;
   userProfile: IUserProfile;
+  userId: any;
 }
 
 const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
   menuBar,
   setMenuBar,
   userProfile,
+  userId,
 }: ProfileTopBarProps) => {
+  const [images] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   // function to handle preference click
   const handleMenuClick = (e: any) => {
     e.preventDefault();
@@ -58,63 +69,84 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
     await resendVerification(formData);
   };
 
+  const onChange = async (imageList: ImageListType) => {
+    setIsLoading(true);
+    const formData = new FormData();
+    const file: any = imageList[0].file;
+    formData.append("Photo", file, file.name);
+    formData.append("UserId", userId);
+    await updateUserPicture(formData);
+    setIsLoading(false);
+  };
+
   return (
     <>
-      <div className="profile_top_bar_container">
-        <div className="user_profile">
-          {userProfile.profilePicture ? (
-            <img
-              className="user_image"
-              src={userProfile.profilePicture}
-              alt=""
-            />
-          ) : (
-            <img className="user_image" src={defaultImage} alt="" />
-          )}
-          <h3 className="user_name">{`${userProfile.firstName} ${userProfile.lastName}`}</h3>
-          {userProfile.emailVerified ? (
-            <p className="user_identity">Identity verified</p>
-          ) : (
-            <>
-              <p className="user_identity">Identity not verified</p>
-              <p className="user_identity" onClick={handleVerifyAccount}>
-                <small style={{ cursor: "pointer" }}>
-                  Click to verify your account
-                </small>
-              </p>
-            </>
-          )}
+      <Spin spinning={isLoading}>
+        <div className="profile_top_bar_container">
+          <div className="user_profile">
+            {userProfile.profilePicture ? (
+              <img
+                className="user_image"
+                src={userProfile.profilePicture}
+                alt=""
+              />
+            ) : (
+              <img className="user_image" src={defaultImage} alt="" />
+            )}
+            <h3 className="user_name">{`${userProfile.firstName} ${userProfile.lastName}`}</h3>
+            {userProfile.emailVerified ? (
+              <p className="user_identity">Identity verified</p>
+            ) : (
+              <>
+                <p className="user_identity">Identity not verified</p>
+                <p className="user_identity" onClick={handleVerifyAccount}>
+                  <small style={{ cursor: "pointer" }}>
+                    Click to verify your account
+                  </small>
+                </p>
+              </>
+            )}
+          </div>
+          <div className="menu_bar">
+            {menuBar.map((item) => (
+              // <span key={item.id} className="preferences_tag">{item.title}</span>
+              <span
+                key={item.id.toString()}
+                id={item.id.toString()}
+                className={item.state ? "active" : "not_active"}
+                onClick={handleMenuClick}
+              >
+                {item.title}
+              </span>
+            ))}
+          </div>
+          <ImageUploading value={images} onChange={onChange}>
+            {({ onImageUpload, dragProps }) => (
+              // write your building UI
+              <div
+                className="profile_top_bar_button"
+                onClick={onImageUpload}
+                {...dragProps}
+              >
+                <BsFillPencilFill />
+              </div>
+            )}
+          </ImageUploading>
         </div>
-        <div className="menu_bar">
-          {menuBar.map((item) => (
-            // <span key={item.id} className="preferences_tag">{item.title}</span>
-            <span
-              key={item.id.toString()}
-              id={item.id.toString()}
-              className={item.state ? "active" : "not_active"}
-              onClick={handleMenuClick}
-            >
-              {item.title}
-            </span>
-          ))}
+        <div className="">
+          <select className="profile_top_bar_select" onClick={handle}>
+            {menuBar.map((item) => (
+              <option
+                key={item.id.toString()}
+                id={item.id.toString()}
+                value={item.title}
+              >
+                {item.title}
+              </option>
+            ))}
+          </select>
         </div>
-        <button className="profile_top_bar_button">
-          <BsFillPencilFill />
-        </button>
-      </div>
-      <div className="">
-        <select className="profile_top_bar_select" onClick={handle}>
-          {menuBar.map((item) => (
-            <option
-              key={item.id.toString()}
-              id={item.id.toString()}
-              value={item.title}
-            >
-              {item.title}
-            </option>
-          ))}
-        </select>
-      </div>
+      </Spin>
     </>
   );
 };

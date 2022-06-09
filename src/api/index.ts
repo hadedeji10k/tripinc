@@ -71,6 +71,10 @@ export const getUserProfilePictureByID = async (userId: IGetUserByID): Promise<A
     return await REGAPI.get(`/api/Users/GetProfilePicture/${userId}`);
 }
 
+export const updateUserProfilePicture = async (formData: any): Promise<AxiosResponse<any>> => {
+    return await REGAPI.post("/api/Users/ChangeProfilePicture", formData);
+}
+
 export const getTopDeals = async (): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get('/api/Attractions/GetTopDeals');
 }
