@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Spin, Switch } from "antd";
 import "antd/dist/antd.min.css";
 import "./AccountPage.css";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Formik } from "formik";
 import {
   ProfileDetailsPreferenceSchema,
@@ -25,6 +26,12 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
   const [showEdit, setShowEdit] = useState<boolean>(false);
   const [showPasswordEdit, setShowPasswordEdit] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [showCurrentPassword, setShowCurrentPassword] =
+    useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+  const [showNewConfirmPassword, setShowNewConfirmPassword] =
+    useState<boolean>(false);
 
   // const toggleShowAccountModal = (e: React.FormEvent): void => {
   //   e.preventDefault();
@@ -79,6 +86,7 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
     }).then((result) => {
       if (result.isConfirmed) {
         setShowPasswordEdit((prevState) => !prevState);
+        setShowCurrentPassword(false);
       }
     });
   };
@@ -266,13 +274,29 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
                     >
                       <div className="profile_details_item">
                         <div className="profile_details_item_row">
-                          <label className="personal_info_label">
-                            Current Password
-                          </label>
+                          <div className="password_div">
+                            <label className="personal_info_label">
+                              Current Password
+                            </label>
+                            {showPasswordEdit ? (
+                              <span
+                                className="sign_in_code_eyes_icon"
+                                onClick={() =>
+                                  setShowCurrentPassword((prev) => !prev)
+                                }
+                              >
+                                {showCurrentPassword ? (
+                                  <AiFillEyeInvisible />
+                                ) : (
+                                  <AiFillEye />
+                                )}
+                              </span>
+                            ) : null}
+                          </div>
                           <input
                             name="password"
                             className="personal_info_input"
-                            type="password"
+                            type={showCurrentPassword ? "text" : "password"}
                             placeholder={userData?.password}
                             disabled={!showPasswordEdit}
                             onChange={handleChange}
@@ -298,13 +322,27 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
 
                         {showPasswordEdit ? (
                           <div className="profile_details_item_row">
-                            <label className="personal_info_label">
-                              New Password
-                            </label>
+                            <div className="password_div">
+                              <label className="personal_info_label">
+                                New Password
+                              </label>
+                              <span
+                                className="sign_in_code_eyes_icon"
+                                onClick={() =>
+                                  setShowNewPassword((prev) => !prev)
+                                }
+                              >
+                                {showNewPassword ? (
+                                  <AiFillEyeInvisible />
+                                ) : (
+                                  <AiFillEye />
+                                )}
+                              </span>
+                            </div>
                             <input
                               name="newPassword"
                               className="personal_info_input"
-                              type="password"
+                              type={showNewPassword ? "text" : "password"}
                               placeholder={userData?.password}
                               disabled={!showPasswordEdit}
                               onChange={handleChange}
@@ -321,13 +359,29 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
                       {showPasswordEdit ? (
                         <div className="profile_details_item">
                           <div className="profile_details_item_row">
-                            <label className="personal_info_label">
-                              Confirm New Password
-                            </label>
+                            <div className="password_div">
+                              <label className="personal_info_label">
+                                Confirm New Password
+                              </label>
+                              <span
+                                className="sign_in_code_eyes_icon"
+                                onClick={() =>
+                                  setShowNewConfirmPassword((prev) => !prev)
+                                }
+                              >
+                                {showNewConfirmPassword ? (
+                                  <AiFillEyeInvisible />
+                                ) : (
+                                  <AiFillEye />
+                                )}
+                              </span>
+                            </div>
                             <input
                               name="confirmPassword"
                               className="personal_info_input"
-                              type="password"
+                              type={
+                                showNewConfirmPassword ? "text" : "password"
+                              }
                               placeholder={userData?.password}
                               disabled={!showPasswordEdit}
                               onChange={handleChange}
