@@ -324,7 +324,7 @@
     /* padding: 20px; */
 }
 
-.input {
+.landing_page_newsletter_input {
     display: block;
     margin-top: 15px;
     margin-bottom: 20px;
@@ -338,7 +338,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.input:focus {
+.landing_page_newsletter_input:focus {
     border: 2px solid rgb(170, 5, 5);
     transition: all 0.3s ease-in-out;
 }
@@ -851,10 +851,10 @@
         line-height: 20px;
     }
 
-    .input {
-        width: 200px;
-        font-size: 0.7rem;
-    }
+    .landing_page_newsletter_input {
+     width: 200px;
+     font-size: 0.7rem;
+ }
 }
 
 

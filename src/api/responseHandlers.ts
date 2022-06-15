@@ -35,7 +35,7 @@ export const signUp = async (formData: ISignUpFull) => {
       // success message
       Swal.fire({
         title: "Success!",
-        text: "You have successfully created new profile",
+        text: "You have successfully created a new profile",
         icon: "success",
         confirmButtonText: "Ok",
       }).then((result) => {
@@ -99,7 +99,7 @@ export const googleSignUp = async (formData: IGoogleSignUpFull) => {
       // success message
       Swal.fire({
         title: "Success!",
-        text: "You have successfully created new profile",
+        text: "You have successfully created a new profile",
         icon: "success",
         confirmButtonText: "Ok",
       }).then((result) => {

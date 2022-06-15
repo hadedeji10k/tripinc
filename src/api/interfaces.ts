@@ -381,3 +381,12 @@ export interface IDeal {
     cancellationPolicyText?: string,
     expiryDate?: Date
 }
+
+export interface IPagination {
+    hasNext: boolean,
+    hasPrevious: boolean,
+    currentPage: number,
+    pageSize: number,
+    totalPages: number,
+    totalCount: number,
+}

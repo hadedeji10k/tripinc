@@ -34,8 +34,16 @@ const MainRoute: React.FC = () => {
         <Route element={<MainLayout />}>
           {/* <Route element={<AuthVerify />}> */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/explore/:catName" element={<ExploreCategoryPage />} />
+          {/* <Route path="/explore" element={<ExplorePage />} /> */}
+          {/* <Route
+            path="/explore/category/new/:catNameParam"
+            element={<ExploreCategoryPage />}
+          /> */}
+          <Route path="/explore" element={<ExplorePage />}>
+            <Route path="city/:cityParam" element={<ExplorePage />} />
+            <Route path="category/:catNameParam" element={<ExplorePage />} />
+          </Route>
+
           <Route
             path="/my-trips"
             element={

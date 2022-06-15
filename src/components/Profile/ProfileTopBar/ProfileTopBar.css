@@ -1,6 +1,6 @@
 .profile_top_bar_container {
     background: #F26A4D;
-    height: 55vh;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,6 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 87%;
 }
 
 .user_image {
@@ -48,7 +49,7 @@
 .menu_bar {
     display: flex;
     flex-direction: row;
-    margin-top: 40px;
+    margin-top: 2%;
 }
 
 .active {
@@ -80,7 +81,7 @@
     display: block;
     margin-top: 7px;
     margin-bottom: 25px;
-    padding: 0.7rem 1rem;
+    padding: 0.3rem 0.6rem;
     font-size: 1rem;
     border-radius: 40px;
     outline: none;
@@ -93,8 +94,8 @@
     outline: none;
     cursor: pointer;
     position: absolute;
-    top: 35px;
-    right: 65px;
+    bottom: -30px;
+    right: -15px;
 }
 
 .profile_top_bar_button:hover {
@@ -106,14 +107,6 @@
 
 .profile_top_bar_select {
     display: none;
-}
-
-
-@media screen and (max-width: 1000px) {
-    .profile_top_bar_button {
-        top: 20px;
-        right: 20px;
-    }
 }
 
 @media screen and (max-width: 750px) {

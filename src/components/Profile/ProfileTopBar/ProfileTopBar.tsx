@@ -85,11 +85,25 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
         <div className="profile_top_bar_container">
           <div className="user_profile">
             {userProfile.profilePicture ? (
-              <img
-                className="user_image"
-                src={userProfile.profilePicture}
-                alt=""
-              />
+              <div style={{ position: "relative" }}>
+                <img
+                  className="user_image"
+                  src={userProfile.profilePicture}
+                  alt=""
+                />
+                <ImageUploading value={images} onChange={onChange}>
+                  {({ onImageUpload, dragProps }) => (
+                    // write your building UI
+                    <div
+                      className="profile_top_bar_button"
+                      onClick={onImageUpload}
+                      {...dragProps}
+                    >
+                      <BsFillPencilFill />
+                    </div>
+                  )}
+                </ImageUploading>
+              </div>
             ) : (
               <img className="user_image" src={defaultImage} alt="" />
             )}
@@ -120,18 +134,6 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
               </span>
             ))}
           </div>
-          <ImageUploading value={images} onChange={onChange}>
-            {({ onImageUpload, dragProps }) => (
-              // write your building UI
-              <div
-                className="profile_top_bar_button"
-                onClick={onImageUpload}
-                {...dragProps}
-              >
-                <BsFillPencilFill />
-              </div>
-            )}
-          </ImageUploading>
         </div>
         <div className="">
           <select className="profile_top_bar_select" onClick={handle}>

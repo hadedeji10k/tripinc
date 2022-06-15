@@ -80,7 +80,7 @@ const Footer = () => {
                     name="email"
                     id="newsletter-input"
                     type="email"
-                    className="input"
+                    className="footer_newsletter_input"
                     placeholder="Enter your email address"
                     onChange={handleChange}
                     onBlur={handleBlur}

@@ -193,6 +193,12 @@ const LandingPage = () => {
     email: "",
   };
 
+  const handleCityInput = () => {
+    const city = document.getElementById("city_input") as any;
+    const url = `/#/explore/city/${city.value}`;
+    window.location.href = url;
+  };
+
   return (
     <>
       <div className="landing_page_container">
@@ -211,7 +217,7 @@ const LandingPage = () => {
         </div>
         <div className="bucket_list_page_search_container">
           <div className="bucket_list_page_search_form">
-            {countryData.length > 0 && (
+            {/* {countryData.length > 0 && (
               <div
                 className="landing_dropdown_content"
                 id="landing_city_dropdown"
@@ -227,18 +233,21 @@ const LandingPage = () => {
                   </p>
                 ))}
               </div>
-            )}
+            )} */}
             <input
               id="city_input"
               className="bucket_list_page_search_input"
               type="text"
               autoComplete="off"
               placeholder="Search for a city"
-              onChange={handleClick}
-              defaultValue={city}
-              onBlur={handleCountryBlur}
+              // onChange={handleClick}
+              // defaultValue={city}
+              // onBlur={handleCountryBlur}
             />
-            <button className="bucket_list_page_search_button">
+            <button
+              className="bucket_list_page_search_button"
+              onClick={handleCityInput}
+            >
               <BiSearch />
             </button>
           </div>
@@ -249,7 +258,7 @@ const LandingPage = () => {
             Personalised weekend and holiday plans sorted in minutes
           </h3>
           <p className="landing_page_sub_header">
-            One platform, millions of experience, yet personalised to you
+            One platform, millions of experiences, yet personalised to you
           </p>
           <div className="landing_page_services_row_container">
             <div className="landing_page_services_row">
@@ -273,7 +282,7 @@ const LandingPage = () => {
                 <img src={image3} alt="" className="image" />
               </div>
               <div className="text">
-                <p>Itenary that fits your lifestyle</p>
+                <p>Itinerary that fits your lifestyle</p>
               </div>
             </div>
           </div>
@@ -289,7 +298,7 @@ const LandingPage = () => {
             <div className="how_inner_container_40">
               <div className="how_card">
                 <p className="red_tag">01</p>
-                <p className="how_card_header">Set your own limits.</p>
+                <p className="how_card_header">Set your limits.</p>
                 <p className="how_card_sub_heading">
                   Plan your trip by setting your budget and how many people will
                   be joining you.{" "}
@@ -298,11 +307,11 @@ const LandingPage = () => {
               <div className="how_card">
                 <p className="red_tag">02</p>
                 <p className="how_card_header">
-                  Find interests that floats your boat.{" "}
+                  Find interests that float your boat.{" "}
                 </p>
                 <p className="how_card_sub_heading">
-                  Bucketlist the adventures you want and skip the expereinces
-                  you don’t.{" "}
+                  Bookmark the adventures you want and skip the expereinces you
+                  don’t.{" "}
                 </p>
               </div>
               <div className="how_card">
@@ -338,7 +347,7 @@ const LandingPage = () => {
               </h3>
               <p className="early_birds_sub_heading">
                 Be one of the first to try our BETA site today! Simply enter
-                your email address below and we will send you the link to your
+                your email address below and we will send the link to your
                 inbox.{" "}
               </p>
               <br />
@@ -406,7 +415,7 @@ const LandingPage = () => {
           <div id="category_tag_container" className="category_tag_container">
             {categoryData?.map((item) => (
               // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <a href={`/#/explore?catName=${item.title}`} key={item.id}>
+              <a href={`/#/explore/category/${item.title}`} key={item.id}>
                 <div
                   id={item.id.toString()}
                   className="category_clicked"
@@ -445,7 +454,7 @@ const LandingPage = () => {
               <h3 className="landing_page_header">Join our newsletter 🎉</h3>
               <p className="landing_page_sub_header">
                 Be one of the first to try our BETA site today! Simply enter
-                your email address below and we will send you the link to your
+                your email address below and we will send the link to your
                 inbox.{" "}
               </p>
               <div className="number_tag">
@@ -480,7 +489,7 @@ const LandingPage = () => {
                       name="email"
                       id="newsletter-input"
                       type="email"
-                      className="input"
+                      className="landing_page_newsletter_input"
                       placeholder="Enter your email address"
                       onChange={handleChange}
                       onBlur={handleBlur}

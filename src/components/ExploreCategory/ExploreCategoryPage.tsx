@@ -12,7 +12,9 @@ import { IDeal } from "../../api/interfaces";
 const ExploreCategoryPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [attractionData, setAttractionData] = useState<IDeal[]>([]);
-  const { catName } = useParams();
+  const { catNameParam } = useParams();
+  console.log(catNameParam);
+  const catName = catNameParam ? catNameParam : "Beach";
 
   useEffect(() => {
     setIsLoading(true);
