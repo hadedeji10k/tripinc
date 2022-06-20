@@ -87,8 +87,6 @@ const ExplorePage = () => {
   //   setIsLoading(false);
   // }, [catNameParam, userId, cityParam]);
 
-  const handleInput = () => {};
-
   const handle = (id: any) => {
     // const id = e.target.id;
     const index = menuBar.findIndex((item) => item.id === id);
