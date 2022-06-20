@@ -327,15 +327,11 @@ const BucketListPage = () => {
               {wishListData.map((item) => (
                 <div key={item.id}>
                   <Card
-                    id={item.id}
-                    image={item.imageUrl}
-                    title={item.title}
-                    description={item.description}
-                    price={item.price}
-                    reviews={item.ratings}
+                    item={item}
                     liked={true}
                     handleLikeButton={handleLikeButton}
                     handleUnLikeButton={handleUnLikeButton}
+                    url={`/explore-details/attraction/${item.id}`}
                   />
                 </div>
               ))}

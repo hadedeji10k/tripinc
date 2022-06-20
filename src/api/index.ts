@@ -83,8 +83,19 @@ export const getAttractionByID = async (id): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/Attractions/${id}`);
 }
 
+// get tour by ID
+export const getTourByID = async (id): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Tours/${id}`);
+}
+
+// get attractions
 export const getAllDeals = async (query?: string): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/Attractions?${query}`);
+}
+
+// get tours
+export const getAllTours = async (query?: string): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Tours?${query}`);
 }
 
 export const getAllCountries = async (): Promise<AxiosResponse<any>> => {

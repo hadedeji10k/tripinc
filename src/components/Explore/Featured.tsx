@@ -497,19 +497,11 @@ const Featured = () => {
                   <div key={item.id}>
                     <Spin spinning={isLoading}>
                       <Card
-                        id={item.id}
-                        image={
-                          item.imageUrl
-                            ? item.imageUrl
-                            : item?.photos[0]?.photoUrl
-                        }
-                        title={item.title}
-                        description={item.description}
-                        price={item.price}
-                        reviews={item.ratings}
+                        item={item}
                         liked={handleLike(item)}
                         handleLikeButton={handleLikeButton}
                         handleUnLikeButton={handleUnLikeButton}
+                        url={`/explore-details/attraction/${item.id}`}
                       />
                     </Spin>
                   </div>

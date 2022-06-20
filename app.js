@@ -32,40 +32,40 @@
 // console.log(starsArray);
 // console.log(average);
 
-let array = [
-  {
-    id: 1,
-    item: "item1",
-  },
-  {
-    id: 2,
-    item: "item2",
-  },
-  {
-    id: 3,
-    item: "item3",
-  },
-];
+// let array = [
+//   {
+//     id: 1,
+//     item: "item1",
+//   },
+//   {
+//     id: 2,
+//     item: "item2",
+//   },
+//   {
+//     id: 3,
+//     item: "item3",
+//   },
+// ];
 
-let array1 = [
-  {
-    id: 1,
-    item: "item1",
-    amount: 5,
-  },
-  {
-    id: 2,
-    item: "item1",
-    amount: 10,
-  },
-];
-let index = array1.find((item) => item?.id === array[2].id);
-const starsArray = array1.map((item) => {
-  return item.amount;
-});
+// let array1 = [
+//   {
+//     id: 1,
+//     item: "item1",
+//     amount: 5,
+//   },
+//   {
+//     id: 2,
+//     item: "item1",
+//     amount: 10,
+//   },
+// ];
+// let index = array1.find((item) => item?.id === array[2].id);
+// const starsArray = array1.map((item) => {
+//   return item.amount;
+// });
 
-const sum = starsArray.reduce((a, b) => a + b, 0);
-console.log(sum);
+// const sum = starsArray.reduce((a, b) => a + b, 0);
+// console.log(sum);
 // if (index) {
 //   console.log(index);
 // }
@@ -283,3 +283,32 @@ const handlePreferencesClick = (e) => {
 //   setPreferenceExistingData(preferencesDataArray);
 // }
 // }
+
+const axios = require("axios");
+
+const url = "https://muna-email-sender.herokuapp.com/send-message";
+
+const project_website = "www.google.com";
+const email_address = "hello@gmail.com";
+const telegram_username = "@hello";
+const service_needed = "I want to build a service";
+
+const message = `<p>
+  <b>These are the inputs from the form</b>
+
+  Project Website: ${project_website} <br />
+  Email Address: ${email_address} <br />
+  Telegram Username: ${telegram_username} <br />
+  Service Needed: ${service_needed}
+  </p>
+`;
+
+const formData = {
+  subject: "Testing on Heroku",
+  message,
+  receiver: "adedejiyusuf26@gmail.com",
+};
+
+axios.post(url, formData).then((res) => {
+  console.log(res);
+});

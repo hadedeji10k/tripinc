@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from "../stores/Auth";
 import { checkAuth } from "../utils/helpers";
 
-export default function ScrollToTop() {
+export default function ScrollToTopOfPage() {
   const authContext = useContext(AuthContext);
 
   const { pathname } = useLocation();

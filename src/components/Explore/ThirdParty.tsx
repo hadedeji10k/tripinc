@@ -1,62 +1,61 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect } from "react";
 // import { useLocation } from "react-router-dom";
-import { Spin } from "antd";
+import { Spin, DatePicker, Radio, Space, Select } from "antd";
 import "antd/dist/antd.min.css";
 import "./ExplorePage.css";
 // import { preferencedata, attractiondata } from "../../currentUserData";
-// import { attraction } from "../../interfaces";
+// import { attraction } from '../../interfaces';
 import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
-import { getAllCategories, getAllDeals, getUserWishList } from "../../api";
-import { IDeal, IFormattedCategory } from "../../api/interfaces";
+import {
+  getAllCategories,
+  getAllDeals,
+  getAllTours,
+  getUserWishList,
+} from "../../api";
+import {
+  ICategory,
+  IDeal,
+  IFormattedCategory,
+  IPagination,
+} from "../../api/interfaces";
 import { localGetUserId, symbolHelper } from "../../utils/helpers";
 import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
 import { FaLessThanEqual } from "react-icons/fa";
+import moment from "moment";
 
-// function useQuery() {
-//   const { search } = useLocation();
-
-//   return React.useMemo(() => new URLSearchParams(search), [search]);
-// }
-
-function containsEncodedComponents(x) {
-  // ie ?,=,&,/ etc
-  return decodeURIComponent(x);
-}
+const { RangePicker } = DatePicker;
 
 const ThirdParty = () => {
   // use query to get the search
   // const query = useQuery();
   // get the current search category name
 
-  // this is a temporary fix to the search params to filter the search query and get category name
-  // this is not quite ideal cos it might break sometimes
-  const url = new URL(document.URL);
-  const newQuery = containsEncodedComponents(url);
-  const catName = newQuery.split("=")[1];
   const userId = localGetUserId();
+
   // Defining states of this page
   const [isLoading, setIsLoading] = useState(false);
   // state to manage preference data (to sort out clicked and unclicked preference)
-  const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
-    []
-  );
+  const [preferenceData, setPreferenceData] = useState<ICategory[]>([]);
   const [wishList, setWishList] = useState<any[]>([]);
   // state to manage the attraction data to be mapped into cards (using this in order to manage the attraction data in case it is filtered)
   const [initialAttractionData, setInitialAttractionData] = useState<IDeal[]>(
     []
   );
-  const [catExistingData, setCatExistingData] = useState<IDeal[]>([]);
-  const [preferenceExistingData, setPreferenceExistingData] = useState<IDeal[]>(
-    []
-  );
   const [attractionData, setAttractionData] = useState<IDeal[]>([]);
+  // state to manage pagination
+  const [pagination, setPagination] = useState<IPagination | any>();
   // state to manage the search result data, so using this when user filter and it get it for the "Result for:" in the page
   const [searchResultField, setSearchResultField] = useState("All");
-  // state to manage the search result in the page
+  const [categorySearchResultField, setCategorySearchResultField] =
+    useState("");
+
+  // state to manage the search input in the page
   const [inputField, setInputField] = useState("");
+  const [dateInput, setDateInput] = useState<Date[] | any>([]);
+  const [category, setCategory] = useState<any>([]);
 
   // useEffect to get the attraction data and category as preferenceData
   useEffect(() => {
@@ -71,217 +70,253 @@ const ThirdParty = () => {
           setWishList([]);
         });
     }
-    // if cat name is not undefined get the attraction based on the category name
-    if (catName) {
-      const query = `Interests=${catName}`;
-      getAllDeals(query).then((res) => {
-        setAttractionData(res.data.items);
-        setCatExistingData(res.data.items);
-      });
-      // also get the initial data in case the user unselect the category, it will filter to all
-      getAllDeals().then((res) => {
-        setInitialAttractionData(res.data.items);
-        console.log(res.data.items);
-        setIsLoading(false);
-      });
-    } else {
-      // if cat name is undefined get all the attraction
-      getAllDeals().then((res) => {
-        setAttractionData(res.data.items);
-        setInitialAttractionData(res.data.items);
-        setIsLoading(false);
-      });
-    }
+
     // get all categories as preferenceData
     getAllCategories().then((res) => {
-      const arrayTopush: any = [];
-      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
-      for (let i = 0; i < res.data.length; i++) {
-        const element = res.data[i];
-        const data = {
-          id: element.id,
-          title: element.name,
-          symbol: symbolHelper(element.name),
-          stateOfClass: false,
-        };
-        arrayTopush.push(data);
-      }
-      // if there is catName, therefore, the state of the category is clicked
-      if (catName) {
-        const index = arrayTopush.findIndex((x) => x.title === catName);
-        arrayTopush[index].stateOfClass = true;
-      }
-      // set the preference data
-      setPreferenceData(arrayTopush);
+      setPreferenceData(res.data);
+      console.log(res.data);
     });
-  }, [catName, userId]);
+
+    getAllTours().then((res) => {
+      setAttractionData(res.data.items);
+      setInitialAttractionData(res.data.items);
+      console.log(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+      setIsLoading(false);
+    });
+  }, [userId]);
 
   // useEffect to set preference data when the user click on the preference
-  useEffect(() => {
-    // select the preference tags clicked
-    let preferences = preferenceData.filter(
-      (item) => item.stateOfClass === true
-    );
-    // getting the input element
-    let input = document.getElementById("input") as HTMLInputElement;
-    // if the input value is not null, set the search result field to the input's value
-    if (input.value !== "") {
-      setSearchResultField(input.value);
-    }
+  // useEffect(() => {
+  //   // select the preference tags clicked
+  //   let preferences = preferenceData.filter(
+  //     (item) => item.stateOfClass === true
+  //   );
 
-    // if the preference tag clicked is empty, set the search result field to the "All"
-    if (preferences.length === 0 && input.value === "") {
-      setAttractionData(initialAttractionData);
-      setSearchResultField("All");
-    }
+  //   if (preferences.length > 0) {
+  //     // if the preference tag clicked is not empty, set the search result field to the preference tag clicked
+  //     let preferencesText = "";
+  //     for (let i = 0; i < preferences.length; i++) {
+  //       preferencesText += `${preferences[i].title}, `;
+  //     }
+  //     setCategorySearchResultField(preferencesText);
+  //   }
 
-    // if the preference tag clicked is not empty, set the input field back to empty, i.e since at least one of the preference tag has been clicked then the input field should be set to empty
-    if (preferences.length > 0) {
-      setInputField("");
-      input.value = "";
-    }
+  //   // if the input value is not null and preferences is clicked, set the search result field to the input's value and preferences
+  //   if (inputField !== "" && preferences.length > 0) {
+  //     setSearchResultField(`${inputField} -> ${categorySearchResultField}`);
+  //   } else if (inputField !== "" && preferences.length === 0) {
+  //     setSearchResultField(inputField);
+  //   } else if (inputField === "" && preferences.length > 0) {
+  //     setSearchResultField(categorySearchResultField);
+  //   } else {
+  //     setSearchResultField("All");
+  //     setCategorySearchResultField("");
+  //     setAttractionData(initialAttractionData);
+  //   }
 
-    return () => {};
-  }, [preferenceData, inputField, initialAttractionData]);
+  //   // if the preference tag clicked is empty, set the search result field to the "All"
+  //   if (preferences.length === 0 && inputField === "") {
+  //     setSearchResultField("All");
+  //     setCategorySearchResultField("");
+  //     setAttractionData(initialAttractionData);
+  //   }
 
-  // useEffect to manage the prev and next buttons, it determines if there are preferences tags more than the screen width and hide them (the buttons) if there is no preferences tags more than the screen width
+  //   if (preferences.length > 0 && inputField !== "") {
+  //     const filteredArray: any = [];
+  //     // loop through all clicked preferences and filter the attraction data to the clicked preferences
+  //     for (let i = 0; i < preferences.length; i++) {
+  //       const element = preferences[i];
+  //       const catArray: any = [];
+  //       // loop through the current attractions
+  //       for (let index = 0; index < initialAttractionData.length; index++) {
+  //         // get one attraction
+  //         const attraction = initialAttractionData[index];
+  //         // get the categories of the attraction
+  //         const data = attraction?.categories.filter(
+  //           (catItem) => catItem.name === element.title
+  //         );
+  //         // if category selected matches any of the categories of the attraction, push the attraction id to the catArray
+  //         if (data.length > 0) {
+  //           catArray.push(attraction.id);
+  //         }
+  //       }
+  //       // loop through the catArray and filter the result with the attraction id
+  //       for (let i = 0; i < catArray.length; i++) {
+  //         const element = catArray[i];
+  //         const filtered = initialAttractionData.filter(
+  //           (item) => item.id === element
+  //         );
+  //         // push the result into the preferences array
+  //         let insideArray = false;
+  //         filteredArray.forEach((element) => {
+  //           if (element.id === filtered[0].id) insideArray = true;
+  //         });
+  //         if (!insideArray) {
+  //           filteredArray.push(filtered[0]);
+  //         }
+  //       }
+  //     }
+  //     let data = filteredArray.filter((item) =>
+  //       item.location.toLowerCase().includes(inputField.toLowerCase())
+  //     );
+  //     setAttractionData(data);
+  //   } else if (preferences.length > 0 && inputField === "") {
+  //     const filteredArray: any = [];
+  //     // loop through all clicked preferences and filter the attraction data to the clicked preferences
+  //     for (let i = 0; i < preferences.length; i++) {
+  //       const element = preferences[i];
+  //       const catArray: any = [];
+  //       // loop through the current attractions
+  //       for (let index = 0; index < initialAttractionData.length; index++) {
+  //         // get one attraction
+  //         const attraction = initialAttractionData[index];
+  //         // get the categories of the attraction
+  //         const data = attraction?.categories.filter(
+  //           (catItem) => catItem.name === element.title
+  //         );
+  //         // if category selected matches any of the categories of the attraction, push the attraction id to the catArray
+  //         if (data.length > 0) {
+  //           catArray.push(attraction.id);
+  //         }
+  //       }
+  //       // loop through the catArray and filter the result with the attraction id
+  //       for (let i = 0; i < catArray.length; i++) {
+  //         const element = catArray[i];
+  //         const filtered = initialAttractionData.filter(
+  //           (item) => item.id === element
+  //         );
+  //         // push the result into the preferences array
+  //         let insideArray = false;
+  //         filteredArray.forEach((element) => {
+  //           if (element.id === filtered[0].id) insideArray = true;
+  //         });
+  //         if (!insideArray) {
+  //           filteredArray.push(filtered[0]);
+  //         }
+  //       }
+  //     }
+  //     setAttractionData(filteredArray);
+  //   } else if (preferences.length === 0 && inputField !== "") {
+  //     let data = initialAttractionData.filter((item) =>
+  //       item.location.toLowerCase().includes(inputField.toLowerCase())
+  //     );
+  //     setAttractionData(data);
+  //   } else if (preferences.length === 0 && inputField === "") {
+  //     setAttractionData(initialAttractionData);
+  //   }
 
-  /* 
-  useEffect(() => {
-    let element = document.getElementById(
-      "preferences_tag_container"
-    ) as HTMLElement;
-    if (
-      element.clientWidth === element.scrollWidth ||
-      element.clientWidth > element.scrollWidth
-    ) {
-      let prev = document.getElementById("prev") as HTMLElement;
-      let next = document.getElementById("next") as HTMLElement;
-      prev.style.display = "none";
-      next.style.display = "none";
-    }
-  }, []);
-
-  // function to handle next button scroll of preferences if there is overflow in the element's data
-  const handleScrollRight = (e: any) => {
-    let element = document.getElementById(
-      "preferences_tag_container"
-    ) as HTMLElement;
-    element.scrollLeft += 70;
-  };
-
-  // function to handle prev button scroll of preferences if there is overflow in the element's data
-  const handleScrollLeft = (e: any) => {
-    let element = document.getElementById(
-      "preferences_tag_container"
-    ) as HTMLElement;
-    element.scrollLeft -= 70;
-  };
-  */
+  //   return () => {};
+  // }, [
+  //   preferenceData,
+  //   inputField,
+  //   initialAttractionData,
+  //   categorySearchResultField,
+  // ]);
 
   // function to manage the preference button when it is clicked
-  const handlePreferencesClick = (e: any) => {
-    // prevent default so it won't refresh the page
-    e.preventDefault();
-    // set input field to empty when preference is clicked
-    setInputField("");
-    // console.log(e.target.id)
+  // const handlePreferencesClick = (e: any) => {
+  //   // prevent default so it won't refresh the page
+  //   e.preventDefault();
 
-    // get the id of the preference tag clicked
-    const id = e.target.id;
+  //   // get the id of the preference tag clicked
+  //   const id = e.target.id;
 
-    // get the index of the preference in the preferenceData state
-    const index = preferenceData.findIndex((item) => item.id === parseInt(id));
-    // change the state of the class of the clicked preference tag
-    preferenceData[index].stateOfClass = !preferenceData[index].stateOfClass;
-    // set the preference data state to be the current preference data
-    setPreferenceData([...preferenceData]);
-    // console.log(preferenceData);
-    // get all clicked preferences
-    const clickedPreferences = preferenceData.filter(
-      (item) => item.stateOfClass === true
-    );
-
-    // let newData: any = [];
-    let searchResultField1: string = "";
-
-    // loop through all clicked preferences and filter the attraction data to the clicked preferences
-    let preferences: any = [];
-    for (let i = 0; i < clickedPreferences.length; i++) {
-      const element = clickedPreferences[i];
-      const catArray: any = [];
-      // loop through the initial attractions
-      for (let index = 0; index < initialAttractionData.length; index++) {
-        // get one attraction
-        const attraction = initialAttractionData[index];
-        // get the categories of the attraction
-        const data = attraction?.categories.filter(
-          (catItem) => catItem.name === element.title
-        );
-        // if category selected matches any of the categories of the attraction, push the attraction id to the catArray
-        if (data.length > 0) {
-          catArray.push(attraction.id);
-        }
-      }
-      // loop through the catArray and filter the result with the attraction id
-      for (let i = 0; i < catArray.length; i++) {
-        const element = catArray[i];
-        const filtered = initialAttractionData.filter(
-          (item) => item.id === element
-        );
-        // push the result into the preferences array
-        preferences.push(filtered[0]);
-      }
-
-      // set the search result field to the selected preference
-      if (searchResultField1 === "") {
-        searchResultField1 = searchResultField1 + " " + element.title;
-      } else {
-        searchResultField1 = searchResultField1 + ". " + element.title;
-      }
-      setSearchResultField(searchResultField1);
-    }
-    // if the preference is not undefined, it should push the filtered data into a new array
-    if (preferences.length >= 1 && preferences !== undefined) {
-      setAttractionData(preferences);
-      setPreferenceExistingData(preferences);
-    }
-  };
+  //   // get the index of the preference in the preferenceData state
+  //   const index = preferenceData.findIndex((item) => item.id === parseInt(id));
+  //   // change the state of the class of the clicked preference tag
+  //   preferenceData[index].stateOfClass = !preferenceData[index].stateOfClass;
+  //   // set the preference data state to be the current preference data
+  //   setPreferenceData([...preferenceData]);
+  // };
 
   // function to handle the input data (using this for the onClick of button of the search and onChange of the input)
   const handleInput = (e: any) => {
     // get the input
     let input = document.getElementById("input") as HTMLInputElement;
     // console.log(input.value);
+    setInputField(input.value);
+  };
 
-    // filter the original attraction data fetched from external using the input data
-    let data = attractionData.filter((item) =>
-      item.location.toLowerCase().includes(input.value.toLowerCase())
-    );
+  // function to handle date change
+  const onDateChange = (date) => {
+    console.log(date);
+    const today = new Date(date[0]);
+    setDateInput(date);
+    console.log(today);
+  };
 
-    if (input.value !== "") {
-      // if the data is not empty
-      if (data.length !== 0) {
-        console.log("here");
-        // set the attractiondata to the new data filtered
-        setAttractionData(data);
-        // set the search result to the input value
-        // setSearchResultField("input.value");
-        // set all preferences to false so it won't be filtered
-        // preferenceData.forEach((item) => {
-        //   item.stateOfClass = false;
-        // });
-      }
+  // function to handle category change
+  const handleCategoryClick = (e: any) => {
+    setCategory(e.target.value);
+  };
+
+  const handleCategoryChange = (value: any) => {
+    setCategory(value);
+  };
+
+  // function to handle the search button
+  const handleSearchButton = async (e: any) => {
+    setIsLoading(true);
+    // prevent default so it won't refresh the page
+    e.preventDefault();
+    console.log(inputField, category, dateInput);
+
+    // get category data and create a query for it
+    let categoryQuery = "";
+    if (category.length > 0) {
+      category.map((item) => {
+        categoryQuery = categoryQuery + `&Interests=${item}`;
+      });
     } else {
-      if (catName) {
-        setAttractionData(catExistingData);
-      } else {
-        setAttractionData(preferenceExistingData);
-      }
+      categoryQuery = "";
     }
-    setSearchResultField(input.value);
-    // setAttractionData([...data]);
-    // console.log(attractionData);
+
+    // get the date data and create a query for it
+    let dateQuery: string = "";
+    if (dateInput.length >= 1) {
+      dateQuery = `StartDate=${moment(
+        dateInput[0]
+      ).toISOString()}&EndDate=${moment(dateInput[1]).toISOString()}`;
+    } else if (dateInput.length === 0) {
+      dateQuery = `StartDate=${moment(dateInput[0]).toISOString()}`;
+    } else {
+      dateQuery = "";
+    }
+
+    let inputQuery: string = "";
+    if (inputField.length > 0) {
+      inputQuery = `&Location=${inputField}`;
+    } else {
+      inputQuery = "";
+    }
+
+    // query
+    const query = `${dateQuery}${categoryQuery}${inputQuery}`;
+
+    console.log(query);
+
+    await getAllTours(query).then((res) => {
+      setAttractionData(res.data.items);
+      setInitialAttractionData(res.data.items);
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
   };
 
   // use this function to handle when the "all" button is clicked
@@ -292,13 +327,10 @@ const ThirdParty = () => {
     setSearchResultField("All");
     // set the input field to empty
     setInputField("");
+    setCategorySearchResultField("");
     // using this to shadow mark the input field and set it to empty
     let input = document.getElementById("input") as HTMLInputElement;
     input.value = "";
-    // and setting the preference tags to false
-    preferenceData.forEach((item) => {
-      item.stateOfClass = false;
-    });
   };
 
   const handleLike = (a: any) => {
@@ -348,104 +380,115 @@ const ThirdParty = () => {
     setIsLoading(false);
   };
 
+  const handlePaginationPrev = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage - 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getAllDeals(query).then((res) => {
+      setInitialAttractionData(res.data.items);
+      console.log(res.data.items);
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
+  const handlePaginationNext = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage + 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getAllDeals(query).then((res) => {
+      setInitialAttractionData(res.data.items);
+      console.log(res.data.items);
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
         <div className="explore_page_container">
           <div className="explore_page_search_container">
-            <div className="explore_page_search_form">
+            <div className="explore_page_search_featured_form">
               <input
                 id="input"
-                className="explore_page_search_input"
+                className="explore_page_search_third_input"
                 type="text"
                 placeholder="Search for a city"
                 defaultValue={inputField}
                 onChange={handleInput}
               />
-              <input
-                className="date_input"
-                type="date"
-                name=""
-                id=""
-                defaultValue="No dates"
-              />
-              <select className="explorer_page_select" name="" id="">
-                <option value="">Solo trip</option>
-                <option value="">Family trip</option>
-                <option value="">Friend trip</option>
-              </select>
+              <span className="third_party_date_picker">
+                <RangePicker onChange={onDateChange} size="small" />
+              </span>
+
+              {/* <select
+                className="explorer_page_third_party_select"
+                onClick={handleCategoryClick}
+                onChange={handleCategoryClick}
+              >
+                <option value="">Choose category</option>
+                {preferenceData.map((data) => (
+                  <option key={data.id} value={data.name}>
+                    {data.name}
+                  </option>
+                ))}
+              </select> */}
+              <Select
+                mode="tags"
+                className="explorer_page_third_party_select"
+                size="small"
+                placeholder="Please select"
+                // defaultValue={['a10', 'c12']}
+                onChange={handleCategoryChange}
+              >
+                {preferenceData.map((data) => (
+                  <option key={data.id} value={data.name}>
+                    {data.name}
+                  </option>
+                ))}
+              </Select>
               <button
                 className="explore_page_search_button"
-                onClick={handleInput}
+                onClick={handleSearchButton}
               >
                 <BiSearch />
               </button>
             </div>
           </div>
-          <p>Sort using preferences:</p>
-          <div
-            id="preferences_tag_container"
-            className="preferences_tag_container"
-          >
-            <span className="preferences_not_clicked" onClick={handleAllClick}>
-              All
-            </span>
-            {preferenceData.map((item) => (
-              // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <span
-                key={item.id}
-                id={item.id.toString()}
-                className={
-                  item.stateOfClass
-                    ? "preferences_clicked"
-                    : "preferences_not_clicked"
-                }
-                onClick={handlePreferencesClick}
-              >
-                {item.symbol} {item.title}
-              </span>
-            ))}
-          </div>
-          {/* <div className="scroll_button">
-            <span
-              id="prev"
-              className="navigation_button"
-              onClick={handleScrollLeft}
-            >
-              Prev
-            </span>
-            <span
-              id="next"
-              className="navigation_button"
-              onClick={handleScrollRight}
-            >
-              Next
-            </span>
-          </div> */}
+
           <div className="">
             <p>Search Result for: {searchResultField}</p>
           </div>
           {/* <Card data={attractionData} /> */}
           {attractionData ? (
             attractionData.length > 0 ? (
-              <div className="card">
+              <div className="featured_card">
                 {attractionData.map((item) => (
                   <div key={item.id}>
                     <Spin spinning={isLoading}>
                       <Card
-                        id={item.id}
-                        image={
-                          item.imageUrl
-                            ? item.imageUrl
-                            : item?.photos[0]?.photoUrl
-                        }
-                        title={item.title}
-                        description={item.description}
-                        price={item.price}
-                        reviews={item.ratings}
+                        item={item}
                         liked={handleLike(item)}
                         handleLikeButton={handleLikeButton}
                         handleUnLikeButton={handleUnLikeButton}
+                        url={`/explore-details/tour/${item.tourId}`}
                       />
                     </Spin>
                   </div>
@@ -467,6 +510,42 @@ const ThirdParty = () => {
               </>
             )
           ) : null}
+
+          <div className="explore_page_number">
+            <span>
+              Page {pagination?.currentPage} of {pagination?.totalPages}
+            </span>
+            <span>
+              {(pagination?.currentPage - 1) * pagination?.pageSize + 1} -
+              {pagination?.hasNext
+                ? pagination?.pageSize * pagination?.currentPage
+                : pagination?.totalCount}
+            </span>
+          </div>
+          <div className="scroll_button">
+            <button
+              className={
+                pagination?.hasPrevious
+                  ? "explore_navigation_button_active"
+                  : "explore_navigation_button"
+              }
+              onClick={handlePaginationPrev}
+              disabled={!pagination?.hasPrevious}
+            >
+              Prev
+            </button>
+            <button
+              className={
+                pagination?.hasNext
+                  ? "explore_navigation_button_active"
+                  : "explore_navigation_button"
+              }
+              onClick={handlePaginationNext}
+              disabled={!pagination?.hasNext}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </Spin>
     </>

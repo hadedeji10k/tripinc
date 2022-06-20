@@ -12,7 +12,7 @@ import {
   getUserByID,
   getUserProfilePictureByID,
 } from "../api";
-import { CitiesPageSize } from "./constants";
+import { CitiesPageSize, currencyList } from "./constants";
 
 export const checkAuth = (): boolean => {
   let valid = false;
@@ -220,6 +220,12 @@ export const symbolHelper = (name) => {
   } else {
     return "";
   }
+};
+
+export const currencySymbolHelper = (currency: string) => {
+  const filtered = currencyList.filter((item: any) => item.Code === currency);
+  const symbol = filtered[0]?.Symbol;
+  return symbol;
 };
 
 export const localGetUser = () => {

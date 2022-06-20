@@ -11,7 +11,7 @@ import image from "../../images/location.png";
 import { getExplore } from "../../currentUserData";
 import CartModal from "../Cart/CartModal";
 import { useParams } from "react-router-dom";
-import { getAttractionByID, getUserWishList } from "../../api";
+import { getAttractionByID, getTourByID, getUserWishList } from "../../api";
 import { IAddReview, ICart, IDeal, IRatings } from "../../api/interfaces";
 import {
   getUserProfilePicture,
@@ -44,7 +44,9 @@ const ExploreDetails = () => {
 
   const [wishListData, setWishListData] = useState<IDeal[]>([]);
 
-  const { id } = useParams();
+  const { tourId } = useParams();
+  const { attractionId } = useParams();
+
   const userId = localGetUserId();
 
   // checking of network connectivity
@@ -87,7 +89,7 @@ const ExploreDetails = () => {
     const cart = JSON.parse(localStorage.getItem("cart_data") as any);
     cart &&
       cart?.map((item) => {
-        if (Number(item.itemId) === Number(id)) {
+        if (Number(item.itemId) === Number(attractionId)) {
           setItemInCart(true);
           setCartItem(item);
         }
@@ -96,7 +98,7 @@ const ExploreDetails = () => {
       .then((res) => {
         setWishListData(res.data.items);
         const item = res.data.items.find(
-          (item) => item?.id.toString() === id?.toString()
+          (item) => item?.id.toString() === attractionId?.toString()
         );
         if (item) {
           setUserLikedPost(true);
@@ -112,7 +114,12 @@ const ExploreDetails = () => {
   // fetch attractiondata from remote or local storage
   useEffect(() => {
     setIsLoading(true);
-    getAttractionByID(id).then((res) => {
+    // set function to attraction if attractionId is available else set it to tourId
+    const fetchData = attractionId
+      ? getAttractionByID(attractionId)
+      : getTourByID(tourId);
+    // call the function
+    fetchData.then((res) => {
       console.log(res.data);
       setAttractionData(res.data);
 
@@ -147,7 +154,7 @@ const ExploreDetails = () => {
       }
       setIsLoading(false);
     });
-  }, [id]);
+  }, [attractionId, tourId]);
 
   const toggleShowCartModal = (e: React.FormEvent) => {
     e.preventDefault();
@@ -213,7 +220,7 @@ const ExploreDetails = () => {
       .then(async (result) => {
         if (result.isConfirmed) {
           // remove from database
-          await removeFromWishList(id, userId).then((res) => {
+          await removeFromWishList(attractionId, userId).then((res) => {
             if (res === true) {
               // set the wishListData to the new data after removing
               setWishListData([...data]);
@@ -244,7 +251,7 @@ const ExploreDetails = () => {
     const formData: IAddReview = {
       userId,
       fullName: localGetUserFullName(),
-      attractionId: Number(id),
+      attractionId: Number(attractionId),
       rating: userRating,
       comment: userReview,
     };
@@ -264,7 +271,11 @@ const ExploreDetails = () => {
             <div className="explore_details_image">
               <img
                 className="explore_image"
-                src={attractionData?.imageUrl}
+                src={
+                  attractionData?.imageUrl
+                    ? attractionData?.imageUrl
+                    : attractionData?.photos[0].photoUrl
+                }
                 alt=""
               />
             </div>

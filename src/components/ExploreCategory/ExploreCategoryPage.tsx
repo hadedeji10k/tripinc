@@ -45,14 +45,10 @@ const ExploreCategoryPage = () => {
                 {attractionData.map((item) => (
                   <div key={item.id}>
                     <Card
-                      id={item.id}
-                      image={item.imageUrl}
-                      title={item.title}
-                      description={item.description}
-                      price={item.price}
-                      reviews={item.ratings}
+                      item={item}
                       liked={item.liked}
                       handleLikeButton={handleLikeButton}
+                      url={`/explore-details/attraction/${item.id}`}
                     />
                   </div>
                 ))}
