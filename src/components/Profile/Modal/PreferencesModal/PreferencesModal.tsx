@@ -3,11 +3,15 @@ import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./PreferencesModal.css";
 import { MdClose } from "react-icons/md";
+import { getAllCategories } from "../../../../api";
+import { symbolHelper } from "../../../../utils/helpers";
+import { IFormattedCategory } from "../../../../api/interfaces";
 
 // interface for this Modal
 interface PreferencesModalProp {
   showPreferencesModal: Boolean;
   setShowPreferencesModal: React.Dispatch<React.SetStateAction<Boolean>>;
+  userPreference: any;
 }
 
 // Styled component for background
@@ -134,6 +138,13 @@ const placesdata = [
   },
 ];
 
+interface IPlaces {
+  id: number;
+  title: string;
+  stateOfClass: boolean;
+  class: string;
+}
+
 const placesBeenTodata = [
   {
     id: 1,
@@ -165,11 +176,42 @@ const placesBeenTodata = [
 const PreferencesModal = ({
   showPreferencesModal,
   setShowPreferencesModal,
+  userPreference,
 }: PreferencesModalProp) => {
   // states for the preferences data
-  const [preferenceData, setPreferenceData] = useState(preferencedata);
-  const [placesData, setPlacesData] = useState(placesdata);
-  const [placesBeenToData, setPlacesBeenToData] = useState(placesBeenTodata);
+  const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
+    []
+  );
+  const [placesData, setPlacesData] = useState<IPlaces[]>([]);
+  const [placesBeenToData, setPlacesBeenToData] = useState<IPlaces[]>([]);
+
+  useEffect(() => {
+    // get all categories as preferenceData
+    getAllCategories().then((res) => {
+      const arrayToPush: any = [];
+      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+      for (let i = 0; i < res.data.length; i++) {
+        const element = res.data[i];
+        const data = {
+          id: element.id,
+          title: element.name,
+          symbol: symbolHelper(element.name),
+          stateOfClass: false,
+        };
+        arrayToPush.push(data);
+      }
+      // if there is catNameParam, therefore, the state of the category is clicked
+      // if (catNameParam) {
+      //   const index = arrayToPush.findIndex(
+      //     (x) => x.title.toLowerCase() === catNameParam.toLowerCase()
+      //   );
+      //   arrayToPush[index].stateOfClass = true;
+      //   // setSearchResultField(catNameParam);
+      // }
+      // set the preference data
+      setPreferenceData(arrayToPush);
+    });
+  }, [showPreferencesModal]);
 
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
@@ -237,35 +279,29 @@ const PreferencesModal = ({
   // function to handle typing of places tag
   const handlePlacesChange = (e: any) => {
     e.preventDefault();
-    // console.log(e.keyCode)
     let inputData = e.target.value.toString();
     let input = document.getElementById("places") as HTMLInputElement;
     input.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
+      // if user presses enter or tab, it should add it to  the list
+      if (event.key === "Enter" || event.key === "Tab") {
         let newPlacesData = placesData.filter(
-          (item) => item.title !== inputData
+          (item) => item.title.toLowerCase() === inputData.toLowerCase()
         );
-        // console.log(placesData)
-        setPlacesData([...newPlacesData]);
 
-        if (newPlacesData.length !== placesData.length) {
-          // console.log(inputData)
-          // console.log(id)
-          let lastElement = newPlacesData[newPlacesData.length - 1];
-          let id = lastElement.id + 1;
-          setPlacesData([
-            ...newPlacesData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
-          ]);
+        if (newPlacesData.length > 0) {
+          setPlacesData([...newPlacesData]);
         } else {
-          let lastElement = newPlacesData[newPlacesData.length - 1];
-          let id = lastElement.id + 1;
           setPlacesData([
-            ...newPlacesData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
+            ...placesData,
+            {
+              id: placesData.length + 1,
+              title: inputData,
+              stateOfClass: false,
+              class: "clicked",
+            },
           ]);
         }
-        console.log(placesData);
+
         input.value = "";
       }
     });
@@ -283,35 +319,29 @@ const PreferencesModal = ({
   // function to handle typing of placesBeenTo tag
   const handlePlacesBeenToChange = (e: any) => {
     e.preventDefault();
-    // console.log(e.keyCode)
     let inputData = e.target.value.toString();
     let input = document.getElementById("placesBeenTo") as HTMLInputElement;
     input.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
+      // if user presses enter or tab, it should add it to  the list
+      if (event.key === "Enter" || event.key === "Tab") {
         let newPlacesBeenToData = placesBeenToData.filter(
-          (item) => item.title !== inputData
+          (item) => item.title.toLowerCase() === inputData.toLowerCase()
         );
-        // console.log(PlacesBeenToData)
-        setPlacesBeenToData([...newPlacesBeenToData]);
 
-        if (newPlacesBeenToData.length !== placesBeenToData.length) {
-          // console.log(inputData)
-          // console.log(id)
-          let lastElement = newPlacesBeenToData[newPlacesBeenToData.length - 1];
-          let id = lastElement.id + 1;
-          setPlacesBeenToData([
-            ...newPlacesBeenToData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
-          ]);
+        if (newPlacesBeenToData.length > 0) {
+          setPlacesBeenToData([...newPlacesBeenToData]);
         } else {
-          let lastElement = newPlacesBeenToData[newPlacesBeenToData.length - 1];
-          let id = lastElement.id + 1;
           setPlacesBeenToData([
-            ...newPlacesBeenToData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
+            ...placesBeenToData,
+            {
+              id: placesBeenToData.length + 1,
+              title: inputData,
+              stateOfClass: false,
+              class: "clicked",
+            },
           ]);
         }
-        console.log(placesBeenToData);
+
         input.value = "";
       }
     });
@@ -419,7 +449,7 @@ const PreferencesModal = ({
                         }
                         onClick={handlePreferencesClick}
                       >
-                        {item.title}
+                        {item.symbol} {item.title}
                       </span>
                     ))}
                   </div>

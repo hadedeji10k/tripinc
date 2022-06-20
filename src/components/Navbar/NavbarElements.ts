@@ -7,7 +7,7 @@ interface MobileNavbar {
 }
 
 interface NavProps {
-    isScrolled?: any;
+    loggedIn?: any;
 }
 
 
@@ -23,7 +23,7 @@ export const Nav = styled.nav<NavProps>`
     align-content: center;
     font-size: 1rem;
     position: sticky;
-    top: 0;
+    top: ${({ loggedIn }) => (loggedIn ? '25px' : '0')};
     z-index: 10;
     margin: auto;
 

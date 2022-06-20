@@ -11,9 +11,13 @@ import { IUserProfile } from "../../../api/interfaces";
 
 interface PersonalInfoPageProps {
   userProfile: IUserProfile;
+  userPreference: any;
 }
 
-const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
+const PersonalInfoPage = ({
+  userProfile,
+  userPreference,
+}: PersonalInfoPageProps) => {
   // const [preferenceData, setPreferenceData] = useState(preferencedata)
 
   const [showProfileModal, setShowProfileModal] = useState<Boolean>(false);
@@ -146,7 +150,9 @@ const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
               </span>
             ))
           ) : (
-            <p>You have no places selected yet</p>
+            <p style={{ textAlign: "center" }}>
+              You have no places selected yet
+            </p>
           )}
         </div>
       </div>
@@ -162,7 +168,9 @@ const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
               </span>
             ))
           ) : (
-            <p>You have no bucket list selected yet</p>
+            <p style={{ textAlign: "center" }}>
+              You have no bucket list selected yet
+            </p>
           )}
         </div>
       </div>
@@ -178,7 +186,9 @@ const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
               </span>
             ))
           ) : (
-            <p>You have no interest selected yet</p>
+            <p style={{ textAlign: "center" }}>
+              You have no interest selected yet
+            </p>
           )}
         </div>
       </div>
@@ -199,6 +209,7 @@ const PersonalInfoPage = ({ userProfile }: PersonalInfoPageProps) => {
       <PreferencesModal
         showPreferencesModal={showPreferencesModal}
         setShowPreferencesModal={setShowPreferencesModal}
+        userPreference={userPreference}
       />
 
       {/* testing */}

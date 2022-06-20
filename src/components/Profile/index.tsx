@@ -134,7 +134,10 @@ const Profile = (): any => {
               userId={userId}
             />
             {data[0].slug === "personal_info" ? (
-              <PersonalInfoPage userProfile={fullUserProfile} />
+              <PersonalInfoPage
+                userProfile={fullUserProfile}
+                userPreference={userPreferenceData}
+              />
             ) : data[0].slug === "account" ? (
               <AccountPage userPreference={userPreferenceData} />
             ) : data[0].slug === "bookings" ? (

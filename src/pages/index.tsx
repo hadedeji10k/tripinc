@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer/Footer";
 import AuthVerify from "./AuthVerify";
+import LoggedInBanner from "./LoggedInBanner";
 
 const MainLayout: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -19,6 +20,7 @@ const MainLayout: React.FC = () => {
   return (
     <>
       <AuthVerify>
+        <LoggedInBanner />
         <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
         <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
 

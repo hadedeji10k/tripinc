@@ -82,3 +82,13 @@ export const ProfileDetailsSchema = Yup.object().shape({
     })
     .required("Confirm Password is required"),
 });
+
+export const CustomerInfoSchema = Yup.object().shape({
+  firstName: Yup.string().required("First Name is required"),
+  lastName: Yup.string().required("Last Name is required"),
+  address: Yup.string().required("Address is required"),
+  postalCode: Yup.string().required("Postal Code is required"),
+  phoneNumber: Yup.string().matches(phoneRegExp, "Phone number is not valid"),
+  city: Yup.string().required("City is required"),
+  country: Yup.string().required("Country is required"),
+});

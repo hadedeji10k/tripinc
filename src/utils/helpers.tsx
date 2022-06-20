@@ -267,7 +267,7 @@ export const getUserProfilePicture = async (id?: any) => {
   return user.data;
 };
 
-// get user id
+// get user full name
 export const localGetUserFullName = (): string | null => {
   const user = JSON.parse(localStorage.getItem("profile") as any)?.user;
 
@@ -277,6 +277,18 @@ export const localGetUserFullName = (): string | null => {
   const parsedUser = JSON.parse(user);
 
   return `${parsedUser.firstName} ${parsedUser.lastName}`;
+};
+
+// get user first name
+export const localGetUserFirstName = (): string | null => {
+  const user = JSON.parse(localStorage.getItem("profile") as any)?.user;
+
+  if (!user) {
+    return null;
+  }
+  const parsedUser = JSON.parse(user);
+
+  return `${parsedUser.firstName}`;
 };
 
 // get user id

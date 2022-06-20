@@ -5,6 +5,7 @@ import { AuthContext } from "../../stores/Auth";
 import {
   checkAuth,
   getUserProfilePicture,
+  localGetUserFirstName,
   localLogoutProfile,
 } from "../../utils/helpers";
 import { useGoogleLogout } from "react-google-login";
@@ -111,7 +112,10 @@ const Navbar: React.FC<NavbarProps> = ({
   // return the NavbarContainer
   return (
     <>
-      <Nav className={navBarScrolled ? "navbar_active" : "navbar_nature"}>
+      <Nav
+        loggedIn={isLoggedIn ? true : false}
+        className={navBarScrolled ? "navbar_active" : "navbar_nature"}
+      >
         <NavbarContainer>
           <NavbarLogo
             className={

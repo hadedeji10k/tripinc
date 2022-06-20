@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./General.css";
 import { generalFaq } from "../../../../currentUserData";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -6,8 +6,8 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 const General = () => {
   const [faqsData, setFaqsData] = useState(generalFaq);
 
-  // function to handle preference click
-  const handleReviewsClick = (e: any) => {
+  // function to handle faqs click
+  const handleFaqsClick = (e: any) => {
     // e.preventDefault();
     // console.log(e);
     const id = e.id;
@@ -24,13 +24,13 @@ const General = () => {
   return (
     <div className="general_faq_container">
       {faqsData.map((item, index) => (
-        <>
+        <div key={index} style={{ width: "100%" }}>
           <hr className="general_faq_line" />
           {/* <div className="question_answer_container"> */}
           <div
             className="row"
             id={item.id.toString()}
-            onClick={() => handleReviewsClick(item)}
+            onClick={() => handleFaqsClick(item)}
           >
             <h4 className="general_faq_question">{item.question}</h4>
 
@@ -50,7 +50,7 @@ const General = () => {
             ""
           )}
           {/* </div> */}
-        </>
+        </div>
       ))}
     </div>
   );
