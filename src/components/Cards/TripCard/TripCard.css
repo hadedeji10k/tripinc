@@ -68,13 +68,17 @@
     margin-bottom: 10px;
 }
 
-.price {
+.card_price {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
     color: #23262F;
+    align-items: center;
+    background: #F4F5F6;
+    border-radius: 8px;
+    padding: 10px;
 }
 
 .arrow {

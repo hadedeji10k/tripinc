@@ -56,13 +56,13 @@ const Card = ({
           </p>
           <hr />
           <div className="card_price_review">
-            <p className="price">
+            <p className="card_price">
               {" "}
               from {currencySymbolHelper(item.currency)}
               {item.price}
             </p>
 
-            <p className="price"> {item.ratings?.length} item.ratings</p>
+            <p className="card_price"> {item.ratings?.length} reviews</p>
             {/* <p className="price"> {item.ratings?.map((item) => { 
                             newLocal.review += rating
                         })} {item.ratings?.length} item.ratings</p> */}

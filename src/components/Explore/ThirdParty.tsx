@@ -74,13 +74,11 @@ const ThirdParty = () => {
     // get all categories as preferenceData
     getAllCategories().then((res) => {
       setPreferenceData(res.data);
-      console.log(res.data);
     });
 
     getAllTours().then((res) => {
       setAttractionData(res.data.items);
       setInitialAttractionData(res.data.items);
-      console.log(res.data.items);
 
       setPagination({
         hasNext: res.data.hasNext,
@@ -242,16 +240,12 @@ const ThirdParty = () => {
   const handleInput = (e: any) => {
     // get the input
     let input = document.getElementById("input") as HTMLInputElement;
-    // console.log(input.value);
     setInputField(input.value);
   };
 
   // function to handle date change
-  const onDateChange = (date) => {
-    console.log(date);
-    const today = new Date(date[0]);
+  const onDateChange = (date: any) => {
     setDateInput(date);
-    console.log(today);
   };
 
   // function to handle category change
@@ -268,7 +262,6 @@ const ThirdParty = () => {
     setIsLoading(true);
     // prevent default so it won't refresh the page
     e.preventDefault();
-    console.log(inputField, category, dateInput);
 
     // get category data and create a query for it
     let categoryQuery = "";
@@ -302,8 +295,6 @@ const ThirdParty = () => {
     // query
     const query = `${dateQuery}${categoryQuery}${inputQuery}`;
 
-    console.log(query);
-
     await getAllTours(query).then((res) => {
       setAttractionData(res.data.items);
       setInitialAttractionData(res.data.items);
@@ -334,8 +325,6 @@ const ThirdParty = () => {
   };
 
   const handleLike = (a: any) => {
-    // console.log(a);
-    // console.log(wishList);
     let returnState: boolean = false;
     if (wishList && wishList.length > 0) {
       let index = wishList.find((item) => item?.id === a.id);
@@ -368,7 +357,7 @@ const ThirdParty = () => {
 
   const handleUnLikeButton = async (id: any) => {
     setIsLoading(true);
-    console.log(id);
+
     const data = attractionData.filter((item) => item.id === id);
     const wishListData = wishList.filter((item) => item.id !== id);
 
@@ -387,7 +376,7 @@ const ThirdParty = () => {
     }`;
     await getAllDeals(query).then((res) => {
       setInitialAttractionData(res.data.items);
-      console.log(res.data.items);
+
       setPagination({
         hasNext: res.data.hasNext,
         hasPrevious: res.data.hasPrevious,
@@ -407,7 +396,7 @@ const ThirdParty = () => {
     }`;
     await getAllDeals(query).then((res) => {
       setInitialAttractionData(res.data.items);
-      console.log(res.data.items);
+
       setPagination({
         hasNext: res.data.hasNext,
         hasPrevious: res.data.hasPrevious,

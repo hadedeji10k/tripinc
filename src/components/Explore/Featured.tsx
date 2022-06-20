@@ -79,7 +79,6 @@ const Featured = () => {
     getAllDeals().then((res) => {
       setAttractionData(res.data.items);
       setInitialAttractionData(res.data.items);
-      console.log(res.data.items);
 
       setPagination({
         hasNext: res.data.hasNext,
@@ -303,7 +302,6 @@ const Featured = () => {
   const handleInput = (e: any) => {
     // get the input
     let input = document.getElementById("input") as HTMLInputElement;
-    // console.log(input.value);
     setInputField(input.value);
   };
 
@@ -326,8 +324,6 @@ const Featured = () => {
   };
 
   const handleLike = (a: any) => {
-    // console.log(a);
-    // console.log(wishList);
     let returnState: boolean = false;
     if (wishList && wishList.length > 0) {
       let index = wishList.find((item) => item?.id === a.id);
@@ -360,7 +356,7 @@ const Featured = () => {
 
   const handleUnLikeButton = async (id: any) => {
     setIsLoading(true);
-    console.log(id);
+
     const data = attractionData.filter((item) => item.id === id);
     const wishListData = wishList.filter((item) => item.id !== id);
 
@@ -379,7 +375,7 @@ const Featured = () => {
     }`;
     await getAllDeals(query).then((res) => {
       setInitialAttractionData(res.data.items);
-      console.log(res.data.items);
+
       setPagination({
         hasNext: res.data.hasNext,
         hasPrevious: res.data.hasPrevious,
@@ -399,7 +395,7 @@ const Featured = () => {
     }`;
     await getAllDeals(query).then((res) => {
       setInitialAttractionData(res.data.items);
-      console.log(res.data.items);
+
       setPagination({
         hasNext: res.data.hasNext,
         hasPrevious: res.data.hasPrevious,
