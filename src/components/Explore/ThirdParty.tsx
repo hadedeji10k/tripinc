@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Spin, DatePicker, Radio, Space, Select } from "antd";
 import "antd/dist/antd.min.css";
 import "./ExplorePage.css";
-// import { preferencedata, attractiondata } from "../../currentUserData";
+// import { preferencedata, tourData } from "../../currentUserData";
 // import { attraction } from '../../interfaces';
 import Card from "../Cards/TripCard/TripCard";
 
@@ -40,11 +40,7 @@ const ThirdParty = () => {
   // state to manage preference data (to sort out clicked and unclicked preference)
   const [preferenceData, setPreferenceData] = useState<ICategory[]>([]);
   const [wishList, setWishList] = useState<any[]>([]);
-  // state to manage the attraction data to be mapped into cards (using this in order to manage the attraction data in case it is filtered)
-  const [initialAttractionData, setInitialAttractionData] = useState<IDeal[]>(
-    []
-  );
-  const [attractionData, setAttractionData] = useState<IDeal[]>([]);
+  const [tourData, setTourData] = useState<IDeal[]>([]);
   // state to manage pagination
   const [pagination, setPagination] = useState<IPagination | any>();
   // state to manage the search result data, so using this when user filter and it get it for the "Result for:" in the page
@@ -56,6 +52,9 @@ const ThirdParty = () => {
   const [inputField, setInputField] = useState("");
   const [dateInput, setDateInput] = useState<Date[] | any>([]);
   const [category, setCategory] = useState<any>([]);
+
+  // set query
+  const [currentQuery, setCurrentQuery] = useState("");
 
   // useEffect to get the attraction data and category as preferenceData
   useEffect(() => {
@@ -77,9 +76,7 @@ const ThirdParty = () => {
     });
 
     getAllTours().then((res) => {
-      setAttractionData(res.data.items);
-      setInitialAttractionData(res.data.items);
-
+      setTourData(res.data.items);
       setPagination({
         hasNext: res.data.hasNext,
         hasPrevious: res.data.hasPrevious,
@@ -118,14 +115,14 @@ const ThirdParty = () => {
   //   } else {
   //     setSearchResultField("All");
   //     setCategorySearchResultField("");
-  //     setAttractionData(initialAttractionData);
+  //     setTourData(initialtourData);
   //   }
 
   //   // if the preference tag clicked is empty, set the search result field to the "All"
   //   if (preferences.length === 0 && inputField === "") {
   //     setSearchResultField("All");
   //     setCategorySearchResultField("");
-  //     setAttractionData(initialAttractionData);
+  //     setTourData(initialtourData);
   //   }
 
   //   if (preferences.length > 0 && inputField !== "") {
@@ -135,9 +132,9 @@ const ThirdParty = () => {
   //       const element = preferences[i];
   //       const catArray: any = [];
   //       // loop through the current attractions
-  //       for (let index = 0; index < initialAttractionData.length; index++) {
+  //       for (let index = 0; index < initialtourData.length; index++) {
   //         // get one attraction
-  //         const attraction = initialAttractionData[index];
+  //         const attraction = initialtourData[index];
   //         // get the categories of the attraction
   //         const data = attraction?.categories.filter(
   //           (catItem) => catItem.name === element.title
@@ -150,7 +147,7 @@ const ThirdParty = () => {
   //       // loop through the catArray and filter the result with the attraction id
   //       for (let i = 0; i < catArray.length; i++) {
   //         const element = catArray[i];
-  //         const filtered = initialAttractionData.filter(
+  //         const filtered = initialtourData.filter(
   //           (item) => item.id === element
   //         );
   //         // push the result into the preferences array
@@ -166,7 +163,7 @@ const ThirdParty = () => {
   //     let data = filteredArray.filter((item) =>
   //       item.location.toLowerCase().includes(inputField.toLowerCase())
   //     );
-  //     setAttractionData(data);
+  //     setTourData(data);
   //   } else if (preferences.length > 0 && inputField === "") {
   //     const filteredArray: any = [];
   //     // loop through all clicked preferences and filter the attraction data to the clicked preferences
@@ -174,9 +171,9 @@ const ThirdParty = () => {
   //       const element = preferences[i];
   //       const catArray: any = [];
   //       // loop through the current attractions
-  //       for (let index = 0; index < initialAttractionData.length; index++) {
+  //       for (let index = 0; index < initialtourData.length; index++) {
   //         // get one attraction
-  //         const attraction = initialAttractionData[index];
+  //         const attraction = initialtourData[index];
   //         // get the categories of the attraction
   //         const data = attraction?.categories.filter(
   //           (catItem) => catItem.name === element.title
@@ -189,7 +186,7 @@ const ThirdParty = () => {
   //       // loop through the catArray and filter the result with the attraction id
   //       for (let i = 0; i < catArray.length; i++) {
   //         const element = catArray[i];
-  //         const filtered = initialAttractionData.filter(
+  //         const filtered = initialtourData.filter(
   //           (item) => item.id === element
   //         );
   //         // push the result into the preferences array
@@ -202,21 +199,21 @@ const ThirdParty = () => {
   //         }
   //       }
   //     }
-  //     setAttractionData(filteredArray);
+  //     setTourData(filteredArray);
   //   } else if (preferences.length === 0 && inputField !== "") {
-  //     let data = initialAttractionData.filter((item) =>
+  //     let data = initialtourData.filter((item) =>
   //       item.location.toLowerCase().includes(inputField.toLowerCase())
   //     );
-  //     setAttractionData(data);
+  //     setTourData(data);
   //   } else if (preferences.length === 0 && inputField === "") {
-  //     setAttractionData(initialAttractionData);
+  //     setTourData(initialtourData);
   //   }
 
   //   return () => {};
   // }, [
   //   preferenceData,
   //   inputField,
-  //   initialAttractionData,
+  //   initialtourData,
   //   categorySearchResultField,
   // ]);
 
@@ -296,8 +293,7 @@ const ThirdParty = () => {
     const query = `${dateQuery}${categoryQuery}${inputQuery}`;
 
     await getAllTours(query).then((res) => {
-      setAttractionData(res.data.items);
-      setInitialAttractionData(res.data.items);
+      setTourData(res.data.items);
       setPagination({
         hasNext: res.data.hasNext,
         hasPrevious: res.data.hasPrevious,
@@ -306,28 +302,21 @@ const ThirdParty = () => {
         totalPages: res.data.totalPages,
         totalCount: res.data.totalCount,
       });
+      setCurrentQuery(query);
     });
-    setIsLoading(false);
-  };
 
-  // use this function to handle when the "all" button is clicked
-  const handleAllClick = (e: any) => {
-    // therefore setting the attractiondata to the original data fetched from external
-    setAttractionData(initialAttractionData);
-    // set the search result  to ALl
-    setSearchResultField("All");
-    // set the input field to empty
-    setInputField("");
-    setCategorySearchResultField("");
-    // using this to shadow mark the input field and set it to empty
-    let input = document.getElementById("input") as HTMLInputElement;
-    input.value = "";
+    setIsLoading(false);
   };
 
   const handleLike = (a: any) => {
     let returnState: boolean = false;
     if (wishList && wishList.length > 0) {
-      let index = wishList.find((item) => item?.id === a.id);
+      let index = wishList.find(
+        (item) =>
+          item?.id === a.id &&
+          item?.itemType.toLowerCase() === a.itemType.toLowerCase() &&
+          item?.provider.toLowerCase() === a.provider.toLowerCase()
+      );
       if (index) {
         returnState = true;
       } else {
@@ -339,15 +328,13 @@ const ThirdParty = () => {
 
   const handleLikeButton = async (id: any) => {
     setIsLoading(true);
-    const data = attractionData.filter((item) => item.id === id);
+    const data = tourData.filter((item) => item.id === id);
     const formData = {
       userId,
       itemId: data[0].id,
       itemType: data[0].itemType,
       provider: data[0].provider,
-      tripId: data[0].tourId,
     };
-
     const response = await addToWishList(formData);
     if (response === true) {
       setWishList([...wishList, data[0]]);
@@ -358,7 +345,7 @@ const ThirdParty = () => {
   const handleUnLikeButton = async (id: any) => {
     setIsLoading(true);
 
-    const data = attractionData.filter((item) => item.id === id);
+    const data = tourData.filter((item) => item.id === id);
     const wishListData = wishList.filter((item) => item.id !== id);
 
     // remove from database, if successful, remove from state
@@ -371,11 +358,11 @@ const ThirdParty = () => {
 
   const handlePaginationPrev = async () => {
     setIsLoading(true);
-    const query = `PageNumber=${pagination?.currentPage - 1}&PageSize=${
-      pagination?.pageSize
-    }`;
-    await getAllDeals(query).then((res) => {
-      setInitialAttractionData(res.data.items);
+    const query = `${currentQuery}PageNumber=${
+      pagination?.currentPage - 1
+    }&PageSize=${pagination?.pageSize}`;
+    await getAllTours(query).then((res) => {
+      setTourData(res.data.items);
 
       setPagination({
         hasNext: res.data.hasNext,
@@ -391,11 +378,11 @@ const ThirdParty = () => {
 
   const handlePaginationNext = async () => {
     setIsLoading(true);
-    const query = `PageNumber=${pagination?.currentPage + 1}&PageSize=${
-      pagination?.pageSize
-    }`;
-    await getAllDeals(query).then((res) => {
-      setInitialAttractionData(res.data.items);
+    const query = `${currentQuery}PageNumber=${
+      pagination?.currentPage + 1
+    }&PageSize=${pagination?.pageSize}`;
+    await getAllTours(query).then((res) => {
+      setTourData(res.data.items);
 
       setPagination({
         hasNext: res.data.hasNext,
@@ -465,11 +452,11 @@ const ThirdParty = () => {
           <div className="">
             <p>Search Result for: {searchResultField}</p>
           </div>
-          {/* <Card data={attractionData} /> */}
-          {attractionData ? (
-            attractionData.length > 0 ? (
+          {/* <Card data={tourData} /> */}
+          {tourData ? (
+            tourData.length > 0 ? (
               <div className="featured_card">
-                {attractionData.map((item) => (
+                {tourData.map((item) => (
                   <div key={item.id}>
                     <Spin spinning={isLoading}>
                       <Card
@@ -489,13 +476,6 @@ const ThirdParty = () => {
                 <br />
                 <h3>No search Result</h3>
                 <br />
-                <span
-                  id="next"
-                  className="preferences_clicked"
-                  onClick={handleAllClick}
-                >
-                  See all
-                </span>
               </>
             )
           ) : null}

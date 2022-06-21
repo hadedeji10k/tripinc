@@ -326,7 +326,12 @@ const Featured = () => {
   const handleLike = (a: any) => {
     let returnState: boolean = false;
     if (wishList && wishList.length > 0) {
-      let index = wishList.find((item) => item?.id === a.id);
+      let index = wishList.find(
+        (item) =>
+          item?.id === a.id &&
+          item?.itemType.toLowerCase() === a.itemType.toLowerCase() &&
+          item?.provider.toLowerCase() === a.provider.toLowerCase()
+      );
       if (index) {
         returnState = true;
       } else {
@@ -339,13 +344,15 @@ const Featured = () => {
   const handleLikeButton = async (id: any) => {
     setIsLoading(true);
     const data = attractionData.filter((item) => item.id === id);
+    console.log(data);
     const formData = {
       userId,
       itemId: data[0].id,
       itemType: data[0].itemType,
       provider: data[0].provider,
-      tripId: data[0].tourId,
     };
+
+    console.log(formData);
 
     const response = await addToWishList(formData);
     if (response === true) {
