@@ -1,4 +1,4 @@
-FROM nginx:1.21 as base
+FROM nginx:1.22 as base
 
 
 FROM node:16.15 AS publish
