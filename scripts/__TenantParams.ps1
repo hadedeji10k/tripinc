@@ -26,8 +26,8 @@ $TpiParams = @{
 
 	Traveler = @{
 		_ProjName = "Web2-Traveler";
-		_ProjPath = "Web2-Traveler";
-		_ProjHome = "frontend";
+		_ProjPath = "";
+		_ProjHome = "";
 
 		DnsHost = @{
 			Prod = @("tripinc.co","www.tripinc.co");
@@ -39,8 +39,8 @@ $TpiParams = @{
 
 	AngularAdmin = @{
 		_ProjName = "Angular-Admin";
-		_ProjPath = "WebPortal/Angular13/projects/admin";
-		_ProjHome = "frontend";
+		_ProjPath = "Angular13/projects/admin";
+		_ProjHome = "";
 
 		DnsHost = @{
 			Test = @("angular-admin.tripinc.co");
@@ -51,8 +51,8 @@ $TpiParams = @{
 
 	AngularFrontend = @{
 		_ProjName = "Angular-Frontend";
-		_ProjPath = "WebPortal/Angular13/projects/portal";
-		_ProjHome = "frontend";
+		_ProjPath = "Angular13/projects/portal";
+		_ProjHome = "";
 
 		DnsHost = @{
 			Test = @("angular-frontend.tripinc.co");
@@ -65,7 +65,7 @@ $TpiParams = @{
 	Onboarding = @{
 		_ProjName = "TripInc.Onboarding.Api";
 		_ProjPath = "TripInc.Onboarding.Api";
-		_ProjHome = "backend/Onboarding";
+		_ProjHome = "";
 
 		DnsHost = @{
 			Prod = @("onboarding.tripinc.co");
@@ -78,7 +78,7 @@ $TpiParams = @{
 	Planning = @{
 		_ProjName = "TripInc.Planning.Api";
 		_ProjPath = "TripInc.Planning.Api";
-		_ProjHome = "backend/Planning";
+		_ProjHome = "";
 
 		DnsHost = @{
 			Prod = @("planning.tripinc.co");
@@ -91,7 +91,7 @@ $TpiParams = @{
 	TripService = @{
 		_ProjName = "TripInc.TripService.Api";
 		_ProjPath = "TripInc.TripService.Api";
-		_ProjHome = "backend/TripService";
+		_ProjHome = "";
 
 		DnsHost = @{
 			Prod = @("tripservice.tripinc.co");
@@ -106,7 +106,7 @@ $TpiParams = @{
 	UserSecurity = @{
 		_ProjName = "TripInc.UserSecurity.API";
 		_ProjPath = "TripInc.UserSecurity.API";
-		_ProjHome = "backend/UserSecurity";
+		_ProjHome = "";
 
 		DnsHost = @{
 			Prod = @("usersecurity.tripinc.co");
