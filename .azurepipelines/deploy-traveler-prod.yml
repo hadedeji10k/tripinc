@@ -22,7 +22,7 @@ variables:
   value: $(Build.BuildId)
 
 trigger:
-- main
+- master
 
 pool:
   name: Default
