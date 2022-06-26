@@ -3,7 +3,8 @@ $TpiParams = @{
 	AwsRegion = "eu-west-2";
 	
 	EksName = "tripinc-01";
-	EksContext = "iam-root-account@tripinc-01.eu-west-2.eksctl.io";
+	# EksContext = "iam-root-account@tripinc-01.eu-west-2.eksctl.io";
+	EksContext = "arn:aws:eks:eu-west-2:068012186896:cluster/tripinc-01";
 
 	K8sNamespace = @{
 		Prod = "planner-prod";
