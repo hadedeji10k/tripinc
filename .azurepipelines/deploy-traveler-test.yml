@@ -1,0 +1,59 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+variables:
+- name: 'TRIPINC_CONFIG_NETFXDIR'
+  value: $(Build.SourcesDirectory)/backend/Config
+- name: 'TRIPINC_CONFIG_NODEJSDIR'
+  value: $(Build.SourcesDirectory)/frontend/custom-params
+- name: 'TRIPINC_MYSQL_PWD'
+  value: 'XOJ'
+
+- name: 'TRIPINC_PROJDIR'
+  value: $(Build.SourcesDirectory)
+- name: 'TRIPINC_RUNTIMECONFIG'
+  value: '~/.runtimeconfig/TripInc'
+- name: 'TRIPINC_SCRIPTDIR'
+  value: $(Build.SourcesDirectory)/scripts
+
+- name: 'TRIPINC_BUILDID'
+  value: $(Build.BuildId)
+
+trigger:
+- develop
+
+pool:
+  name: Default
+  demands:
+  - Agent.OS -equals Linux
+
+jobs:
+- job: Build_DockerImage
+  displayName: Build DockerImage
+  # pool:
+  #   name: 'Default'
+  #   demands:
+  #   - Agent.OS -equals Linux
+  steps:
+  - script: pwd
+    displayName: 'Present working directory'
+
+  - pwsh: $(TRIPINC_SCRIPTDIR)/ProjDockerPublish.ps1 Traveler
+    displayName: 'Do actual build'
+
+- deployment: Deploy_AKS_DB
+  displayName: Deploy App Resources
+  dependsOn: Build_DockerImage
+  pool:
+    name: 'Default'
+    demands:
+    - Agent.OS -equals Linux
+  environment: 'test'
+  strategy: 
+    runOnce:
+      deploy:
+        steps:
+        - pwsh: $(TRIPINC_SCRIPTDIR)/ProjEksDeployFrontend.ps1 Traveler -TpiIsTesting # -TpiPushBuild
+          displayName: 'Deploy to EKS'
