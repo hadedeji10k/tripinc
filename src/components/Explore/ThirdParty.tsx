@@ -313,7 +313,7 @@ const ThirdParty = () => {
     if (wishList && wishList.length > 0) {
       let index = wishList.find(
         (item) =>
-          item?.id === a.id &&
+          item?.itemId === a.id &&
           item?.itemType.toLowerCase() === a.itemType.toLowerCase() &&
           item?.provider.toLowerCase() === a.provider.toLowerCase()
       );

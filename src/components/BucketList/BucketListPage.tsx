@@ -9,7 +9,7 @@ import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
 import { localGetUserId } from "../../utils/helpers";
-import { getUserWishList } from "../../api";
+import { getUserWishListAsAttraction } from "../../api";
 import { IDeal } from "../../api/interfaces";
 import { removeFromWishList } from "../../api/responseHandlers";
 import Swal from "sweetalert2";
@@ -35,7 +35,7 @@ const BucketListPage = () => {
   useEffect(() => {
     setIsLoading(true);
     if (userId) {
-      getUserWishList(userId)
+      getUserWishListAsAttraction(userId)
         .then((res) => {
           setWishListData(res.data.items);
           setInitialWishListData(res.data.items);
@@ -331,7 +331,14 @@ const BucketListPage = () => {
                     liked={true}
                     handleLikeButton={handleLikeButton}
                     handleUnLikeButton={handleUnLikeButton}
-                    url={`/explore-details/attraction/${item.id}`}
+                    url={
+                      item.itemType.toLowerCase() === "attraction"
+                        ? `/explore-details/attraction/${item.id}`
+                        : item.itemType.toLowerCase() === "tour" &&
+                          item.tourId !== 0
+                        ? `/explore-details/tour/${item.tourId}`
+                        : `/explore-details/attraction/${item.id}`
+                    }
                   />
                 </div>
               ))}

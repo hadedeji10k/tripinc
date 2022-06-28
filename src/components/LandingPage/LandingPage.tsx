@@ -10,14 +10,7 @@ import image from "../../images/illlustration-travel-agent.png";
 import image2 from "../../images/illlustration-bookings-oneplatform.png";
 import image3 from "../../images/illlustration-itenary-lifestyle.png";
 import phoneImage from "../../images/mockup-phones.png";
-// import landingPage from "../../images/landing_page.png";
 import { BiSearch } from "react-icons/bi";
-
-// dummy images
-// import exploreImage from "../../images/img container (style).png";
-// import exploreImage2 from "../../images/img container (style)(1).png";
-// import exploreImage3 from "../../images/img container (style)(2).png";
-
 import { countryData } from "../../currentUserData";
 
 import { getAllCategories, getTopDeals } from "../../api";
@@ -376,30 +369,12 @@ const LandingPage = () => {
                     />
                   </Link>
                 </div>
-                <Link to={`/explore-details/${item.id}`}>
+                <Link to={`/explore-details/attraction/${item.id}`}>
                   <p className="explore_card_title">{item.title}</p>
                 </Link>
                 <p className="explore_card_location">{item.city}</p>
               </div>
             ))}
-            {/* <div className="explore_card">
-              <div className="explore_image_container">
-                <img src={exploreImage2} alt="" className="explore_image" />
-              </div>
-              <p className="explore_card_title">
-                Tommy Live comedy at Tall Horse Pub
-              </p>
-              <p className="explore_card_location">London, United Kingdom</p>
-            </div>
-            <div className="explore_card">
-              <div className="explore_image_container">
-                <img src={exploreImage3} alt="" className="explore_image" />
-              </div>
-              <p className="explore_card_title">
-                Tommy Live comedy at Tall Horse Pub
-              </p>
-              <p className="explore_card_location">London, United Kingdom</p>
-            </div> */}
           </div>
           <a href="/#/explore">
             <button className="button">Explore more!</button>

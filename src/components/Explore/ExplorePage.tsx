@@ -1,20 +1,11 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./ExplorePage.css";
-// import { preferencedata, attractiondata } from "../../currentUserData";
-// import { attraction } from "../../interfaces";
-import Card from "../Cards/TripCard/TripCard";
-
-import { BiSearch } from "react-icons/bi";
-import { getAllCategories, getAllDeals, getUserWishList } from "../../api";
-import { IDeal, IFormattedCategory } from "../../api/interfaces";
-import { localGetUserId, symbolHelper } from "../../utils/helpers";
-import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
-import { FaLessThanEqual } from "react-icons/fa";
+import { IFormattedCategory } from "../../api/interfaces";
+import { localGetUserId } from "../../utils/helpers";
 import Featured from "./Featured";
 import ThirdParty from "./ThirdParty";
 

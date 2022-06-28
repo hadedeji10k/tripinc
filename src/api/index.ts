@@ -158,6 +158,11 @@ export const getUserWishList = async (userId: any): Promise<AxiosResponse<any>> 
     return await TRIPAPI.get(`/api/WishLists/GetByUser/${userId}`);
 }
 
+// get user wishlist
+export const getUserWishListAsAttraction = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/WishLists/GetAsAttractionsByUser/${userId}`);
+}
+
 // add to cart
 export const addToCart = async (formData: IAddCart): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.post(`/api/Carts/AddToCart`, formData);
