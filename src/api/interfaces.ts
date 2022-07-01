@@ -251,56 +251,18 @@ export interface IDeal {
     longitude: number,
     latitude: number,
     distance?: number,
-    openingHour?: {
-        ticks: number,
-        days: number,
-        hours: number,
-        milliseconds: number,
-        minutes: number,
-        seconds: number,
-        totalDays: number,
-        totalHours: number,
-        totalMilliseconds: number,
-        totalMinutes: number,
-        totalSeconds: number
-    },
-    closingHour?: {
-        ticks: number,
-        days: number,
-        hours: number,
-        milliseconds: number,
-        minutes: number,
-        seconds: number,
-        totalDays: number,
-        totalHours: number,
-        totalMilliseconds: number,
-        totalMinutes: number,
-        totalSeconds: number
-    },
-    bestVisitingTime?: [
-        {
-            ticks: number,
-            days: number,
-            hours: number,
-            milliseconds: number,
-            minutes: number,
-            seconds: number,
-            totalDays: number,
-            totalHours: number,
-            totalMilliseconds: number,
-            totalMinutes: number,
-            totalSeconds: number
-        }
-    ],
-    openingDaysList?: string[],
+    openingHour: string,
+    closingHour: string,
+    bestVisitingTime: string[],
+    openingDaysList: string[],
     availableDates?: Date[],
     typicalTimeSpent?: number,
     description: string,
     averageRating?: number,
     numberOfRatings?: number,
     imageUrl?: string,
-    termsAndConditions?: string,
-    greatForList?: string[],
+    termsAndConditions: string,
+    greatForList: string[],
     thingsToPackList?: string[],
     creatorUserId?: number,
     creatorName?: string,
@@ -378,7 +340,7 @@ export interface IDeal {
             unit: string
         }
     ],
-    cancellationPolicyText?: string,
+    cancellationPolicyText: string,
     expiryDate?: Date
 }
 
@@ -389,4 +351,8 @@ export interface IPagination {
     pageSize: number,
     totalPages: number,
     totalCount: number,
+}
+
+export interface ITripPlanning {
+
 }

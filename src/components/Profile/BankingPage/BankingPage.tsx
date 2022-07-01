@@ -94,10 +94,10 @@ const BankingPage = () => {
             <div className="banking_header_container">
               <h3 className="banking_page_header">Payment Information</h3>
               <button className="banking_page_button">
-                Update payment info
+                Add new payment method
               </button>
             </div>
-            <div className="billing_details_container">
+            {/* <div className="billing_details_container">
               <div className="billing_details_container_row">
                 <div className="billing_details_row_title">
                   <p className="banking_details_title">PAYMENT METHOD</p>
@@ -124,17 +124,17 @@ const BankingPage = () => {
                   <p className="banking_details_title">12 / 15</p>
                 </div>
               </div>
-            </div>
+            </div> */}
             <button className="banking_page_button_small_screen">
-              Update payment info
+              Add new payment method
             </button>
             <hr className="banking_line" />
           </div>
-          <div className="banking_page_button_add_container">
+          {/* <div className="banking_page_button_add_container">
             <button className="banking_page_button_add">
               Add new payment method
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

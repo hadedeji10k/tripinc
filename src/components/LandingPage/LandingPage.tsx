@@ -361,7 +361,7 @@ const LandingPage = () => {
             {topDeals?.map((item) => (
               <div className="explore_card" key={item.id}>
                 <div className="explore_image_container">
-                  <Link to={`/explore-details/${item.id}`}>
+                  <Link to={`/explore-details/attraction/${item.id}`}>
                     <img
                       src={item.imageUrl}
                       alt={item.title + "'s image"}

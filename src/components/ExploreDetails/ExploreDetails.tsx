@@ -329,18 +329,26 @@ const ExploreDetails = () => {
 
           <div className="explore_page_other">
             <div className="description_container">
-              <div className="description">
-                <p>
-                  {showDetails
-                    ? attractionData?.description
-                    : attractionData?.description.slice(0, 200)}
-                  {}...
-                </p>
-                <p>
-                  <button onClick={toggleDetails}>
-                    {showDetails ? "Show less" : "Show more"}
-                  </button>
-                </p>
+              <div className="explore_details_description">
+                <h3 className="sub_heading">Description</h3>
+                {attractionData?.description ||
+                attractionData?.description.length === 0 ? (
+                  <>
+                    <p>
+                      {showDetails
+                        ? attractionData?.description
+                        : attractionData?.description.slice(0, 200)}
+                      {}...
+                    </p>
+                    <p>
+                      <button onClick={toggleDetails}>
+                        {showDetails ? "Show less" : "Show more"}
+                      </button>
+                    </p>
+                  </>
+                ) : (
+                  "N/A"
+                )}
               </div>
             </div>
 
@@ -348,6 +356,84 @@ const ExploreDetails = () => {
 
             <div className="explore_container">
               <h3 className="sub_heading">Details</h3>
+              {attractionData && attractionData?.openingHour ? (
+                <>
+                  <h3>Opens: </h3>
+                  <div className="explore_details_tag_container">
+                    <span className="explore_details_tags">
+                      {attractionData?.openingHour}
+                    </span>
+                  </div>
+                </>
+              ) : null}
+              {attractionData && attractionData?.closingHour ? (
+                <>
+                  <h3>Closes: </h3>
+                  <div className="explore_details_tag_container">
+                    <span className="explore_details_tags">
+                      {attractionData?.closingHour}
+                    </span>
+                  </div>
+                </>
+              ) : null}
+              {attractionData && attractionData?.typicalTimeSpent ? (
+                <>
+                  <h3>Typical time spent: </h3>
+                  <div className="explore_details_tag_container">
+                    <span className="explore_details_tags">
+                      {Math.floor(attractionData?.typicalTimeSpent / 60)} hour
+                      {Math.floor(attractionData?.typicalTimeSpent / 60) > 1
+                        ? "s"
+                        : ""}{" "}
+                      {" : "}
+                      {(attractionData?.typicalTimeSpent % 60).toString() ||
+                        0}{" "}
+                      min
+                      {attractionData?.typicalTimeSpent % 60 > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                </>
+              ) : null}
+              {attractionData && attractionData?.greatForList?.length > 0 ? (
+                <>
+                  <h3>Great For: </h3>
+                  <div className="explore_details_tag_container">
+                    {attractionData?.greatForList.map((item) => (
+                      <span className="explore_details_tags">{item}</span>
+                    ))}
+                  </div>
+                </>
+              ) : null}
+              {attractionData && attractionData?.openingDaysList?.length > 0 ? (
+                <>
+                  <h3>Opening Days: </h3>
+                  <div className="explore_details_tag_container">
+                    {attractionData?.openingDaysList.map((item) => (
+                      <span className="explore_details_tags">{item}</span>
+                    ))}
+                  </div>
+                </>
+              ) : null}
+              {attractionData &&
+              attractionData?.bestVisitingTime?.length > 0 ? (
+                <>
+                  <h3>Best Visiting Times: </h3>
+                  <div className="explore_details_tag_container">
+                    {attractionData?.bestVisitingTime.map((item) => (
+                      <span className="explore_details_tags">{item}</span>
+                    ))}
+                  </div>
+                </>
+              ) : null}
+              {/* if no details is available, show N/A */}
+              {!attractionData?.openingHour &&
+              !attractionData?.closingHour &&
+              !attractionData?.typicalTimeSpent &&
+              !attractionData?.greatForList &&
+              !attractionData?.openingDaysList &&
+              !attractionData?.bestVisitingTime ? (
+                <h3>N/A</h3>
+              ) : null}
             </div>
 
             {/* <hr className="line"/> */}
@@ -385,14 +471,20 @@ const ExploreDetails = () => {
             <div className="explore_container">
               <h3 className="sub_heading">Terms and Conditions</h3>
               <p className="sub_heading_description">
-                {attractionData?.termsAndConditions}
+                {!attractionData?.termsAndConditions ||
+                attractionData?.termsAndConditions.length === 0
+                  ? "N/A"
+                  : attractionData?.termsAndConditions}
               </p>
             </div>
 
             <div className="explore_container">
               <h3 className="sub_heading">Cancellation policy</h3>
               <p className="sub_heading_description">
-                {attractionData?.cancellationPolicyText}
+                {!attractionData?.cancellationPolicyText ||
+                attractionData?.cancellationPolicyText.length === 0
+                  ? "N/A"
+                  : attractionData?.cancellationPolicyText}
               </p>
             </div>
 

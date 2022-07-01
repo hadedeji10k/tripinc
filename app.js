@@ -312,3 +312,6 @@ const formData = {
 axios.post(url, formData).then((res) => {
   console.log(res);
 });
+
+// js fiddle
+// http://jsfiddle.net/5GCsJ/4713/

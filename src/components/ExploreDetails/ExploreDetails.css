@@ -93,7 +93,7 @@
     padding: 0;
 }
 
-.description {
+.explore_details_description {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -106,7 +106,7 @@
     margin-bottom: 10px;
 }
 
-.description p button,
+.explore_details_description p button,
 .review_card_details_name button {
     padding: 5px;
     color: #172e68;
@@ -117,7 +117,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.description p button:hover,
+.explore_details_description p button:hover,
 .review_card_details_name button:hover {
     background-color: #172e68;
     color: #fff;
@@ -298,6 +298,28 @@
     transition: all 0.3s ease-in-out;
 }
 
+.explore_details_tag_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.explore_details_tags {
+    background: #576fcf;
+    color: #FCFCFD;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.explore_details_tags:hover {
+    background: #2c4bc8;
+    transition: all 0.3s ease-in-out;
+}
+
 @media screen and (max-width: 1020px) {
     .explore_page_other {
         padding-left: 30px;
@@ -327,7 +349,7 @@
 }
 
 @media screen and (max-width: 650px) {
-    .description {
+    .explore_details_description {
         width: 80%;
     }
 
