@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview, IMakeOrder } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -521,6 +521,58 @@ export const removeFromCart = async (id: any) => {
     Swal.fire({
       title: "Error!",
       text: `Removing from Cart was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+
+
+// Make order
+export const makeOrder = async (formData: IMakeOrder) => {
+  try {
+    const response = await api.makeOrder(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully placed your cart items on order. Kindly check your order list to view your orders.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.reload()
+        }
+      })
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Placing order was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Placing order was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Placing order was not successful. Please try again later`,
       icon: "error",
       confirmButtonText: "Ok",
     });

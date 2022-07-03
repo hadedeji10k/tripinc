@@ -1,14 +1,13 @@
-import "./CartSummary.css";
+import "./OrderSummary.css";
 interface Props {
   totalAmountOfItems: number;
-  itemsInCart: boolean;
 }
-const CartSummary = ({ totalAmountOfItems, itemsInCart }: Props) => {
-  const serviceFee = itemsInCart ? 200 : 0;
+const OrderSummary = ({ totalAmountOfItems }: Props) => {
+  const serviceFee = false ? 200 : 0;
   return (
     <>
       <div className="cart_summary_container">
-        <p className="shopping_description">Cart Summary</p>
+        <p className="shopping_description">Order Summary</p>
 
         <hr className="cart_line" />
         <div className="shopping_cart_price">
@@ -48,4 +47,4 @@ const CartSummary = ({ totalAmountOfItems, itemsInCart }: Props) => {
   );
 };
 
-export default CartSummary;
+export default OrderSummary;

@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -182,6 +182,23 @@ export const removeFromCart = async (cartId: any): Promise<AxiosResponse<any>> =
 export const getUserCart = async (userId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/Carts/GetByUser/${userId}`);
 }
+
+// get user order
+export const makeOrder = async (formData: IMakeOrder): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/Orders/Checkout`, formData);
+}
+
+// get user order
+export const getUserOrder = async (userId: any, query?: string): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Orders/GetByUser/${userId}?${query}`);
+}
+
+// get order details by order ID
+export const getOrderByID = async (orderId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Orders/${orderId}`);
+}
+
+
 
 // add review
 export const addReview = async (formData: IAddReview): Promise<AxiosResponse<any>> => {

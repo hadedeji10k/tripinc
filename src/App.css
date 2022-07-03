@@ -119,3 +119,14 @@
   padding: 3px 5px;
   border-radius: 10px;
 }
+
+.order_page_table {
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  max-width: 90%;
+  width: 90%;
+}

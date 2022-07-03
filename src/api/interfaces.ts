@@ -172,6 +172,48 @@ export interface ICart {
     associatedTripId: number,
     date: Date
 }
+
+export interface IMakeOrder {
+    userId: number | null,
+    tripId?: number
+}
+export interface IOrderItem {
+    orderId: number,
+    userId: number,
+    itemId: number,
+    itemName: string,
+    currency: string,
+    unitPrice: number,
+    quantity: number,
+    totalAmount: number,
+    imageUrl: string,
+    isFulfilled: boolean,
+    isCancelled: boolean,
+    cancellationDate: any,
+    id: number,
+    createdDate: Date,
+    updatedDate: Date | null
+}
+
+export interface IOrderDetails {
+    userId: number,
+    userFullName: string,
+    email: string,
+    tripId: number | null,
+    orderReference: string,
+    totalAmount: number,
+    currency: string,
+    paid: boolean,
+    paymentDate: Date | null,
+    amountPaid: number,
+    status: string,
+    cancellationReason: string | null,
+    items: IOrderItem[],
+    id: number,
+    createdDate: Date | null,
+    updatedDate: Date | null
+}
+
 export interface IAddCart {
     userId: number | null,
     itemId: number,

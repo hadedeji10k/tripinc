@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./ShoppingCartPage.css";
+import "./ShoppingCart.css";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import CartCard from "./CartCard";
-import { ICart } from "../../../api/interfaces";
+import { ICart } from "../../api/interfaces";
 import {
   addToWishList,
   removeFromCart,
   removeFromWishList,
-} from "../../../api/responseHandlers";
+} from "../../api/responseHandlers";
 import Swal from "sweetalert2";
-import { getAttractionByID, getUserWishList } from "../../../api";
+import { getAttractionByID, getUserWishList } from "../../api";
 
 interface Props {
   cartData: ICart[];
@@ -19,7 +19,7 @@ interface Props {
   userId: any;
 }
 
-const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
+const ShoppingCart = ({ cartData, setCartData, userId }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [wishList, setWishList] = useState<any[]>([]);
 
@@ -171,7 +171,7 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
               <br />
               <br />
               <br />
-              <p>No item in cart</p>
+              <p>No items in cart</p>
               <br />
               <br />
               <br />
@@ -183,4 +183,4 @@ const ShoppingCartPage = ({ cartData, setCartData, userId }: Props) => {
   );
 };
 
-export default ShoppingCartPage;
+export default ShoppingCart;

@@ -1,6 +1,21 @@
 import "./PaymentPage.css";
 
-const PaymentPage = () => {
+interface Props {
+  menuBar: any;
+  setMenuBar: any;
+}
+
+const PaymentPage = ({ menuBar, setMenuBar }: Props) => {
+  const handleClickMenu = (id: any) => {
+    for (let i = 0; i < menuBar.length; i++) {
+      const element = menuBar[i];
+      element.state = false;
+    }
+    const index = menuBar.findIndex((item) => item.id === parseInt(id));
+    menuBar[index].state = true;
+    setMenuBar([...menuBar]);
+  };
+
   const atmCardHandle = (event: any): any => {
     event.preventDefault();
     if (event.target.value.length === 4) {
@@ -81,6 +96,12 @@ const PaymentPage = () => {
             </div>
           </div>
           <button className="payment_page_button">Proceed to Payment</button>
+          <button
+            onClick={() => handleClickMenu(2)}
+            className="customer_info_button"
+          >
+            Back
+          </button>
           <p>
             <a href="/explore" className="return_to_explore">
               &larr; Return to Exploring

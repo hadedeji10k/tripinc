@@ -19,6 +19,8 @@ import TripInterest from "../components/TripInterest/TripInterest";
 import MyTrip from "../components/MyTripPage/MyTrip";
 import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
 import ExploreCategoryPage from "../components/ExploreCategory/ExploreCategoryPage";
+import Orders from "../components/Shopping/OrdersPage";
+import ShoppingCartPage from "../components/ShoppingCartPage";
 
 // import AuthVerify from "../pages/AuthVerify";
 import MainLayout from "../pages";
@@ -88,8 +90,24 @@ const MainRoute: React.FC = () => {
           </Route>
           <Route path="/plan-trip" element={<PlanTrip />} />
           <Route path="/set-budget" element={<SetBudget />} />
-          <Route path="/shopping" element={<Shopping />} />
           <Route path="/trip-interest" element={<TripInterest />} />
+          <Route path="/shopping/cart" element={<ShoppingCartPage />} />
+          <Route
+            path="/shopping/order/:orderId"
+            element={
+              <RequireAuth>
+                <Shopping />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <RequireAuth>
+                <Orders />
+              </RequireAuth>
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
         </Route>
         {/* </Route> */}

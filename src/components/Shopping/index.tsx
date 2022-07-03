@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Spin } from "antd";
+import "antd/dist/antd.min.css";
 import CustomerInfoPage from "./CustomerInfoPage/CustomerInfoPage";
-import ShoppingCartPage from "./ShoppingCartPage/ShoppingCartPage";
+import OrderPage from "./OrderPage/OrderPage";
 import PaymentPage from "./PaymentPage/PaymentPage";
-import CartSummary from "./CartSummary/CartSummary";
+import OrderSummary from "./OrderSummary/OrderSummary";
 import "./Shopping.css";
-import { ICart } from "../../api/interfaces";
+import { IOrderDetails, IOrderItem } from "../../api/interfaces";
 import { localGetUserId } from "../../utils/helpers";
-import { getUserCart } from "../../api";
+import { getOrderByID } from "../../api";
 
 const menuBarData = [
   {
     id: 1,
     state: true,
-    title: "Cart View",
+    title: "Order View",
   },
   {
     id: 2,
@@ -28,20 +31,23 @@ const menuBarData = [
 
 const Shopping = () => {
   const [menuBar, setMenuBar] = useState(menuBarData);
-  const [cartData, setCartData] = useState<ICart[]>([]);
-  let data = menuBar.filter((item) => item.state === true);
+  const [orderItems, setOrderItems] = useState<IOrderItem[] | any>([]);
+  const [orderDetails, setOrderDetails] = useState<IOrderDetails>();
   const [userId] = useState<number | null>(() => localGetUserId());
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  let data = menuBar.filter((item) => item.state === true);
+
+  const { orderId } = useParams();
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart_data") as any);
-    if (cart && cart.length > 0) {
-      setCartData(cart);
-    } else {
-      getUserCart(userId).then((res) => {
-        localStorage.setItem("cart_data", JSON.stringify(res.data));
-        setCartData(res.data);
-      });
-    }
+    setIsLoading(true);
+    getOrderByID(orderId).then((res) => {
+      localStorage.setItem("order_items", JSON.stringify(res.data));
+      setOrderDetails(res.data);
+      setOrderItems(res.data.items);
+      setIsLoading(false);
+    });
   }, [userId]);
 
   // const handleNextButton = (id: any) => {
@@ -78,75 +84,69 @@ const Shopping = () => {
     setMenuBar([...menuBar]);
   };
 
-  const totalAmountOfItems = () => {
-    const amountArray = cartData.map((item) => {
-      return item.totalAmount;
-    });
-
-    const sum = amountArray.reduce((a, b) => a + b, 0);
-    return sum;
-  };
-
   return (
     <>
-      <div className="shopping_page_container">
-        <div className="shopping_page_big_half_container">
-          <p className="navigation">
-            <span
-              className={
-                data[0].id === 1 ? "shopping_active" : "shopping_not_active"
+      <Spin spinning={isLoading}>
+        <div className="shopping_page_container">
+          <div className="shopping_page_big_half_container">
+            <p className="navigation">
+              <span
+                className={
+                  data[0].id === 1 ? "shopping_active" : "shopping_not_active"
+                }
+                onClick={() => {
+                  handleClickMenu(1);
+                }}
+              >
+                01 Order View &nbsp;&nbsp;{" "}
+              </span>{" "}
+              <span
+                className={
+                  data[0].id === 2 ? "shopping_active" : "shopping_not_active"
+                }
+                onClick={() => {
+                  handleClickMenu(2);
+                }}
+              >
+                {" "}
+                &gt; &nbsp; 02 Customer Info &nbsp;&nbsp;{" "}
+              </span>{" "}
+              <span
+                className={
+                  data[0].id === 3 ? "shopping_active" : "shopping_not_active"
+                }
+                onClick={() => {
+                  handleClickMenu(3);
+                }}
+              >
+                {" "}
+                &gt; &nbsp; 03 Payment
+              </span>
+            </p>
+            <hr className="cart_line" />
+            {data[0].id === 1 ? (
+              <OrderPage
+                orderItems={orderItems}
+                menuBar={menuBar}
+                setMenuBar={setMenuBar}
+              />
+            ) : data[0].id === 2 ? (
+              <CustomerInfoPage menuBar={menuBar} setMenuBar={setMenuBar} />
+            ) : data[0].id === 3 ? (
+              <PaymentPage menuBar={menuBar} setMenuBar={setMenuBar} />
+            ) : (
+              <></>
+            )}
+          </div>
+          <div className="shopping_page_small_half_container">
+            <OrderSummary
+              totalAmountOfItems={
+                (orderDetails && orderDetails?.totalAmount) || 0
               }
-              onClick={() => {
-                handleClickMenu(1);
-              }}
-            >
-              01 Cart View &nbsp;&nbsp;{" "}
-            </span>{" "}
-            <span
-              className={
-                data[0].id === 2 ? "shopping_active" : "shopping_not_active"
-              }
-              onClick={() => {
-                handleClickMenu(2);
-              }}
-            >
-              {" "}
-              &gt; &nbsp; 02 Customer Info &nbsp;&nbsp;{" "}
-            </span>{" "}
-            <span
-              className={
-                data[0].id === 3 ? "shopping_active" : "shopping_not_active"
-              }
-              onClick={() => {
-                handleClickMenu(3);
-              }}
-            >
-              {" "}
-              &gt; &nbsp; 03 Payment
-            </span>
-          </p>
-          <hr className="cart_line" />
-          {data[0].id === 1 ? (
-            <ShoppingCartPage
-              cartData={cartData}
-              setCartData={setCartData}
-              userId={userId}
             />
-          ) : data[0].id === 2 ? (
-            <CustomerInfoPage />
-          ) : data[0].id === 3 ? (
-            <PaymentPage />
-          ) : (
-            <></>
-          )}
+          </div>
         </div>
-        <div className="shopping_page_small_half_container">
-          <CartSummary
-            totalAmountOfItems={totalAmountOfItems()}
-            itemsInCart={cartData.length > 0 ? true : false}
-          />
-        </div>
-      </div>
+      </Spin>
     </>
   );
 };

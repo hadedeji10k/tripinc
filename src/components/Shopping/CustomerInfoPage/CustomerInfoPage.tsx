@@ -4,7 +4,22 @@ import { Formik } from "formik";
 import { CustomerInfoSchema } from "../../../schema/yupSchema";
 import Swal from "sweetalert2";
 
-const CustomerInfoPage = () => {
+interface Props {
+  menuBar: any;
+  setMenuBar: any;
+}
+
+const CustomerInfoPage = ({ menuBar, setMenuBar }: Props) => {
+  const handleClickMenu = (id: any) => {
+    for (let i = 0; i < menuBar.length; i++) {
+      const element = menuBar[i];
+      element.state = false;
+    }
+    const index = menuBar.findIndex((item) => item.id === parseInt(id));
+    menuBar[index].state = true;
+    setMenuBar([...menuBar]);
+  };
+
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
@@ -169,6 +184,12 @@ const CustomerInfoPage = () => {
               // End of signup form
             )}
           </Formik>
+          <button
+            onClick={() => handleClickMenu(1)}
+            className="customer_info_button"
+          >
+            Back
+          </button>
           <p>
             <a href="/explore" className="return_to_explore">
               &larr; Return to Exploring

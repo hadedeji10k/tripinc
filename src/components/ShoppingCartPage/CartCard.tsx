@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
-import "./ShoppingCartPage.css";
-import { ICart } from "../../../api/interfaces";
-import { updateCart } from "../../../api";
+import "./ShoppingCart.css";
+import { ICart } from "../../api/interfaces";
+import { updateCart } from "../../api";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
