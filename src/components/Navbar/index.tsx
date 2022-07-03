@@ -5,6 +5,7 @@ import { AuthContext } from "../../stores/Auth";
 import {
   checkAuth,
   getUserProfilePicture,
+  localGetOrdersLength,
   localGetUserFirstName,
   localLogoutProfile,
 } from "../../utils/helpers";
@@ -32,6 +33,7 @@ import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 // import logo from '../../logo.svg'
 import { localGetCartLength } from "../../utils/helpers";
+import { BsBagCheck } from "react-icons/bs";
 
 // Interface for this component
 interface NavbarProps {
@@ -48,11 +50,13 @@ const Navbar: React.FC<NavbarProps> = ({
   const [profilePicture, setProfilePicture] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(authContext.isLoggedIn);
   const [cartLength, setCartLength] = useState<number>(0);
-  // this isused to check if the user has scrolled more than the nav bar
+  const [ordersLength, setOrdersLength] = useState<number>(0);
+  // this is used to check if the user has scrolled more than the nav bar
   const [navBarScrolled, setNavBarScrolled] = useState<boolean>(false);
 
   useEffect(() => {
     setCartLength(localGetCartLength());
+    setOrdersLength(localGetOrdersLength());
   });
 
   const { pathname } = useLocation();
@@ -181,7 +185,7 @@ const Navbar: React.FC<NavbarProps> = ({
               className={
                 navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
               }
-              to="/shopping"
+              to="/shopping/cart"
             >
               <ReactIcons>
                 <AiOutlineShoppingCart />
@@ -191,6 +195,23 @@ const Navbar: React.FC<NavbarProps> = ({
                   }
                 >
                   {cartLength}
+                </span>
+              </ReactIcons>
+            </NavLink>
+            <NavLink
+              className={
+                navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
+              }
+              to="/orders"
+            >
+              <ReactIcons>
+                <BsBagCheck />
+                <span
+                  className={
+                    navBarScrolled ? "cart_number_active" : "cart_number"
+                  }
+                >
+                  {ordersLength}
                 </span>
               </ReactIcons>
             </NavLink>

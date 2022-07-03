@@ -43,7 +43,6 @@ const Shopping = () => {
   useEffect(() => {
     setIsLoading(true);
     getOrderByID(orderId).then((res) => {
-      localStorage.setItem("order_items", JSON.stringify(res.data));
       setOrderDetails(res.data);
       setOrderItems(res.data.items);
       setIsLoading(false);

@@ -13,7 +13,7 @@ const OrderCard = ({ item }: Props) => {
       <div className="cart_card_container">
         <div className="order_image_container">
           <Link to={`/explore-details/attraction/${item.itemId}`}>
-            <img src={item.imageUrl} alt="" className="image" />
+            <img src={item.imageUrl} alt="" className="order_page_image" />
           </Link>
         </div>
         <div className="order_card_details_container">

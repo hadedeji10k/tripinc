@@ -1,6 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
 // import { MdOutlineLanguage } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BsBagCheck } from "react-icons/bs";
+import { ReactIcons } from "../Navbar/NavbarElements";
+import { localGetCartLength, localGetOrdersLength } from "../../utils/helpers";
 import {
   SidebarContainer,
   Icon,
@@ -25,6 +28,14 @@ interface SidebarProps {
 
 // the react component
 const Sidebar = ({ isOpen, toggleIsOpen }: SidebarProps) => {
+  const [cartLength, setCartLength] = useState<number>(0);
+  const [ordersLength, setOrdersLength] = useState<number>(0);
+
+  useEffect(() => {
+    setCartLength(localGetCartLength());
+    setOrdersLength(localGetOrdersLength());
+  });
+
   // return the sidebar container
   return (
     <>
@@ -42,8 +53,17 @@ const Sidebar = ({ isOpen, toggleIsOpen }: SidebarProps) => {
               <MdOutlineLanguage />
               &nbsp; Language
             </SidebarLink> */}
-            <SidebarLink to="/shopping">
-              <AiOutlineShoppingCart />
+            <SidebarLink to="/shopping/cart">
+              <ReactIcons>
+                <AiOutlineShoppingCart />
+                <span className="cart_number_active">{cartLength}</span>
+              </ReactIcons>
+            </SidebarLink>
+            <SidebarLink to="/orders">
+              <ReactIcons>
+                <BsBagCheck />
+                <span className="cart_number_active">{ordersLength}</span>
+              </ReactIcons>
             </SidebarLink>
             <SidebarLink to="/sign-up">Sign Up</SidebarLink>
           </SidebarMenu>

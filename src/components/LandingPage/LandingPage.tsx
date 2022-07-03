@@ -255,24 +255,24 @@ const LandingPage = () => {
           </p>
           <div className="landing_page_services_row_container">
             <div className="landing_page_services_row">
-              <div className="image_container move-Y">
-                <img src={image} alt="" className="image" />
+              <div className="landing_page_svg_container move-Y">
+                <img src={image} alt="" className="landing_page_image" />
               </div>
               <div className="text">
                 <p>Travel agent in your pocket</p>
               </div>
             </div>
             <div className="landing_page_services_row">
-              <div className="image_container move-X">
-                <img src={image2} alt="" className="image" />
+              <div className="landing_page_svg_container move-X">
+                <img src={image2} alt="" className="landing_page_image" />
               </div>
               <div className="text">
                 <p>All your bookings on one platform</p>
               </div>
             </div>
             <div className="landing_page_services_row">
-              <div className="image_container move-Z">
-                <img src={image3} alt="" className="image" />
+              <div className="landing_page_svg_container move-Z">
+                <img src={image3} alt="" className="landing_page_image" />
               </div>
               <div className="text">
                 <p>Itinerary that fits your lifestyle</p>
@@ -320,7 +320,7 @@ const LandingPage = () => {
             </div>
             <div className="how_inner_container_60">
               <div className="how_image_container">
-                <img src={phoneImage} alt="" className="image" />
+                <img src={phoneImage} alt="" className="landing_page_image" />
               </div>
             </div>
           </div>
@@ -331,7 +331,7 @@ const LandingPage = () => {
           <div className="early_birds_container">
             <div className="early_birds_container_60">
               <div className="how_image_container">
-                <img src={phoneImage} alt="" className="image" />
+                <img src={phoneImage} alt="" className="landing_page_image" />
               </div>
             </div>
             <div className="early_birds_container_40">
@@ -486,7 +486,7 @@ const LandingPage = () => {
             </div>
             <div className="early_birds_container_60">
               <div className="how_image_container">
-                <img src={phoneImage} alt="" className="image" />
+                <img src={phoneImage} alt="" className="landing_page_image" />
               </div>
             </div>
           </div>

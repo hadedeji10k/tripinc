@@ -361,3 +361,14 @@ export const localGetCartLength = (): number => {
     return cart.length;
   }
 };
+
+// get Orders length
+export const localGetOrdersLength = (): number => {
+  const orders = JSON.parse(localStorage.getItem("order_items") as any);
+
+  if (!orders) {
+    return 0;
+  } else {
+    return orders.totalCount;
+  }
+};

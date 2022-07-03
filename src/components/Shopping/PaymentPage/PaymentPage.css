@@ -157,9 +157,9 @@ select::-ms-expand {
         width: 220px;
     }
 
-    .payment_page_button {
-        margin-right: 10px;
-    }
+    /* .payment_page_button {
+    margin-right: 10px;
+} */
 }
 
 @media screen and (max-width: 550px) {

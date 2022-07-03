@@ -124,9 +124,9 @@
         width: 220px;
     }
 
-    .customer_info_button {
-        margin-right: 10px;
-    }
+    /* .customer_info_button {
+    margin-right: 10px;
+} */
 }
 
 @media screen and (max-width: 550px) {

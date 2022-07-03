@@ -182,7 +182,7 @@
     max-width: 300px;
 }
 
-.image_container {
+.landing_page_svg_container {
     width: 250px;
     height: 120px;
     margin-right: 15px;
@@ -201,7 +201,7 @@
     animation: animate-svgs-y 4.5s ease-in-out infinite;
 }
 
-.image {
+.landing_page_image {
     width: 100%;
     height: 100%;
 }
@@ -852,9 +852,9 @@
     }
 
     .landing_page_newsletter_input {
-     width: 200px;
-     font-size: 0.7rem;
- }
+        width: 200px;
+        font-size: 0.7rem;
+    }
 }
 
 
@@ -865,7 +865,7 @@
         align-items: center;
     }
 
-    .image_container {
+    .landing_page_svg_container {
         width: 200px;
         height: 170px;
     }
@@ -911,7 +911,7 @@
         width: 140px;
     }
 
-    .image_container {
+    .landing_page_svg_container {
         width: 150px;
         height: 130px;
     }

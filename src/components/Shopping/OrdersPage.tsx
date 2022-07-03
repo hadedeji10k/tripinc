@@ -104,6 +104,7 @@ const Orders = () => {
 
   useEffect(() => {
     getUserOrder(userId).then((res) => {
+      localStorage.setItem("order_items", JSON.stringify(res.data));
       setNewRows(res.data.items);
       console.log(res.data);
 
