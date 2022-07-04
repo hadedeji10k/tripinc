@@ -37,7 +37,7 @@ const Card = ({
         <div className="trip_card_image_container">
           <Link to={url ? url : `/explore-details/attraction/${item.id}`}>
             <img
-              className="image"
+              className="trip_card_image"
               src={
                 item.imageUrl
                   ? item.imageUrl.toString()
