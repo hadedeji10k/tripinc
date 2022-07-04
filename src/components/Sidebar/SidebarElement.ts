@@ -76,6 +76,24 @@ export const SidebarLink = styled(ReactLinkRouter)`
     }
 `
 
+export const SidebarNoLink = styled.p`
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    list-style: none;
+    transition: 0.3s ease-in-out;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+        color: #252748;
+        background: #d4d5e4;
+        transition: 0.3s ease-in-out;
+    }
+`
+
 export const SidebarBtn = styled.div`
     display: flex;
     justify-content: center;

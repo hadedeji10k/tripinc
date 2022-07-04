@@ -1,14 +1,8 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { AuthContext } from "../../stores/Auth";
-import {
-  checkAuth,
-  getUserProfilePicture,
-  localGetOrdersLength,
-  localGetUserFirstName,
-  localLogoutProfile,
-} from "../../utils/helpers";
+import { localLogoutProfile } from "../../utils/helpers";
 import { useGoogleLogout } from "react-google-login";
 import defaultImage from "../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
@@ -30,36 +24,30 @@ import {
 } from "./NavbarElements";
 import { GoogleLoginClientId } from "../../utils/constants";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
-// import logo from '../../logo.svg'
-import { localGetCartLength } from "../../utils/helpers";
 import { BsBagCheck } from "react-icons/bs";
 
 // Interface for this component
 interface NavbarProps {
   isOpen: Boolean;
   toggleIsOpen: (arg: Boolean) => void;
+  profilePicture?: any;
+  isLoggedIn?: boolean;
+  cartLength?: number;
+  ordersLength?: number;
 }
 
 // react component for the NavbarContainer
 const Navbar: React.FC<NavbarProps> = ({
   isOpen,
   toggleIsOpen,
+  profilePicture,
+  isLoggedIn,
+  cartLength,
+  ordersLength,
 }: NavbarProps) => {
   const authContext = useContext(AuthContext);
-  const [profilePicture, setProfilePicture] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(authContext.isLoggedIn);
-  const [cartLength, setCartLength] = useState<number>(0);
-  const [ordersLength, setOrdersLength] = useState<number>(0);
   // this is used to check if the user has scrolled more than the nav bar
   const [navBarScrolled, setNavBarScrolled] = useState<boolean>(false);
-
-  useEffect(() => {
-    setCartLength(localGetCartLength());
-    setOrdersLength(localGetOrdersLength());
-  });
-
-  const { pathname } = useLocation();
 
   const changeNavbarBackground = () => {
     if (window.scrollY >= 80) {
@@ -70,16 +58,6 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   window.addEventListener("scroll", changeNavbarBackground);
-
-  useEffect(() => {
-    checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    getUserProfilePicture().then((res) => {
-      setProfilePicture(res);
-    });
-  }, [isLoggedIn]);
 
   const handleGoogleLogoutSuccess = () => {
     // navigate("/");
@@ -181,98 +159,100 @@ const Navbar: React.FC<NavbarProps> = ({
               <MdOutlineLanguage />
               &nbsp; Language
             </NavLink> */}
-            <NavLink
-              className={
-                navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
-              }
-              to="/shopping/cart"
-            >
-              <ReactIcons>
-                <AiOutlineShoppingCart />
-                <span
-                  className={
-                    navBarScrolled ? "cart_number_active" : "cart_number"
-                  }
-                >
-                  {cartLength}
-                </span>
-              </ReactIcons>
-            </NavLink>
-            <NavLink
-              className={
-                navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
-              }
-              to="/orders"
-            >
-              <ReactIcons>
-                <BsBagCheck />
-                <span
-                  className={
-                    navBarScrolled ? "cart_number_active" : "cart_number"
-                  }
-                >
-                  {ordersLength}
-                </span>
-              </ReactIcons>
-            </NavLink>
             {isLoggedIn ? (
-              // <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
-              profilePicture !== "" ? (
-                <>
-                  <NavBtnProfileLink
-                    className={
-                      navBarScrolled
-                        ? "navbar_active_color"
-                        : "navbar_nature_color"
-                    }
-                    to="/profile"
-                  >
+              <>
+                <NavLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_active_color"
+                      : "navbar_nature_color"
+                  }
+                  to="/shopping/cart"
+                >
+                  <ReactIcons>
+                    <AiOutlineShoppingCart />
+                    <span
+                      className={
+                        navBarScrolled ? "cart_number_active" : "cart_number"
+                      }
+                    >
+                      {cartLength}
+                    </span>
+                  </ReactIcons>
+                </NavLink>
+                <NavLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_active_color"
+                      : "navbar_nature_color"
+                  }
+                  to="/orders"
+                >
+                  <ReactIcons>
+                    <BsBagCheck />
+                    <span
+                      className={
+                        navBarScrolled ? "cart_number_active" : "cart_number"
+                      }
+                    >
+                      {ordersLength}
+                    </span>
+                  </ReactIcons>
+                </NavLink>
+              </>
+            ) : null}
+            {isLoggedIn ? (
+              <>
+                <NavBtnProfileLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_active_color"
+                      : "navbar_nature_color"
+                  }
+                  to="/profile"
+                >
+                  {profilePicture !== "" ? (
                     <img
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "inherit",
-                      }}
+                      className="navbar_profile_pics"
                       src={profilePicture}
                       alt="profile pic"
                     />
-                  </NavBtnProfileLink>
-                  <NavBtnLinkLogout onClick={handleLogout}>
-                    Log out
-                  </NavBtnLinkLogout>
-                </>
-              ) : (
-                <>
-                  <NavBtnProfileLink
-                    className={
-                      navBarScrolled
-                        ? "navbar_active_color"
-                        : "navbar_nature_color"
-                    }
-                    to="/profile"
-                  >
+                  ) : (
                     <img
                       className="navbar_profile_pics"
                       src={defaultImage}
                       alt="profile pic"
                     />
-                  </NavBtnProfileLink>
-                  <NavBtnLinkLogout onClick={handleLogout}>
-                    Log out
-                  </NavBtnLinkLogout>
-                </>
-              )
+                  )}
+                </NavBtnProfileLink>
+                <NavBtnLinkLogout onClick={handleLogout}>
+                  Log out
+                </NavBtnLinkLogout>
+              </>
             ) : (
-              <NavBtnLink
-                className={
-                  navBarScrolled
-                    ? "navbar_head_active_button"
-                    : "navbar_head_button"
-                }
-                to="/sign-up"
-              >
-                Try Beta
-              </NavBtnLink>
+              <>
+                <NavBtnLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_head_active_button"
+                      : "navbar_head_button"
+                  }
+                  to="/sign-in"
+                >
+                  Sign in
+                </NavBtnLink>{" "}
+                &nbsp;&nbsp;
+                <NavBtnLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_head_active_button"
+                      : "navbar_head_button"
+                  }
+                  to="/sign-up"
+                >
+                  Try Beta
+                </NavBtnLink>
+              </>
             )}
           </NavBtn>
         </NavbarContainer>

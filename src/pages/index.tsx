@@ -1,28 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer/Footer";
 import AuthVerify from "./AuthVerify";
 import LoggedInBanner from "./LoggedInBanner";
+import {
+  localGetCartLength,
+  localGetOrdersLength,
+  getUserProfilePicture,
+  checkAuth,
+} from "../utils/helpers";
+import { AuthContext } from "../stores/Auth";
 
 const MainLayout: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const authContext = useContext(AuthContext);
+  const [profilePicture, setProfilePicture] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(authContext.isLoggedIn);
+  const [cartLength, setCartLength] = useState<number>(0);
+  const [ordersLength, setOrdersLength] = useState<number>(0);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    setCartLength(localGetCartLength());
+    setOrdersLength(localGetOrdersLength());
+  }, [pathname]);
+
+  useEffect(() => {
+    getUserProfilePicture().then((res) => {
+      setProfilePicture(res);
+    });
+  }, [isLoggedIn]);
 
   const toggleIsOpen = (): void => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    console.log("I'm here ");
-  });
-
   return (
     <>
       <AuthVerify>
         <LoggedInBanner />
-        <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
-        <Navbar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
+        <Sidebar
+          isOpen={isOpen}
+          toggleIsOpen={toggleIsOpen}
+          profilePicture={profilePicture}
+          isLoggedIn={isLoggedIn}
+          cartLength={cartLength}
+          ordersLength={ordersLength}
+        />
+        <Navbar
+          isOpen={isOpen}
+          toggleIsOpen={toggleIsOpen}
+          profilePicture={profilePicture}
+          isLoggedIn={isLoggedIn}
+          cartLength={cartLength}
+          ordersLength={ordersLength}
+        />
 
         <Outlet />
         <Footer />
