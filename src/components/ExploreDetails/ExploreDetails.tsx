@@ -210,7 +210,8 @@ const ExploreDetails = () => {
       (item) => item.id.toString() !== attractionData?.id.toString()
     );
     Swal.fire({
-      title: "Are you sure you want to remove this from your bucket list?",
+      title: "Warning!",
+      text: "Are you sure you want to remove this from your bucket list?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, remove!",

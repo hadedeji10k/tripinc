@@ -1,0 +1,158 @@
+.trip_planning_budget_card {
+    max-width: 97%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+    /* margin: 2rem; */
+    padding: 0 20px;
+    /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); */
+}
+
+.trip_planning_budget_card_container {
+    max-width: 250px;
+    width: 200px;
+    max-height: 430px;
+    border: 2px solid #E6E8EC;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: relative;
+    margin-right: 10px;
+    /* flex: 0 1 calc(30% - 1em); */
+    margin-bottom: 2rem;
+    /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); */
+}
+
+.trip_planning_budget_image_container {
+    width: 100%;
+    height: 150px;
+}
+
+.trip_planning_budget_image {
+    height: 100%;
+    width: 100%;
+}
+
+.trip_planning_budget_card_details {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    background: #fff;
+    overflow: hidden;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.trip_planning_budget_card_title {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #141416;
+    margin-bottom: 0;
+}
+
+.card_description {
+    font-size: 12px;
+    color: #000000;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.card_price_review {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.trip_planning_budget_card_price {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    color: #23262F;
+    margin-bottom: 0;
+}
+
+.other_details {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+
+    /* identical to box height, or 167% */
+
+    color: #777E90;
+}
+
+.button_container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+}
+
+
+.trip_planning_budget_card_button {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 10px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    /* border: 2px solid #ccc; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+    background: #92A5EF;
+    border-radius: 90px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.trip_planning_budget_card_button:hover {
+    background: #2b44a8;
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 900px) {
+    /* .trip_planning_budget_card_container {
+        max-width: 330px;
+        flex: 0 1 calc(50% - 1em);
+    } */
+}
+
+@media screen and (max-width: 600px) {
+    /* .trip_planning_budget_card_container {
+    max-width: 320px;
+    flex: 0 1 calc(100% - 1em);
+} */
+}
+
+@media screen and (max-width: 230px) {
+    .trip_planning_budget_card_title {
+        font-size: 16px;
+    }
+
+    .card_description {
+        font-size: 10px;
+    }
+}

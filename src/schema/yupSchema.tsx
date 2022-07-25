@@ -92,3 +92,10 @@ export const CustomerInfoSchema = Yup.object().shape({
   city: Yup.string().required("City is required"),
   country: Yup.string().required("Country is required"),
 });
+
+export const AddFlightSchema = Yup.object().shape({
+  flightName: Yup.string().required("Flight name is required"),
+  airportName: Yup.string().required("Airport name is required"),
+  arrivalTime: Yup.array().required("Arrival time is required"),
+  arrivalDate: Yup.string().required("Arrival date is required"),
+});

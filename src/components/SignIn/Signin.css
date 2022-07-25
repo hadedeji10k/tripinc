@@ -52,6 +52,7 @@
 .signin_label {
     text-transform: uppercase;
     font-size: 14px;
+    display: block;
 }
 
 .sign_in_form {

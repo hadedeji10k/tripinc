@@ -62,7 +62,8 @@ const Sidebar = ({
 
   const handleLogout = () => {
     Swal.fire({
-      title: "Are you sure you want to log out?",
+      title: "Warning!",
+      text: "Are you sure you want to log out?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, log out!",

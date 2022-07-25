@@ -40,11 +40,11 @@
     margin-bottom: 20px;
 }
 
-p {
+.footer_item_menu_name {
     margin-bottom: 10px;
 }
 
-a {
+.footer_item_link {
     text-decoration: none;
     color: #fff;
 }

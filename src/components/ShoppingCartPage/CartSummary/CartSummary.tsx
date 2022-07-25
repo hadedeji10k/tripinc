@@ -21,8 +21,8 @@ const CartSummary = ({
       userId,
     };
     Swal.fire({
-      title:
-        "Are you sure you want to place an order now? Note: Orders cannot be edited.",
+      title: "Warning!",
+      text: "Are you sure you want to place an order now? Note: Orders cannot be edited.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, continue!",

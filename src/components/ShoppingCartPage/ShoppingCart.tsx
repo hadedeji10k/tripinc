@@ -58,7 +58,8 @@ const ShoppingCart = ({ cartData, setCartData, userId }: Props) => {
       });
     }
     Swal.fire({
-      title: "Are you sure you want to remove this from your cart?",
+      title: "Warning!",
+      text: "Are you sure you want to remove this from your cart?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, remove!",
@@ -104,7 +105,8 @@ const ShoppingCart = ({ cartData, setCartData, userId }: Props) => {
   const handleUnLikeButton = async (id: any) => {
     setIsLoading(true);
     Swal.fire({
-      title: "Are you sure you want to remove this from your bucket list?",
+      title: "Warning!",
+      text: "Are you sure you want to remove this from your bucket list?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, remove!",

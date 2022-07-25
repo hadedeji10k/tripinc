@@ -159,8 +159,8 @@ export const getUserWishList = async (userId: any): Promise<AxiosResponse<any>> 
 }
 
 // get user wishlist
-export const getUserWishListAsAttraction = async (userId: any): Promise<AxiosResponse<any>> => {
-    return await TRIPAPI.get(`/api/WishLists/GetAsAttractionsByUser/${userId}`);
+export const getUserWishListAsAttraction = async (userId: any, query?: string): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/WishLists/GetAsAttractionsByUser/${userId}?${query}`);
 }
 
 // add to cart

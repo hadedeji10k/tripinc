@@ -53,8 +53,8 @@
 .signup_label {
     text-transform: uppercase;
     font-size: 14px;
+    display: block;
 }
-
 
 .sign_up_form {
     padding: 10px;

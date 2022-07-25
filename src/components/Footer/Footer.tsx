@@ -33,29 +33,41 @@ const Footer = () => {
       <div className="footer_menu">
         <div className="footer_item">
           <div className="footer_item_menu">
-            <p>
-              <a href="/">Press</a>
+            <p className="footer_item_menu_name">
+              <a className="footer_item_link" href="/">
+                Press
+              </a>
             </p>
-            <p>
-              <a href="/">About us</a>
+            <p className="footer_item_menu_name">
+              <a className="footer_item_link" href="/">
+                About us
+              </a>
             </p>
-            <p>
-              <a href="/">Help Center</a>
-            </p>
-          </div>
-          <div className="footer_item_menu">
-            <p>
-              <a href="/">What we do</a>
-            </p>
-            <p>
-              <a href="/">Our Team</a>
-            </p>
-            <p>
-              <a href="/">Refer a friend</a>
+            <p className="footer_item_menu_name">
+              <a className="footer_item_link" href="/">
+                Help Center
+              </a>
             </p>
           </div>
           <div className="footer_item_menu">
-            <p>
+            <p className="footer_item_menu_name">
+              <a className="footer_item_link" href="/">
+                What we do
+              </a>
+            </p>
+            <p className="footer_item_menu_name">
+              <a className="footer_item_link" href="/">
+                Our Team
+              </a>
+            </p>
+            <p className="footer_item_menu_name">
+              <a className="footer_item_link" href="/">
+                Refer a friend
+              </a>
+            </p>
+          </div>
+          <div className="footer_item_menu">
+            <p className="footer_item_menu_name">
               Keep your finger on the pulse! 🔥 &nbsp; Sign up for our
               newsletter
             </p>
@@ -105,21 +117,23 @@ const Footer = () => {
         <div className="footer_item">
           <div className="footer_item_menu">
             <p className="brand_name">
-              <a href="/">TripInc</a>
+              <a className="footer_item_link" href="/">
+                TripInc
+              </a>
             </p>
           </div>
           <div className="footer_item_menu">
-            <p>
+            <p className="footer_item_menu_name">
               Stay Connected &nbsp; &nbsp;{" "}
-              <a href="/">
+              <a className="footer_item_link" href="/">
                 <BsFacebook />
               </a>{" "}
               &nbsp; &nbsp;{" "}
-              <a href="/">
+              <a className="footer_item_link" href="/">
                 <BsTwitter />
               </a>{" "}
               &nbsp; &nbsp;{" "}
-              <a href="/">
+              <a className="footer_item_link" href="/">
                 <BsInstagram />
               </a>{" "}
             </p>

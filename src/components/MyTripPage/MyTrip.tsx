@@ -41,13 +41,13 @@ const MyTrip = () => {
     select_input.value = currentData;
 
     // set the attraction data after filtering the current data
-    if (currentData === "Upcoming Trips") {
-      let newData = attractiondata.filter((item) => item.location === "Lag");
-      setAttractionData(newData);
-    } else if (currentData === "Past Trips") {
-      let newData = attractiondata.filter((item) => item.location === "Lonn");
-      setAttractionData(newData);
-    }
+    // if (currentData === "Upcoming Trips") {
+    //   let newData = attractiondata.filter((item) => item.location === "Lag");
+    //   setAttractionData(newData);
+    // } else if (currentData === "Past Trips") {
+    //   let newData = attractiondata.filter((item) => item.location === "Lonn");
+    //   setAttractionData(newData);
+    // }
   }, [currentData, menuData]);
 
   // function to manage the trip button when it is clicked (for select)

@@ -12,7 +12,7 @@ import {
   getUserByID,
   getUserProfilePictureByID,
 } from "../api";
-import { CitiesPageSize, currencyList } from "./constants";
+import { CitiesPageSize, currencyList, monthNames } from "./constants";
 
 export const checkAuth = (): boolean => {
   let valid = false;
@@ -371,4 +371,30 @@ export const localGetOrdersLength = (): number => {
   } else {
     return orders.totalCount;
   }
+};
+
+// generate array with date
+export const generateDateArray = (startDate: Date, endDate: Date) => {
+  const date = new Date(startDate.getTime());
+  let array: any = {};
+
+  while (date <= endDate) {
+    const arrayDateName = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+    array = {
+      ...array,
+      [arrayDateName]: [],
+    };
+    date.setDate(date.getDate() + 1);
+  }
+
+  return array;
+};
+
+// get keys from Object
+export const getKeysFromObject = (object: Object) => {
+  let keys: any = [];
+
+  for (let k in object) keys.push(k);
+
+  return keys;
 };
