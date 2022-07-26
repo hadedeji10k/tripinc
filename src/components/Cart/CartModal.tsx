@@ -137,59 +137,60 @@ const CartModal = ({
           });
         }
       });
-    }
-    setIsLoading(true);
-    if (itemInCart) {
-      const formData = {
-        userId,
-        items: [
-          {
-            cartId: cartData.id,
-            quantity: numOfPeople,
-          },
-        ],
-      };
-      const response = await updateCart(formData);
-      if (response.data.status === true && response.status === 200) {
-        localStorage.setItem("cart_data", JSON.stringify(response.data.data));
-        Swal.fire({
-          title: "Success!",
-          text: "You have successfully updated the item in Cart.",
-          icon: "success",
-          confirmButtonText: "Ok",
-        }).then((result) => {
-          if (result.isConfirmed || result.isDenied || result.isDismissed) {
-            window.location.reload();
-          }
-        });
-      } else {
-        setIsLoading(false);
-        setShowCartModal(false);
-      }
     } else {
-      const formData: IAddCart = {
-        userId: localGetUserId(),
-        itemId: item.id,
-        itemType: item.itemType,
-        itemName: item.title,
-        currency: item.currency,
-        unitPrice: item.price,
-        quantity: 2,
-        imageUrl: item.imageUrl ? item.imageUrl : item.photos[0].photoUrl,
-        date: new Date(),
-      };
-      const response = await addToCart(formData);
-      if (response === true) {
-        Swal.fire({
-          title: "Success!",
-          text: "You have successfully added item to Cart.",
-          icon: "success",
-          confirmButtonText: "Ok",
-        }).then((result) => {
-          if (result.isConfirmed || result.isDenied || result.isDismissed) {
-            window.location.reload();
-          }
-        });
+      setIsLoading(true);
+      if (itemInCart) {
+        const formData = {
+          userId,
+          items: [
+            {
+              cartId: cartData.id,
+              quantity: numOfPeople,
+            },
+          ],
+        };
+        const response = await updateCart(formData);
+        if (response.data.status === true && response.status === 200) {
+          localStorage.setItem("cart_data", JSON.stringify(response.data.data));
+          Swal.fire({
+            title: "Success!",
+            text: "You have successfully updated the item in Cart.",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed || result.isDenied || result.isDismissed) {
+              window.location.reload();
+            }
+          });
+        } else {
+          setIsLoading(false);
+          setShowCartModal(false);
+        }
+      } else {
+        const formData: IAddCart = {
+          userId: localGetUserId(),
+          itemId: item.id,
+          itemType: item.itemType,
+          itemName: item.title,
+          currency: item.currency,
+          unitPrice: item.price,
+          quantity: 2,
+          imageUrl: item.imageUrl ? item.imageUrl : item.photos[0].photoUrl,
+          date: new Date(),
+        };
+        const response = await addToCart(formData);
+        if (response === true) {
+          Swal.fire({
+            title: "Success!",
+            text: "You have successfully added item to Cart.",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed || result.isDenied || result.isDismissed) {
+              window.location.reload();
+            }
+          });
+        }
       }
     }
   };
