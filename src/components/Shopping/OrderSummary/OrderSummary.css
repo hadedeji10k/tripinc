@@ -69,9 +69,9 @@
     transition: all 0.3s ease-in-out;
 }
 
-.shopping_cart_button_to_checkout {
+.order_summary_button_to_redeem {
     width: 50%;
-    margin: 1rem auto;
+    margin: 1rem auto 0;
     padding: 15px 20px;
     border-radius: 10px;
     outline: none;
@@ -82,7 +82,7 @@
     cursor: pointer;
 }
 
-.shopping_cart_button_to_checkout:hover {
+.order_summary_button_to_redeem:hover {
     outline: none;
     border: none;
     background: #4d5b94;

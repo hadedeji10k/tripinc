@@ -410,3 +410,9 @@ export interface ITravelDetails {
     stays?: any[],
     rentalCars?: any[],
 }
+
+export interface IInitiatePayment {
+    userId: number,
+    orderId: number,
+    paymentProvider: string
+}

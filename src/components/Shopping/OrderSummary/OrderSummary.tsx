@@ -1,9 +1,14 @@
 import "./OrderSummary.css";
+import { localGetUserId } from "../../../utils/helpers";
+import Swal from "sweetalert2";
 interface Props {
   totalAmountOfItems: number;
 }
 const OrderSummary = ({ totalAmountOfItems }: Props) => {
   const serviceFee = false ? 200 : 0;
+
+  const userId = localGetUserId() as number;
+
   return (
     <>
       <div className="cart_summary_container">
@@ -33,9 +38,8 @@ const OrderSummary = ({ totalAmountOfItems }: Props) => {
           placeholder="Enter your voucher code here"
         />
 
-        <hr className="cart_line" />
-        <button className="shopping_cart_button_to_checkout">
-          Proceed to Checkout
+        <button className="order_summary_button_to_redeem">
+          Redeem Voucher
         </button>
 
         <hr className="cart_line" />

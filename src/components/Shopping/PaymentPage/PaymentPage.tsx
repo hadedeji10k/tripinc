@@ -1,11 +1,21 @@
+import StripePayment from "./StripePayment";
 import "./PaymentPage.css";
+import { IOrderDetails } from "../../../api/interfaces";
 
 interface Props {
   menuBar: any;
   setMenuBar: any;
+  orderDetails: IOrderDetails;
+  clientSecret: string;
 }
 
-const PaymentPage = ({ menuBar, setMenuBar }: Props) => {
+const PaymentPage = ({
+  menuBar,
+  setMenuBar,
+  orderDetails,
+  clientSecret,
+}: Props) => {
+  console.log(orderDetails);
   const handleClickMenu = (id: any) => {
     for (let i = 0; i < menuBar.length; i++) {
       const element = menuBar[i];
@@ -14,19 +24,6 @@ const PaymentPage = ({ menuBar, setMenuBar }: Props) => {
     const index = menuBar.findIndex((item) => item.id === parseInt(id));
     menuBar[index].state = true;
     setMenuBar([...menuBar]);
-  };
-
-  const atmCardHandle = (event: any): any => {
-    event.preventDefault();
-    if (event.target.value.length === 4) {
-      event.target.defaultValue = `${event.target.value}  `;
-    }
-    if (event.target.value.length === 10) {
-      event.target.value = `${event.target.value}  `;
-    }
-    if (event.target.value.length === 16) {
-      event.target.value = `${event.target.value}  `;
-    }
   };
 
   return (
@@ -55,58 +52,24 @@ const PaymentPage = ({ menuBar, setMenuBar }: Props) => {
           <hr className="cart_line" />
           <div className="card_info_container">
             <div className="card_info_details">
-              <p>Credit Card</p>
+              <p className="payment_card_info_text">Credit Card</p>
               <small>
                 Safe money transfer using your bank account. Visa, Maestro,
                 Discover, American Express.
               </small>
             </div>
-            <div>
-              <label className="payment_page_label">Card Number</label>
-              <input
-                className="payment_page_input"
-                onChange={atmCardHandle}
-                type="text"
-                placeholder="Enter Card Number"
-              />
-            </div>
-            <div>
-              <label className="payment_page_label">Card Holder Name</label>
-              <input
-                className="payment_page_input"
-                type="text"
-                placeholder="Enter Card Holder Name"
-              />
-            </div>
-            <div>
-              <label className="payment_page_label">Expiration Date</label>
-              <input
-                className="payment_page_input"
-                type="text"
-                placeholder="Expiration Date"
-              />
-            </div>
-            <div>
-              <label className="payment_page_label">CVC</label>
-              <input
-                className="payment_page_input"
-                type="text"
-                placeholder="CVC"
-              />
-            </div>
+            <StripePayment
+              orderReference={orderDetails.orderReference}
+              amount={orderDetails?.totalAmount}
+              clientSecret={clientSecret}
+            />
           </div>
-          <button className="payment_page_button">Proceed to Payment</button>
           <button
             onClick={() => handleClickMenu(2)}
             className="customer_info_button"
           >
             Back
           </button>
-          <p>
-            <a href="/explore" className="return_to_explore">
-              &larr; Return to Exploring
-            </a>
-          </p>
         </div>
       </div>
     </>

@@ -10,6 +10,7 @@ import "./Shopping.css";
 import { IOrderDetails, IOrderItem } from "../../api/interfaces";
 import { localGetUserId } from "../../utils/helpers";
 import { getOrderByID } from "../../api";
+import { initiatePayment, getUserByID } from "../../api/index";
 
 const menuBarData = [
   {
@@ -34,7 +35,17 @@ const Shopping = () => {
   const [orderItems, setOrderItems] = useState<IOrderItem[] | any>([]);
   const [orderDetails, setOrderDetails] = useState<IOrderDetails>();
   const [userId] = useState<number | null>(() => localGetUserId());
+  const [userInfo, setUserInfo] = useState<number | null>(() =>
+    localGetUserId()
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // state to enable the proceed to payment button
+  const [enablePaymentButton, setEnablePaymentButton] =
+    useState<boolean>(false);
+
+  // initialize the payment
+  const [clientSecret, setClientSecret] = useState("");
 
   let data = menuBar.filter((item) => item.state === true);
 
@@ -45,7 +56,10 @@ const Shopping = () => {
     getOrderByID(orderId).then((res) => {
       setOrderDetails(res.data);
       setOrderItems(res.data.items);
-      setIsLoading(false);
+      getUserByID(userId as any).then((res) => {
+        setUserInfo(res.data);
+        setIsLoading(false);
+      });
     });
   }, [userId]);
 
@@ -93,9 +107,6 @@ const Shopping = () => {
                 className={
                   data[0].id === 1 ? "shopping_active" : "shopping_not_active"
                 }
-                onClick={() => {
-                  handleClickMenu(1);
-                }}
               >
                 01 Order View &nbsp;&nbsp;{" "}
               </span>{" "}
@@ -103,9 +114,6 @@ const Shopping = () => {
                 className={
                   data[0].id === 2 ? "shopping_active" : "shopping_not_active"
                 }
-                onClick={() => {
-                  handleClickMenu(2);
-                }}
               >
                 {" "}
                 &gt; &nbsp; 02 Customer Info &nbsp;&nbsp;{" "}
@@ -114,9 +122,6 @@ const Shopping = () => {
                 className={
                   data[0].id === 3 ? "shopping_active" : "shopping_not_active"
                 }
-                onClick={() => {
-                  handleClickMenu(3);
-                }}
               >
                 {" "}
                 &gt; &nbsp; 03 Payment
@@ -130,9 +135,20 @@ const Shopping = () => {
                 setMenuBar={setMenuBar}
               />
             ) : data[0].id === 2 ? (
-              <CustomerInfoPage menuBar={menuBar} setMenuBar={setMenuBar} />
+              <CustomerInfoPage
+                menuBar={menuBar}
+                setMenuBar={setMenuBar}
+                userInfo={userInfo}
+                orderDetails={orderDetails as any}
+                setClientSecret={setClientSecret}
+              />
             ) : data[0].id === 3 ? (
-              <PaymentPage menuBar={menuBar} setMenuBar={setMenuBar} />
+              <PaymentPage
+                menuBar={menuBar}
+                setMenuBar={setMenuBar}
+                orderDetails={orderDetails as any}
+                clientSecret={clientSecret}
+              />
             ) : (
               <></>
             )}

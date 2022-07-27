@@ -1,4 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
+import { Spin } from "antd";
+import "antd/dist/antd.min.css";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -103,6 +105,7 @@ const Orders = () => {
   const [userId] = useState<number | null>(() => localGetUserId());
 
   useEffect(() => {
+    setIsLoading(true);
     getUserOrder(userId).then((res) => {
       localStorage.setItem("order_items", JSON.stringify(res.data));
       setNewRows(res.data.items);
@@ -116,6 +119,7 @@ const Orders = () => {
         totalPages: res.data.totalPages,
         totalCount: res.data.totalCount,
       });
+      setIsLoading(false);
     });
   }, [userId]);
 
@@ -160,75 +164,77 @@ const Orders = () => {
   };
 
   return (
-    <div className="order_page_table">
-      <h3 className="basic_details_header">Orders</h3>
-      <br />
-      {newRows && newRows.length > 0 ? (
-        <>
-          <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-              <TableHead>
-                <TableRow>
-                  <TableCell />
-                  <TableCell>Order Reference</TableCell>
-                  <TableCell align="right">Status</TableCell>
-                  <TableCell align="right">Total Amount</TableCell>
-                  <TableCell align="right">Paid</TableCell>
-                  <TableCell align="right">Amount Paid</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {newRows.map((row, index) => (
-                  <Row key={index} row={row} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <br />
-          <div className="explore_page_number">
-            <span>
-              Page {pagination?.currentPage} of {pagination?.totalPages}
-            </span>
-            <span>
-              {(pagination?.currentPage - 1) * pagination?.pageSize + 1} -
-              {pagination?.hasNext
-                ? pagination?.pageSize * pagination?.currentPage
-                : pagination?.totalCount}
-            </span>
-          </div>
-          <div className="scroll_button">
-            {pagination?.hasPrevious ? (
-              <button
-                className={
-                  pagination?.hasPrevious
-                    ? "explore_navigation_button_active"
-                    : "explore_navigation_button"
-                }
-                onClick={handlePaginationPrev}
-                disabled={!pagination?.hasPrevious}
-              >
-                Prev
-              </button>
-            ) : null}
-            {pagination?.hasNext ? (
-              <button
-                className={
-                  pagination?.hasNext
-                    ? "explore_navigation_button_active"
-                    : "explore_navigation_button"
-                }
-                onClick={handlePaginationNext}
-                disabled={!pagination?.hasNext}
-              >
-                Next
-              </button>
-            ) : null}
-          </div>
-        </>
-      ) : (
-        <h3 className="basic_details_title">You have no orders yet.</h3>
-      )}
-    </div>
+    <Spin spinning={isLoading} size="large">
+      <div className="order_page_table">
+        <h3 className="basic_details_header">Orders</h3>
+        <br />
+        {newRows && newRows.length > 0 ? (
+          <>
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell />
+                    <TableCell>Order Reference</TableCell>
+                    <TableCell align="right">Status</TableCell>
+                    <TableCell align="right">Total Amount</TableCell>
+                    <TableCell align="right">Paid</TableCell>
+                    <TableCell align="right">Amount Paid</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {newRows.map((row, index) => (
+                    <Row key={index} row={row} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <br />
+            <div className="explore_page_number">
+              <span>
+                Page {pagination?.currentPage} of {pagination?.totalPages}
+              </span>
+              <span>
+                {(pagination?.currentPage - 1) * pagination?.pageSize + 1} -
+                {pagination?.hasNext
+                  ? pagination?.pageSize * pagination?.currentPage
+                  : pagination?.totalCount}
+              </span>
+            </div>
+            <div className="scroll_button">
+              {pagination?.hasPrevious ? (
+                <button
+                  className={
+                    pagination?.hasPrevious
+                      ? "explore_navigation_button_active"
+                      : "explore_navigation_button"
+                  }
+                  onClick={handlePaginationPrev}
+                  disabled={!pagination?.hasPrevious}
+                >
+                  Prev
+                </button>
+              ) : null}
+              {pagination?.hasNext ? (
+                <button
+                  className={
+                    pagination?.hasNext
+                      ? "explore_navigation_button_active"
+                      : "explore_navigation_button"
+                  }
+                  onClick={handlePaginationNext}
+                  disabled={!pagination?.hasNext}
+                >
+                  Next
+                </button>
+              ) : null}
+            </div>
+          </>
+        ) : (
+          <h3 className="basic_details_title">You have no orders yet.</h3>
+        )}
+      </div>
+    </Spin>
   );
 };
 
