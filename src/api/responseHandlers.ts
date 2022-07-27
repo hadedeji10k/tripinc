@@ -38,11 +38,7 @@ export const signUp = async (formData: ISignUpFull) => {
         text: "You have successfully created a new profile",
         icon: "success",
         confirmButtonText: "Ok",
-      }).then((result) => {
-        if (result.isConfirmed || result.isDenied || result.isDismissed) {
-          window.location.href = "/";
-        }
-      });
+      })
       return user
     }
 
@@ -251,6 +247,7 @@ export const resendVerification = async (formData: IResendVerification) => {
           window.location.href = "/#/verify-account";
         }
       });
+      return true
     }
 
     if (response.status === 200 && response.data.status === false) {
@@ -260,6 +257,7 @@ export const resendVerification = async (formData: IResendVerification) => {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      return false
     }
 
     // if there is error
@@ -270,6 +268,7 @@ export const resendVerification = async (formData: IResendVerification) => {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      return false
     }
   } catch (error) {
     console.log(error);
@@ -279,6 +278,7 @@ export const resendVerification = async (formData: IResendVerification) => {
       icon: "error",
       confirmButtonText: "Ok",
     });
+    return false
   }
 };
 

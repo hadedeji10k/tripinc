@@ -1,17 +1,40 @@
-import React, { useState } from "react";
-import {
-  preferencedata,
-  placesdata,
-  placesBeenTodata,
-} from "../../currentUserData";
-// import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
-// import SecurityCodeModal from '../SecurityCodeModal/SecurityCodeModal';
+import React, { useState, useEffect } from "react";
+import { getAllCategories } from "../../api";
+import { Spin } from "antd";
+import "antd/dist/antd.min.css";
+import { symbolHelper } from "../../utils/helpers";
 import "./Preferences.css";
+import { IFormattedCategory } from "../../api/interfaces";
 
 const Preferences: React.FC = () => {
-  const [preferenceData, setPreferenceData] = useState(preferencedata);
-  const [placesData, setPlacesData] = useState(placesdata);
-  const [placesBeenToData, setPlacesBeenToData] = useState(placesBeenTodata);
+  const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
+    []
+  );
+  const [placesData, setPlacesData] = useState<any[]>([]);
+  const [placesBeenToData, setPlacesBeenToData] = useState<any[]>([]);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    getAllCategories().then((res) => {
+      const arrayToPush: any = [];
+      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+      for (let i = 0; i < res.data.length; i++) {
+        const element = res.data[i];
+        const data = {
+          id: element.id,
+          title: element.name,
+          symbol: symbolHelper(element.name),
+          stateOfClass: false,
+        };
+        arrayToPush.push(data);
+      }
+
+      setPreferenceData(arrayToPush);
+
+      setIsLoading(false);
+    });
+  }, []);
 
   // function to handle preference click
   const handlePreferencesClick = (e: any) => {
@@ -24,7 +47,7 @@ const Preferences: React.FC = () => {
     setPreferenceData([...preferenceData]);
   };
 
-  // function to handle places click
+  // function to handle places click to delete
   const handlePlacesClick = (e: any) => {
     e.preventDefault();
     const id = e.target.id;
@@ -37,40 +60,32 @@ const Preferences: React.FC = () => {
   const handlePlacesChange = (e: any) => {
     e.preventDefault();
     // console.log(e.keyCode)
+    // get the input data
     let inputData = e.target.value.toString();
+    // get the input element and add an event listener
     let input = document.getElementById("places") as HTMLInputElement;
     input.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         let newPlacesData = placesData.filter(
-          (item) => item.title !== inputData
+          (item) => item.title === inputData
         );
-        // console.log(placesData)
-        setPlacesData([...newPlacesData]);
 
-        if (newPlacesData.length !== placesData.length) {
-          // console.log(inputData)
-          // console.log(id)
-          let lastElement = newPlacesData[newPlacesData.length - 1];
-          let id = lastElement.id + 1;
-          setPlacesData([
-            ...newPlacesData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
-          ]);
+        if (newPlacesData.length > 0) {
+          input.value = "";
+          return;
         } else {
-          let lastElement = newPlacesData[newPlacesData.length - 1];
-          let id = lastElement.id + 1;
+          let id = placesData.length + 1;
           setPlacesData([
-            ...newPlacesData,
+            ...placesData,
             { id, title: inputData, stateOfClass: false, class: "clicked" },
           ]);
         }
-        console.log(placesData);
         input.value = "";
       }
     });
   };
 
-  // function to handle placesBeenTo click
+  // function to handle placesBeenTo click to delete
   const handlePlacesBeenToClick = (e: any) => {
     e.preventDefault();
     const id = e.target.id;
@@ -88,29 +103,20 @@ const Preferences: React.FC = () => {
     input.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         let newPlacesBeenToData = placesBeenToData.filter(
-          (item) => item.title !== inputData
+          (item) => item.title === inputData
         );
-        // console.log(PlacesBeenToData)
-        setPlacesBeenToData([...newPlacesBeenToData]);
 
-        if (newPlacesBeenToData.length !== placesBeenToData.length) {
-          // console.log(inputData)
-          // console.log(id)
-          let lastElement = newPlacesBeenToData[newPlacesBeenToData.length - 1];
-          let id = lastElement.id + 1;
-          setPlacesBeenToData([
-            ...newPlacesBeenToData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
-          ]);
+        if (newPlacesBeenToData.length > 0) {
+          input.value = "";
+          return;
         } else {
-          let lastElement = newPlacesBeenToData[newPlacesBeenToData.length - 1];
-          let id = lastElement.id + 1;
+          let id = placesBeenToData.length + 1;
           setPlacesBeenToData([
-            ...newPlacesBeenToData,
+            ...placesBeenToData,
             { id, title: inputData, stateOfClass: false, class: "clicked" },
           ]);
         }
-        console.log(placesBeenToData);
+
         input.value = "";
       }
     });
@@ -129,109 +135,113 @@ const Preferences: React.FC = () => {
   };
 
   return (
-    <div className="preferences_container">
-      <div className="preferences_word">
-        <h1 className="preferences_header">Nice to meet you!</h1>
-        <h3 className="preferences_title">
-          Tell us a bit more about your adventures.
-        </h3>
-      </div>
+    <Spin spinning={isLoading} size="large">
+      <div className="preferences_container">
+        <div className="preferences_word">
+          <h1 className="preferences_header">Nice to meet you!</h1>
+          <h3 className="preferences_title">
+            Tell us a bit more about your adventures.
+          </h3>
+        </div>
 
-      {/* places been to */}
-      <div>
-        <label className="preferences_label">Where have you been before?</label>
-        <input
-          id="placesBeenTo"
-          className="preferences_input"
-          type="text"
-          placeholder="Enter the name of the location"
-          onChange={handlePlacesBeenToChange}
-        />
-      </div>
-      <div className="bucket_list_tag_container">
-        {placesBeenToData.map((item) => (
-          // <span key={item.id} className="bucket_list_tag">{item.title}</span>
-          <span
-            key={item.id}
-            id={item.id.toString()}
-            className="location_tag"
-            onClick={handlePlacesBeenToClick}
-          >
-            x {item.title}
-          </span>
-        ))}
-      </div>
-
-      {/* Bucket List */}
-
-      <div className="bucket_list">
-        <label className="preferences_label">
-          What’s on your bucket list?{" "}
-        </label>
-        <input
-          id="places"
-          className="preferences_input"
-          type="text"
-          placeholder="Enter your preferred location"
-          onChange={handlePlacesChange}
-        />
-      </div>
-      <div className="bucket_list_tab">
+        {/* places been to */}
+        <div>
+          <label className="preferences_label">
+            Where have you been before?
+          </label>
+          <input
+            id="placesBeenTo"
+            className="preferences_input"
+            type="text"
+            placeholder="Enter the name of the location"
+            onChange={handlePlacesBeenToChange}
+          />
+        </div>
         <div className="bucket_list_tag_container">
-          {placesData.map((item) => (
+          {placesBeenToData.map((item) => (
             // <span key={item.id} className="bucket_list_tag">{item.title}</span>
             <span
               key={item.id}
               id={item.id.toString()}
               className="location_tag"
-              onClick={handlePlacesClick}
+              onClick={handlePlacesBeenToClick}
             >
               x {item.title}
             </span>
           ))}
         </div>
-      </div>
 
-      {/* Preferences */}
-      <div className="preferences_tab">
-        <label className="preferences_label">
-          Describe your travel interests (select as many as you like):
-        </label>
-        <div className="preferences_tag_container">
-          {preferenceData.map((item) => (
-            // <span key={item.id} className="preferences_tag">{item.title}</span>
-            <span
-              key={item.id}
-              id={item.id.toString()}
-              className={
-                item.stateOfClass
-                  ? "preferences_clicked"
-                  : "preferences_not_clicked"
-              }
-              onClick={handlePreferencesClick}
-            >
-              {item.title}
-            </span>
-          ))}
+        {/* Bucket List */}
+
+        <div className="bucket_list">
+          <label className="preferences_label">
+            What’s on your bucket list?{" "}
+          </label>
+          <input
+            id="places"
+            className="preferences_input"
+            type="text"
+            placeholder="Enter your preferred location"
+            onChange={handlePlacesChange}
+          />
         </div>
-      </div>
+        <div className="bucket_list_tab">
+          <div className="bucket_list_tag_container">
+            {placesData.map((item) => (
+              // <span key={item.id} className="bucket_list_tag">{item.title}</span>
+              <span
+                key={item.id}
+                id={item.id.toString()}
+                className="location_tag"
+                onClick={handlePlacesClick}
+              >
+                x {item.title}
+              </span>
+            ))}
+          </div>
+        </div>
 
-      {/* Button */}
-      <div className="preferences_button_container">
-        <button className="preferences_button" onClick={handleSubmit}>
-          Time to Explore!
-        </button>
+        {/* Preferences */}
+        <div className="preferences_tab">
+          <label className="preferences_label">
+            Describe your travel interests (select as many as you like):
+          </label>
+          <div className="preferences_tag_container">
+            {preferenceData.map((item) => (
+              // <span key={item.id} className="preferences_tag">{item.title}</span>
+              <span
+                key={item.id}
+                id={item.id.toString()}
+                className={
+                  item.stateOfClass
+                    ? "preferences_clicked"
+                    : "preferences_not_clicked"
+                }
+                onClick={handlePreferencesClick}
+              >
+                {item.symbol} {item.title}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Button */}
+        <div className="preferences_button_container">
+          <button className="preferences_button" onClick={handleSubmit}>
+            Time to Explore!
+          </button>
+        </div>
+        {/* <SecurityCodeModal showModal={showModal} setShowModal={setShowModal} /> */}
+        {/* <div className="have_account">
+          <h3>
+            Already have an account?{" "}
+            <a href="/" className="login_text">
+              Login
+            </a>
+          </h3>
+        </div> */}
       </div>
-      {/* <SecurityCodeModal showModal={showModal} setShowModal={setShowModal} /> */}
-      <div className="have_account">
-        <h3>
-          Already have an account?{" "}
-          <a href="/" className="login_text">
-            Login
-          </a>
-        </h3>
-      </div>
-    </div>
+    </Spin>
   );
 };
 

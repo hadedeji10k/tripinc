@@ -337,19 +337,40 @@ const handlePreferencesClick = (e) => {
 // Object.assign(asset, quote);
 // console.log(asset);
 
-const add1 = [
+// const add1 = [
+//   {
+//     id: 1,
+//     name: "test",
+//   },
+// ];
+
+// const add2 = [
+//   {
+//     id: 2,
+//     name: "testw",
+//   },
+// ];
+
+// const add = [...add1, ...add2];
+// console.log(add);
+
+let array = [
   {
     id: 1,
     name: "test",
   },
-];
-
-const add2 = [
   {
     id: 2,
-    name: "testw",
+    name: "tests",
+  },
+];
+let id = array.length + 1;
+array = [
+  ...array,
+  {
+    id,
+    name: "Yusuf",
   },
 ];
 
-const add = [...add1, ...add2];
-console.log(add);
+console.log(array);

@@ -62,11 +62,18 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
   };
 
   const handleVerifyAccount = async () => {
+    setIsLoading(true);
     const formData = {
       recipient: userProfile.email,
       verificationType: "Email",
     };
-    await resendVerification(formData);
+    await resendVerification(formData)
+      .then((result) => {
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
   };
 
   const onChange = async (imageList: ImageListType) => {
@@ -81,7 +88,7 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
 
   return (
     <>
-      <Spin spinning={isLoading}>
+      <Spin spinning={isLoading} size="large">
         <div className="profile_top_bar_container">
           <div className="user_profile">
             {userProfile.profilePicture ? (
