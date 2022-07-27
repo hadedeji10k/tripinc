@@ -284,34 +284,93 @@ const handlePreferencesClick = (e) => {
 // }
 // }
 
-const axios = require("axios");
+// const axios = require("axios");
 
-const url = "https://muna-email-sender.herokuapp.com/send-message";
+// const url = "https://muna-email-sender.herokuapp.com/send-message";
 
-const project_website = "www.google.com";
-const email_address = "hello@gmail.com";
-const telegram_username = "@hello";
-const service_needed = "I want to build a service";
+// const project_website = "www.google.com";
+// const email_address = "hello@gmail.com";
+// const telegram_username = "@hello";
+// const service_needed = "I want to build a service";
 
-const message = `<p>
-  <b>These are the inputs from the form</b>
+// const message = `<p>
+//   <b>These are the inputs from the form</b>
 
-  Project Website: ${project_website} <br />
-  Email Address: ${email_address} <br />
-  Telegram Username: ${telegram_username} <br />
-  Service Needed: ${service_needed}
-  </p>
-`;
+//   Project Website: ${project_website} <br />
+//   Email Address: ${email_address} <br />
+//   Telegram Username: ${telegram_username} <br />
+//   Service Needed: ${service_needed}
+//   </p>
+// `;
 
-const formData = {
-  subject: "Testing on Heroku",
-  message,
-  receiver: "adedejiyusuf26@gmail.com",
-};
+// const formData = {
+//   subject: "Testing on Heroku",
+//   message,
+//   receiver: "adedejiyusuf26@gmail.com",
+// };
 
-axios.post(url, formData).then((res) => {
-  console.log(res);
-});
+// axios.post(url, formData).then((res) => {
+//   console.log(res);
+// });
 
 // js fiddle
 // http://jsfiddle.net/5GCsJ/4713/
+
+// let half = 8;
+// const news = parseInt(String(half && half + 1.2));
+// console.log(news);
+// console.log(parseInt(null));
+// let asset = {
+//   name: "Muna Token",
+//   symbol: "Asset.MUNA",
+//   platform: "Platform.WAVES",
+//   decimals: 8,
+//   image: "munaImage",
+//   assetId: "environment.waves.munaAssetId",
+// };
+
+// const quote = {
+//   price_usd: 0,
+//   percent_change: 0,
+// };
+
+// Object.assign(asset, quote);
+// console.log(asset);
+
+// const add1 = [
+//   {
+//     id: 1,
+//     name: "test",
+//   },
+// ];
+
+// const add2 = [
+//   {
+//     id: 2,
+//     name: "testw",
+//   },
+// ];
+
+// const add = [...add1, ...add2];
+// console.log(add);
+
+let array = [
+  {
+    id: 1,
+    name: "test",
+  },
+  {
+    id: 2,
+    name: "tests",
+  },
+];
+let id = array.length + 1;
+array = [
+  ...array,
+  {
+    id,
+    name: "Yusuf",
+  },
+];
+
+console.log(array);

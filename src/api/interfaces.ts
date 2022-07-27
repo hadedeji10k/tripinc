@@ -398,3 +398,15 @@ export interface IPagination {
 export interface ITripPlanning {
 
 }
+
+export interface IFlight {
+    flightName: string,
+    time: any,
+    timeCombo: any,
+    airportName: string,
+}
+export interface ITravelDetails {
+    flights?: IFlight[],
+    stays?: any[],
+    rentalCars?: any[],
+}

@@ -2,23 +2,20 @@ import React from "react";
 import { HashRouter as Router } from "react-router-dom";
 import "./App.css";
 import MainRoute from "./routings";
-import ScrollToTop from "react-scroll-to-top";
+import { BackTop } from "antd";
+import "antd/dist/antd.min.css";
 
 import ScrollToTopOfPage from "./pages/scrollToTopOfPage";
-import { arrowSVGText, svgStyle } from "./utils/constants";
+import { IoMdArrowRoundUp } from "react-icons/io";
 
 function App() {
   return (
     <>
-      <ScrollToTop
-        smooth
-        svgPath={arrowSVGText}
-        color="white"
-        width="500"
-        height="500"
-        viewBox="2 5 252 246"
-        style={svgStyle}
-      />
+      <BackTop duration={900} style={{ bottom: "30px", right: "30px" }}>
+        <div className="back_to_top_app_css">
+          <IoMdArrowRoundUp />
+        </div>
+      </BackTop>
       <Router>
         <ScrollToTopOfPage />
         <MainRoute />

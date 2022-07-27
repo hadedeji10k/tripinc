@@ -61,7 +61,8 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
   const toggleCancelShowEdit = (e: React.FormEvent): void => {
     e.preventDefault();
     Swal.fire({
-      title: "Are you sure you want to cancel changes?",
+      title: "Warning!",
+      text: "Are you sure you want to cancel changes?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, cancel changes!",
@@ -77,7 +78,8 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
   const togglePasswordCancelShowEdit = (e: React.FormEvent): void => {
     e.preventDefault();
     Swal.fire({
-      title: "Are you sure you want to cancel changes?",
+      title: "Warning!",
+      text: "Are you sure you want to cancel changes?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, cancel changes!",

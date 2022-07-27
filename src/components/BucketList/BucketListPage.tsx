@@ -218,7 +218,8 @@ const BucketListPage = () => {
     const data = wishListData.filter((item) => item.id !== id);
     const data2 = initialWishListData.filter((item) => item.id !== id);
     Swal.fire({
-      title: "Are you sure you want to remove this from your bucket list?",
+      title: "Warning!",
+      text: "Are you sure you want to remove this from your bucket list?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, remove!",

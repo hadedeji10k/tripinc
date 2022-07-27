@@ -12,6 +12,8 @@ const VerifyAccount = () => {
   const [hideOtp, setHideOtp] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const [otpErrorMessage, setOtpErrorMessage] = useState("");
+
   const userId = localGetUserId();
 
   const handleChange = (otp) => {
@@ -26,15 +28,25 @@ const VerifyAccount = () => {
   };
 
   const handleContinue = async () => {
-    setIsLoading(true);
-    const formData = {
-      userId,
-      token: otp,
-      verificationType: "Email",
-    };
-    console.log(formData);
-    await verifyAccount(formData);
-    setIsLoading(false);
+    if (otp.length !== 6) {
+      setOtpErrorMessage("Invalid OTP, Please enter the OTP numbers correctly");
+    } else {
+      setOtpErrorMessage("");
+      setIsLoading(true);
+      const formData = {
+        userId,
+        token: otp,
+        verificationType: "Email",
+      };
+      console.log(formData);
+      await verifyAccount(formData)
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -56,6 +68,9 @@ const VerifyAccount = () => {
           shouldAutoFocus={true}
           placeholder={hideOtp ? "******" : "123456"}
         />
+        <p className="red_alert m_t_5 m_b_5">
+          {otpErrorMessage.length > 0 && otpErrorMessage}
+        </p>
         {hideOtp ? (
           <p className="code_eyes_icon" onClick={handleOtpHide}>
             <AiFillEye />
