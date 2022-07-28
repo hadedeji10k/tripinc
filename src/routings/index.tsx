@@ -29,6 +29,7 @@ import RequireAuth from "../pages/RequiredAuth";
 import VerifyAccount from "../components/VerifyAccount/VerifyAccount";
 import PageNotFound from "../components/PageNotFound/PageNotFound";
 import TripPlanning from "../components/TripPlanning";
+import SuccessfulPayment from "../components/Shopping/SuccessfulPayment/index";
 
 const MainRoute: React.FC = () => {
   return (
@@ -101,6 +102,7 @@ const MainRoute: React.FC = () => {
               </RequireAuth>
             }
           />
+          <Route path="/successful-payment" element={<SuccessfulPayment />} />
           <Route
             path="/orders"
             element={

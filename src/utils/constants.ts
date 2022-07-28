@@ -13,7 +13,8 @@ export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug
 export const fullMonthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ]
-
+export const stripeTestKey = "pk_test_51LQ9eVARtos1qH9ZsqQMHqCQFw8W2J7YKU7rVYWFRAa5sJkvZ0YqGogcFo3fRu8yQTBeBEbK4rr3mEk03mcC6NWE00odqvBQ4h"
+export const stripeLiveKey = "pk_live_51Hno6bEaoi4RnNazs45MLoj4JO0hM0EHJXbZzF3GqNlyAg0AbC8IWO1BgTiiPDaMISd2fUEQs7yQf2zu0kJmGLal009uRr36BD"
 export const currencyList = [
     {
         Name: "Afghan Afghani",

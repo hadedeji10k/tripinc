@@ -40,9 +40,11 @@ const Shopping = () => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // state to enable the proceed to payment button
-  const [enablePaymentButton, setEnablePaymentButton] =
-    useState<boolean>(false);
+  // state to check if payment has been made
+  const [isPaymentCompleted, setIsPaymentCompleted] = useState<boolean>(false);
+
+  // state to set customer information
+  // const [customerInfo, setCustomerInfo] = useState<any>({});
 
   // initialize the payment
   const [clientSecret, setClientSecret] = useState("");
@@ -55,6 +57,9 @@ const Shopping = () => {
     setIsLoading(true);
     getOrderByID(orderId).then((res) => {
       setOrderDetails(res.data);
+      setIsPaymentCompleted(
+        res.data.status.toLowerCase() === "completed" ? true : false
+      );
       setOrderItems(res.data.items);
       getUserByID(userId as any).then((res) => {
         setUserInfo(res.data);
@@ -62,30 +67,6 @@ const Shopping = () => {
       });
     });
   }, [userId]);
-
-  // const handleNextButton = (id: any) => {
-  //   const nextId = Number(id) + 1;
-  //   for (let i = 0; i < menuBar.length; i++) {
-  //     const element = menuBar[i];
-  //     element.state = false;
-  //   }
-  //   const index = menuBar.findIndex((item) => item.id === parseInt(id));
-  //   menuBar[index].state = true;
-  //   setMenuBar([...menuBar]);
-  // };
-
-  // const handlePrevButton = (id: any) => {
-  //   const nextId = Number(id) - 1;
-  //   if (nextId >= 1) {
-  //     for (let i = 0; i < menuBar.length; i++) {
-  //       const element = menuBar[i];
-  //       element.state = false;
-  //     }
-  //     const index = menuBar.findIndex((item) => item.id === nextId);
-  //     menuBar[index].state = true;
-  //     setMenuBar([...menuBar]);
-  //   }
-  // };
 
   const handleClickMenu = (id: any) => {
     for (let i = 0; i < menuBar.length; i++) {
@@ -110,29 +91,44 @@ const Shopping = () => {
               >
                 01 Order View &nbsp;&nbsp;{" "}
               </span>{" "}
-              <span
-                className={
-                  data[0].id === 2 ? "shopping_active" : "shopping_not_active"
-                }
-              >
-                {" "}
-                &gt; &nbsp; 02 Customer Info &nbsp;&nbsp;{" "}
-              </span>{" "}
-              <span
-                className={
-                  data[0].id === 3 ? "shopping_active" : "shopping_not_active"
-                }
-              >
-                {" "}
-                &gt; &nbsp; 03 Payment
-              </span>
+              {/* don't show if payment is already made */}
+              {!isPaymentCompleted ? (
+                <>
+                  {/* <span
+                    className={
+                      data[0].id === 2
+                        ? "shopping_active"
+                        : "shopping_not_active"
+                    }
+                  >
+                    {" "}
+                    &gt; &nbsp; 02 Customer Info &nbsp;&nbsp;{" "}
+                  </span>{" "} */}
+                  <span
+                    className={
+                      data[0].id === 3
+                        ? "shopping_active"
+                        : "shopping_not_active"
+                    }
+                  >
+                    {" "}
+                    &gt; &nbsp; 02 Payment
+                  </span>
+                </>
+              ) : null}
             </p>
+
             <hr className="cart_line" />
+
             {data[0].id === 1 ? (
               <OrderPage
                 orderItems={orderItems}
                 menuBar={menuBar}
                 setMenuBar={setMenuBar}
+                isPaymentCompleted={isPaymentCompleted}
+                userInfo={userInfo}
+                orderDetails={orderDetails as any}
+                setClientSecret={setClientSecret}
               />
             ) : data[0].id === 2 ? (
               <CustomerInfoPage
@@ -158,6 +154,7 @@ const Shopping = () => {
               totalAmountOfItems={
                 (orderDetails && orderDetails?.totalAmount) || 0
               }
+              isPaymentCompleted={isPaymentCompleted}
             />
           </div>
         </div>

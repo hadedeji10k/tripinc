@@ -51,7 +51,11 @@ const Row = (props: { row: IOrderDetails }) => {
           {currencySymbolHelper(row.currency)}
           {row.totalAmount}
         </TableCell>
-        <TableCell align="right">{row.paid ? "Paid" : "Not Paid"}</TableCell>
+        <TableCell align="right">
+          {row.amountPaid !== 0 && row.amountPaid === row.totalAmount
+            ? "Paid"
+            : "Not Paid"}
+        </TableCell>
         <TableCell align="right">
           {currencySymbolHelper(row.currency)}
           {row.amountPaid}
@@ -109,7 +113,6 @@ const Orders = () => {
     getUserOrder(userId).then((res) => {
       localStorage.setItem("order_items", JSON.stringify(res.data));
       setNewRows(res.data.items);
-      console.log(res.data);
 
       setPagination({
         hasNext: res.data.hasNext,

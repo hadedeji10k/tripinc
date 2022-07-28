@@ -119,8 +119,6 @@ const CustomerInfoPage = ({
 
     await initiatePayment(formData)
       .then((res) => {
-        console.log(res.data);
-        console.log(res.data.data.clientSecret);
         Swal.fire({
           title: "Success!",
           text: "You have successfully initialized your payment.",

@@ -15,7 +15,6 @@ const PaymentPage = ({
   orderDetails,
   clientSecret,
 }: Props) => {
-  console.log(orderDetails);
   const handleClickMenu = (id: any) => {
     for (let i = 0; i < menuBar.length; i++) {
       const element = menuBar[i];
@@ -65,7 +64,7 @@ const PaymentPage = ({
             />
           </div>
           <button
-            onClick={() => handleClickMenu(2)}
+            onClick={() => handleClickMenu(1)}
             className="customer_info_button"
           >
             Back

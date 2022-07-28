@@ -3,11 +3,10 @@ import { localGetUserId } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 interface Props {
   totalAmountOfItems: number;
+  isPaymentCompleted: boolean;
 }
-const OrderSummary = ({ totalAmountOfItems }: Props) => {
+const OrderSummary = ({ totalAmountOfItems, isPaymentCompleted }: Props) => {
   const serviceFee = false ? 200 : 0;
-
-  const userId = localGetUserId() as number;
 
   return (
     <>
@@ -30,17 +29,22 @@ const OrderSummary = ({ totalAmountOfItems }: Props) => {
           </div>
         </div>
 
-        <hr className="cart_line" />
-        <p>Have a Voucher?</p>
-        <input
-          type="text"
-          className="shopping_input"
-          placeholder="Enter your voucher code here"
-        />
+        {/* hide redeem voucher if payment has already been made*/}
+        {!isPaymentCompleted ? (
+          <>
+            <hr className="cart_line" />
+            <p>Have a Voucher?</p>
+            <input
+              type="text"
+              className="shopping_input"
+              placeholder="Enter your voucher code here"
+            />
 
-        <button className="order_summary_button_to_redeem">
-          Redeem Voucher
-        </button>
+            <button className="order_summary_button_to_redeem">
+              Redeem Voucher
+            </button>
+          </>
+        ) : null}
 
         <hr className="cart_line" />
         <p>Secure checkout</p>
