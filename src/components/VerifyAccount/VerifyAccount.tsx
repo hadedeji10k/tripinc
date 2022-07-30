@@ -38,7 +38,7 @@ const VerifyAccount = () => {
         token: otp,
         verificationType: "Email",
       };
-      console.log(formData);
+
       await verifyAccount(formData)
         .then(() => {
           setIsLoading(false);

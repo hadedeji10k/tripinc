@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -117,6 +117,18 @@ export const getCategories = async (query: any): Promise<AxiosResponse<any>> => 
 // get user preference
 export const getUserPreferences = async (userId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/UserPreferences/GetUserPreference/${userId}`);
+}
+
+export const managePreference = async (formData: IManagePreference): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post('/api/UserPreferences/ManagePreference', formData);
+}
+
+export const managePlacesWishToVisit = async (formData: IManagePlacesWishToVisit): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post('/api/UserPreferences/ManagePlacesWishToVisit', formData);
+}
+
+export const managePlacesVisited = async (formData: IManagePlacesVisited): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post('/api/UserPreferences/ManagePlacesVisited', formData);
 }
 
 // update user currency

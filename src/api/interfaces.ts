@@ -19,6 +19,43 @@ export interface IGetUserByID {
 }
 
 
+export interface IManagePreference {
+    userId: number
+    averageTravelCount?: number
+    foodPreference?: string
+    preferedCurrency?: string
+    preferedTimeFormat?: string
+    areaOfInterestIds?: number[]
+}
+
+export interface IManagePlacesWishToVisit {
+    wishToVisitPlaces?: {
+        id?: number,
+        userId?: number,
+        placeName?: string,
+        city?: string,
+        country?: string,
+        postCode?: string,
+        longitude?: number,
+        latitude?: number,
+        mapUrl?: string
+    }[]
+}
+
+export interface IManagePlacesVisited {
+    visitedPlaces?: {
+        id?: number,
+        userId?: number,
+        placeName?: string,
+        city?: string,
+        country?: string,
+        postCode?: string,
+        longitude?: number,
+        latitude?: number,
+        mapUrl?: string
+    }[]
+}
+
 export interface IUpdateUserCurrency {
     userId: string
     preferedCurrency: string

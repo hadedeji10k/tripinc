@@ -1,21 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Autocomplete from "react-google-autocomplete";
 import { getAllCategories } from "../../api";
+import {
+  managePlacesVisited,
+  managePlacesWishToVisit,
+  managePreference,
+} from "../../api/responseHandlers";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
-import { symbolHelper } from "../../utils/helpers";
+import { localGetUserId, symbolHelper } from "../../utils/helpers";
 import "./Preferences.css";
-import { IFormattedCategory } from "../../api/interfaces";
+import {
+  IFormattedCategory,
+  IManagePlacesVisited,
+  IManagePlacesWishToVisit,
+  IManagePreference,
+} from "../../api/interfaces";
+import { GOOGLEAPIKEY } from "../../utils/constants";
 
 const Preferences: React.FC = () => {
+  const inputRef = useRef(null);
+
   const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
     []
   );
-  const [placesData, setPlacesData] = useState<any[]>([]);
+  const [wishToVisit, setWishToVisit] = useState<any[]>([]);
   const [placesBeenToData, setPlacesBeenToData] = useState<any[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const userId = localGetUserId() as number;
+
   useEffect(() => {
+    setIsLoading(true);
     getAllCategories().then((res) => {
       const arrayToPush: any = [];
       // loop through the response categories and push the category name and the icon into the array to be used in the preference data
@@ -47,91 +64,119 @@ const Preferences: React.FC = () => {
     setPreferenceData([...preferenceData]);
   };
 
-  // function to handle places click to delete
-  const handlePlacesClick = (e: any) => {
-    e.preventDefault();
-    const id = e.target.id;
-    let data = placesData.filter((item) => item.id !== parseInt(id));
-    setPlacesData([...data]);
-    console.log(placesData);
-  };
-
-  // function to handle typing of places tag
-  const handlePlacesChange = (e: any) => {
-    e.preventDefault();
-    // console.log(e.keyCode)
-    // get the input data
-    let inputData = e.target.value.toString();
-    // get the input element and add an event listener
-    let input = document.getElementById("places") as HTMLInputElement;
-    input.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        let newPlacesData = placesData.filter(
-          (item) => item.title === inputData
-        );
-
-        if (newPlacesData.length > 0) {
-          input.value = "";
-          return;
-        } else {
-          let id = placesData.length + 1;
-          setPlacesData([
-            ...placesData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
-          ]);
-        }
-        input.value = "";
-      }
-    });
-  };
-
   // function to handle placesBeenTo click to delete
-  const handlePlacesBeenToClick = (e: any) => {
-    e.preventDefault();
-    const id = e.target.id;
-    let data = placesBeenToData.filter((item) => item.id !== parseInt(id));
-    setPlacesBeenToData([...data]);
-    console.log(placesBeenToData);
+  const handlePlacesRemove = (action: string, id: any) => {
+    let data: any;
+    switch (action) {
+      case "placesBeenTo":
+        data = placesBeenToData.filter((item, key) => key !== parseInt(id));
+        setPlacesBeenToData([...data]);
+        break;
+      case "wishToVisit":
+        data = wishToVisit.filter((item, key) => key !== parseInt(id));
+        setWishToVisit([...data]);
+        break;
+
+      default:
+        break;
+    }
   };
 
-  // function to handle typing of placesBeenTo tag
-  const handlePlacesBeenToChange = (e: any) => {
-    e.preventDefault();
-    // console.log(e.keyCode)
-    let inputData = e.target.value.toString();
-    let input = document.getElementById("placesBeenTo") as HTMLInputElement;
-    input.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        let newPlacesBeenToData = placesBeenToData.filter(
-          (item) => item.title === inputData
-        );
+  const handleOnAutocompleteSelect = (
+    action: string,
+    data: any,
+    extra: any
+  ) => {
+    let input: any;
+    switch (action) {
+      case "placesBeenTo":
+        input = document.getElementById("places_been_to") as HTMLInputElement;
+        setPlacesBeenToData((prev) => {
+          let dataExist = prev.filter(
+            (item) =>
+              item.placeName.toLowerCase() ===
+              data.formatted_address.toLowerCase()
+          );
 
-        if (newPlacesBeenToData.length > 0) {
-          input.value = "";
-          return;
-        } else {
-          let id = placesBeenToData.length + 1;
-          setPlacesBeenToData([
-            ...placesBeenToData,
-            { id, title: inputData, stateOfClass: false, class: "clicked" },
-          ]);
-        }
-
+          if (dataExist.length > 0) {
+            return prev;
+          } else {
+            return [
+              ...prev,
+              {
+                userId,
+                placeName: data.formatted_address,
+                longitude: data.geometry.location.toJSON().lng,
+                latitude: data.geometry.location.toJSON().lat,
+                mapUrl: data.url,
+              },
+            ];
+          }
+        });
         input.value = "";
-      }
-    });
+
+        break;
+      case "wishToVisit":
+        input = document.getElementById("wish_to_visit") as HTMLInputElement;
+
+        setWishToVisit((prev) => {
+          let dataExist = prev.filter(
+            (item) =>
+              item.placeName.toLowerCase() ===
+              data.formatted_address.toLowerCase()
+          );
+
+          if (dataExist.length > 0) {
+            return prev;
+          } else {
+            return [
+              ...prev,
+              {
+                userId,
+                placeName: data.formatted_address,
+                longitude: data.geometry.location.toJSON().lng,
+                latitude: data.geometry.location.toJSON().lat,
+                mapUrl: data.url,
+              },
+            ];
+          }
+        });
+        input.value = "";
+
+        break;
+
+      default:
+        break;
+    }
   };
 
   // Function to handle save button
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(placesData);
-    console.log(placesBeenToData);
-    let preferences = preferenceData.filter(
-      (item) => item.stateOfClass === true
-    );
+    setIsLoading(true);
+    let preferences = preferenceData
+      .filter((item) => item.stateOfClass === true)
+      .map((item) => item.id);
 
-    console.log(preferences);
+    const managePreferenceFormData: IManagePreference = {
+      userId,
+      areaOfInterestIds: preferences,
+    };
+    const managePlacesWishToVisitFormData: IManagePlacesWishToVisit = {
+      wishToVisitPlaces: wishToVisit,
+    };
+    const managePlacesVisitedFormData: IManagePlacesVisited = {
+      visitedPlaces: placesBeenToData,
+    };
+    await managePreference(managePreferenceFormData);
+    await managePlacesWishToVisit(managePlacesWishToVisitFormData);
+    await managePlacesVisited(managePlacesVisitedFormData);
+
+    setTimeout(() => {
+      window.location.href = "/#/profile";
+    }, 1000);
+
+    setIsLoading(false);
   };
 
   return (
@@ -149,24 +194,35 @@ const Preferences: React.FC = () => {
           <label className="preferences_label">
             Where have you been before?
           </label>
-          <input
-            id="placesBeenTo"
-            className="preferences_input"
-            type="text"
+          <Autocomplete
+            // ref={inputRef}
+            apiKey={GOOGLEAPIKEY}
+            onPlaceSelected={(selected) => {
+              handleOnAutocompleteSelect(
+                "placesBeenTo",
+                selected,
+                placesBeenToData
+              );
+            }}
+            options={{
+              types: [],
+              fields: ["formatted_address", "place_id", "url", "geometry"],
+            }}
             placeholder="Enter the name of the location"
-            onChange={handlePlacesBeenToChange}
+            className="preferences_input"
+            id="places_been_to"
           />
         </div>
         <div className="bucket_list_tag_container">
-          {placesBeenToData.map((item) => (
+          {placesBeenToData.map((item, key) => (
             // <span key={item.id} className="bucket_list_tag">{item.title}</span>
             <span
-              key={item.id}
-              id={item.id.toString()}
+              key={key}
+              id={key.toString()}
               className="location_tag"
-              onClick={handlePlacesBeenToClick}
+              onClick={() => handlePlacesRemove("placesBeenTo", key)}
             >
-              x {item.title}
+              x {item.placeName}
             </span>
           ))}
         </div>
@@ -177,25 +233,32 @@ const Preferences: React.FC = () => {
           <label className="preferences_label">
             What’s on your bucket list?{" "}
           </label>
-          <input
-            id="places"
+          <Autocomplete
+            // ref={inputRef}
+            apiKey={GOOGLEAPIKEY}
+            onPlaceSelected={(selected: any) => {
+              handleOnAutocompleteSelect("wishToVisit", selected, wishToVisit);
+            }}
+            options={{
+              types: [],
+              fields: ["formatted_address", "place_id", "url", "geometry"],
+            }}
+            placeholder="Enter the name of the location"
             className="preferences_input"
-            type="text"
-            placeholder="Enter your preferred location"
-            onChange={handlePlacesChange}
+            id="wish_to_visit"
           />
         </div>
         <div className="bucket_list_tab">
           <div className="bucket_list_tag_container">
-            {placesData.map((item) => (
+            {wishToVisit.map((item, key) => (
               // <span key={item.id} className="bucket_list_tag">{item.title}</span>
               <span
-                key={item.id}
-                id={item.id.toString()}
+                key={key}
+                id={key.toString()}
                 className="location_tag"
-                onClick={handlePlacesClick}
+                onClick={() => handlePlacesRemove("wishToVisit", key)}
               >
-                x {item.title}
+                x {item.placeName}
               </span>
             ))}
           </div>

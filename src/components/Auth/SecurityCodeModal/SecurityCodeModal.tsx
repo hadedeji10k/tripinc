@@ -5,6 +5,10 @@ import "./SecurityCodeModal.css";
 import { MdClose } from "react-icons/md";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { Spin } from "antd";
+import "antd/dist/antd.min.css";
+import { verifyAccount } from "../../../api/responseHandlers";
+import { localGetUserId } from "../../../utils/helpers";
 
 // interface for this Modal
 interface SecurityCodeModalProp {
@@ -35,6 +39,10 @@ const SecurityCodeModal = ({
   const [otp, setOtp] = useState<string>("");
   const [otpErrorMessage, setOtpErrorMessage] = useState<string>("");
   const [hideOtp, setHideOtp] = useState<boolean>(true);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const userId = localGetUserId() as number;
 
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
@@ -90,17 +98,31 @@ const SecurityCodeModal = ({
     setHideOtp((prev) => !prev);
   };
 
-  const handleContinue = (): void => {
+  const handleContinue = async () => {
     if (otp.length !== 6) {
       setOtpErrorMessage("Invalid OTP, Please enter the OTP numbers correctly");
     } else {
       console.log(otp);
+      setIsLoading(true);
+      const formData = {
+        userId,
+        token: otp,
+        verificationType: "Email",
+      };
+
+      await verifyAccount(formData)
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setIsLoading(false);
+        });
     }
   };
 
   // return the component
   return (
-    <>
+    <Spin spinning={isLoading} size="large">
       {showSecurityModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
@@ -151,7 +173,7 @@ const SecurityCodeModal = ({
           {/* </div> */}
         </Background>
       ) : null}
-    </>
+    </Spin>
   );
 };
 
