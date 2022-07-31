@@ -35,7 +35,7 @@ export const signUp = async (formData: ISignUpFull) => {
       // success message
       Swal.fire({
         title: "Success!",
-        text: "You have successfully created a new profile",
+        text: "You have successfully created a new profile. An account verification mail has been sent to your email address. Kindly verify your account.",
         icon: "success",
         confirmButtonText: "Ok",
       }).then((result) => {
