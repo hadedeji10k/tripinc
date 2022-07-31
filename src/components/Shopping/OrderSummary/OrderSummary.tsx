@@ -1,6 +1,4 @@
 import "./OrderSummary.css";
-import { localGetUserId } from "../../../utils/helpers";
-import Swal from "sweetalert2";
 interface Props {
   totalAmountOfItems: number;
   isPaymentCompleted: boolean;

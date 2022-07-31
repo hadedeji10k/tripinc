@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./LandingPage.css";
@@ -11,23 +11,14 @@ import image2 from "../../images/illlustration-bookings-oneplatform.png";
 import image3 from "../../images/illlustration-itenary-lifestyle.png";
 import phoneImage from "../../images/mockup-phones.png";
 import { BiSearch } from "react-icons/bi";
-import { countryData } from "../../currentUserData";
 
 import { getAllCategories, getTopDeals } from "../../api";
 import { symbolHelper } from "../../utils/helpers";
 import { IFormattedCategory, IDeal } from "../../api/interfaces";
 import { signUpToNewsLetter } from "../../api/responseHandlers";
 import { Link } from "react-router-dom";
-
-interface CountryProps {
-  id: number;
-  name: string;
-  flag: string;
-  capital: string;
-  population: string;
-  area: string;
-  populationDensity: string;
-}
+import Autocomplete from "react-google-autocomplete";
+import { GOOGLEAPIKEY } from "../../utils/constants";
 
 const LandingPage = () => {
   // state to manage location data (to sort out clicked and unclicked location)
@@ -39,16 +30,13 @@ const LandingPage = () => {
     useState<boolean>(false);
 
   const [city, setCity] = useState("");
-  const [cityFilteredData, setCityFilteredData] = useState<CountryProps[]>([]);
-
-  let cityInputElement = document.getElementById("city_input") as any;
 
   useEffect(() => {
     getTopDeals().then((res) => {
       setTopDeals(res.data);
     });
     getAllCategories().then((res) => {
-      const arrayTopush: any = [];
+      const arrayToPush: any = [];
       for (let i = 0; i < res.data.length; i++) {
         const element = res.data[i];
         const data = {
@@ -57,24 +45,11 @@ const LandingPage = () => {
           symbol: symbolHelper(element.name),
           stateOfClass: false,
         };
-        arrayTopush.push(data);
+        arrayToPush.push(data);
       }
-      setCategoryData(arrayTopush);
+      setCategoryData(arrayToPush);
     });
   }, []);
-
-  useEffect(() => {
-    setCity(cityInputElement?.value);
-    // console.log("reached");
-    // const newFilter = countryData.filter((value) => {
-    //   return value.name
-    //     .toLowerCase()
-    //     .includes(cityInputElement?.value.toLowerCase());
-    // });
-
-    // setCityFilteredData([...newFilter]);
-    return () => {};
-  }, [cityInputElement?.value, city]);
 
   // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
   useEffect(() => {
@@ -121,55 +96,6 @@ const LandingPage = () => {
     // window.location.href = "";
   };
 
-  // function to handle the search button click
-  const handleCountryClick = (e: any) => {
-    e.preventDefault();
-    let value = e.target.innerHTML;
-
-    // setCityFilteredData([]);
-    setCity(value);
-    cityInputElement.value = value;
-
-    const dropDownElement = document.getElementById(
-      "landing_city_dropdown"
-    ) as any;
-    dropDownElement.style.display = "none";
-  };
-
-  const handleCountryBlur = (e: any) => {
-    e.preventDefault();
-    // let value = e.target.value;
-
-    setTimeout(() => {
-      const cityDropDownElement = document.getElementById(
-        "landing_city_dropdown"
-      ) as any;
-      cityDropDownElement.style.display = "none";
-    }, 200);
-  };
-
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    const searchWord = e.target.value;
-    setCity(searchWord);
-    const dropDownElement = document.getElementById(
-      "landing_city_dropdown"
-    ) as any;
-    dropDownElement.style.display = "block";
-
-    if (searchWord === "" || searchWord === null || searchWord === undefined) {
-      setCityFilteredData([]);
-      dropDownElement.style.display = "none";
-    } else {
-      const newFilter = countryData.filter((value) => {
-        return value.name.toLowerCase().includes(searchWord.toLowerCase());
-      });
-      console.log(newFilter);
-      // setCityFilteredData([...newFilter]);
-      setCityFilteredData((prev) => [...newFilter]);
-    }
-  };
-
   // function to handle newsletter subscription
   const handleNewsletterSubmit = async (values: any) => {
     setIsNewsLetterLoading(true);
@@ -187,8 +113,7 @@ const LandingPage = () => {
   };
 
   const handleCityInput = () => {
-    const city = document.getElementById("city_input") as any;
-    const url = `/#/explore/city/${city.value}`;
+    const url = `/#/explore/city/${city}`;
     window.location.href = url;
   };
 
@@ -196,11 +121,6 @@ const LandingPage = () => {
     <>
       <div className="landing_page_container">
         <div className="landing_page_image_container">
-          {/* <img
-            src={landingPage}
-            alt="landing_page_image"
-            className="landing_page_image"
-          /> */}
           <h1 className="landing_page_image_header">
             Discover all those hidden gems
           </h1>
@@ -210,32 +130,17 @@ const LandingPage = () => {
         </div>
         <div className="bucket_list_page_search_container">
           <div className="bucket_list_page_search_form">
-            {/* {countryData.length > 0 && (
-              <div
-                className="landing_dropdown_content"
-                id="landing_city_dropdown"
-              >
-                {cityFilteredData.map((item) => (
-                  <p
-                    key={item.id}
-                    id="country_mapped"
-                    className="pop_up_data_item"
-                    onClick={handleCountryClick}
-                  >
-                    {item.name}
-                  </p>
-                ))}
-              </div>
-            )} */}
-            <input
-              id="city_input"
-              className="bucket_list_page_search_input"
-              type="text"
-              autoComplete="off"
+            <Autocomplete
+              apiKey={GOOGLEAPIKEY}
+              onPlaceSelected={(selected) => {
+                setCity(selected.formatted_address);
+              }}
+              options={{
+                fields: ["formatted_address"],
+              }}
               placeholder="Search for a city"
-              // onChange={handleClick}
-              // defaultValue={city}
-              // onBlur={handleCountryBlur}
+              className="bucket_list_page_search_input"
+              id="city_input"
             />
             <button
               className="bucket_list_page_search_button"

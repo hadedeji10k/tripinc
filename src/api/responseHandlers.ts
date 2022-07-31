@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview, IMakeOrder, IManagePreference, IManagePlacesWishToVisit, IManagePlacesVisited } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview, IMakeOrder, IManagePreference, IManagePlacesWishToVisit, IManagePlacesVisited, IForgotPasswordRequest } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -38,7 +38,11 @@ export const signUp = async (formData: ISignUpFull) => {
         text: "You have successfully created a new profile",
         icon: "success",
         confirmButtonText: "Ok",
-      })
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/#/preferences";
+        }
+      });
       return user
     }
 
@@ -275,6 +279,56 @@ export const resendVerification = async (formData: IResendVerification) => {
     Swal.fire({
       title: "Error!",
       text: `Error sending verification code to your email. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+
+export const forgotPasswordRequest = async (formData: IForgotPasswordRequest) => {
+  try {
+    const response = await api.forgotPasswordResquest(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: `Email sent, ${response.data.message}`,
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/#/sign-in";
+        }
+      });
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Error sending an email to you, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Error sending an email to you. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Error sending an email to you. Please try again later`,
       icon: "error",
       confirmButtonText: "Ok",
     });

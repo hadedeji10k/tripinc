@@ -4,10 +4,10 @@ import { ISignUpAndInResponse } from '../interfaces';
 
 // swagger api - registration - `${tripServiceUrl}/api-docs/index.html`
 
-const baseURL = 
-	runtimeEnvironment == "dev" ? devTripServiceUrl 
-	: runtimeEnvironment == "test" ? testTripServiceUrl 
-	: tripServiceUrl;
+const baseURL =
+    (runtimeEnvironment as string) === "dev" ? devTripServiceUrl
+        : (runtimeEnvironment as string) === "test" ? testTripServiceUrl
+            : tripServiceUrl;
 
 // TRIP SERVICE api
 const TRIPAPI = axios.create({ baseURL });

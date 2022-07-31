@@ -8,9 +8,13 @@ import { FaFacebookF } from "react-icons/fa";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { Formik } from "formik";
-import { ISignIn } from "../../../api/interfaces";
+import { IForgotPasswordRequest, ISignIn } from "../../../api/interfaces";
 import { SignInSchema } from "../../../schema/yupSchema";
-import { googleSignIn, signIn } from "../../../api/responseHandlers";
+import {
+  forgotPasswordRequest,
+  googleSignIn,
+  signIn,
+} from "../../../api/responseHandlers";
 import { GoogleLogin } from "react-google-login";
 // import { remoteGoogleLogin } from "../../api/responseHandlers";
 import { GoogleLoginClientId } from "../../../utils/constants";
@@ -135,6 +139,27 @@ const Signin = () => {
     setRemoteError("Google Login unsuccessful.");
   };
 
+  const handleForgotPassword = () => {
+    Swal.fire({
+      title: "Enter your email address",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Forgot Password",
+      confirmButtonColor: "#5e75cd",
+      showLoaderOnConfirm: true,
+      preConfirm: async (email) => {
+        const formData: IForgotPasswordRequest = {
+          email,
+        };
+        return await forgotPasswordRequest(formData);
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -145,7 +170,7 @@ const Signin = () => {
           </div>
           <div className="external_signin_button">
             <GoogleLogin
-              clientId={GoogleLoginClientId}
+              clientId={GoogleLoginClientId as string}
               render={(renderProps) => (
                 <button
                   className="signin_google_button"
@@ -241,8 +266,11 @@ const Signin = () => {
                         Remember Me
                       </label>
                     </span>
-                    <span className="forgot_password">
-                      <a href="/">I forgot my password!</a>
+                    <span
+                      className="sign_in_forgot_password"
+                      onClick={handleForgotPassword}
+                    >
+                      I forgot my password!
                     </span>
                   </div>
                   <div className="signin_button_container">

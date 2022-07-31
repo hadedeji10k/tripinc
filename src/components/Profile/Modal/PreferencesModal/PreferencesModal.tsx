@@ -29,148 +29,12 @@ const Background: any = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-// preferences dummy userData
-const preferencedata = [
-  {
-    id: 1,
-    title: "🎢 Adventure",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 2,
-    title: "🎨 Arts & Galleries",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 3,
-    title: "🏝 Beach",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 4,
-    title: "🍹 Food & Drinks",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 5,
-    title: "🏝 Shopping",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 6,
-    title: "🏛 History & Culture",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 7,
-    title: "⛩ Iconic Architecture",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 8,
-    title: "⚽️ Sporting Attractions",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 9,
-    title: "🏵 Wellness & Spa",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 10,
-    title: "🌲 Outdoors & Nature",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 11,
-    title: "🎷 Nightlife",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 12,
-    title: "🗽 Tourist Attractions",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 13,
-    title: "🎬 Film",
-    stateOfClass: false,
-    class: "clicked",
-  },
-];
-
-const placesdata = [
-  {
-    id: 1,
-    title: "Nigeria",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 2,
-    title: "Barcelona",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 3,
-    title: "America",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 4,
-    title: "London",
-    stateOfClass: false,
-    class: "clicked",
-  },
-];
-
 interface IPlaces {
   id: number;
   title: string;
   stateOfClass: boolean;
   class: string;
 }
-
-const placesBeenTodata = [
-  {
-    id: 1,
-    title: "Nigeria",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 2,
-    title: "Barcelona",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 3,
-    title: "America",
-    stateOfClass: false,
-    class: "clicked",
-  },
-  {
-    id: 4,
-    title: "London",
-    stateOfClass: false,
-    class: "clicked",
-  },
-];
 
 // Component for security Modal
 const PreferencesModal = ({
@@ -200,15 +64,6 @@ const PreferencesModal = ({
         };
         arrayToPush.push(data);
       }
-      // if there is catNameParam, therefore, the state of the category is clicked
-      // if (catNameParam) {
-      //   const index = arrayToPush.findIndex(
-      //     (x) => x.title.toLowerCase() === catNameParam.toLowerCase()
-      //   );
-      //   arrayToPush[index].stateOfClass = true;
-      //   // setSearchResultField(catNameParam);
-      // }
-      // set the preference data
       setPreferenceData(arrayToPush);
     });
   }, [showPreferencesModal]);

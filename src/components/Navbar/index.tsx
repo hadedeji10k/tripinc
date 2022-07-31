@@ -67,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   const { signOut } = useGoogleLogout({
-    clientId: GoogleLoginClientId,
+    clientId: GoogleLoginClientId as string,
     onLogoutSuccess: handleGoogleLogoutSuccess,
     onFailure: handleGoogleLogoutFailure,
   });

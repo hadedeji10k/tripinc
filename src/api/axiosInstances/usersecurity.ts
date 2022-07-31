@@ -1,15 +1,15 @@
 import axios from "axios";
-import { IRefreshToken, ISignUpAndInResponse } from '../interfaces';
-import { cannotRefreshAccessToken, checkAuthForRefresh, getLocalRefreshToken, refreshAccessToken } from '../../utils/helpers'
+import { ISignUpAndInResponse } from '../interfaces';
+import { checkAuthForRefresh } from '../../utils/helpers'
 import { refreshToken } from '../responseHandlers';
 import { devUserServiceUrl, runtimeEnvironment, testUserServiceUrl, userServiceUrl } from "../../utils/constants";
 
 // swagger api - registration - https://usersecurity.tripincmvptest.com/api-docs/index.html
 
-const baseURL = 
-	runtimeEnvironment == "dev" ? devUserServiceUrl 
-	: runtimeEnvironment == "test" ? testUserServiceUrl 
-	: userServiceUrl;
+const baseURL =
+    (runtimeEnvironment as string) === "dev" ? devUserServiceUrl
+        : (runtimeEnvironment as string) === "test" ? testUserServiceUrl
+            : userServiceUrl;
 
 const ENDPOINTS_NO_TOKEN = ['/api/Auth/Login', '/api/Auth/SocialLogin']
 

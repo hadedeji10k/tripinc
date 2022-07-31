@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Autocomplete from "react-google-autocomplete";
 import { getAllCategories } from "../../api";
 import {
@@ -19,8 +19,6 @@ import {
 import { GOOGLEAPIKEY } from "../../utils/constants";
 
 const Preferences: React.FC = () => {
-  const inputRef = useRef(null);
-
   const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
     []
   );

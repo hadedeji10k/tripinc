@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect } from "react";
 // import { useLocation } from "react-router-dom";
-import { Spin, DatePicker, Radio, Space, Select } from "antd";
+import { Spin, DatePicker, Select } from "antd";
 import "antd/dist/antd.min.css";
 import "./ExplorePage.css";
 // import { preferencedata, tourData } from "../../currentUserData";
@@ -9,21 +9,11 @@ import "./ExplorePage.css";
 import Card from "../Cards/TripCard/TripCard";
 
 import { BiSearch } from "react-icons/bi";
-import {
-  getAllCategories,
-  getAllDeals,
-  getAllTours,
-  getUserWishList,
-} from "../../api";
-import {
-  ICategory,
-  IDeal,
-  IFormattedCategory,
-  IPagination,
-} from "../../api/interfaces";
-import { localGetUserId, symbolHelper } from "../../utils/helpers";
+import { getAllCategories, getAllTours, getUserWishList } from "../../api";
+import { ICategory, IDeal, IPagination } from "../../api/interfaces";
+import { localGetUserId } from "../../utils/helpers";
 import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
-import { FaLessThanEqual } from "react-icons/fa";
+// import { FaLessThanEqual } from "react-icons/fa";
 import moment from "moment";
 
 const { RangePicker } = DatePicker;
@@ -45,8 +35,7 @@ const ThirdParty = () => {
   const [pagination, setPagination] = useState<IPagination | any>();
   // state to manage the search result data, so using this when user filter and it get it for the "Result for:" in the page
   const [searchResultField, setSearchResultField] = useState("All");
-  const [categorySearchResultField, setCategorySearchResultField] =
-    useState("");
+  // const [categorySearchResultField, setCategorySearchResultField] = useState("");
 
   // state to manage the search input in the page
   const [inputField, setInputField] = useState("");
@@ -89,150 +78,6 @@ const ThirdParty = () => {
     });
   }, [userId]);
 
-  // useEffect to set preference data when the user click on the preference
-  // useEffect(() => {
-  //   // select the preference tags clicked
-  //   let preferences = preferenceData.filter(
-  //     (item) => item.stateOfClass === true
-  //   );
-
-  //   if (preferences.length > 0) {
-  //     // if the preference tag clicked is not empty, set the search result field to the preference tag clicked
-  //     let preferencesText = "";
-  //     for (let i = 0; i < preferences.length; i++) {
-  //       preferencesText += `${preferences[i].title}, `;
-  //     }
-  //     setCategorySearchResultField(preferencesText);
-  //   }
-
-  //   // if the input value is not null and preferences is clicked, set the search result field to the input's value and preferences
-  //   if (inputField !== "" && preferences.length > 0) {
-  //     setSearchResultField(`${inputField} -> ${categorySearchResultField}`);
-  //   } else if (inputField !== "" && preferences.length === 0) {
-  //     setSearchResultField(inputField);
-  //   } else if (inputField === "" && preferences.length > 0) {
-  //     setSearchResultField(categorySearchResultField);
-  //   } else {
-  //     setSearchResultField("All");
-  //     setCategorySearchResultField("");
-  //     setTourData(initialtourData);
-  //   }
-
-  //   // if the preference tag clicked is empty, set the search result field to the "All"
-  //   if (preferences.length === 0 && inputField === "") {
-  //     setSearchResultField("All");
-  //     setCategorySearchResultField("");
-  //     setTourData(initialtourData);
-  //   }
-
-  //   if (preferences.length > 0 && inputField !== "") {
-  //     const filteredArray: any = [];
-  //     // loop through all clicked preferences and filter the attraction data to the clicked preferences
-  //     for (let i = 0; i < preferences.length; i++) {
-  //       const element = preferences[i];
-  //       const catArray: any = [];
-  //       // loop through the current attractions
-  //       for (let index = 0; index < initialtourData.length; index++) {
-  //         // get one attraction
-  //         const attraction = initialtourData[index];
-  //         // get the categories of the attraction
-  //         const data = attraction?.categories.filter(
-  //           (catItem) => catItem.name === element.title
-  //         );
-  //         // if category selected matches any of the categories of the attraction, push the attraction id to the catArray
-  //         if (data.length > 0) {
-  //           catArray.push(attraction.id);
-  //         }
-  //       }
-  //       // loop through the catArray and filter the result with the attraction id
-  //       for (let i = 0; i < catArray.length; i++) {
-  //         const element = catArray[i];
-  //         const filtered = initialtourData.filter(
-  //           (item) => item.id === element
-  //         );
-  //         // push the result into the preferences array
-  //         let insideArray = false;
-  //         filteredArray.forEach((element) => {
-  //           if (element.id === filtered[0].id) insideArray = true;
-  //         });
-  //         if (!insideArray) {
-  //           filteredArray.push(filtered[0]);
-  //         }
-  //       }
-  //     }
-  //     let data = filteredArray.filter((item) =>
-  //       item.location.toLowerCase().includes(inputField.toLowerCase())
-  //     );
-  //     setTourData(data);
-  //   } else if (preferences.length > 0 && inputField === "") {
-  //     const filteredArray: any = [];
-  //     // loop through all clicked preferences and filter the attraction data to the clicked preferences
-  //     for (let i = 0; i < preferences.length; i++) {
-  //       const element = preferences[i];
-  //       const catArray: any = [];
-  //       // loop through the current attractions
-  //       for (let index = 0; index < initialtourData.length; index++) {
-  //         // get one attraction
-  //         const attraction = initialtourData[index];
-  //         // get the categories of the attraction
-  //         const data = attraction?.categories.filter(
-  //           (catItem) => catItem.name === element.title
-  //         );
-  //         // if category selected matches any of the categories of the attraction, push the attraction id to the catArray
-  //         if (data.length > 0) {
-  //           catArray.push(attraction.id);
-  //         }
-  //       }
-  //       // loop through the catArray and filter the result with the attraction id
-  //       for (let i = 0; i < catArray.length; i++) {
-  //         const element = catArray[i];
-  //         const filtered = initialtourData.filter(
-  //           (item) => item.id === element
-  //         );
-  //         // push the result into the preferences array
-  //         let insideArray = false;
-  //         filteredArray.forEach((element) => {
-  //           if (element.id === filtered[0].id) insideArray = true;
-  //         });
-  //         if (!insideArray) {
-  //           filteredArray.push(filtered[0]);
-  //         }
-  //       }
-  //     }
-  //     setTourData(filteredArray);
-  //   } else if (preferences.length === 0 && inputField !== "") {
-  //     let data = initialtourData.filter((item) =>
-  //       item.location.toLowerCase().includes(inputField.toLowerCase())
-  //     );
-  //     setTourData(data);
-  //   } else if (preferences.length === 0 && inputField === "") {
-  //     setTourData(initialtourData);
-  //   }
-
-  //   return () => {};
-  // }, [
-  //   preferenceData,
-  //   inputField,
-  //   initialtourData,
-  //   categorySearchResultField,
-  // ]);
-
-  // function to manage the preference button when it is clicked
-  // const handlePreferencesClick = (e: any) => {
-  //   // prevent default so it won't refresh the page
-  //   e.preventDefault();
-
-  //   // get the id of the preference tag clicked
-  //   const id = e.target.id;
-
-  //   // get the index of the preference in the preferenceData state
-  //   const index = preferenceData.findIndex((item) => item.id === parseInt(id));
-  //   // change the state of the class of the clicked preference tag
-  //   preferenceData[index].stateOfClass = !preferenceData[index].stateOfClass;
-  //   // set the preference data state to be the current preference data
-  //   setPreferenceData([...preferenceData]);
-  // };
-
   // function to handle the input data (using this for the onClick of button of the search and onChange of the input)
   const handleInput = (e: any) => {
     // get the input
@@ -246,9 +91,9 @@ const ThirdParty = () => {
   };
 
   // function to handle category change
-  const handleCategoryClick = (e: any) => {
-    setCategory(e.target.value);
-  };
+  // const handleCategoryClick = (e: any) => {
+  //   setCategory(e.target.value);
+  // };
 
   const handleCategoryChange = (value: any) => {
     setCategory(value);

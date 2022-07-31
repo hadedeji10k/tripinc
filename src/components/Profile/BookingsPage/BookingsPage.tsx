@@ -1,8 +1,8 @@
 import React from "react";
 import "./BookingsPage.css";
-import { attractiondata } from "../../../currentUserData";
-import UpcomingTripCard from "../../Cards/UpcomingTripCard/UpcomingTripCard";
-import PastTripCard from "../../Cards/PastTripCard/PastTripCard";
+// import { attractiondata } from "../../../currentUserData";
+// import UpcomingTripCard from "../../Cards/UpcomingTripCard/UpcomingTripCard";
+// import PastTripCard from "../../Cards/PastTripCard/PastTripCard";
 
 const BookingsPage = () => {
   return (

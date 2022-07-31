@@ -10,7 +10,7 @@ import "./Shopping.css";
 import { IOrderDetails, IOrderItem } from "../../api/interfaces";
 import { localGetUserId } from "../../utils/helpers";
 import { getOrderByID } from "../../api";
-import { initiatePayment, getUserByID } from "../../api/index";
+import { getUserByID } from "../../api/index";
 
 const menuBarData = [
   {
@@ -57,26 +57,17 @@ const Shopping = () => {
     setIsLoading(true);
     getOrderByID(orderId).then((res) => {
       setOrderDetails(res.data);
-      setIsPaymentCompleted(
-        res.data.status.toLowerCase() === "completed" ? true : false
-      );
+      setIsPaymentCompleted(false);
+      // setIsPaymentCompleted(
+      //   res.data.status.toLowerCase() === "completed" ? true : false
+      // );
       setOrderItems(res.data.items);
       getUserByID(userId as any).then((res) => {
         setUserInfo(res.data);
         setIsLoading(false);
       });
     });
-  }, [userId]);
-
-  const handleClickMenu = (id: any) => {
-    for (let i = 0; i < menuBar.length; i++) {
-      const element = menuBar[i];
-      element.state = false;
-    }
-    const index = menuBar.findIndex((item) => item.id === parseInt(id));
-    menuBar[index].state = true;
-    setMenuBar([...menuBar]);
-  };
+  }, [userId, orderId]);
 
   return (
     <>

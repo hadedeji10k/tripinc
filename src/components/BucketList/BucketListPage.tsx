@@ -72,7 +72,7 @@ const BucketListPage = () => {
     }
 
     return () => {};
-  }, [wishListData, locationData, inputField]);
+  }, [wishListData, locationData, inputField, initialWishListData]);
 
   // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
   // useEffect(() => {
@@ -107,63 +107,63 @@ const BucketListPage = () => {
   // };
 
   // function to manage the locations button when it is clicked
-  const handleLocationsClick = (e: any) => {
-    // prevent default so it won't refresh the page
-    e.preventDefault();
-    // set input field to empty when location is clicked
-    setInputField("");
-    // console.log(e.target.id)
+  // const handleLocationsClick = (e: any) => {
+  //   // prevent default so it won't refresh the page
+  //   e.preventDefault();
+  //   // set input field to empty when location is clicked
+  //   setInputField("");
+  //   // console.log(e.target.id)
 
-    // get the id of the location tag clicked
-    const id = e.target.id;
+  //   // get the id of the location tag clicked
+  //   const id = e.target.id;
 
-    // get the index of the location in the locationData state
-    const index = locationData.findIndex((item) => item.id === parseInt(id));
-    // change the state of the class of the clicked location tag
-    locationData[index].stateOfClass = !locationData[index].stateOfClass;
-    // set the location data state to be the current location data
-    setLocationData([...locationData]);
-    // get all clicked locations
-    const clickedLocations = locationData.filter(
-      (item) => item.stateOfClass === true
-    );
-    // console.log(clickedLocations);
-    let newData: any = [];
-    let searchResultField1: string = "";
+  //   // get the index of the location in the locationData state
+  //   const index = locationData.findIndex((item) => item.id === parseInt(id));
+  //   // change the state of the class of the clicked location tag
+  //   locationData[index].stateOfClass = !locationData[index].stateOfClass;
+  //   // set the location data state to be the current location data
+  //   setLocationData([...locationData]);
+  //   // get all clicked locations
+  //   const clickedLocations = locationData.filter(
+  //     (item) => item.stateOfClass === true
+  //   );
+  //   // console.log(clickedLocations);
+  //   let newData: any = [];
+  //   let searchResultField1: string = "";
 
-    // loop through all clicked locations and filter the attraction data to the clicked locations
-    for (let i = 0; i < clickedLocations.length; i++) {
-      const element = clickedLocations[i];
-      let locations = initialWishListData.filter(
-        (item) => item.location === element.title
-      );
-      // if the location is not undefined, it should push the filtered data into a new array
-      if (locations.length >= 1 && locations !== undefined) {
-        // newData.push(locations[0]);
-        locations.forEach((item) => {
-          newData.push(item);
-        });
-      }
+  //   // loop through all clicked locations and filter the attraction data to the clicked locations
+  //   for (let i = 0; i < clickedLocations.length; i++) {
+  //     const element = clickedLocations[i];
+  //     let locations = initialWishListData.filter(
+  //       (item) => item.location === element.title
+  //     );
+  //     // if the location is not undefined, it should push the filtered data into a new array
+  //     if (locations.length >= 1 && locations !== undefined) {
+  //       // newData.push(locations[0]);
+  //       locations.forEach((item) => {
+  //         newData.push(item);
+  //       });
+  //     }
 
-      // set the search result field to the selected location
-      if (searchResultField1 === "") {
-        searchResultField1 = searchResultField1 + " " + element.title;
-      } else {
-        searchResultField1 = searchResultField1 + ". " + element.title;
-      }
-      setSearchResultField(searchResultField1);
-    }
+  //     // set the search result field to the selected location
+  //     if (searchResultField1 === "") {
+  //       searchResultField1 = searchResultField1 + " " + element.title;
+  //     } else {
+  //       searchResultField1 = searchResultField1 + ". " + element.title;
+  //     }
+  //     setSearchResultField(searchResultField1);
+  //   }
 
-    // set the attraction data to the new array
-    if (newData.length > 0) {
-      setWishListData(newData);
-      // clicked
-      // console.log(wishListData);
-    } else {
-      setWishListData([]);
-      // console.log(wishListData);
-    }
-  };
+  //   // set the attraction data to the new array
+  //   if (newData.length > 0) {
+  //     setWishListData(newData);
+  //     // clicked
+  //     // console.log(wishListData);
+  //   } else {
+  //     setWishListData([]);
+  //     // console.log(wishListData);
+  //   }
+  // };
 
   // function to handle the input data (using this for the onClick of button of the search and onChange of the input)
   const handleInput = (e: any) => {

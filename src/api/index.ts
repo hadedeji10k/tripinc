@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited, IForgotPasswordRequest, IConfirmForgotPasswordRequest } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -32,7 +32,7 @@ export const verifyAccount = async (formData: IVerifyAccount): Promise<AxiosResp
     return await USERAPI.post("/api/Auth/VerifyAccount", formData);
 }
 
-// verify account
+// resend verification token to account
 export const resendVerification = async (formData: IResendVerification): Promise<AxiosResponse<any>> => {
     return await USERAPI.post("/api/Auth/ResendVerification", formData);
 }
@@ -45,6 +45,16 @@ export const updateProfile = async (formData: IUpdateProfile): Promise<AxiosResp
 // sign in 
 export const signIn = async (formData: ISignIn): Promise<AxiosResponse<any>> => {
     return await USERAPI.post("/api/Auth/Login", formData);
+}
+
+// forgot password
+export const forgotPasswordResquest = async (formData: IForgotPasswordRequest): Promise<AxiosResponse<any>> => {
+    return await USERAPI.post("/api/Auth/ForgotPassword", formData);
+}
+
+// confirm forgot password
+export const confirmForgotPasswordResquest = async (formData: IConfirmForgotPasswordRequest): Promise<AxiosResponse<any>> => {
+    return await USERAPI.post("/api/Auth/ConfirmPasswordReset", formData);
 }
 
 // remote google sign up

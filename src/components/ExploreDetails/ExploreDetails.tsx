@@ -7,8 +7,6 @@ import "./ExploreDetails.css";
 import { FiFlag } from "react-icons/fi";
 import { GoStar } from "react-icons/go";
 import { BsSuitHeartFill } from "react-icons/bs";
-import image from "../../images/location.png";
-import { getExplore } from "../../currentUserData";
 import CartModal from "../Cart/CartModal";
 import { useParams } from "react-router-dom";
 import { getAttractionByID, getTourByID, getUserWishList } from "../../api";
@@ -93,6 +91,7 @@ const ExploreDetails = () => {
           setItemInCart(true);
           setCartItem(item);
         }
+        return true;
       });
     getUserWishList(userId)
       .then((res) => {
@@ -109,7 +108,7 @@ const ExploreDetails = () => {
       .catch((err) => {
         setWishListData([]);
       });
-  }, []);
+  }, [userId, attractionId]);
 
   // fetch attractiondata from remote or local storage
   useEffect(() => {
@@ -308,7 +307,7 @@ const ExploreDetails = () => {
               <div className="title_container">
                 <h3 className="short_title">
                   {attractionData?.typicalTimeSpent} min
-                  {attractionData?.typicalTimeSpent || 0 > 0 ? "s" : ""}
+                  {(attractionData?.typicalTimeSpent || 0) > 0 ? "s" : ""}
                 </h3>
               </div>
             </div>
@@ -317,7 +316,7 @@ const ExploreDetails = () => {
                 <p>
                   <GoStar /> &nbsp; {averageRatings.toFixed(1)} (
                   {attractionData?.ratings.length} review{""}
-                  {attractionData?.ratings.length || 0 > 0 ? "s" : ""})
+                  {(attractionData?.ratings.length || 0) > 0 ? "s" : ""})
                 </p>
               </div>
               <div>

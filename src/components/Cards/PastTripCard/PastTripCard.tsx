@@ -1,20 +1,7 @@
-import React, { useState } from "react";
 import "./PastTripCard.css";
-import { IoIosArrowDown } from "react-icons/io";
-import { BsSuitHeartFill } from "react-icons/bs";
+// import { IoIosArrowDown } from "react-icons/io";
 
 const PastTripCard = ({ image, title, description, price, reviews, liked }) => {
-  // const newLocal = { review: 0, }
-  // const [attractionData, setAttractionData] = useState(data);
-
-  //   const handleLikeButton = (e): void => {
-  //     console.log(e.target.id);
-  //     const data1 = data.filter((item) => id.toString() === e.target.id);
-  //     data1[0].liked = !data[0].liked;
-  //     console.log(data1);
-  //     setAttractionData([...attractionData]);
-  //   };
-
   return (
     <>
       <div className="past_card_container">

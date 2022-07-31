@@ -10,6 +10,16 @@ export interface IEmailExists {
     email: string
 }
 
+export interface IForgotPasswordRequest {
+    email: string
+}
+
+export interface IConfirmForgotPasswordRequest {
+    resetCode: string
+    userId: number
+    newPassword: string
+}
+
 export interface IRefreshToken {
     refreshToken: string
 }

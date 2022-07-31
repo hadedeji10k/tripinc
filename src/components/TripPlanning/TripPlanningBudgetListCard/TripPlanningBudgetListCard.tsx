@@ -129,7 +129,7 @@ const TripPlanningBudgetListCard = ({
           <div className="arrow">
             <div className="arrow_tag">
               <Dropdown overlay={menu} trigger={["click"]}>
-                <a
+                <span
                   onClick={(e) => {
                     e.preventDefault();
                     setSelectedItem(itemId);
@@ -138,7 +138,7 @@ const TripPlanningBudgetListCard = ({
                   <Space>
                     <IoIosArrowDown />
                   </Space>
-                </a>
+                </span>
               </Dropdown>
             </div>
           </div>

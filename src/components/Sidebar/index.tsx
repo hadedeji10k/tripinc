@@ -55,7 +55,7 @@ const Sidebar = ({
   };
 
   const { signOut } = useGoogleLogout({
-    clientId: GoogleLoginClientId,
+    clientId: GoogleLoginClientId as string,
     onLogoutSuccess: handleGoogleLogoutSuccess,
     onFailure: handleGoogleLogoutFailure,
   });

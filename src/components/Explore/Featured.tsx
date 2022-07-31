@@ -14,7 +14,7 @@ import { getAllCategories, getAllDeals, getUserWishList } from "../../api";
 import { IDeal, IFormattedCategory, IPagination } from "../../api/interfaces";
 import { localGetUserId, symbolHelper } from "../../utils/helpers";
 import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
-import { FaLessThanEqual } from "react-icons/fa";
+// import { FaLessThanEqual } from "react-icons/fa";
 
 // function useQuery() {
 //   const { search } = useLocation();
@@ -53,10 +53,6 @@ const Featured = () => {
 
   // state to manage the search input in the page
   const [inputField, setInputField] = useState("");
-  const [catExistingData, setCatExistingData] = useState<IDeal[]>([]);
-  const [preferenceExistingData, setPreferenceExistingData] = useState<IDeal[]>(
-    []
-  );
 
   // useEffect to get the attraction data and category as preferenceData
   useEffect(() => {

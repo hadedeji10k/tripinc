@@ -262,7 +262,7 @@
     width: 100%;
 }
 
-.forgot_password a {
+.sign_in_forgot_password {
     color: #fff;
     text-decoration: none;
     background: #475683;
@@ -270,9 +270,10 @@
     border-radius: 50px;
     transition: all 0.3s ease-in-out;
     margin-left: 10px;
+    cursor: pointer;
 }
 
-.forgot_password a:hover {
+.sign_in_forgot_password:hover {
     color: #fff;
     background: #233774;
     transition: all 0.3s ease-in-out;
@@ -391,12 +392,12 @@ input[type=checkbox]:checked {
     }
 
     .remember_me,
-    .forgot_password {
+    .sign_in_forgot_password {
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
     }
 
-    .forgot_password {
+    .sign_in_forgot_password {
         padding: 10px 7px;
         font-size: 14px;
     }

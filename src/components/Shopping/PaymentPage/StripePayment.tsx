@@ -9,12 +9,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./PaymentPage.css";
-import { stripeTestKey, stripeLiveKey } from "../../../utils/constants";
+import { stripeLiveKey } from "../../../utils/constants";
 
-const stripePromise = loadStripe(stripeTestKey);
-// const stripePromise = loadStripe(
-//   stripeLiveKey
-// );
+const stripePromise = loadStripe(stripeLiveKey as string);
 
 const StripePayment = ({ orderReference, amount, clientSecret }) => {
   const [isLoading, setIsLoading] = useState(false);

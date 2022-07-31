@@ -1,5 +1,5 @@
 //we need to inject this somehow
-export const runtimeEnvironment = "dev";
+export const runtimeEnvironment = "test";
 
 //dev
 export const devTripServiceUrl = "http://localhost:21200";
@@ -14,17 +14,17 @@ export const tripServiceUrl = "https://tripservice.tripinc.co";
 export const userServiceUrl = "https://usersecurity.tripinc.co";
 export const onboardingServiceUrl = "https://onboarding.tripinc.co";
 
-export const GoogleLoginClientId = "889082544764-3krlffvkl28vom2efda98r5m4vm3scsd.apps.googleusercontent.com";
-export const GoogleProviderKey = "Em-vDxa3hunSvByFWyUocmYX";
+export const GoogleLoginClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+export const GoogleProviderKey = process.env.REACT_APP_GOOGLE_PROVIDER_ID;
 export const CitiesPageSize = 100
-export const GOOGLEAPIKEY = "AIzaSyDnyZ4kOYvlHECURxnQVGrWUKiq4qzvikw"
+export const GOOGLEAPIKEY = process.env.REACT_APP_GOOGLE_API_KEY
 export const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
 export const fullMonthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ]
-export const stripeTestKey = "pk_test_51LQ9eVARtos1qH9ZsqQMHqCQFw8W2J7YKU7rVYWFRAa5sJkvZ0YqGogcFo3fRu8yQTBeBEbK4rr3mEk03mcC6NWE00odqvBQ4h"
-export const stripeLiveKey = "pk_live_51Hno6bEaoi4RnNazs45MLoj4JO0hM0EHJXbZzF3GqNlyAg0AbC8IWO1BgTiiPDaMISd2fUEQs7yQf2zu0kJmGLal009uRr36BD"
+export const stripeTestKey = process.env.REACT_APP_STRIPE_TEST_PUBLIC_KEY
+export const stripeLiveKey = process.env.REACT_APP_STRIPE_LIVE_PUBLIC_KEY
 export const currencyList = [
     {
         Name: "Afghan Afghani",

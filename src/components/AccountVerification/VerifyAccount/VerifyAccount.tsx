@@ -4,8 +4,8 @@ import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import "./VerifyAccount.css";
-import { localGetUserId } from "../../utils/helpers";
-import { verifyAccount } from "../../api/responseHandlers";
+import { localGetUserId } from "../../../utils/helpers";
+import { verifyAccount } from "../../../api/responseHandlers";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState<string>("");

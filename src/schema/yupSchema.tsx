@@ -8,6 +8,22 @@ export const SignInSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
 });
 
+export const ConfirmPasswordRequestSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password Required"),
+  confirmPassword: Yup.string()
+    .min(6, "Confirm password must be at least 6 characters")
+    .when("password", {
+      is: (val: any) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      ),
+    })
+    .required("Confirm Password is required"),
+});
+
 export const newsLetterSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email required"),
 });

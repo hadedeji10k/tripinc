@@ -10,11 +10,7 @@ import BookingsPage from "./BookingsPage/BookingsPage";
 import Wallet from "./WalletPage/WalletPage";
 import HelpCenterPage from "./HelpCenterPage/HelpCenterPage";
 
-import {
-  checkAuth,
-  getFullUserProfile,
-  localGetUserId,
-} from "../../utils/helpers";
+import { getFullUserProfile, localGetUserId } from "../../utils/helpers";
 import { getUserPreferences } from "../../api";
 
 const menuBarData = [

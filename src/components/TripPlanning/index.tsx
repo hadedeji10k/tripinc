@@ -103,6 +103,7 @@ const TripPlanning = () => {
   let dateTagContainer = document.getElementById(
     "trip_planning_date_tag_container"
   ) as HTMLElement;
+
   useEffect(() => {
     console.log(dateContainer?.scrollHeight);
     console.log(dateTagContainer?.scrollHeight);
@@ -111,7 +112,6 @@ const TripPlanning = () => {
     } else {
       setShowDateNavButton(true);
     }
-    console.log(showDateNavButton);
   }, [dateContainer, dateTagContainer]);
 
   // useEffect for wishlist on bucket_list
@@ -120,7 +120,8 @@ const TripPlanning = () => {
     if (userId) {
       getUserWishListAsAttraction(userId, "PageSize=5")
         .then((res) => {
-          setWishListData(res.data.items);
+          const wishListItems = res.data.items ? res.data.items : [];
+          setWishListData(wishListItems);
           setIsBucketListLoading(false);
           setPagination({
             hasNext: res.data.hasNext,
@@ -130,7 +131,6 @@ const TripPlanning = () => {
             totalPages: res.data.totalPages,
             totalCount: res.data.totalCount,
           });
-          console.log(pagination);
         })
         .catch((err) => {
           setWishListData([]);

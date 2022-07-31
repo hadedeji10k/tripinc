@@ -99,7 +99,7 @@ const Signup = () => {
         </div>
         <div className="external_signup_button">
           <GoogleLogin
-            clientId={GoogleLoginClientId}
+            clientId={GoogleLoginClientId as string}
             render={(renderProps) => (
               <button
                 className="signup_google_button"

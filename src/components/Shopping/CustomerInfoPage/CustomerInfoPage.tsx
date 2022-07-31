@@ -25,7 +25,7 @@ const CustomerInfoPage = ({
   setClientSecret,
 }: Props) => {
   const [radioValue, setRadioValue] = useState("profileInfo");
-  const [addNewCustomerInfo, setAddNewCustomerInfo] = useState<boolean>(false);
+  // const [addNewCustomerInfo, setAddNewCustomerInfo] = useState<boolean>(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,54 +62,54 @@ const CustomerInfoPage = ({
 
   const handleSubmitForm = async (action: string, data?: any) => {
     setIsLoading(true);
-    let userDetails: any = {};
+    // let userDetails: any = {};
 
-    if (action === "profileInfo") {
-      const {
-        firstName,
-        lastName,
-        addressLine1,
-        addressLine2,
-        postCode: postalCode,
-        phoneNumber,
-        city,
-        country,
-      } = userInfo;
-      userDetails = {
-        firstName,
-        lastName,
-        addressLine1,
-        addressLine2,
-        postalCode,
-        phoneNumber,
-        city,
-        country,
-      };
-    } else if (action === "exInfo") {
-    } else if (action === "newInfo") {
-      const {
-        firstName,
-        lastName,
-        addressLine1,
-        addressLine2,
-        postCode: postalCode,
-        phoneNumber,
-        city,
-        country,
-      } = data;
-      userDetails = {
-        firstName,
-        lastName,
-        addressLine1,
-        addressLine2,
-        postalCode,
-        phoneNumber,
-        city,
-        country,
-      };
-    } else {
-      userDetails = {};
-    }
+    // if (action === "profileInfo") {
+    //   const {
+    //     firstName,
+    //     lastName,
+    //     addressLine1,
+    //     addressLine2,
+    //     postCode: postalCode,
+    //     phoneNumber,
+    //     city,
+    //     country,
+    //   } = userInfo;
+    //   userDetails = {
+    //     firstName,
+    //     lastName,
+    //     addressLine1,
+    //     addressLine2,
+    //     postalCode,
+    //     phoneNumber,
+    //     city,
+    //     country,
+    //   };
+    // } else if (action === "exInfo") {
+    // } else if (action === "newInfo") {
+    //   const {
+    //     firstName,
+    //     lastName,
+    //     addressLine1,
+    //     addressLine2,
+    //     postCode: postalCode,
+    //     phoneNumber,
+    //     city,
+    //     country,
+    //   } = data;
+    //   userDetails = {
+    //     firstName,
+    //     lastName,
+    //     addressLine1,
+    //     addressLine2,
+    //     postalCode,
+    //     phoneNumber,
+    //     city,
+    //     country,
+    //   };
+    // } else {
+    //   userDetails = {};
+    // }
 
     const formData: IInitiatePayment = {
       userId: userInfo?.id,

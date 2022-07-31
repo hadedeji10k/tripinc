@@ -1,4 +1,4 @@
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useState } from "react";
 import { DatePicker, TimePicker } from "antd";
 import "antd/dist/antd.min.css";
@@ -21,7 +21,7 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
   const [showAddDetails, setShowAddDetails] = useState<boolean>(false);
   const [showAddFlightDetails, setShowAddFlightDetails] =
     useState<boolean>(false);
-  const [showAddStayDetails, setShowAddStayDetails] = useState<boolean>(false);
+  // const [showAddStayDetails, setShowAddStayDetails] = useState<boolean>(false);
 
   const [availableFlightsOpen, setAvailableFlightsOpen] =
     useState<boolean>(false);
@@ -33,13 +33,13 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
     arrivalDate: "",
   };
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
-  };
+  // const onSubmit = async (data: any) => {
+  //   console.log(data);
+  // };
 
-  const onChange = (time, timeString) => {
-    console.log(time, timeString);
-  };
+  // const onChange = (time, timeString) => {
+  //   console.log(time, timeString);
+  // };
 
   const flightClick = (e: any) => {
     if (e === "cancel") {
@@ -197,7 +197,7 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
                     /> */}
 
                 <TimePicker.RangePicker
-                style={{display: 'inline-flex'}}
+                  style={{ display: "inline-flex" }}
                   className="signin_input m_b_15 w_80 travel_details_time_picker"
                   onChange={(time, timeString) => {
                     console.log(time, timeString);

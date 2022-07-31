@@ -26,10 +26,12 @@ import ShoppingCartPage from "../components/ShoppingCartPage";
 import MainLayout from "../pages";
 import SocialBasicDetails from "../components/Auth/SocialBasicDetails/SocialBasicDetails";
 import RequireAuth from "../pages/RequiredAuth";
-import VerifyAccount from "../components/VerifyAccount/VerifyAccount";
+import VerifyAccount from "../components/AccountVerification/VerifyAccount/VerifyAccount";
 import PageNotFound from "../components/PageNotFound/PageNotFound";
 import TripPlanning from "../components/TripPlanning";
 import SuccessfulPayment from "../components/Shopping/SuccessfulPayment/index";
+import AccountVerified from "../components/AccountVerification/AccountVerified/index";
+import ForgotPassword from "../components/Auth/ForgotPassword";
 
 const MainRoute: React.FC = () => {
   return (
@@ -74,12 +76,14 @@ const MainRoute: React.FC = () => {
           />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<Signin />} />
+          <Route path="/reset-password" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/basic-details" element={<BasicDetails />} />
           <Route
             path="/social-basic-details"
             element={<SocialBasicDetails />}
           />
+          <Route path="/account-activation" element={<AccountVerified />} />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/profile/add-card" element={<AddCard />} />
           {/* <Route path="/explore-details/:id" element={<ExploreDetails />} /> */}

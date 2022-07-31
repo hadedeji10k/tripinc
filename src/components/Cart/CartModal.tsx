@@ -6,11 +6,11 @@ import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./CartModal.css";
 import { MdClose } from "react-icons/md";
-import { IAddCart, ICart, IDeal } from "../../api/interfaces";
+import { IAddCart, IDeal } from "../../api/interfaces";
 import { localGetUserId } from "../../utils/helpers";
 import { addToCart } from "../../api/responseHandlers";
 // import { FiStar } from "react-icons/fi";
-import { getUserCart, updateCart } from "../../api/index";
+import { updateCart } from "../../api/index";
 import Swal from "sweetalert2";
 
 // interface for CartModal
