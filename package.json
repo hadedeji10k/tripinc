@@ -50,7 +50,7 @@
 		"react-scripts": "^5.0.1"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "SET NODE_OPTIONS=\"--max-http-header-size=200000\" && node node_modules/react-scripts/bin/react-scripts.js start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"

@@ -1,9 +1,19 @@
+//we need to inject this somehow
+export const runtimeEnvironment = "dev";
+
+//dev
+export const devTripServiceUrl = "http://localhost:21200";
+export const devUserServiceUrl = "http://localhost:21000";
+export const devOnboardingServiceUrl = "http://localhost:21100";
+//test
 export const testTripServiceUrl = "https://test-tripservice.tripinc.co";
 export const testUserServiceUrl = "https://test-usersecurity.tripinc.co";
 export const testOnboardingServiceUrl = "https://test-onboarding.tripinc.co";
+//prod
 export const tripServiceUrl = "https://tripservice.tripinc.co";
 export const userServiceUrl = "https://usersecurity.tripinc.co";
 export const onboardingServiceUrl = "https://onboarding.tripinc.co";
+
 export const GoogleLoginClientId = "889082544764-3krlffvkl28vom2efda98r5m4vm3scsd.apps.googleusercontent.com";
 export const GoogleProviderKey = "Em-vDxa3hunSvByFWyUocmYX";
 export const CitiesPageSize = 100

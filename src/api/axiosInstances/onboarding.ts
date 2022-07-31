@@ -2,12 +2,14 @@ import axios from "axios";
 import { IRefreshToken, ISignUpAndInResponse } from '../interfaces';
 import { cannotRefreshAccessToken, checkAuthForRefresh, refreshAccessToken } from '../../utils/helpers'
 import { refreshToken } from "../responseHandlers";
-import { testOnboardingServiceUrl, onboardingServiceUrl } from "../../utils/constants";
+import { devOnboardingServiceUrl, onboardingServiceUrl, runtimeEnvironment, testOnboardingServiceUrl } from "../../utils/constants";
 
 const ENDPOINTS_NO_TOKEN = ['/api/Auth/CheckIfEmailExist', '/api/Auth/Register', '/api/Auth/SocialSignup', '/api/Users/GetProfilePicture/:userId'];
 
-const testingEnvironment = true
-const baseURL = testingEnvironment ? testOnboardingServiceUrl : onboardingServiceUrl
+const baseURL = 
+	runtimeEnvironment == "dev" ? devOnboardingServiceUrl 
+	: runtimeEnvironment == "test" ? testOnboardingServiceUrl 
+	: onboardingServiceUrl;
 
 // registration api
 const REGAPI = axios.create({ baseURL });

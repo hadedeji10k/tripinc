@@ -5,7 +5,7 @@ FROM node:16.15 AS publish
 WORKDIR /src-node
 
 COPY ["./package*.json", "Web2-Traveler/"]
-RUN cd /src-node/Web2-Traveler && npm install --force									#cache point
+RUN cd /src-node/Web2-Traveler && npm install --force										#cache point
 WORKDIR /src-node
 COPY . ./Web2-Traveler
 RUN cd /src-node/Web2-Traveler && npm run build

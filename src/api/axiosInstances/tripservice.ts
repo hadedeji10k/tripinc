@@ -1,12 +1,13 @@
 import axios from "axios";
-import { testTripServiceUrl, tripServiceUrl } from "../../utils/constants";
+import { devTripServiceUrl, runtimeEnvironment, testTripServiceUrl, tripServiceUrl } from "../../utils/constants";
 import { ISignUpAndInResponse } from '../interfaces';
 
 // swagger api - registration - `${tripServiceUrl}/api-docs/index.html`
 
-
-const testingEnvironment = true
-const baseURL = testingEnvironment ? testTripServiceUrl : tripServiceUrl
+const baseURL = 
+	runtimeEnvironment == "dev" ? devTripServiceUrl 
+	: runtimeEnvironment == "test" ? testTripServiceUrl 
+	: tripServiceUrl;
 
 // TRIP SERVICE api
 const TRIPAPI = axios.create({ baseURL });
