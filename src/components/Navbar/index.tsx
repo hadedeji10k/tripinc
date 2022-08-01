@@ -8,6 +8,8 @@ import defaultImage from "../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
 // import { MdOutlineLanguage } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import LogoWhite from "../../images/logo-tripinc-white.svg";
+import LogoBlue from "../../images/logo-tripinc.svg";
 import {
   Nav,
   NavbarContainer,
@@ -108,7 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({
             }
             to="/"
           >
-            TripInc
+            <img src={navBarScrolled ? LogoWhite : LogoBlue} alt="" />
           </NavbarLogo>
           <MobileIcon onClick={toggleIsOpen}>
             <GoThreeBars />
