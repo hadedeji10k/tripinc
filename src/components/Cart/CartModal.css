@@ -64,7 +64,7 @@
     color: #777E90;
 }
 
-.cart_select_container select {
+.cart_select_container_select {
     width: 320px;
     font-family: "Poppins";
     font-size: 17px;
@@ -205,7 +205,7 @@ select::-ms-expand {
 }
 
 @media screen and (max-width: 570px) {
-    .cart_select_container select {
+    .cart_select_container_select {
         width: 250px;
     }
 
@@ -248,7 +248,7 @@ select::-ms-expand {
 }
 
 @media screen and (max-width: 380px) {
-    .cart_select_container select {
+    .cart_select_container_select {
         width: 200px;
         font-size: 14px;
     }
@@ -269,7 +269,7 @@ select::-ms-expand {
 }
 
 @media screen and (max-width: 380px) {
-    .cart_select_container select {
+    .cart_select_container_select {
         width: 170px;
         font-size: 12px;
     }
@@ -291,7 +291,7 @@ select::-ms-expand {
 }
 
 @media screen and (max-width: 260px) {
-    .cart_select_container select {
+    .cart_select_container_select {
         width: 120px;
         font-size: 10px;
     }

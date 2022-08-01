@@ -139,45 +139,10 @@ const BasicDetails: React.FC = () => {
                       <p className="red_alert">{errors.phoneNumber}</p>
                     ) : null}
                   </div>
-                  {/* <div>
-                    <div className="dropdown">
-                      <label className="basic_details_label">
-                        Country of Origin
-                      </label>
-                      <input
-                        id="country_input"
-                        className="basic_details_input"
-                        type="text"
-                        placeholder="Select Country"
-                        name="countryOfOrigin"
-                        onChange={handleClick}
-                        defaultValue={country}
-                        onBlur={handleCountryBlur}
-                        onClick={handleClick}
-                      />
-                      {countries.length > 0 && (
-                        <div className="dropdown-content" id="country_dropdown">
-                          {countryFilteredData.map((item) => (
-                            <p
-                              key={item.id}
-                              id="country_mapped"
-                              className="pop_up_data_item"
-                              onClick={handleCountryClick}
-                            >
-                              {item.countryName}
-                            </p>
-                          ))}
-                        </div>
-                      )}
-                      {countryError ? (
-                        <p className="red_alert">{countryError}</p>
-                      ) : null}
-                    </div>
-                  </div> */}
+
                   <div className="basic_details_country">
                     <label className="basic_details_label">Country</label>
                     <Autocomplete
-                      // ref={inputRef}
                       apiKey={GOOGLEAPIKEY}
                       onPlaceSelected={(selected: any) => {
                         setCountry(selected.formatted_address);
@@ -186,7 +151,7 @@ const BasicDetails: React.FC = () => {
                         types: ["country"],
                         fields: ["formatted_address"],
                       }}
-                      placeholder="Select Country"
+                      placeholder="Where do you live?"
                       className="basic_details_input"
                       id="country_input"
                     />
@@ -203,7 +168,7 @@ const BasicDetails: React.FC = () => {
                         types: [],
                         fields: ["formatted_address"],
                       }}
-                      placeholder="Select City"
+                      placeholder="City"
                       className="basic_details_input"
                       id="city_input"
                     />

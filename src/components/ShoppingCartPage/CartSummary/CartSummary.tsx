@@ -13,7 +13,7 @@ const CartSummary = ({
   setIsLoading,
   userId,
 }: Props) => {
-  const serviceFee = itemsInCart ? 200 : 0;
+  const serviceFee = 0;
 
   const handleOrderClick = async () => {
     setIsLoading(true);
@@ -55,11 +55,11 @@ const CartSummary = ({
           </div>
           <div className="shopping_price">
             <p>Service fee</p>
-            <p>${serviceFee}</p>
+            <p>${serviceFee.toFixed(2)}</p>
           </div>
           <div className="total_shopping_price">
             <p>Total</p>
-            <p>${serviceFee + totalAmountOfItems}</p>
+            <p>${(serviceFee + totalAmountOfItems).toFixed(2)}</p>
           </div>
         </div>
 

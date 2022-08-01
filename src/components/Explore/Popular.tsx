@@ -15,10 +15,12 @@ import { localGetUserId } from "../../utils/helpers";
 import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
 // import { FaLessThanEqual } from "react-icons/fa";
 import moment from "moment";
+import { GOOGLEAPIKEY } from "../../utils/constants";
+import Autocomplete from "react-google-autocomplete";
 
 const { RangePicker } = DatePicker;
 
-const ThirdParty = () => {
+const Popular = () => {
   // use query to get the search
   // const query = useQuery();
   // get the current search category name
@@ -34,7 +36,7 @@ const ThirdParty = () => {
   // state to manage pagination
   const [pagination, setPagination] = useState<IPagination | any>();
   // state to manage the search result data, so using this when user filter and it get it for the "Result for:" in the page
-  const [searchResultField, setSearchResultField] = useState("All");
+  const [searchResultField, setSearchResultField] = useState("");
   // const [categorySearchResultField, setCategorySearchResultField] = useState("");
 
   // state to manage the search input in the page
@@ -247,13 +249,26 @@ const ThirdParty = () => {
         <div className="explore_page_container">
           <div className="explore_page_search_container">
             <div className="explore_page_search_featured_form">
-              <input
+              {/* <input
                 id="input"
                 className="explore_page_search_third_input"
                 type="text"
                 placeholder="Search for a city"
                 defaultValue={inputField}
                 onChange={handleInput}
+              /> */}
+              <Autocomplete
+                // ref={inputRef}
+                apiKey={GOOGLEAPIKEY}
+                onPlaceSelected={(selected: any) => {
+                  setInputField(selected.formatted_address);
+                }}
+                options={{
+                  fields: ["formatted_address"],
+                }}
+                placeholder="Search for a city"
+                className="explore_page_search_third_input"
+                id="input"
               />
               <span className="third_party_date_picker">
                 <RangePicker onChange={onDateChange} size="small" />
@@ -295,7 +310,9 @@ const ThirdParty = () => {
           </div>
 
           <div className="">
-            <p>Search Result for: {searchResultField}</p>
+            {searchResultField.length > 0 ? (
+              <p>Search Result for: {searchResultField}</p>
+            ) : null}
           </div>
           {/* <Card data={tourData} /> */}
           {tourData ? (
@@ -366,4 +383,4 @@ const ThirdParty = () => {
   );
 };
 
-export default ThirdParty;
+export default Popular;

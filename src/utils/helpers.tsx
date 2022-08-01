@@ -104,7 +104,7 @@ export const localLogout = (navigate?: any, location?: any) => {
   localStorage.removeItem("profile");
   Swal.fire({
     title: "Error!",
-    text: "You are logged out! kindly log in again to continue",
+    text: "This feature is unavailable as you are not signed in. Please sign in to access this page.",
     icon: "error",
     confirmButtonText: "Ok",
   }).then((result) => {
@@ -175,7 +175,7 @@ export const cannotRefreshAccessToken = () => {
   localStorage.removeItem("profile");
   Swal.fire({
     title: "Error!",
-    text: "You are logged out! Cannot process any request, kindly log in again to continue",
+    text: "This feature is unavailable as you are not signed in. Please sign in to access this page.",
     icon: "error",
     confirmButtonText: "Ok",
   }).then((result) => {

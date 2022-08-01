@@ -13,7 +13,7 @@ function RequireAuth({ children }) {
     if (!user) {
       Swal.fire({
         title: "Error!",
-        text: "You are logged out! kindly log in again to continue",
+        text: "This feature is unavailable as you are not signed in. Please sign in to access this page.",
         icon: "error",
         confirmButtonText: "Ok",
       }).then((result) => {

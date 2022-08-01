@@ -912,19 +912,8 @@ export const remoteGoogleLogin = async (values: any) => {
     loginData,
     values
   };
-  // const response = await api.remoteGoogleLogin(loginData);
-  // For local testing
-  // return axios.post("http://127.0.0.1:8000/v1/social-auth/google/", loginData);
 };
 
-// {
-//     "access_Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjE4IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6InN0cmluZyBzdHJpbmciLCJlbWFpbCI6InN0cmluZ0BnLmNvIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiTGltaXRlZEFjY2VzcyIsIlVzZXJEYXRhIjoie1widXNlcklkXCI6MTgsXCJhY2NvdW50VHlwZVwiOlwiQ3VzdG9tZXJcIixcInBob25lTnVtYmVyXCI6XCJzdHJpbmdcIixcImZpcnN0TmFtZVwiOlwic3RyaW5nXCIsXCJsYXN0TmFtZVwiOlwic3RyaW5nXCIsXCJlbWFpbFwiOlwic3RyaW5nQGcuY29cIn0iLCJuYmYiOjE2NTAyODE1NTEsImV4cCI6MTY1MDI4MjQ1MSwiaXNzIjoiaHR0cHM6Ly90cmlwaW5jbXZwdGVzdC5jb20iLCJhdWQiOiJodHRwczovL3RyaXBpbmNtdnB0ZXN0LmNvbSJ9.lq3EkMRAGBNmCzUs1PbNiyZGDCtl-RNlvvoG6_Omkv8",
-//     "refresh_Token": "6483d1b577a9445b9dae2479a2abb9ca",
-//     "expires_In": 1440,
-//     "grant_Type": "LimitedAccess",
-//     "status": true,
-//     "message": "You have successfully created new profile"
-//   }
 
 export const checkIfEmailExists = async (formData: ISignUp) => {
   try {
@@ -950,6 +939,13 @@ export const checkIfEmailExists = async (formData: ISignUp) => {
     }
   } catch (error) {
     console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: "Please try again.",
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
   }
 };
 

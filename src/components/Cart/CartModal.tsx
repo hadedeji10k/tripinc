@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Spin } from "antd";
+import { Spin, DatePicker, TimePicker } from "antd";
 import "antd/dist/antd.min.css";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
@@ -12,6 +12,7 @@ import { addToCart } from "../../api/responseHandlers";
 // import { FiStar } from "react-icons/fi";
 import { updateCart } from "../../api/index";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 // interface for CartModal
 interface CartModalProp {
@@ -48,8 +49,8 @@ const CartModal = ({
   userId,
 }: CartModalProp) => {
   const [price, setPrice] = useState<Number>(0);
-  const [numOfPeople, setNumOfPeople] = useState<number>(0);
-  const [date, setDate] = useState<string>("");
+  const [numOfPeople, setNumOfPeople] = useState<number>(1);
+  const [date, setDate] = useState<any>(null);
   const [time, setTime] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -102,22 +103,22 @@ const CartModal = ({
     setPrice(price);
   };
 
-  const handleDate = (e: any): void => {
-    const date = e.target.value;
-    setDate(date);
-  };
-
-  const handleTime = (e: any): void => {
-    const time = e.target.value;
-    setTime(time);
-  };
-
   // function for closing the modal
   const closeModal = (e: React.FormEvent): void => {
     e.preventDefault();
     if (modalRef.current === e.target) {
       setShowCartModal(false);
     }
+  };
+
+  const handleDate = (date, dateString) => {
+    console.log(date._d, dateString);
+    setDate(date._d);
+  };
+
+  const handleTime = (time: any, timeString: string): void => {
+    console.log(time, timeString);
+    setTime(timeString);
   };
 
   const handleAddToCart = async (e: React.FormEvent) => {
@@ -174,9 +175,9 @@ const CartModal = ({
           itemName: item.title,
           currency: item.currency,
           unitPrice: item.price,
-          quantity: 2,
+          quantity: numOfPeople,
           imageUrl: item.imageUrl ? item.imageUrl : item.photos[0].photoUrl,
-          date: new Date(),
+          date: date || new Date(),
         };
         const response = await addToCart(formData);
         if (response === true) {
@@ -187,6 +188,7 @@ const CartModal = ({
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed || result.isDenied || result.isDismissed) {
+              setShowCartModal(false);
               window.location.reload();
             }
           });
@@ -208,25 +210,33 @@ const CartModal = ({
                   ${item.price} <small className="small">/ person</small>
                 </h3>
                 <div className="cart_select_container">
-                  <select name="date" id="date" onClick={handleDate}>
-                    <option value="Friday 21st, January">
-                      Friday 21st, January
-                    </option>
-                    <option value="Saturday 22nd, January">
-                      Saturday 22nd, January
-                    </option>
-                    <option value="Sunday 23rd, January">
-                      Sunday 23rd, January
-                    </option>
-                  </select>
+                  <DatePicker
+                    className="cart_select_container_select"
+                    onChange={handleDate}
+                  />
                 </div>
                 <div className="cart_select_container">
-                  <select name="people" id="people" onClick={handlePeople}>
-                    <option value={itemInCart ? cartData?.quantity : 0}>
-                      {itemInCart ? cartData?.quantity : 0} adult
-                      {itemInCart && cartData?.quantity > 1 ? "s" : ""}
-                    </option>
-                    <option value="1">1 adult</option>
+                  <select
+                    className="cart_select_container_select"
+                    name="people"
+                    id="people"
+                    onClick={handlePeople}
+                  >
+                    {itemInCart && cartData?.quantity ? (
+                      <>
+                        <option value={itemInCart ? cartData?.quantity : 1}>
+                          {itemInCart ? cartData?.quantity : 1} adult
+                          {itemInCart && cartData?.quantity > 1 ? "s" : ""}
+                        </option>
+                        <option value="1">1 adult</option>
+                      </>
+                    ) : numOfPeople > 0 ? (
+                      <option value={numOfPeople}>
+                        {numOfPeople} adult{numOfPeople > 1 ? "s" : ""}
+                      </option>
+                    ) : (
+                      <option value="1">1 adult</option>
+                    )}
                     <option value="2">2 adults</option>
                     <option value="3">3 adults</option>
                     <option value="4">4 adults</option>
@@ -239,11 +249,16 @@ const CartModal = ({
                   </select>
                 </div>
                 <div className="cart_select_container">
-                  <select name="time" id="time" onClick={handleTime}>
+                  <TimePicker
+                    className="cart_select_container_select"
+                    onChange={handleTime}
+                    defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+                  />
+                  {/* <select name="time" id="time" onClick={handleTime}>
                     <option value="12:00 - 16:00">12:00 - 16:00</option>
                     <option value="13:00 - 19:00">13:00 - 19:00</option>
                     <option value="11:00 - 13:00">11:00 - 13:00</option>
-                  </select>
+                  </select> */}
                 </div>
                 <div>
                   <button className="button" onClick={handleAddToCart}>
@@ -255,7 +270,9 @@ const CartModal = ({
 
                 <div className="price">
                   <p>Total</p>
-                  <p>${price.toString()}</p>
+                  <p>
+                    ${price === 0 ? item?.price.toString() : price.toString()}
+                  </p>
                 </div>
 
                 <div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import "antd/dist/antd.min.css";
 import "./ExplorePage.css";
 import Featured from "./Featured";
-import ThirdParty from "./ThirdParty";
+import Popular from "./Popular";
 
 const menuBarData = [
   {
@@ -15,8 +15,8 @@ const menuBarData = [
   {
     id: 2,
     state: false,
-    title: "Third Party",
-    slug: "third_party",
+    title: "Popular",
+    slug: "popular",
   },
 ];
 
@@ -66,9 +66,9 @@ const ExplorePage = () => {
         </div>
         <div>
           {data[0].id === 1 ? (
-            <Featured />
+            <Featured handleMove={handle} />
           ) : data[0].id === 2 ? (
-            <ThirdParty />
+            <Popular />
           ) : null}
         </div>
       </div>

@@ -22,7 +22,7 @@ import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
 //   return React.useMemo(() => new URLSearchParams(search), [search]);
 // }
 
-const Featured = () => {
+const Featured = ({ handleMove }) => {
   // use query to get the search
   // const query = useQuery();
   // get the current search category name
@@ -510,14 +510,17 @@ const Featured = () => {
               <>
                 <br />
                 <br />
-                <h3>No search Result</h3>
+                <h3>
+                  Please check our popular destinations for more attraction you
+                  may like.
+                </h3>
                 <br />
                 <span
                   id="next"
                   className="preferences_clicked"
-                  onClick={handleAllClick}
+                  onClick={() => handleMove(2)}
                 >
-                  See all
+                  Move to Popular
                 </span>
               </>
             )

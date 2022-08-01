@@ -75,6 +75,7 @@ const ShoppingCart = ({ cartData, setCartData, userId }: Props) => {
             );
             setCartData([...newCartData]);
             setIsLoading(false);
+            window.location.reload();
           }
         }
       })
