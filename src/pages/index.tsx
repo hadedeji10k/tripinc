@@ -24,9 +24,14 @@ const MainLayout: React.FC = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    console.log("reached here");
     checkAuth() ? setIsLoggedIn(true) : setIsLoggedIn(false);
-    setCartLength(localGetCartLength());
-    setOrdersLength(localGetOrdersLength());
+    localGetCartLength().then((res) => {
+      setCartLength(res);
+    });
+    localGetOrdersLength().then((res) => {
+      setOrdersLength(res);
+    });
   }, [pathname]);
 
   useEffect(() => {

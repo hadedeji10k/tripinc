@@ -37,8 +37,8 @@ const BucketListPage = () => {
     if (userId) {
       getUserWishListAsAttraction(userId)
         .then((res) => {
-          setWishListData(res.data.items);
-          setInitialWishListData(res.data.items);
+          setWishListData(res.data.items ? res.data.items : []);
+          setInitialWishListData(res.data.items ? res.data.items : []);
           setIsLoading(false);
         })
         .catch((err) => {
@@ -362,7 +362,10 @@ const BucketListPage = () => {
             <>
               <br />
               <br />
-              <h3>You have no attraction in bucket list</h3>
+              <h3>
+                Nothing here to show. Your bookmarked attractions will appear
+                here.
+              </h3>
               <br />
               <br />
             </>

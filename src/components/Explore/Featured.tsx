@@ -508,20 +508,31 @@ const Featured = ({ handleMove }) => {
               </div>
             ) : (
               <>
-                <br />
-                <br />
-                <h3>
-                  Please check our popular destinations for more attraction you
-                  may like.
-                </h3>
-                <br />
-                <span
-                  id="next"
-                  className="preferences_clicked"
-                  onClick={() => handleMove(2)}
-                >
-                  Move to Popular
-                </span>
+                {isLoading ? (
+                  <>
+                    <br />
+                    <br />
+                    <h3>
+                      Please check our popular destinations for more attraction
+                      you may like.
+                    </h3>
+                    <br />
+                    <span
+                      id="next"
+                      className="preferences_clicked m_b_20"
+                      onClick={handleAllClick}
+                    >
+                      See all Featured
+                    </span>
+                    <span
+                      id="next"
+                      className="preferences_clicked"
+                      onClick={() => handleMove(2)}
+                    >
+                      Move to Popular
+                    </span>
+                  </>
+                ) : null}
               </>
             )
           ) : null}

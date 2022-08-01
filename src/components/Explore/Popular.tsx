@@ -273,24 +273,11 @@ const Popular = () => {
               <span className="third_party_date_picker">
                 <RangePicker onChange={onDateChange} size="small" />
               </span>
-
-              {/* <select
-                className="explorer_page_third_party_select"
-                onClick={handleCategoryClick}
-                onChange={handleCategoryClick}
-              >
-                <option value="">Choose category</option>
-                {preferenceData.map((data) => (
-                  <option key={data.id} value={data.name}>
-                    {data.name}
-                  </option>
-                ))}
-              </select> */}
               <Select
                 mode="tags"
                 className="explorer_page_third_party_select"
                 size="small"
-                placeholder="Please select"
+                placeholder="What floats your boat"
                 // defaultValue={['a10', 'c12']}
                 onChange={handleCategoryChange}
               >
@@ -332,14 +319,14 @@ const Popular = () => {
                   </div>
                 ))}
               </div>
-            ) : (
+            ) : isLoading ? (
               <>
                 <br />
                 <br />
                 <h3>No search Result</h3>
                 <br />
               </>
-            )
+            ) : null
           ) : null}
 
           <div className="explore_page_number">

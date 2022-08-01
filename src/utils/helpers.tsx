@@ -10,6 +10,8 @@ import {
   getAllCountries,
   getCities,
   getUserByID,
+  getUserCart,
+  getUserOrder,
   getUserProfilePictureByID,
 } from "../api";
 import { CitiesPageSize, currencyList, monthNames } from "./constants";
@@ -40,6 +42,28 @@ export const checkAuth = (): boolean => {
 // log out user
 export const localLogoutProfile = () => {
   localStorage.removeItem("profile");
+  localStorage.removeItem("cart_data");
+  localStorage.removeItem("order_items");
+};
+
+export const localLogout = (navigate?: any, location?: any) => {
+  localStorage.removeItem("profile");
+  localStorage.removeItem("cart_data");
+  localStorage.removeItem("order_items");
+  Swal.fire({
+    title: "Error!",
+    text: "This feature is unavailable as you are not signed in. Please sign in to access this page.",
+    icon: "error",
+    confirmButtonText: "Ok",
+  }).then((result) => {
+    if (result.isConfirmed || result.isDenied || result.isDismissed) {
+      navigate("/sign-in", {
+        replace: true,
+        state: { from: location?.pathname },
+      });
+      window.location.href = "/#/sign-in";
+    }
+  });
 };
 
 export const cities = async () => {
@@ -100,24 +124,6 @@ export const countries = async () => {
   }
 };
 
-export const localLogout = (navigate?: any, location?: any) => {
-  localStorage.removeItem("profile");
-  Swal.fire({
-    title: "Error!",
-    text: "This feature is unavailable as you are not signed in. Please sign in to access this page.",
-    icon: "error",
-    confirmButtonText: "Ok",
-  }).then((result) => {
-    if (result.isConfirmed || result.isDenied || result.isDismissed) {
-      navigate("/sign-in", {
-        replace: true,
-        state: { from: location?.pathname },
-      });
-      window.location.href = "/#/sign-in";
-    }
-  });
-};
-
 export const checkAuthForRefresh = () => {
   let tokenExpired: boolean | null = false;
   let can_still_refresh: boolean | null = false;
@@ -143,7 +149,6 @@ export const checkAuthForRefresh = () => {
       tokenExpired = true;
       refreshToken = profile.refresh_Token;
     } else {
-      // localLogout();
       tokenExpired = null;
       can_still_refresh = null;
     }
@@ -352,24 +357,38 @@ export const removeUser = () => {
 };
 
 // get cart length
-export const localGetCartLength = (): number => {
+export const localGetCartLength = async () => {
   const cart = JSON.parse(localStorage.getItem("cart_data") as any);
 
-  if (!cart) {
-    return 0;
-  } else {
+  if (cart) {
     return cart.length;
+  } else {
+    const userId = localGetUserId();
+    if (userId) {
+      const response = await getUserCart(userId);
+      localStorage.setItem("cart_data", JSON.stringify(response.data));
+      return response.data.length;
+    } else {
+      return 0;
+    }
   }
 };
 
 // get Orders length
-export const localGetOrdersLength = (): number => {
+export const localGetOrdersLength = async () => {
   const orders = JSON.parse(localStorage.getItem("order_items") as any);
 
-  if (!orders) {
-    return 0;
-  } else {
+  if (orders) {
     return orders.totalCount;
+  } else {
+    const userId = localGetUserId();
+    if (userId) {
+      const response = await getUserOrder(userId);
+      localStorage.setItem("order_items", JSON.stringify(response.data));
+      return response.data.totalCount;
+    } else {
+      return 0;
+    }
   }
 };
 
