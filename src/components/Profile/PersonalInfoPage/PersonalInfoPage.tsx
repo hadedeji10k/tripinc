@@ -12,13 +12,26 @@ import { IUserProfile } from "../../../api/interfaces";
 interface PersonalInfoPageProps {
   userProfile: IUserProfile;
   userPreference: any;
+  interestData: any;
+  setInterestData: any;
+  placesVisited: any;
+  setPlacesVisited: any;
+  wishToVisitPlaces: any;
+  setWishToVisitPlaces: any;
 }
 
 const PersonalInfoPage = ({
   userProfile,
   userPreference,
+  interestData,
+  setInterestData,
+  placesVisited,
+  setPlacesVisited,
+  wishToVisitPlaces,
+  setWishToVisitPlaces,
 }: PersonalInfoPageProps) => {
   // const [preferenceData, setPreferenceData] = useState(preferencedata)
+  console.log(interestData);
 
   const [showProfileModal, setShowProfileModal] = useState<Boolean>(false);
   const [showPreferencesModal, setShowPreferencesModal] =
@@ -142,11 +155,11 @@ const PersonalInfoPage = ({
           Where you have been to before:
         </label>
         <div className="preferences_tag_container">
-          {userData?.placesBeenToData.length < 0 ? (
-            userData?.placesBeenToData.map((item, index) => (
+          {placesVisited.length > 0 ? (
+            placesVisited.map((item, index) => (
               // <span key={item.id} className="preferences_tag">{item.title}</span>
               <span key={index} className="places_been_to">
-                {item}
+                {item.placeName}
               </span>
             ))
           ) : (
@@ -160,11 +173,11 @@ const PersonalInfoPage = ({
       <div className="preferences_tab">
         <label className="preferences_label">Your bucket list(s):</label>
         <div className="preferences_tag_container">
-          {userData?.bucketList.length < 0 ? (
-            userData?.bucketList.map((item, index) => (
+          {wishToVisitPlaces.length > 0 ? (
+            wishToVisitPlaces.map((item, index) => (
               // <span key={item.id} className="preferences_tag">{item.title}</span>
               <span key={index} className="places_been_to">
-                {item}
+                {item.placeName}
               </span>
             ))
           ) : (
@@ -178,13 +191,15 @@ const PersonalInfoPage = ({
       <div className="preferences_tab">
         <label className="preferences_label">Your travel interests:</label>
         <div className="preferences_tag_container">
-          {userData?.preferenceData.length < 0 ? (
-            userData?.preferenceData.map((item, index) => (
-              // <span key={item.id} className="preferences_tag">{item.title}</span>
-              <span key={index} className="preferences_clicked">
-                {item}
-              </span>
-            ))
+          {userPreference?.userInterests.length > 0 ? (
+            interestData
+              ?.filter((item) => item.stateOfClass === true)
+              .map((item, index) => (
+                // <span key={item.id} className="preferences_tag">{item.title}</span>
+                <span key={index} className="preferences_clicked">
+                  {item.symbol} {item.title}
+                </span>
+              ))
           ) : (
             <p style={{ textAlign: "center" }}>
               You have no interest selected yet
@@ -210,6 +225,12 @@ const PersonalInfoPage = ({
         showPreferencesModal={showPreferencesModal}
         setShowPreferencesModal={setShowPreferencesModal}
         userPreference={userPreference}
+        interestData={interestData}
+        setInterestData={setInterestData}
+        placesVisited={placesVisited}
+        setPlacesVisited={setPlacesVisited}
+        wishToVisitPlaces={wishToVisitPlaces}
+        setWishToVisitPlaces={setWishToVisitPlaces}
       />
 
       {/* testing */}

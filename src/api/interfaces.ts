@@ -463,3 +463,16 @@ export interface IInitiatePayment {
     orderId: number,
     paymentProvider: string
 }
+
+export interface IPlaces {
+    id: number,
+    userId: number,
+    placeName: string,
+    city: string,
+    country: string,
+    postCode: string,
+    longitude: number,
+    latitude: number,
+    mapUrl: string,
+    visitCount: number
+}

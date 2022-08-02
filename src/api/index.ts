@@ -129,8 +129,22 @@ export const getUserPreferences = async (userId: any): Promise<AxiosResponse<any
     return await TRIPAPI.get(`/api/UserPreferences/GetUserPreference/${userId}`);
 }
 
+// get user places visited
+export const getUserPlacesVisited = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/UserPreferences/GetPlacesVisited/${userId}`);
+}
+
+// get user places wish to visit
+export const getUserPlacesWishToVisit = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/UserPreferences/GetPlacesWishToVisit/${userId}`);
+}
+
 export const managePreference = async (formData: IManagePreference): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.post('/api/UserPreferences/ManagePreference', formData);
+}
+
+export const removeInterestIds = async (formData: IManagePreference): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post('/api/UserPreferences/RemoveUserInterest', formData);
 }
 
 export const managePlacesWishToVisit = async (formData: IManagePlacesWishToVisit): Promise<AxiosResponse<any>> => {
@@ -151,7 +165,7 @@ export const updateUserTimeFormat = async (formData: IUpdateUserTimeFormat): Pro
     return await TRIPAPI.post(`/api/UserPreferences/UpdateUserTimeFormat`, formData);
 }
 
-// update user time format
+// update user password
 export const updateUserPassword = async (formData: IUpdateUserPassword): Promise<AxiosResponse<any>> => {
     return await USERAPI.post(`/api/Auth/ChangePassword`, formData);
 }

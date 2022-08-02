@@ -1,17 +1,24 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useSpring, animated } from "react-spring";
+import Autocomplete from "react-google-autocomplete";
 import styled from "styled-components";
 import "./PreferencesModal.css";
 import { MdClose } from "react-icons/md";
-import { getAllCategories } from "../../../../api";
-import { symbolHelper } from "../../../../utils/helpers";
-import { IFormattedCategory } from "../../../../api/interfaces";
+import { localGetUserId } from "../../../../utils/helpers";
+import { GOOGLEAPIKEY } from "../../../../utils/constants";
+import Swal from "sweetalert2";
 
 // interface for this Modal
 interface PreferencesModalProp {
   showPreferencesModal: Boolean;
   setShowPreferencesModal: React.Dispatch<React.SetStateAction<Boolean>>;
   userPreference: any;
+  interestData: any;
+  setInterestData: any;
+  placesVisited: any;
+  setPlacesVisited: any;
+  wishToVisitPlaces: any;
+  setWishToVisitPlaces: any;
 }
 
 // Styled component for background
@@ -29,44 +36,19 @@ const Background: any = styled.div`
   transition: all 0.3s ease-in-out;
 `;
 
-interface IPlaces {
-  id: number;
-  title: string;
-  stateOfClass: boolean;
-  class: string;
-}
-
 // Component for security Modal
 const PreferencesModal = ({
   showPreferencesModal,
   setShowPreferencesModal,
   userPreference,
+  interestData,
+  setInterestData,
+  placesVisited,
+  setPlacesVisited,
+  wishToVisitPlaces,
+  setWishToVisitPlaces,
 }: PreferencesModalProp) => {
-  // states for the preferences data
-  const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
-    []
-  );
-  const [placesData, setPlacesData] = useState<IPlaces[]>([]);
-  const [placesBeenToData, setPlacesBeenToData] = useState<IPlaces[]>([]);
-
-  useEffect(() => {
-    // get all categories as preferenceData
-    getAllCategories().then((res) => {
-      const arrayToPush: any = [];
-      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
-      for (let i = 0; i < res.data.length; i++) {
-        const element = res.data[i];
-        const data = {
-          id: element.id,
-          title: element.name,
-          symbol: symbolHelper(element.name),
-          stateOfClass: false,
-        };
-        arrayToPush.push(data);
-      }
-      setPreferenceData(arrayToPush);
-    });
-  }, [showPreferencesModal]);
+  const userId = localGetUserId() as number;
 
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
@@ -87,15 +69,57 @@ const PreferencesModal = ({
   const closeModal = (e: React.FormEvent): void => {
     e.preventDefault();
     if (modalRef.current === e.target) {
-      setShowPreferencesModal(false);
+      Swal.fire({
+        title: "Warning!",
+        text: "Are you sure you want to quit your changes?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes!",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          setShowPreferencesModal(false);
+        }
+      });
     }
+  };
+
+  // function for closing the modal using button
+  const handleCloseModal = (e: React.FormEvent): void => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Warning!",
+      text: "Are you sure you want to quit your changes?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setShowPreferencesModal(false);
+      }
+    });
   };
 
   // function for checking for the esc key press
   const keyPress = useCallback(
     (e: React.KeyboardEvent | any) => {
       if (e.key === "Escape" && showPreferencesModal) {
-        setShowPreferencesModal(false);
+        Swal.fire({
+          title: "Warning!",
+          text: "Are you sure you want to quit your changes?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes!",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            setShowPreferencesModal(false);
+          }
+        });
       }
     },
     [setShowPreferencesModal, showPreferencesModal]
@@ -116,100 +140,100 @@ const PreferencesModal = ({
     e.preventDefault();
     // console.log(e.target.id)
     const id = e.target.id;
-    const index = preferenceData.findIndex((item) => item.id === parseInt(id));
-    preferenceData[index].stateOfClass = !preferenceData[index].stateOfClass;
-    // preferenceData[index].class = preferenceData[index].stateOfClass ? 'clicked' : 'not-clicked'
-    setPreferenceData([...preferenceData]);
+    const index = interestData.findIndex((item) => item.id === parseInt(id));
+    interestData[index].stateOfClass = !interestData[index].stateOfClass;
+    // interestData[index].class = interestData[index].stateOfClass ? 'clicked' : 'not-clicked'
+    setInterestData([...interestData]);
   };
 
-  // function to handle places click
-  const handlePlacesClick = (e: any) => {
-    e.preventDefault();
-    const id = e.target.id;
-    let data = placesData.filter((item) => item.id !== parseInt(id));
-    setPlacesData([...data]);
-    console.log(placesData);
+  // function to handle remove of places
+  const handlePlacesRemove = (action: string, id: any) => {
+    let data: any;
+    switch (action) {
+      case "placesVisited":
+        data = placesVisited.filter((item, key) => key !== parseInt(id));
+        setPlacesVisited([...data]);
+        break;
+      case "wishToVisitPlaces":
+        data = wishToVisitPlaces.filter((item, key) => key !== parseInt(id));
+        setWishToVisitPlaces([...data]);
+        break;
+
+      default:
+        break;
+    }
   };
 
-  // function to handle typing of places tag
-  const handlePlacesChange = (e: any) => {
-    e.preventDefault();
-    let inputData = e.target.value.toString();
-    let input = document.getElementById("places") as HTMLInputElement;
-    input.addEventListener("keydown", function (event) {
-      // if user presses enter or tab, it should add it to  the list
-      if (event.key === "Enter" || event.key === "Tab") {
-        let newPlacesData = placesData.filter(
-          (item) => item.title.toLowerCase() === inputData.toLowerCase()
-        );
+  const handleOnAutocompleteSelect = (action: string, data: any) => {
+    let input: any;
+    switch (action) {
+      case "placesVisited":
+        input = document.getElementById("places_been_to") as HTMLInputElement;
+        setPlacesVisited((prev) => {
+          let dataExist = prev.filter(
+            (item) =>
+              item.placeName.toLowerCase() ===
+              data.formatted_address.toLowerCase()
+          );
 
-        if (newPlacesData.length > 0) {
-          setPlacesData([...newPlacesData]);
-        } else {
-          setPlacesData([
-            ...placesData,
-            {
-              id: placesData.length + 1,
-              title: inputData,
-              stateOfClass: false,
-              class: "clicked",
-            },
-          ]);
-        }
-
+          if (dataExist.length > 0) {
+            return prev;
+          } else {
+            return [
+              ...prev,
+              {
+                userId,
+                placeName: data.formatted_address,
+                longitude: data.geometry.location.toJSON().lng,
+                latitude: data.geometry.location.toJSON().lat,
+                mapUrl: data.url,
+              },
+            ];
+          }
+        });
         input.value = "";
-      }
-    });
-  };
 
-  // function to handle placesBeenTo click
-  const handlePlacesBeenToClick = (e: any) => {
-    e.preventDefault();
-    const id = e.target.id;
-    let data = placesBeenToData.filter((item) => item.id !== parseInt(id));
-    setPlacesBeenToData([...data]);
-    console.log(placesBeenToData);
-  };
+        break;
+      case "wishToVisitPlaces":
+        input = document.getElementById("wish_to_visit") as HTMLInputElement;
 
-  // function to handle typing of placesBeenTo tag
-  const handlePlacesBeenToChange = (e: any) => {
-    e.preventDefault();
-    let inputData = e.target.value.toString();
-    let input = document.getElementById("placesBeenTo") as HTMLInputElement;
-    input.addEventListener("keydown", function (event) {
-      // if user presses enter or tab, it should add it to  the list
-      if (event.key === "Enter" || event.key === "Tab") {
-        let newPlacesBeenToData = placesBeenToData.filter(
-          (item) => item.title.toLowerCase() === inputData.toLowerCase()
-        );
+        setWishToVisitPlaces((prev) => {
+          let dataExist = prev.filter(
+            (item) =>
+              item.placeName.toLowerCase() ===
+              data.formatted_address.toLowerCase()
+          );
 
-        if (newPlacesBeenToData.length > 0) {
-          setPlacesBeenToData([...newPlacesBeenToData]);
-        } else {
-          setPlacesBeenToData([
-            ...placesBeenToData,
-            {
-              id: placesBeenToData.length + 1,
-              title: inputData,
-              stateOfClass: false,
-              class: "clicked",
-            },
-          ]);
-        }
-
+          if (dataExist.length > 0) {
+            return prev;
+          } else {
+            return [
+              ...prev,
+              {
+                userId,
+                placeName: data.formatted_address,
+                longitude: data.geometry.location.toJSON().lng,
+                latitude: data.geometry.location.toJSON().lat,
+                mapUrl: data.url,
+              },
+            ];
+          }
+        });
         input.value = "";
-      }
-    });
+
+        break;
+
+      default:
+        break;
+    }
   };
 
   // Function to handle save button
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(placesData);
-    console.log(placesBeenToData);
-    let preferences = preferenceData.filter(
-      (item) => item.stateOfClass === true
-    );
+    // console.log(placesData);
+    console.log(placesVisited);
+    let preferences = interestData.filter((item) => item.stateOfClass === true);
 
     console.log(preferences);
   };
@@ -234,24 +258,36 @@ const PreferencesModal = ({
                   <label className="preferences_modal_label">
                     Where have you been before?
                   </label>
-                  <input
-                    id="placesBeenTo"
-                    className="preferences_modal_input"
-                    type="text"
+                  <Autocomplete
+                    apiKey={GOOGLEAPIKEY}
+                    onPlaceSelected={(selected) => {
+                      handleOnAutocompleteSelect("placesVisited", selected);
+                    }}
+                    options={{
+                      types: [],
+                      fields: [
+                        "formatted_address",
+                        "place_id",
+                        "url",
+                        "geometry",
+                      ],
+                    }}
                     placeholder="Enter the name of the location"
-                    onChange={handlePlacesBeenToChange}
+                    className="preferences_modal_input"
+                    id="places_been_to"
                   />
                 </div>
                 <div className="preferences_modal_bucket_list_tag_container">
-                  {placesBeenToData.map((item) => (
-                    // <span key={item.id} className="bucket_list_tag">{item.title}</span>
+                  {placesVisited.map((item, key) => (
                     <span
-                      key={item.id}
-                      id={item.id.toString()}
+                      key={key}
+                      id={key.toString()}
                       className="preferences_modal_location_tag"
-                      onClick={handlePlacesBeenToClick}
+                      onClick={() =>
+                        handlePlacesRemove("wishToVisitPlaces", key)
+                      }
                     >
-                      x {item.title}
+                      x {item.placeName}
                     </span>
                   ))}
                 </div>
@@ -262,25 +298,39 @@ const PreferencesModal = ({
                   <label className="preferences_modal_label">
                     What’s on your bucket list?{" "}
                   </label>
-                  <input
-                    id="places"
+                  <Autocomplete
+                    apiKey={GOOGLEAPIKEY}
+                    onPlaceSelected={(selected: any) => {
+                      handleOnAutocompleteSelect("wishToVisitPlaces", selected);
+                    }}
+                    options={{
+                      types: [],
+                      fields: [
+                        "formatted_address",
+                        "place_id",
+                        "url",
+                        "geometry",
+                      ],
+                    }}
+                    placeholder="Enter the name of the location"
                     className="preferences_modal_input"
-                    type="text"
-                    placeholder="Enter your preferred location"
-                    onChange={handlePlacesChange}
+                    id="wish_to_visit"
                   />
                 </div>
                 <div className="preferences_modal_bucket_list_tab">
                   <div className="preferences_modal_bucket_list_tag_container">
-                    {placesData.map((item) => (
+                    {wishToVisitPlaces.map((item, key) => (
                       // <span key={item.id} className="bucket_list_tag">{item.title}</span>
+
                       <span
-                        key={item.id}
-                        id={item.id.toString()}
+                        key={key}
+                        id={key.toString()}
                         className="preferences_modal_location_tag"
-                        onClick={handlePlacesClick}
+                        onClick={() =>
+                          handlePlacesRemove("wishToVisitPlaces", key)
+                        }
                       >
-                        x {item.title}
+                        x {item.placeName}
                       </span>
                     ))}
                   </div>
@@ -292,7 +342,7 @@ const PreferencesModal = ({
                     Describe your travel interests (select as many as you like):
                   </label>
                   <div className="preferences_modal_preferences_tag_container">
-                    {preferenceData.map((item) => (
+                    {interestData.map((item) => (
                       // <span key={item.id} className="preferences_tag">{item.title}</span>
                       <span
                         key={item.id}
@@ -322,7 +372,7 @@ const PreferencesModal = ({
 
               <MdClose
                 className="close_modal_button"
-                onClick={() => setShowPreferencesModal((prev) => !prev)}
+                onClick={handleCloseModal}
               />
             </div>
           </animated.div>

@@ -80,11 +80,7 @@ const Preferences: React.FC = () => {
     }
   };
 
-  const handleOnAutocompleteSelect = (
-    action: string,
-    data: any,
-    extra: any
-  ) => {
+  const handleOnAutocompleteSelect = (action: string, data: any) => {
     let input: any;
     switch (action) {
       case "placesBeenTo":
@@ -196,11 +192,7 @@ const Preferences: React.FC = () => {
             // ref={inputRef}
             apiKey={GOOGLEAPIKEY}
             onPlaceSelected={(selected) => {
-              handleOnAutocompleteSelect(
-                "placesBeenTo",
-                selected,
-                placesBeenToData
-              );
+              handleOnAutocompleteSelect("placesBeenTo", selected);
             }}
             options={{
               types: [],
@@ -235,7 +227,7 @@ const Preferences: React.FC = () => {
             // ref={inputRef}
             apiKey={GOOGLEAPIKEY}
             onPlaceSelected={(selected: any) => {
-              handleOnAutocompleteSelect("wishToVisit", selected, wishToVisit);
+              handleOnAutocompleteSelect("wishToVisit", selected);
             }}
             options={{
               types: [],
