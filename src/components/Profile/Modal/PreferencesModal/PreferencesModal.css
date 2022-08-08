@@ -207,6 +207,11 @@
         transform: translateX(40px);
         padding: 20px;
     }
+
+    .preferences_modal_wrapper {
+        width: 90%;
+        transform: translateX(30px);
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -225,6 +230,13 @@
 @media screen and (max-width: 550px) {
     .preferences_modal_input {
         width: 300px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .preferences_modal_wrapper {
+        width: 85%;
+        transform: translateX(20px);
     }
 }
 

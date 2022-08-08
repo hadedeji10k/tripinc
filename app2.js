@@ -129,3 +129,9 @@ const books = [
 
 // console.log(handleUp(2));
 // console.log(handleDown(2));
+
+let newBook = books.map((a) => ({ ...a }));
+// console.log(newBook);
+newBook[1].title = "Things fall apart";
+console.log(newBook);
+console.log(books);

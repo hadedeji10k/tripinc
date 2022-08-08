@@ -14,13 +14,15 @@ import Swal from "sweetalert2";
 import {
   updateUserPreference,
   updateUserPassword,
+  updateUserSocialPermission,
 } from "../../../api/responseHandlers";
 
 interface AccountPageProps {
   userPreference: any;
+  userConsents: any;
 }
 
-const AccountPage = ({ userPreference }: AccountPageProps) => {
+const AccountPage = ({ userPreference, userConsents }: AccountPageProps) => {
   const [showAccountPageModal, setShowAccountPageModal] =
     useState<boolean>(false);
   const [showEdit, setShowEdit] = useState<boolean>(false);
@@ -98,12 +100,34 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
     setShowPasswordEdit((prevState) => !prevState);
   };
 
-  const onChange = (checked) => {
-    console.log(`switch to ${checked}`);
+  const handleSociallyPermission = (action, checked) => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    let formData: any = {};
+    switch (action) {
+      case "privacy":
+        formData = {
+          userId: userPreference.userId,
+          allowAllCookies: checked,
+        };
+        console.log(formData);
+        updateUserSocialPermission(formData).then(() => {
+          setIsLoading(false);
+        });
+        break;
+      case "social":
+        formData = {
+          userId: userPreference.userId,
+          shareActivitySocially: checked,
+        };
+        console.log(formData);
+        updateUserSocialPermission(formData).then(() => {
+          setIsLoading(false);
+        });
+        break;
+
+      default:
+        break;
+    }
   };
 
   const initialPreferenceValues = {
@@ -450,7 +474,12 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
                     </div>
                     <div className="permission_item_content2">
                       {/* <button className="personal_info_button">Edit</button> */}
-                      <Switch defaultChecked={false} onChange={onChange} />
+                      <Switch
+                        defaultChecked={userConsents?.allowAllCookies}
+                        onChange={(checked) =>
+                          handleSociallyPermission("privacy", checked)
+                        }
+                      />
                     </div>
                   </div>
                   <div>
@@ -466,7 +495,12 @@ const AccountPage = ({ userPreference }: AccountPageProps) => {
                     </div>
                     <div className="permission_item_content2">
                       {/* <button className="personal_info_button">Edit</button> */}
-                      <Switch defaultChecked={false} onChange={onChange} />
+                      <Switch
+                        defaultChecked={userConsents?.shareActivitySocially}
+                        onChange={(checked) =>
+                          handleSociallyPermission("social", checked)
+                        }
+                      />
                     </div>
                   </div>
                 </div>

@@ -23,15 +23,13 @@ import {
   removeFromWishList,
 } from "../../api/responseHandlers";
 import { GOOGLEAPIKEY } from "../../utils/constants";
+import ReviewModal from "./ReviewModal/ReviewModal";
 
 const ExploreDetails = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showCartModal, setShowCartModal] = useState<Boolean>(false);
+  const [showReviewModal, setShowReviewModal] = useState<boolean>(false);
+  const [showCartModal, setShowCartModal] = useState<boolean>(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [showReviewTextArea, setShowReviewTextArea] = useState(false);
-
-  const [userRating, setUserRating] = useState<number>(0);
-  const [userReview, setUserReview] = useState<string>("");
 
   const [itemInCart, setItemInCart] = useState(false);
   const [cartItem, setCartItem] = useState<ICart>();
@@ -235,32 +233,6 @@ const ExploreDetails = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  };
-
-  const handleReviewTextChange = (e) => {
-    console.log(e.target.value);
-    setUserReview(e.target.value);
-  };
-
-  const ratingChanged = (newRating) => {
-    setUserRating(newRating);
-  };
-
-  const handleReviewSubmit = async (e) => {
-    setIsLoading(true);
-    const formData: IAddReview = {
-      userId,
-      fullName: localGetUserFullName(),
-      attractionId: Number(attractionId),
-      rating: userRating,
-      comment: userReview,
-    };
-    console.log(formData);
-    await addReview(formData).then((res) => {
-      if (res !== true) {
-        setIsLoading(false);
-      }
-    });
   };
 
   return (
@@ -548,42 +520,12 @@ const ExploreDetails = () => {
                     style={{
                       cursor: "pointer",
                     }}
-                    onClick={() => setShowReviewTextArea((prev) => !prev)}
+                    onClick={() => setShowReviewModal((prev) => !prev)}
                   >
-                    {showReviewTextArea
+                    {showReviewModal
                       ? "Cancel review"
                       : "Click to leave a review"}
                   </p>
-                  {showReviewTextArea ? (
-                    <>
-                      <ReactStars
-                        count={5}
-                        size={24}
-                        activeColor="#ffd700"
-                        onChange={ratingChanged}
-                        isHalf={true}
-                        emptyIcon={<i className="far fa-star"></i>}
-                        halfIcon={<i className="fa fa-star-half-alt"></i>}
-                        fullIcon={<i className="fa fa-star"></i>}
-                      />
-                      <textarea
-                        onChange={handleReviewTextChange}
-                        style={{
-                          resize: "none",
-                          width: "80%",
-                          height: "100px",
-                          borderRadius: "5px",
-                          border: "2px solid gray",
-                        }}
-                      ></textarea>
-                      <button
-                        className="explore_detail_button"
-                        onClick={handleReviewSubmit}
-                      >
-                        Submit
-                      </button>
-                    </>
-                  ) : null}
                 </div>
               ) : (
                 <>
@@ -602,6 +544,14 @@ const ExploreDetails = () => {
             </div>
           </div>
         </div>
+        <ReviewModal
+          showReviewModal={showReviewModal}
+          setShowReviewModal={setShowReviewModal}
+          attractionId={attractionData?.id}
+          attractionName={attractionData?.title}
+          attractionCity={attractionData?.city}
+          userId={userId}
+        />
         <CartModal
           showCartModal={showCartModal}
           setShowCartModal={setShowCartModal}

@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited, IForgotPasswordRequest, IConfirmForgotPasswordRequest } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited, IForgotPasswordRequest, IConfirmForgotPasswordRequest, IManageUserFoods, IManageUserConsents } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -129,27 +129,51 @@ export const getUserPreferences = async (userId: any): Promise<AxiosResponse<any
     return await TRIPAPI.get(`/api/UserPreferences/GetUserPreference/${userId}`);
 }
 
-// get user Interests
+// update user currency
+export const updateUserCurrency = async (formData: IUpdateUserCurrency): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/UserPreferences/UpdateUserCurrency`, formData);
+}
+
+// update user time format
+export const updateUserTimeFormat = async (formData: IUpdateUserTimeFormat): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post(`/api/UserPreferences/UpdateUserTimeFormat`, formData);
+}
+
+
+// user Interests
 export const getUserInterests = async (userId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/UserPreferences/GetUserInterests/${userId}`);
 }
 
-// get user places visited
+// export const removeInterestIds = async (formData: IManagePreference): Promise<AxiosResponse<any>> => {
+//     return await TRIPAPI.delete('/api/UserPreferences/RemoveUserInterest', formData);
+// }
+
+// User Foods
+export const getUserFoods = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/UserPreferences/GetUserFoods/${userId}`);
+}
+
+export const manageUserFoods = async (formData: IManageUserFoods): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post('/api/UserPreferences/ManageUserFoods', formData);
+}
+
+// User Consents
+export const getUserConsents = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/UserPreferences/GetUserConsent/${userId}`);
+}
+
+export const manageUserConsents = async (formData: IManageUserConsents): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post('/api/UserPreferences/ManageUserConsent', formData);
+}
+
+// user places visited
 export const getUserPlacesVisited = async (userId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/UserPreferences/GetPlacesVisited/${userId}`);
 }
 
-// get user places wish to visit
 export const getUserPlacesWishToVisit = async (userId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/UserPreferences/GetPlacesWishToVisit/${userId}`);
-}
-
-export const managePreference = async (formData: IManagePreference): Promise<AxiosResponse<any>> => {
-    return await TRIPAPI.post('/api/UserPreferences/ManagePreference', formData);
-}
-
-export const removeInterestIds = async (formData: IManagePreference): Promise<AxiosResponse<any>> => {
-    return await TRIPAPI.post('/api/UserPreferences/RemoveUserInterest', formData);
 }
 
 export const managePlacesWishToVisit = async (formData: IManagePlacesWishToVisit): Promise<AxiosResponse<any>> => {
@@ -160,15 +184,6 @@ export const managePlacesVisited = async (formData: IManagePlacesVisited): Promi
     return await TRIPAPI.post('/api/UserPreferences/ManagePlacesVisited', formData);
 }
 
-// update user currency
-export const updateUserCurrency = async (formData: IUpdateUserCurrency): Promise<AxiosResponse<any>> => {
-    return await TRIPAPI.post(`/api/UserPreferences/UpdateUserCurrency`, formData);
-}
-
-// update user time format
-export const updateUserTimeFormat = async (formData: IUpdateUserTimeFormat): Promise<AxiosResponse<any>> => {
-    return await TRIPAPI.post(`/api/UserPreferences/UpdateUserTimeFormat`, formData);
-}
 
 // update user password
 export const updateUserPassword = async (formData: IUpdateUserPassword): Promise<AxiosResponse<any>> => {

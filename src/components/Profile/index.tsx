@@ -21,6 +21,7 @@ import {
   getUserPlacesVisited,
   getUserPlacesWishToVisit,
   getUserInterests,
+  getUserConsents,
 } from "../../api";
 import { IFormattedCategory, IPlaces } from "../../api/interfaces";
 
@@ -83,6 +84,9 @@ const Profile = (): any => {
   // User wish to visit places
   const [wishToVisitPlaces, setWishToVisitPlaces] = useState<IPlaces[]>([]);
 
+  // User consents
+  const [userConsents, setUserConsents] = useState<any>({});
+
   // const authContext = useContext(AuthContext);
 
   useEffect(() => {
@@ -123,7 +127,12 @@ const Profile = (): any => {
               // get user places visited
               getUserPlacesVisited(userId).then((res) => {
                 setPlacesVisited(res.data.items);
-                setIsLoading(false);
+
+                getUserConsents(userId).then((userConsents) => {
+                  setUserConsents(userConsents.data);
+                  console.log(userConsents.data);
+                  setIsLoading(false);
+                });
 
                 // get user places wish to visit
                 // getUserPlacesWishToVisit(userId).then((result) => {
@@ -211,7 +220,10 @@ const Profile = (): any => {
                 userInterests={userInterests}
               />
             ) : data[0].slug === "account" ? (
-              <AccountPage userPreference={userPreferenceData} />
+              <AccountPage
+                userPreference={userPreferenceData}
+                userConsents={userConsents}
+              />
             ) : data[0].slug === "bookings" ? (
               <BookingsPage />
             ) : data[0].slug === "wallet" ? (

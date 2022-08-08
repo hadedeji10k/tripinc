@@ -82,21 +82,6 @@
     transition: all 0.3s ease-in-out;
 }
 
-.close_modal_button {
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 32px;
-    height: 32px;
-    padding: 5px;
-    z-index: 10;
-    background: #000;
-    color: #fff;
-    border-radius: 50%;
-}
-
-
 @media screen and (max-width: 830px) {
     /* .error_message_modal_wrapper {
         width: 80%;
@@ -115,6 +100,7 @@
         width: 80%;
         transform: translateX(40px);
     }
+
     .line {
         width: 300px;
     }
@@ -124,10 +110,12 @@
     .line {
         width: 350px;
     }
+
     .message_header {
         margin-bottom: 0.8rem;
         line-height: 30px;
     }
+
     .message_title {
         margin-bottom: 1.5rem;
     }
@@ -140,33 +128,28 @@
 }
 
 @media screen and (max-width: 500px) {
-    
+
     .line {
         width: 300px;
     }
-    .close_modal_button {
-        top: 10px;
-        right: 10px;
-        width: 24px;
-        height: 24px;
-    }
 }
 
-@media screen and (max-width: 415px) {  
+@media screen and (max-width: 415px) {
     .message_header {
         font-size: 1.5rem;
     }
+
     .line {
         width: 250px;
     }
 }
 
-@media screen and (max-width: 350px) {  
+@media screen and (max-width: 350px) {
     .line {
         width: 200px;
     }
+
     /* .message_title {
         font-size: 0.8rem;
     } */
 }
-

@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview, IMakeOrder, IManagePreference, IManagePlacesWishToVisit, IManagePlacesVisited, IForgotPasswordRequest } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview, IMakeOrder, IManagePreference, IManagePlacesWishToVisit, IManagePlacesVisited, IForgotPasswordRequest, IManageUserConsents } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -804,6 +804,51 @@ export const updateUserPreference = async (values, userId) => {
 };
 
 
+export const updateUserSocialPermission = async (formData: IManageUserConsents) => {
+  try {
+    const response = await api.manageUserConsents(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully updated your profile",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = "/#/profile";
+        }
+      });
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Updating profile was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      title: "Error!",
+      text: `Updating profile was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
+
 export const googleSignIn = async (formData: any) => {
   try {
     const response = await api.remoteGoogleLogin(formData);
@@ -976,7 +1021,7 @@ export const addReview = async (formData: IAddReview) => {
     if (response.status === 200 && response.data.status === true) {
       Swal.fire({
         title: "Success!",
-        text: "You have successfully added a review on this attraction",
+        text: "You have successfully added a review on this attraction. Thanks for your review.",
         icon: "success",
         confirmButtonText: "Ok",
       }).then((result) => {
@@ -1063,53 +1108,6 @@ export const updateUserPicture = async (formData: any) => {
     Swal.fire({
       title: "Error!",
       text: `Updating Picture was not successful. Please try again later`,
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-    return false
-  }
-};
-
-// update user preferences
-export const managePreference = async (formData: IManagePreference) => {
-  try {
-    const response = await api.managePreference(formData);
-
-    if (response.status === 200 && response.data.status === true) {
-      Swal.fire({
-        title: "Success!",
-        text: "You have successfully updated your profile preferences",
-        icon: "success",
-        confirmButtonText: "Ok",
-      })
-      return true
-    }
-
-    if (response.status === 200 && response.data.status === false) {
-      Swal.fire({
-        title: "Error!",
-        text: `Updating profile preference was not successful, ${response.data.message}`,
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-      return false
-    }
-
-    // if there is error
-    if (response.status !== 200) {
-      Swal.fire({
-        title: "Error!",
-        text: `Updating profile preference was not successful. Please try again later`,
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-      return false
-    }
-  } catch (error) {
-    console.log(error);
-    Swal.fire({
-      title: "Error!",
-      text: `Updating profile preference was not successful. Please try again later`,
       icon: "error",
       confirmButtonText: "Ok",
     });

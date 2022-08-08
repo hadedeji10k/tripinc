@@ -38,6 +38,20 @@ export interface IManagePreference {
     areaOfInterestIds?: number[]
 }
 
+export interface IManageUserConsents {
+    userId: number,
+    allowAllCookies?: boolean,
+    shareActivitySocially?: boolean,
+    acceptHelpPlanning?: boolean
+}
+
+export interface IManageUserFoods {
+    userId: number,
+    foods?: {
+        food: string,
+        rank: number
+    }[]
+}
 export interface IManagePlacesWishToVisit {
     wishToVisitPlaces?: {
         id?: number,

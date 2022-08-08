@@ -48,6 +48,19 @@ const PreferencesModal = ({
   wishToVisitPlaces,
   setWishToVisitPlaces,
 }: PreferencesModalProp) => {
+  const [removedInterest, setRemovedInterest] = useState<any[]>([]);
+  const [interestClone, setInterestClone] = useState<any[]>([]);
+  const [placesVisitedClone, setPlacesVisitedClone] = useState<any[]>([]);
+  const [wishToVisitPlacesClone, setWishToVisitPlacesClone] = useState<any[]>(
+    []
+  );
+
+  useEffect(() => {
+    setWishToVisitPlacesClone(wishToVisitPlaces);
+    setPlacesVisitedClone(placesVisited);
+    setInterestClone(interestData.map((a) => ({ ...a })));
+  }, [wishToVisitPlaces, placesVisited, interestData]);
+
   const userId = localGetUserId() as number;
 
   // this for checking for mainly when the esc key is pressed to close the modal
@@ -79,6 +92,9 @@ const PreferencesModal = ({
         cancelButtonColor: "#d33",
       }).then(async (result) => {
         if (result.isConfirmed) {
+          setWishToVisitPlacesClone(wishToVisitPlaces);
+          setPlacesVisitedClone(placesVisited);
+          setInterestClone(interestData.map((a) => ({ ...a })));
           setShowPreferencesModal(false);
         }
       });
@@ -98,6 +114,9 @@ const PreferencesModal = ({
       cancelButtonColor: "#d33",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        setWishToVisitPlacesClone(wishToVisitPlaces);
+        setPlacesVisitedClone(placesVisited);
+        setInterestClone(interestData.map((a) => ({ ...a })));
         setShowPreferencesModal(false);
       }
     });
@@ -117,12 +136,21 @@ const PreferencesModal = ({
           cancelButtonColor: "#d33",
         }).then(async (result) => {
           if (result.isConfirmed) {
+            setWishToVisitPlacesClone(wishToVisitPlaces);
+            setPlacesVisitedClone(placesVisited);
+            setInterestClone(interestData.map((a) => ({ ...a })));
             setShowPreferencesModal(false);
           }
         });
       }
     },
-    [setShowPreferencesModal, showPreferencesModal]
+    [
+      setShowPreferencesModal,
+      showPreferencesModal,
+      wishToVisitPlaces,
+      placesVisited,
+      interestData,
+    ]
   );
 
   // useEffect for checking for the esc key press
@@ -140,10 +168,10 @@ const PreferencesModal = ({
     e.preventDefault();
     // console.log(e.target.id)
     const id = e.target.id;
-    const index = interestData.findIndex((item) => item.id === parseInt(id));
-    interestData[index].stateOfClass = !interestData[index].stateOfClass;
-    // interestData[index].class = interestData[index].stateOfClass ? 'clicked' : 'not-clicked'
-    setInterestData([...interestData]);
+    const index = interestClone.findIndex((item) => item.id === parseInt(id));
+    // change the state of the interest data object which is the formatted category (clone)
+    interestClone[index].stateOfClass = !interestClone[index].stateOfClass;
+    setInterestClone([...interestClone]);
   };
 
   // function to handle remove of places
@@ -151,12 +179,14 @@ const PreferencesModal = ({
     let data: any;
     switch (action) {
       case "placesVisited":
-        data = placesVisited.filter((item, key) => key !== parseInt(id));
-        setPlacesVisited([...data]);
+        data = placesVisitedClone.filter((item, key) => key !== parseInt(id));
+        setPlacesVisitedClone([...data]);
         break;
       case "wishToVisitPlaces":
-        data = wishToVisitPlaces.filter((item, key) => key !== parseInt(id));
-        setWishToVisitPlaces([...data]);
+        data = wishToVisitPlacesClone.filter(
+          (item, key) => key !== parseInt(id)
+        );
+        setWishToVisitPlacesClone([...data]);
         break;
 
       default:
@@ -169,7 +199,7 @@ const PreferencesModal = ({
     switch (action) {
       case "placesVisited":
         input = document.getElementById("places_been_to") as HTMLInputElement;
-        setPlacesVisited((prev) => {
+        setPlacesVisitedClone((prev) => {
           let dataExist = prev.filter(
             (item) =>
               item.placeName.toLowerCase() ===
@@ -187,6 +217,10 @@ const PreferencesModal = ({
                 longitude: data.geometry.location.toJSON().lng,
                 latitude: data.geometry.location.toJSON().lat,
                 mapUrl: data.url,
+                visitCount: 0,
+                postCode: "",
+                country: "",
+                city: "",
               },
             ];
           }
@@ -196,8 +230,7 @@ const PreferencesModal = ({
         break;
       case "wishToVisitPlaces":
         input = document.getElementById("wish_to_visit") as HTMLInputElement;
-
-        setWishToVisitPlaces((prev) => {
+        setWishToVisitPlacesClone((prev) => {
           let dataExist = prev.filter(
             (item) =>
               item.placeName.toLowerCase() ===
@@ -215,6 +248,10 @@ const PreferencesModal = ({
                 longitude: data.geometry.location.toJSON().lng,
                 latitude: data.geometry.location.toJSON().lat,
                 mapUrl: data.url,
+                visitCount: 0,
+                postCode: "",
+                country: "",
+                city: "",
               },
             ];
           }
@@ -232,8 +269,11 @@ const PreferencesModal = ({
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // console.log(placesData);
-    console.log(placesVisited);
-    let preferences = interestData.filter((item) => item.stateOfClass === true);
+    console.log(placesVisitedClone);
+    console.log(wishToVisitPlacesClone);
+    let preferences = interestClone.filter(
+      (item) => item.stateOfClass === true
+    );
 
     console.log(preferences);
   };
@@ -278,14 +318,12 @@ const PreferencesModal = ({
                   />
                 </div>
                 <div className="preferences_modal_bucket_list_tag_container">
-                  {placesVisited.map((item, key) => (
+                  {placesVisitedClone.map((item, key) => (
                     <span
                       key={key}
                       id={key.toString()}
                       className="preferences_modal_location_tag"
-                      onClick={() =>
-                        handlePlacesRemove("wishToVisitPlaces", key)
-                      }
+                      onClick={() => handlePlacesRemove("placesVisited", key)}
                     >
                       x {item.placeName}
                     </span>
@@ -319,7 +357,7 @@ const PreferencesModal = ({
                 </div>
                 <div className="preferences_modal_bucket_list_tab">
                   <div className="preferences_modal_bucket_list_tag_container">
-                    {wishToVisitPlaces.map((item, key) => (
+                    {wishToVisitPlacesClone.map((item, key) => (
                       // <span key={item.id} className="bucket_list_tag">{item.title}</span>
 
                       <span
@@ -342,7 +380,7 @@ const PreferencesModal = ({
                     Describe your travel interests (select as many as you like):
                   </label>
                   <div className="preferences_modal_preferences_tag_container">
-                    {interestData.map((item) => (
+                    {interestClone.map((item) => (
                       // <span key={item.id} className="preferences_tag">{item.title}</span>
                       <span
                         key={item.id}

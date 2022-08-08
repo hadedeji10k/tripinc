@@ -4,7 +4,6 @@ import { getAllCategories } from "../../api";
 import {
   managePlacesVisited,
   managePlacesWishToVisit,
-  managePreference,
 } from "../../api/responseHandlers";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
@@ -162,7 +161,6 @@ const Preferences: React.FC = () => {
     const managePlacesVisitedFormData: IManagePlacesVisited = {
       visitedPlaces: placesBeenToData,
     };
-    await managePreference(managePreferenceFormData);
     await managePlacesWishToVisit(managePlacesWishToVisitFormData);
     await managePlacesVisited(managePlacesVisitedFormData);
 

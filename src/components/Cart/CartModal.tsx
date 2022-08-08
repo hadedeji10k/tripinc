@@ -17,8 +17,8 @@ import moment from "moment";
 // interface for CartModal
 interface CartModalProp {
   item: IDeal | any;
-  showCartModal: Boolean;
-  setShowCartModal: React.Dispatch<React.SetStateAction<Boolean>>;
+  showCartModal: boolean;
+  setShowCartModal: React.Dispatch<React.SetStateAction<boolean>>;
   itemInCart: boolean;
   cartData?: any;
   userId: number | null;
@@ -200,106 +200,106 @@ const CartModal = ({
   // return the CartModal
   return (
     <>
-      <Spin spinning={isLoading}>
-        {showCartModal ? (
-          // <div className="background">
-          <Background onClick={closeModal} ref={modalRef}>
-            <animated.div className="modal" style={animation}>
-              <div className="cart_modal_wrapper">
-                <h3 className="cart_modal_header">
-                  ${item.price} <small className="small">/ person</small>
-                </h3>
-                <div className="cart_select_container">
-                  <DatePicker
-                    className="cart_select_container_select"
-                    onChange={handleDate}
-                  />
-                </div>
-                <div className="cart_select_container">
-                  <select
-                    className="cart_select_container_select"
-                    name="people"
-                    id="people"
-                    onClick={handlePeople}
-                  >
-                    {itemInCart && cartData?.quantity ? (
-                      <>
-                        <option value={itemInCart ? cartData?.quantity : 1}>
-                          {itemInCart ? cartData?.quantity : 1} adult
-                          {itemInCart && cartData?.quantity > 1 ? "s" : ""}
-                        </option>
-                        <option value="1">1 adult</option>
-                      </>
-                    ) : numOfPeople > 0 ? (
-                      <option value={numOfPeople}>
-                        {numOfPeople} adult{numOfPeople > 1 ? "s" : ""}
+      {showCartModal ? (
+        // <div className="background">
+        <Background onClick={closeModal} ref={modalRef}>
+          <animated.div className="modal" style={animation}>
+            <div className="cart_modal_wrapper">
+              <h3 className="cart_modal_header">
+                ${item.price} <small className="small">/ person</small>
+              </h3>
+              <div className="cart_select_container">
+                <DatePicker
+                  className="cart_select_container_select"
+                  onChange={handleDate}
+                />
+              </div>
+              <div className="cart_select_container">
+                <select
+                  className="cart_select_container_select"
+                  name="people"
+                  id="people"
+                  onClick={handlePeople}
+                >
+                  {itemInCart && cartData?.quantity ? (
+                    <>
+                      <option value={itemInCart ? cartData?.quantity : 1}>
+                        {itemInCart ? cartData?.quantity : 1} adult
+                        {itemInCart && cartData?.quantity > 1 ? "s" : ""}
                       </option>
-                    ) : (
                       <option value="1">1 adult</option>
-                    )}
-                    <option value="2">2 adults</option>
-                    <option value="3">3 adults</option>
-                    <option value="4">4 adults</option>
-                    <option value="5">5 adults</option>
-                    <option value="6">6 adults</option>
-                    <option value="7">7 adults</option>
-                    <option value="8">8 adults</option>
-                    <option value="9">9 adults</option>
-                    <option value="10">10 adults</option>
-                  </select>
-                </div>
-                <div className="cart_select_container">
-                  <TimePicker
-                    className="cart_select_container_select"
-                    onChange={handleTime}
-                    defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
-                  />
-                  {/* <select name="time" id="time" onClick={handleTime}>
+                    </>
+                  ) : numOfPeople > 0 ? (
+                    <option value={numOfPeople}>
+                      {numOfPeople} adult{numOfPeople > 1 ? "s" : ""}
+                    </option>
+                  ) : (
+                    <option value="1">1 adult</option>
+                  )}
+                  <option value="2">2 adults</option>
+                  <option value="3">3 adults</option>
+                  <option value="4">4 adults</option>
+                  <option value="5">5 adults</option>
+                  <option value="6">6 adults</option>
+                  <option value="7">7 adults</option>
+                  <option value="8">8 adults</option>
+                  <option value="9">9 adults</option>
+                  <option value="10">10 adults</option>
+                </select>
+              </div>
+              <div className="cart_select_container">
+                <TimePicker
+                  className="cart_select_container_select"
+                  onChange={handleTime}
+                  defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+                />
+                {/* <select name="time" id="time" onClick={handleTime}>
                     <option value="12:00 - 16:00">12:00 - 16:00</option>
                     <option value="13:00 - 19:00">13:00 - 19:00</option>
                     <option value="11:00 - 13:00">11:00 - 13:00</option>
                   </select> */}
-                </div>
-                <div>
+              </div>
+              <div>
+                <Spin spinning={isLoading}>
                   <button className="button" onClick={handleAddToCart}>
                     Continue
                   </button>
-                </div>
-
-                <hr className="cart_line" />
-
-                <div className="price">
-                  <p>Total</p>
-                  <p>
-                    ${price === 0 ? item?.price.toString() : price.toString()}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="details">
-                    No money will be charged at this step. Reserve now and pay
-                    later!
-                  </p>
-                </div>
-
-                <div className="details">
-                  <p>
-                    <a href="/">Report this activity.</a>
-                  </p>
-                </div>
-
-                <div>
-                  <MdClose
-                    className="close_modal_button"
-                    onClick={() => setShowCartModal((prev) => !prev)}
-                  />
-                </div>
+                </Spin>
               </div>
-            </animated.div>
-            {/* </div> */}
-          </Background>
-        ) : null}
-      </Spin>
+
+              <hr className="cart_line" />
+
+              <div className="price">
+                <p>Total</p>
+                <p>
+                  ${price === 0 ? item?.price.toString() : price.toString()}
+                </p>
+              </div>
+
+              <div>
+                <p className="details">
+                  No money will be charged at this step. Reserve now and pay
+                  later!
+                </p>
+              </div>
+
+              <div className="details">
+                <p>
+                  <a href="/">Report this activity.</a>
+                </p>
+              </div>
+
+              <div>
+                <MdClose
+                  className="close_modal_button"
+                  onClick={() => setShowCartModal((prev) => !prev)}
+                />
+              </div>
+            </div>
+          </animated.div>
+          {/* </div> */}
+        </Background>
+      ) : null}
     </>
   );
 };
