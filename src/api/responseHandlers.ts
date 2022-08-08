@@ -243,14 +243,10 @@ export const resendVerification = async (formData: IResendVerification) => {
     if (response.status === 200 && response.data.status === true) {
       Swal.fire({
         title: "Success!",
-        text: "A verification code has been sent to your mail.",
+        text: "A verification code has been sent to your mail. Kindly check your mail and follow the instructions.",
         icon: "success",
         confirmButtonText: "Ok",
-      }).then((result) => {
-        if (result.isConfirmed || result.isDenied || result.isDismissed) {
-          window.location.href = "/#/verify-account";
-        }
-      });
+      })
       return true
     }
 

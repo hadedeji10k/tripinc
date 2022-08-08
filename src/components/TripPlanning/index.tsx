@@ -335,6 +335,8 @@ const TripPlanning = () => {
             <div
               className="trip_planning_menu_row"
               onClick={() => handleMenuClick(3)}
+              id="itinerary_data"
+              data-itinerary-menu-status={tripMenu[3].stateOfClass}
             >
               {tripMenu[3].stateOfClass ? (
                 <span>
@@ -351,7 +353,12 @@ const TripPlanning = () => {
             <div className="trip_planning_budget_container">
               {tripMenu[3].stateOfClass ? (
                 <>
-                  <Itinerary />
+                  <Itinerary
+                    tripDays={tripDays}
+                    setTripDays={setTripDays}
+                    itineraryData={itineraryData}
+                    setItineraryData={setItineraryData}
+                  />
                 </>
               ) : (
                 ""

@@ -20,6 +20,7 @@ import {
   getUserPreferences,
   getUserPlacesVisited,
   getUserPlacesWishToVisit,
+  getUserInterests,
 } from "../../api";
 import { IFormattedCategory, IPlaces } from "../../api/interfaces";
 
@@ -73,6 +74,9 @@ const Profile = (): any => {
   // All interests
   const [interestData, setInterestData] = useState<IFormattedCategory[]>([]);
 
+  // User Interests
+  const [userInterests, setUserInterests] = useState<any[]>([]);
+
   // User visited places
   const [placesVisited, setPlacesVisited] = useState<IPlaces[]>([]);
 
@@ -93,35 +97,41 @@ const Profile = (): any => {
 
         getUserPreferences(userId).then((response) => {
           setUserPreferenceData(response.data);
-          const userPreference = response.data;
 
-          // get all categories (interests)
-          getAllCategories().then((res) => {
-            const arrayToPush: any = [];
-            // loop through the response categories and push the category name and the icon into the array to be used in the preference data
-            for (let i = 0; i < res.data.length; i++) {
-              const element = res.data[i];
-              const data = {
-                id: element.id,
-                title: element.name,
-                symbol: symbolHelper(element.name),
-                stateOfClass: checkForStateOfClass(
-                  userPreference.userInterests,
-                  element.id
-                ),
-              };
-              arrayToPush.push(data);
-            }
-            setInterestData(arrayToPush);
-            setIsLoading(false);
+          getUserInterests(userId).then((interestResponse) => {
+            setUserInterests(interestResponse.data.items);
 
-            // getUserPlacesVisited(userId).then((res) => {
-            //   setPlacesVisited(res.data.items);
-            //   getUserPlacesWishToVisit(userId).then((result) => {
-            //     setWishToVisitPlaces(result.data.items);
-            //     setIsLoading(false);
-            //   });
-            // });
+            // get all categories (interests)
+            getAllCategories().then((res) => {
+              const arrayToPush: any = [];
+              // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+              for (let i = 0; i < res.data.length; i++) {
+                const element = res.data[i];
+                const data = {
+                  id: element.id,
+                  title: element.name,
+                  symbol: symbolHelper(element.name),
+                  stateOfClass: checkForStateOfClass(
+                    interestResponse.data.items,
+                    element.id
+                  ),
+                };
+                arrayToPush.push(data);
+              }
+              setInterestData(arrayToPush);
+
+              // get user places visited
+              getUserPlacesVisited(userId).then((res) => {
+                setPlacesVisited(res.data.items);
+                setIsLoading(false);
+
+                // get user places wish to visit
+                // getUserPlacesWishToVisit(userId).then((result) => {
+                //   setWishToVisitPlaces(result.data.items);
+                //   setIsLoading(false);
+                // });
+              });
+            });
           });
         });
       });
@@ -129,7 +139,9 @@ const Profile = (): any => {
   }, [userId]);
 
   const checkForStateOfClass = (array: any, id: string) => {
-    const found = array.filter((item) => item.id.toString() === id.toString());
+    const found = array.filter(
+      (item) => item.interestId.toString() === id.toString()
+    );
     if (found.length > 0) {
       return true;
     } else {
@@ -196,6 +208,7 @@ const Profile = (): any => {
                 setPlacesVisited={setPlacesVisited}
                 wishToVisitPlaces={wishToVisitPlaces}
                 setWishToVisitPlaces={setWishToVisitPlaces}
+                userInterests={userInterests}
               />
             ) : data[0].slug === "account" ? (
               <AccountPage userPreference={userPreferenceData} />

@@ -31,17 +31,27 @@ const DateComponent = ({ tripDays }: DateComponentProps) => {
       console.log("false");
     }
 
-    console.log("dateContainer ClientHeight>>>>", dateContainer?.clientHeight);
-    console.log("dateContainer ScrollHeight>>>>", dateContainer?.scrollHeight);
-    console.log(
-      "dateTagContainer ClientHeight>>>>",
-      dateTagContainer?.clientHeight
-    );
-    console.log(
-      "dateTagContainer ScrollHeight>>>>",
-      dateTagContainer?.scrollHeight
-    );
+    // setTimeout(() => {
+    //   testing.scrollIntoView();
+    //   console.log("Clicked testing");
+    // }, 200);
+    // console.log("Testing found, ", !!testing);
   });
+
+  const moveToDate = (id: string) => {
+    const testing = document.getElementById("itinerary_data") as HTMLElement;
+
+    if ((testing.dataset.itineraryMenuStatus as string) === "false") {
+      testing.click();
+    }
+    setTimeout(() => {
+      const testingItineraryData = document.getElementById(id) as HTMLElement;
+      if ((testingItineraryData.dataset.itineraryData as string) === "false") {
+        testingItineraryData.click();
+      }
+      testingItineraryData.scrollIntoView();
+    }, 200);
+  };
 
   return (
     <div
@@ -49,7 +59,11 @@ const DateComponent = ({ tripDays }: DateComponentProps) => {
       id="trip_planning_date_tag_container"
     >
       {tripDays?.map((item, key) => (
-        <div key={key} className="trip_planning_date_tag">
+        <div
+          key={key}
+          className="trip_planning_date_tag"
+          onClick={() => moveToDate(`${item.month} ${item.date}`)}
+        >
           <p className="trip_planning_date">{item.month.toUpperCase()}</p>
           <p className="trip_planning_date">{item.date}</p>
         </div>

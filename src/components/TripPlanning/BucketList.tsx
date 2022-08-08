@@ -85,6 +85,7 @@ const TripPlanningBucketList = ({
                   title={item.title}
                   price={item.price}
                   reviews={item.ratings}
+                  itemType={item.itemType}
                   liked={true}
                   itineraryData={itineraryData}
                   setItineraryData={setItineraryData}

@@ -18,6 +18,7 @@ interface PersonalInfoPageProps {
   setPlacesVisited: any;
   wishToVisitPlaces: any;
   setWishToVisitPlaces: any;
+  userInterests: any;
 }
 
 const PersonalInfoPage = ({
@@ -29,9 +30,9 @@ const PersonalInfoPage = ({
   setPlacesVisited,
   wishToVisitPlaces,
   setWishToVisitPlaces,
+  userInterests,
 }: PersonalInfoPageProps) => {
   // const [preferenceData, setPreferenceData] = useState(preferencedata)
-  console.log(interestData);
 
   const [showProfileModal, setShowProfileModal] = useState<Boolean>(false);
   const [showPreferencesModal, setShowPreferencesModal] =
@@ -191,7 +192,7 @@ const PersonalInfoPage = ({
       <div className="preferences_tab">
         <label className="preferences_label">Your travel interests:</label>
         <div className="preferences_tag_container">
-          {userPreference?.userInterests.length > 0 ? (
+          {userInterests.length > 0 ? (
             interestData
               ?.filter((item) => item.stateOfClass === true)
               .map((item, index) => (

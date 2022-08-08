@@ -129,6 +129,11 @@ export const getUserPreferences = async (userId: any): Promise<AxiosResponse<any
     return await TRIPAPI.get(`/api/UserPreferences/GetUserPreference/${userId}`);
 }
 
+// get user Interests
+export const getUserInterests = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/UserPreferences/GetUserInterests/${userId}`);
+}
+
 // get user places visited
 export const getUserPlacesVisited = async (userId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/UserPreferences/GetPlacesVisited/${userId}`);

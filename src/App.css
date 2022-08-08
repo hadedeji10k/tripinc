@@ -208,6 +208,26 @@
   width: 50% !important;
 }
 
+.w_40 {
+  width: 40% !important;
+}
+
+.w_30 {
+  width: 30% !important;
+}
+
+.w_20 {
+  width: 20% !important;
+}
+
+.w_10 {
+  width: 10% !important;
+}
+
+.w_5 {
+  width: 5% !important;
+}
+
 .h_100 {
   height: 100% !important;
 }

@@ -14,17 +14,17 @@ export const tripServiceUrl = "https://tripservice.tripinc.co";
 export const userServiceUrl = "https://usersecurity.tripinc.co";
 export const onboardingServiceUrl = "https://onboarding.tripinc.co";
 
-export const GoogleLoginClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-export const GoogleProviderKey = process.env.REACT_APP_GOOGLE_PROVIDER_ID;
+export const GoogleLoginClientId = window.tripInc?.REACT_APP_GOOGLE_CLIENT_ID;
+export const GoogleProviderKey = window.tripInc?.REACT_APP_GOOGLE_PROVIDER_ID;
 export const CitiesPageSize = 100
-export const GOOGLEAPIKEY = process.env.REACT_APP_GOOGLE_API_KEY
+export const GOOGLEAPIKEY = window.tripInc?.REACT_APP_GOOGLE_API_KEY
 export const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
 export const fullMonthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ]
-export const stripeTestKey = process.env.REACT_APP_STRIPE_TEST_PUBLIC_KEY
-export const stripeLiveKey = process.env.REACT_APP_STRIPE_LIVE_PUBLIC_KEY
+export const stripeTestKey = window.tripInc?.REACT_APP_STRIPE_TEST_PUBLIC_KEY
+export const stripeLiveKey = window.tripInc?.REACT_APP_STRIPE_LIVE_PUBLIC_KEY
 export const currencyList = [
     {
         Name: "Afghan Afghani",

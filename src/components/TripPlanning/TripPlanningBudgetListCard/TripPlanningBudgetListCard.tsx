@@ -17,6 +17,7 @@ interface Props {
   title: any;
   price: any;
   reviews: any;
+  itemType: any;
   liked: any;
   isBucketListLoading: any;
 }
@@ -30,10 +31,12 @@ const TripPlanningBudgetListCard = ({
   title,
   price,
   reviews,
+  itemType,
   liked,
   isBucketListLoading,
 }: Props) => {
-  const [selectedItem, setSelectedItem] = useState<null | number>(null);
+  const [selectedItemId, setSelectedItemId] = useState<null | number>(null);
+  const [selectedItemType, setSelectedItemType] = useState<null | string>(null);
 
   const itineraryDays = getKeysFromObject(itineraryData);
   const data: any = [];
@@ -53,11 +56,13 @@ const TripPlanningBudgetListCard = ({
 
     // get the selected item from the wishListData
     const selectedItemFromWishlist = wishListData.find(
-      (item) => item.id === selectedItem
+      (item) => item.id === selectedItemId && item.itemType === selectedItemType
     );
 
     //check if it's already in the list
-    const isInList = itineraryDay.find((item) => item.id === selectedItem);
+    const isInList = itineraryDay.find(
+      (item) => item.id === selectedItemId && item.itemType === selectedItemType
+    );
 
     if (isInList) {
       Swal.fire({
@@ -81,12 +86,13 @@ const TripPlanningBudgetListCard = ({
       });
     }
 
-    console.log(selectedItem);
+    console.log(selectedItemId);
 
     console.log(itineraryData);
 
-    // set selected item to null
-    setSelectedItem(null);
+    // set selected item id and type to null
+    setSelectedItemId(null);
+    setSelectedItemType(null);
   };
 
   const menu = <Menu onClick={onClick} items={data} />;
@@ -132,7 +138,8 @@ const TripPlanningBudgetListCard = ({
                 <span
                   onClick={(e) => {
                     e.preventDefault();
-                    setSelectedItem(itemId);
+                    setSelectedItemId(itemId);
+                    setSelectedItemType(itemType);
                   }}
                 >
                   <Space>

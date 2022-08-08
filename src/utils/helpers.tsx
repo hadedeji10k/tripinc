@@ -409,6 +409,21 @@ export const generateDateArray = (startDate: Date, endDate: Date) => {
   return array;
 };
 
+// generate itinerary dates object men for itineraries
+export const generateItineraryMenuObject = (array: any) => {
+  let returnedArray: any = [];
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    returnedArray.push({
+      id: i + 1,
+      stateOfClass: false,
+      arrayName: `${element.month} ${element.date}`,
+      ...element,
+    });
+  }
+  return returnedArray;
+};
+
 // get keys from Object
 export const getKeysFromObject = (object: Object) => {
   let keys: any = [];
@@ -416,4 +431,43 @@ export const getKeysFromObject = (object: Object) => {
   for (let k in object) keys.push(k);
 
   return keys;
+};
+
+// function to help rearrange array
+export const moveArray = (array: any, moveIndex: any, toIndex: any) => {
+  /* Moves an array item from one position in an array to another.
+       Note: This is a pure function so a new array will be returned, instead
+       of altering the array argument.
+      Arguments:
+      1. array    : Array in which to move an item.         (required)
+      2. moveIndex : The index of the item to move.          (required)
+      3. toIndex  : The index to move item at moveIndex to. (required)
+    */
+  let itemRemovedArray = [
+    ...array.slice(0, moveIndex),
+    ...array.slice(moveIndex + 1, array.length),
+  ];
+
+  return [
+    ...itemRemovedArray.slice(0, toIndex),
+    array[moveIndex],
+    ...itemRemovedArray.slice(toIndex, itemRemovedArray.length),
+  ];
+};
+
+export const dateSuffix = (numberOfDate) => {
+  switch (numberOfDate) {
+    case 1:
+    case 21:
+    case 31:
+      return "st";
+    case 2:
+    case 22:
+      return "nd";
+    case 3:
+    case 23:
+      return "rd";
+    default:
+      return "th";
+  }
 };
