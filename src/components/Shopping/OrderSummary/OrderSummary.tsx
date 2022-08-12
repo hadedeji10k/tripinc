@@ -1,9 +1,9 @@
 import "./OrderSummary.css";
 interface Props {
   totalAmountOfItems: number;
-  isPaymentCompleted: boolean;
+  isOrderPending: boolean;
 }
-const OrderSummary = ({ totalAmountOfItems, isPaymentCompleted }: Props) => {
+const OrderSummary = ({ totalAmountOfItems, isOrderPending }: Props) => {
   const serviceFee = false ? 200 : 0;
 
   return (
@@ -27,8 +27,8 @@ const OrderSummary = ({ totalAmountOfItems, isPaymentCompleted }: Props) => {
           </div>
         </div>
 
-        {/* hide redeem voucher if payment has already been made*/}
-        {!isPaymentCompleted ? (
+        {/* hide redeem voucher if order payment has been made */}
+        {isOrderPending ? (
           <>
             <hr className="cart_line" />
             <p>Have a Voucher?</p>

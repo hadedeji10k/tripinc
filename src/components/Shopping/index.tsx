@@ -40,8 +40,8 @@ const Shopping = () => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // state to check if payment has been made
-  const [isPaymentCompleted, setIsPaymentCompleted] = useState<boolean>(false);
+  // state to check if order is still pending
+  const [isOrderPending, setIsOrderPending] = useState<boolean>(false);
 
   // state to set customer information
   // const [customerInfo, setCustomerInfo] = useState<any>({});
@@ -57,10 +57,9 @@ const Shopping = () => {
     setIsLoading(true);
     getOrderByID(orderId).then((res) => {
       setOrderDetails(res.data);
-      setIsPaymentCompleted(false);
-      // setIsPaymentCompleted(
-      //   res.data.status.toLowerCase() === "completed" ? true : false
-      // );
+      setIsOrderPending(
+        res.data.status.toLowerCase() === "pending" ? true : false
+      );
       setOrderItems(res.data.items);
       getUserByID(userId as any).then((res) => {
         setUserInfo(res.data);
@@ -83,7 +82,7 @@ const Shopping = () => {
                 01 Order View &nbsp;&nbsp;{" "}
               </span>{" "}
               {/* don't show if payment is already made */}
-              {!isPaymentCompleted ? (
+              {!isOrderPending ? (
                 <>
                   {/* <span
                     className={
@@ -116,7 +115,7 @@ const Shopping = () => {
                 orderItems={orderItems}
                 menuBar={menuBar}
                 setMenuBar={setMenuBar}
-                isPaymentCompleted={isPaymentCompleted}
+                isOrderPending={isOrderPending}
                 userInfo={userInfo}
                 orderDetails={orderDetails as any}
                 setClientSecret={setClientSecret}
@@ -145,7 +144,7 @@ const Shopping = () => {
               totalAmountOfItems={
                 (orderDetails && orderDetails?.totalAmount) || 0
               }
-              isPaymentCompleted={isPaymentCompleted}
+              isOrderPending={isOrderPending}
             />
           </div>
         </div>

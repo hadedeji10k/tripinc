@@ -7,6 +7,17 @@ import { MdClose } from "react-icons/md";
 import { localGetUserId } from "../../../../utils/helpers";
 import { GOOGLEAPIKEY } from "../../../../utils/constants";
 import Swal from "sweetalert2";
+import {
+  IManagePlacesVisited,
+  IManagePlacesWishToVisit,
+  IManagePreference,
+  IManageUserInterests,
+} from "../../../../api/interfaces";
+import {
+  managePlacesVisited,
+  managePlacesWishToVisit,
+  manageUserInterests,
+} from "../../../../api";
 
 // interface for this Modal
 interface PreferencesModalProp {
@@ -266,16 +277,39 @@ const PreferencesModal = ({
   };
 
   // Function to handle save button
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // console.log(placesData);
-    console.log(placesVisitedClone);
-    console.log(wishToVisitPlacesClone);
-    let preferences = interestClone.filter(
-      (item) => item.stateOfClass === true
-    );
+    let preferences = interestClone
+      .filter((item) => item.stateOfClass === true)
+      .map((item) => item.id);
 
-    console.log(preferences);
+    const managePreferenceFormData: IManageUserInterests = {
+      userId,
+      areaOfInterestIds: preferences,
+    };
+    const managePlacesWishToVisitFormData: IManagePlacesWishToVisit = {
+      userId,
+      wishToVisitPlaces: wishToVisitPlacesClone,
+    };
+    const managePlacesVisitedFormData: IManagePlacesVisited = {
+      userId,
+      visitedPlaces: placesVisitedClone,
+    };
+
+    await managePlacesWishToVisit(managePlacesWishToVisitFormData);
+    await managePlacesVisited(managePlacesVisitedFormData);
+    await manageUserInterests(managePreferenceFormData);
+
+    Swal.fire({
+      title: "Success!",
+      text: "You have successfully updated your profile.",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then((result) => {
+      if (result.isConfirmed || result.isDenied || result.isDismissed) {
+        window.location.reload();
+      }
+    });
   };
 
   // return the component

@@ -156,6 +156,10 @@
     margin-bottom: 1.5rem;
 }
 
+.order_payment_status_tab {
+   justify-content: space-between;
+}
+
 @media screen and (max-width: 770px) {
     .shopping_cart_container {
         flex-direction: column;

@@ -471,3 +471,23 @@ export const dateSuffix = (numberOfDate) => {
       return "th";
   }
 };
+
+// const extension = (exportType == 'csv') ? 'csv' : (exportType == 'excel') ? 'xlsx' : 'csv';
+//         const mimeType = (extension == 'csv') ? 'text/csv' : (extension == 'xlsx') ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/json';
+//         const fileName = "Orders-" + new Date().getTime() + `.${extension}`;
+//         exportFromApi(fileName, result, mimeType);
+
+export const exportFromApi = (fileName: string, data: any, type: string) => {
+  const binaryData: any = [];
+  binaryData.push(data);
+
+  const url = window.URL.createObjectURL(new Blob(binaryData, { type }));
+  const a = document.createElement("a");
+  document.body.appendChild(a);
+  a.setAttribute("style", "display: none");
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  window.URL.revokeObjectURL(url);
+  a.remove();
+};

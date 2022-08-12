@@ -285,6 +285,44 @@
   border-radius: 50%;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.large_title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 33px;
+}
+
+.large_title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 29px;
+}
+
+.medium_title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.1rem;
+  line-height: 26px;
+}
+
+.small_title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+
 @media screen and (max-width: 500px) {
   .close_modal_button {
     top: 10px;

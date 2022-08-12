@@ -10,7 +10,7 @@ import Card from "../Cards/TripCard/TripCard";
 import { BiSearch } from "react-icons/bi";
 import { localGetUserId } from "../../utils/helpers";
 import { getUserWishListAsAttraction } from "../../api";
-import { IDeal } from "../../api/interfaces";
+import { IDeal, IPagination } from "../../api/interfaces";
 import { removeFromWishList } from "../../api/responseHandlers";
 import Swal from "sweetalert2";
 
@@ -18,11 +18,12 @@ import Swal from "sweetalert2";
 const BucketListPage = () => {
   // Defining states of this page
 
-  // state to manage location data (to sort out clicked and unclicked location)
-  const [locationData, setLocationData] = useState(locationdata);
   // state to manage the attraction data to be mapped into cards (using this in order to manage the attraction data in case it is filtered)
   const [wishListData, setWishListData] = useState<IDeal[]>([]);
   const [initialWishListData, setInitialWishListData] = useState<IDeal[]>([]);
+
+  const [pagination, setPagination] = useState<IPagination | any>();
+
   // state to manage the search result data, so using this when user filter and it get it for the "Result for:" in the page
   const [searchResultField, setSearchResultField] = useState("All");
   // state to manage the search result in the page
@@ -39,6 +40,15 @@ const BucketListPage = () => {
         .then((res) => {
           setWishListData(res.data.items ? res.data.items : []);
           setInitialWishListData(res.data.items ? res.data.items : []);
+
+          setPagination({
+            hasNext: res.data.hasNext,
+            hasPrevious: res.data.hasPrevious,
+            currentPage: res.data.currentPage,
+            pageSize: res.data.pageSize,
+            totalPages: res.data.totalPages,
+            totalCount: res.data.totalCount,
+          });
           setIsLoading(false);
         })
         .catch((err) => {
@@ -50,8 +60,6 @@ const BucketListPage = () => {
   }, [userId]);
 
   useEffect(() => {
-    // select the location tags clicked
-    let locations = locationData.filter((item) => item.stateOfClass === true);
     // getting the input element
     let input = document.getElementById("input") as HTMLInputElement;
     // if the input value is not null, set the search result field to the input's value
@@ -59,20 +67,8 @@ const BucketListPage = () => {
       setSearchResultField(input.value);
     }
 
-    // if the location tag clicked is empty, set the search result field to the "All"
-    if (locations.length === 0 && input.value === "") {
-      setWishListData(initialWishListData);
-      setSearchResultField("All");
-    }
-
-    // if the location tag clicked is not empty, set the input field back to empty, i.e since at least one of the location tag has been clicked then the input field should be set to empty
-    if (locations.length > 0) {
-      setInputField("");
-      input.value = "";
-    }
-
     return () => {};
-  }, [wishListData, locationData, inputField, initialWishListData]);
+  }, [wishListData, inputField, initialWishListData]);
 
   // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
   // useEffect(() => {
@@ -117,17 +113,6 @@ const BucketListPage = () => {
   //   // get the id of the location tag clicked
   //   const id = e.target.id;
 
-  //   // get the index of the location in the locationData state
-  //   const index = locationData.findIndex((item) => item.id === parseInt(id));
-  //   // change the state of the class of the clicked location tag
-  //   locationData[index].stateOfClass = !locationData[index].stateOfClass;
-  //   // set the location data state to be the current location data
-  //   setLocationData([...locationData]);
-  //   // get all clicked locations
-  //   const clickedLocations = locationData.filter(
-  //     (item) => item.stateOfClass === true
-  //   );
-  //   // console.log(clickedLocations);
   //   let newData: any = [];
   //   let searchResultField1: string = "";
 
@@ -181,10 +166,6 @@ const BucketListPage = () => {
       setWishListData(data);
       // set the search result to the input value
       // setSearchResultField("input.value");
-      // set all locations to false so it won't be filtered
-      locationData.forEach((item) => {
-        item.stateOfClass = false;
-      });
     } else {
       setWishListData([]);
     }
@@ -204,10 +185,6 @@ const BucketListPage = () => {
     // using this to shadow mark the input field and set it to empty
     let input = document.getElementById("input") as HTMLInputElement;
     input.value = "";
-    // and setting the location tags to false
-    locationData.forEach((item) => {
-      item.stateOfClass = false;
-    });
   };
 
   const handleLikeButton = async (id: any) => {};
@@ -246,6 +223,46 @@ const BucketListPage = () => {
       });
   };
 
+  const handlePaginationPrev = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage - 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getUserWishListAsAttraction(query).then((res) => {
+      setInitialWishListData(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
+  const handlePaginationNext = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage + 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getUserWishListAsAttraction(query).then((res) => {
+      setInitialWishListData(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -276,57 +293,23 @@ const BucketListPage = () => {
               </button>
             </div>
           </div>
-          {/* <p>Sort using Location:</p> */}
-          <div
-            id="preferences_tag_container"
-            className="preferences_tag_container"
-          >
-            {/* <span className="preferences_not_clicked" onClick={handleAllClick}>
-              All
-            </span> */}
-            <br />
-            {/* {locationData.map((item) => (
-              <span
-                key={item.id}
-                id={item.id.toString()}
-                className={
-                  item.stateOfClass
-                    ? "preferences_clicked"
-                    : "preferences_not_clicked"
-                }
-                onClick={handleLocationsClick}
-              >
-                {item.title}
-              </span>
-            ))} */}
-          </div>
-          {/* <div className="scroll_button">
-            <span
-              id="prev"
-              className="navigation_button"
-              onClick={handleScrollLeft}
-            >
-              Prev
-            </span>
-            <span
-              id="next"
-              className="navigation_button"
-              onClick={handleScrollRight}
-            >
-              Next
-            </span>
-          </div> */}
-          {/* Data to be passed here must be from user's bucket list, i.e the item user liked, so it will have the heart red */}
-          {/* <Card data={wishListData} preferencesData={preferencesData} /> */}
 
-          {/* <div className="">
+          <div className="">
             <p>Search Result for: {searchResultField}</p>
-          </div> */}
+          </div>
+          {searchResultField.toLowerCase() !== "all" ? (
+            <span
+              className="preferences_clicked m_b_20"
+              onClick={handleAllClick}
+            >
+              See all
+            </span>
+          ) : null}
 
           {wishListData.length > 0 ? (
             <div className="card">
               {wishListData.map((item) => (
-                <div key={item.id}>
+                <div key={`${item.id}${item.itemType}`}>
                   <Card
                     item={item}
                     liked={true}
@@ -350,13 +333,6 @@ const BucketListPage = () => {
               <br />
               <h3>No Result</h3>
               <br />
-              <span
-                id="next"
-                className="preferences_clicked"
-                onClick={handleAllClick}
-              >
-                See all
-              </span>
             </>
           ) : (
             <>
@@ -370,6 +346,45 @@ const BucketListPage = () => {
               <br />
             </>
           )}
+          <div className="explore_page_number">
+            <span>
+              Page {pagination?.currentPage} of {pagination?.totalPages}
+            </span>
+            <span>
+              {(pagination?.currentPage - 1) * pagination?.pageSize + 1} -
+              {pagination?.hasNext
+                ? pagination?.pageSize * pagination?.currentPage
+                : pagination?.totalCount}
+            </span>
+          </div>
+          <div className="scroll_button">
+            {pagination?.hasPrevious ? (
+              <button
+                className={
+                  pagination?.hasPrevious
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationPrev}
+                disabled={!pagination?.hasPrevious}
+              >
+                Prev
+              </button>
+            ) : null}
+            {pagination?.hasNext ? (
+              <button
+                className={
+                  pagination?.hasNext
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationNext}
+                disabled={!pagination?.hasNext}
+              >
+                Next
+              </button>
+            ) : null}
+          </div>
         </div>
       </Spin>
     </>

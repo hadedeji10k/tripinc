@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Autocomplete from "react-google-autocomplete";
-import { getAllCategories } from "../../api";
+import { getAllCategories, manageUserInterests } from "../../api";
 import {
   managePlacesVisited,
   managePlacesWishToVisit,
@@ -14,8 +14,10 @@ import {
   IManagePlacesVisited,
   IManagePlacesWishToVisit,
   IManagePreference,
+  IManageUserInterests,
 } from "../../api/interfaces";
 import { GOOGLEAPIKEY } from "../../utils/constants";
+import Swal from "sweetalert2";
 
 const Preferences: React.FC = () => {
   const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
@@ -151,24 +153,36 @@ const Preferences: React.FC = () => {
       .filter((item) => item.stateOfClass === true)
       .map((item) => item.id);
 
-    const managePreferenceFormData: IManagePreference = {
+    const managePreferenceFormData: IManageUserInterests = {
       userId,
       areaOfInterestIds: preferences,
     };
     const managePlacesWishToVisitFormData: IManagePlacesWishToVisit = {
+      userId,
       wishToVisitPlaces: wishToVisit,
     };
     const managePlacesVisitedFormData: IManagePlacesVisited = {
+      userId,
       visitedPlaces: placesBeenToData,
     };
     await managePlacesWishToVisit(managePlacesWishToVisitFormData);
     await managePlacesVisited(managePlacesVisitedFormData);
+    await manageUserInterests(managePreferenceFormData);
 
-    setTimeout(() => {
-      window.location.href = "/#/profile";
-    }, 1000);
+    Swal.fire({
+      title: "Success!",
+      text: "You have successfully updated your profile.",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then((result) => {
+      if (result.isConfirmed || result.isDenied || result.isDismissed) {
+        setIsLoading(false);
 
-    setIsLoading(false);
+        setTimeout(() => {
+          window.location.href = "/#/profile";
+        }, 100);
+      }
+    });
   };
 
   return (

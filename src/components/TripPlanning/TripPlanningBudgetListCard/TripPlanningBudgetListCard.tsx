@@ -61,7 +61,9 @@ const TripPlanningBudgetListCard = ({
 
     //check if it's already in the list
     const isInList = itineraryDay.find(
-      (item) => item.id === selectedItemId && item.itemType === selectedItemType
+      (item) =>
+        item.item.id === selectedItemId &&
+        item.item.itemType === selectedItemType
     );
 
     if (isInList) {
@@ -72,7 +74,15 @@ const TripPlanningBudgetListCard = ({
         confirmButtonText: "Ok",
       });
     } else {
-      itineraryDay.push(selectedItemFromWishlist);
+      // push the data into the itinerary Day array gotten from the whole array
+      itineraryDay.push({
+        item: selectedItemFromWishlist,
+        customNote: "",
+        startTime: "",
+        endTime: "",
+        numberOfPeople: "1",
+      });
+      // set itinerary data with the existing and the date changed
       setItineraryData({
         ...itineraryData,
         [dateClicked]: itineraryDay,
@@ -85,11 +95,6 @@ const TripPlanningBudgetListCard = ({
         confirmButtonText: "Ok",
       });
     }
-
-    console.log(selectedItemId);
-
-    console.log(itineraryData);
-
     // set selected item id and type to null
     setSelectedItemId(null);
     setSelectedItemType(null);

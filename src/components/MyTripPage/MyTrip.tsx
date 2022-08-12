@@ -35,10 +35,10 @@ const MyTrip = () => {
     setCurrentData(currentdata[0].title);
 
     // get the select input and set the value to current data
-    let select_input = document.getElementById(
-      "select_input"
-    ) as HTMLSelectElement;
-    select_input.value = currentData;
+    // let select_input = document.getElementById(
+    //   "select_input"
+    // ) as HTMLSelectElement;
+    // select_input.value = currentData;
 
     // set the attraction data after filtering the current data
     // if (currentData === "Upcoming Trips") {
@@ -95,7 +95,8 @@ const MyTrip = () => {
     setCurrentData(menuData[index].title);
   };
 
-  return (
+  // when working on this uncomment line 38 - 41 inside useEffect
+  return false ? (
     <div className="trip_page">
       <div className="trip_page_container">
         <div className="search_container">
@@ -176,6 +177,12 @@ const MyTrip = () => {
           )}
         </div>
       </div>
+    </div>
+  ) : (
+    <div className="trip_page">
+      <h3 className="trip_page_header">
+        This feature is unavailable right now
+      </h3>
     </div>
   );
 };

@@ -15,7 +15,7 @@ import Itinerary from "./Itinerary";
 const tripmenu = [
   {
     id: 1,
-    stateOfClass: false,
+    stateOfClass: true,
     name: "budget",
   },
   {

@@ -5,6 +5,8 @@ import moment from "moment";
 import { MdLocationOn } from "react-icons/md";
 import { generateItineraryMenuObject, dateSuffix } from "../../utils/helpers";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import Swal from "sweetalert2";
+import { ImCancelCircle } from "react-icons/im";
 const { Option } = Select;
 
 interface ItineraryProps {
@@ -37,8 +39,63 @@ const Itinerary = ({
     setTripMenu([...tripMenu]);
   };
 
-  const handleChange = (value: { value: string; label: React.ReactNode }) => {
-    console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+  const handleChange = (
+    value: { value: string; label: React.ReactNode },
+    itineraryDate,
+    itemKey
+  ) => {
+    // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+    // get the day's itinerary array
+    const itineraryDay = itineraryData[itineraryDate];
+    // get the item using the key from the array
+    let itemToEdit = itineraryDay[itemKey];
+    // change the time
+    itemToEdit.numberOfPeople = value;
+    // then set the itineraryData to the edited
+    setItineraryData({
+      ...itineraryData,
+      [itineraryDate]: itineraryDay,
+    });
+  };
+
+  const handleDelete = (itineraryDate, itemKey) => {
+    Swal.fire({
+      title: "Warning!",
+      text: "Are you sure you want to remove this from your itinerary list?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, remove!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const itineraryDay = itineraryData[itineraryDate];
+        const filteredArray = itineraryDay.filter(
+          (item, key) => key !== parseInt(itemKey)
+        );
+        setItineraryData({
+          ...itineraryData,
+          [itineraryDate]: filteredArray,
+        });
+      }
+    });
+  };
+
+  const handleTimeChange = (time, timeString, itineraryDate, itemKey) => {
+    // get the day's itinerary array
+    const itineraryDay = itineraryData[itineraryDate];
+    // get the item using the key from the array
+    let itemToEdit = itineraryDay[itemKey];
+    // change the time
+    itemToEdit.startTime = timeString[0];
+    itemToEdit.endTime = timeString[1];
+    // then set the itineraryData to the edited
+    setItineraryData({
+      ...itineraryData,
+      [itineraryDate]: itineraryDay,
+    });
+    console.log("Updated >>>>>>");
+    console.log(itineraryData);
   };
 
   return (
@@ -87,49 +144,79 @@ const Itinerary = ({
                           width: "100%",
                           height: "100px",
                         }}
-                        src={itinerary.imageUrl}
+                        src={itinerary.item.imageUrl}
                         alt=""
                       />
                     </div>
                     <div className="itinerary_display_card_info">
                       <p className="itinerary_display_card_title">
-                        {itinerary.title}
+                        {itinerary.item.title}
                       </p>
                       <p className="itinerary_display_card_desc">
-                        {itinerary.description.slice(0, 100)}...
+                        {itinerary.item.description.slice(0, 100)}...
                       </p>
                       <div className="itinerary_display_card_info_row">
                         <Tooltip
                           placement="top"
                           title={
-                            itinerary?.location
-                              ? itinerary.location
-                              : itinerary.city
+                            itinerary.item?.location
+                              ? itinerary.item.location
+                              : itinerary.item.city
                           }
                         >
                           <span className="itinerary_display_card_direction_tag">
                             <MdLocationOn />
                           </span>
                         </Tooltip>
-                        <TimePicker
+                        <TimePicker.RangePicker
                           className="itinerary_display_card_time"
-                          defaultValue={moment("09:00:00", "HH:mm:ss")}
+                          onChange={(time, timeString) =>
+                            handleTimeChange(
+                              time,
+                              timeString,
+                              item.arrayName,
+                              key
+                            )
+                          }
+                          defaultValue={[
+                            moment(
+                              itinerary.startTime !== ""
+                                ? itinerary.startTime
+                                : "09:00:00",
+                              "HH:mm:ss"
+                            ),
+                            moment(
+                              itinerary.endTime !== ""
+                                ? itinerary.endTime
+                                : "09:00:00",
+                              "HH:mm:ss"
+                            ),
+                          ]}
                         />
                         <Select
                           defaultValue={{ value: "1", label: "The1" }}
-                          onChange={handleChange}
+                          onChange={(value) =>
+                            handleChange(value, item.arrayName, key)
+                          }
+                          className="itinerary_display_card_select"
                         >
-                          <Option value="1">The1</Option>
-                          <Option value="2">The2</Option>
-                          <Option value="3">The3</Option>
-                          <Option value="4">The4</Option>
-                          <Option value="5">The5</Option>
-                          <Option value="6">The6</Option>
-                          <Option value="7">The7</Option>
-                          <Option value="8">The8</Option>
-                          <Option value="9">The9</Option>
-                          <Option value="10">The10</Option>
+                          <Option value="1">1</Option>
+                          <Option value="2">2</Option>
+                          <Option value="3">3</Option>
+                          <Option value="4">4</Option>
+                          <Option value="5">5</Option>
+                          <Option value="6">6</Option>
+                          <Option value="7">7</Option>
+                          <Option value="8">8</Option>
+                          <Option value="9">9</Option>
+                          <Option value="10">10</Option>
                         </Select>
+                        <span
+                          className="itinerary_display_delete_button"
+                          onClick={() => handleDelete(item.arrayName, key)}
+                        >
+                          <ImCancelCircle />
+                        </span>
                       </div>
                     </div>
                   </div>

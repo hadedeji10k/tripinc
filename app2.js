@@ -135,3 +135,30 @@ let newBook = books.map((a) => ({ ...a }));
 newBook[1].title = "Things fall apart";
 console.log(newBook);
 console.log(books);
+
+// <div aria-label="decrement" data-unique_id="Unique number">
+//   Yes
+// </div>;
+
+// const decrementSelector = '[aria-label="decrement"]';
+
+// /*
+// 1. Add a data attribute to the HTML element showing the status of pack
+// 2. Also add the unique_id (of the package) as a data attribute
+// 3. Add data attribute to the HTML element of button of pack to click
+// */
+
+// cy.get(decrementSelector)
+//   .contains("Yes")
+//   .then(($el) => {
+//     $el.invoke("attr", "data-unique_id").then((dataId) => {
+//       cy.log("dataId : ", dataId);
+
+//       // get the input element and type the dataId in the input
+//       cy.get('[data-testid="first-name"]').type(dataId);
+//       // Get the button element and click on the button element
+//       cy.get('[data-testid="submit_button"]').click();
+//       // expect the result
+//       $el.should("have.text", "Yes");
+//     });
+//   });

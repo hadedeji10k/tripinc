@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited, IForgotPasswordRequest, IConfirmForgotPasswordRequest, IManageUserFoods, IManageUserConsents } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited, IForgotPasswordRequest, IConfirmForgotPasswordRequest, IManageUserFoods, IManageUserConsents, IManageUserInterests } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -145,6 +145,10 @@ export const getUserInterests = async (userId: any): Promise<AxiosResponse<any>>
     return await TRIPAPI.get(`/api/UserPreferences/GetUserInterests/${userId}`);
 }
 
+// manage user Interests
+export const manageUserInterests = async (formData: IManageUserInterests): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.post('/api/UserPreferences/ManageUserInterests', formData);
+}
 // export const removeInterestIds = async (formData: IManagePreference): Promise<AxiosResponse<any>> => {
 //     return await TRIPAPI.delete('/api/UserPreferences/RemoveUserInterest', formData);
 // }
@@ -254,6 +258,10 @@ export const getOrderByID = async (orderId: any): Promise<AxiosResponse<any>> =>
     return await TRIPAPI.get(`/api/Orders/${orderId}`);
 }
 
+// Export Order
+export const exportOrder = async (query?: string): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Orders/Export?${query}`);
+}
 
 
 // add review

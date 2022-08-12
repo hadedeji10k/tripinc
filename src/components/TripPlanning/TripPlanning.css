@@ -454,6 +454,12 @@
     margin-right: 15px;
 }
 
+.itinerary_display_card_select.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-radius: 15px;
+    height: 40px;
+    align-items: center;
+}
+
 .trip_planning_itinerary_menu_date {
     display: inline-flex;
     flex-direction: column;
@@ -466,6 +472,15 @@
     font-size: 0.8rem;
     color: #999999;
     margin-right: 10px;
+}
+
+.itinerary_display_delete_button {
+    display: inline-flex;
+    margin-left: 20px;
+    flex-direction: column;
+    font-size: 20px;
+    justify-content: center;
+    color: red
 }
 
 /* screen  */

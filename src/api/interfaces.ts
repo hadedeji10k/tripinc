@@ -35,9 +35,12 @@ export interface IManagePreference {
     foodPreference?: string
     preferedCurrency?: string
     preferedTimeFormat?: string
-    areaOfInterestIds?: number[]
 }
 
+export interface IManageUserInterests {
+    userId: number
+    areaOfInterestIds?: number[]
+}
 export interface IManageUserConsents {
     userId: number,
     allowAllCookies?: boolean,
@@ -53,6 +56,7 @@ export interface IManageUserFoods {
     }[]
 }
 export interface IManagePlacesWishToVisit {
+    userId?: number,
     wishToVisitPlaces?: {
         id?: number,
         userId?: number,
@@ -67,6 +71,7 @@ export interface IManagePlacesWishToVisit {
 }
 
 export interface IManagePlacesVisited {
+    userId?: number,
     visitedPlaces?: {
         id?: number,
         userId?: number,

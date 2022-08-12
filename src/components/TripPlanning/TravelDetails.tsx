@@ -187,14 +187,6 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
               </div>
               <div className="w_100">
                 <label className="signin_label">Time of Arrival</label>
-                {/* <input
-                      name="flight_name"
-                      className="signin_input"
-                      type="text"
-                      placeholder="Enter the name of the flight"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    /> */}
 
                 <TimePicker.RangePicker
                   style={{ display: "inline-flex" }}
@@ -223,8 +215,6 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
                   name="arrivalDate"
                   defaultValue={moment()}
                 />
-                <br />
-                <br />
                 {formik.errors.arrivalDate && formik.touched.arrivalDate ? (
                   <p className="red_alert">{formik.errors.arrivalDate}</p>
                 ) : null}

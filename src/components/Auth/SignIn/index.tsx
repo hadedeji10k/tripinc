@@ -142,7 +142,7 @@ const Signin = () => {
   const handleForgotPassword = () => {
     Swal.fire({
       title: "Enter your email address",
-      input: "text",
+      input: "email",
       inputAttributes: {
         autocapitalize: "off",
       },

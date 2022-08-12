@@ -275,7 +275,7 @@ const Popular = () => {
               </span>
               <Select
                 mode="tags"
-                className="explorer_page_third_party_select"
+                className="explorer_page_third_party_select explore_page_select"
                 size="small"
                 placeholder="What floats your boat"
                 // defaultValue={['a10', 'c12']}
@@ -341,28 +341,32 @@ const Popular = () => {
             </span>
           </div>
           <div className="scroll_button">
-            <button
-              className={
-                pagination?.hasPrevious
-                  ? "explore_navigation_button_active"
-                  : "explore_navigation_button"
-              }
-              onClick={handlePaginationPrev}
-              disabled={!pagination?.hasPrevious}
-            >
-              Prev
-            </button>
-            <button
-              className={
-                pagination?.hasNext
-                  ? "explore_navigation_button_active"
-                  : "explore_navigation_button"
-              }
-              onClick={handlePaginationNext}
-              disabled={!pagination?.hasNext}
-            >
-              Next
-            </button>
+            {pagination?.hasPrevious ? (
+              <button
+                className={
+                  pagination?.hasPrevious
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationPrev}
+                disabled={!pagination?.hasPrevious}
+              >
+                Prev
+              </button>
+            ) : null}
+            {pagination?.hasNext ? (
+              <button
+                className={
+                  pagination?.hasNext
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationNext}
+                disabled={!pagination?.hasNext}
+              >
+                Next
+              </button>
+            ) : null}
           </div>
         </div>
       </Spin>

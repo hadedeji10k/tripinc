@@ -49,7 +49,10 @@ const DateComponent = ({ tripDays }: DateComponentProps) => {
       if ((testingItineraryData.dataset.itineraryData as string) === "false") {
         testingItineraryData.click();
       }
-      testingItineraryData.scrollIntoView();
+      testingItineraryData.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }, 200);
   };
 
