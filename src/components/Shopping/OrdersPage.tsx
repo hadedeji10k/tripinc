@@ -52,9 +52,7 @@ const Row = (props: { row: IOrderDetails }) => {
           {row.totalAmount}
         </TableCell>
         <TableCell align="right">
-          {row.amountPaid !== 0 && row.amountPaid === row.totalAmount
-            ? "Paid"
-            : "Not Paid"}
+          {row.paid !== true ? "Paid" : "Not Paid"}
         </TableCell>
         <TableCell align="right">
           {currencySymbolHelper(row.currency)}

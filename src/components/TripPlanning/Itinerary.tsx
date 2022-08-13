@@ -8,6 +8,7 @@ import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import Swal from "sweetalert2";
 import { ImCancelCircle } from "react-icons/im";
 import { BsFillPencilFill } from "react-icons/bs";
+import { FaSave } from "react-icons/fa";
 const { Option } = Select;
 
 interface ItineraryProps {
@@ -52,6 +53,37 @@ const Itinerary = ({
     let itemToEdit = itineraryDay[itemKey];
     // change the time
     itemToEdit.numberOfPeople = value;
+    // then set the itineraryData to the edited
+    setItineraryData({
+      ...itineraryData,
+      [itineraryDate]: itineraryDay,
+    });
+  };
+
+  const handleCustomNoteChange = (e, itineraryDate, itemKey) => {
+    e.preventDefault();
+    // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+    // get the day's itinerary array
+    const itineraryDay = itineraryData[itineraryDate];
+    // get the item using the key from the array
+    let itemToEdit = itineraryDay[itemKey];
+    // change the time
+    itemToEdit.customNote = e.target.value;
+    // then set the itineraryData to the edited
+    setItineraryData({
+      ...itineraryData,
+      [itineraryDate]: itineraryDay,
+    });
+  };
+
+  const handleCustomNote = (itineraryDate, itemKey) => {
+    // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+    // get the day's itinerary array
+    const itineraryDay = itineraryData[itineraryDate];
+    // get the item using the key from the array
+    let itemToEdit = itineraryDay[itemKey];
+    // change the time
+    itemToEdit.customNoteStatus = !itemToEdit.customNoteStatus;
     // then set the itineraryData to the edited
     setItineraryData({
       ...itineraryData,
@@ -139,94 +171,115 @@ const Itinerary = ({
               itineraryData[item.arrayName].length > 0 ? (
                 itineraryData[item.arrayName].map((itinerary, key) => (
                   <div className="itinerary_display_card_container" key={key}>
-                    <div className="itinerary_display_card_image">
-                      <img
-                        style={{
-                          width: "100%",
-                          height: "100px",
-                        }}
-                        src={itinerary.item.imageUrl}
-                        alt=""
-                      />
-                    </div>
-                    <div className="itinerary_display_card_info">
-                      <p className="itinerary_display_card_title">
-                        {itinerary.item.title}
-                      </p>
-                      <p className="itinerary_display_card_desc">
-                        {itinerary.item.description.slice(0, 100)}...
-                      </p>
-                      <div className="itinerary_display_card_info_row">
-                        <Tooltip
-                          placement="top"
-                          title={
-                            itinerary.item?.location
-                              ? itinerary.item.location
-                              : itinerary.item.city
-                          }
-                        >
-                          <span className="itinerary_display_card_direction_tag">
-                            <MdLocationOn />
-                          </span>
-                        </Tooltip>
-                        <TimePicker.RangePicker
-                          className="itinerary_display_card_time"
-                          onChange={(time, timeString) =>
-                            handleTimeChange(
-                              time,
-                              timeString,
-                              item.arrayName,
-                              key
-                            )
-                          }
-                          defaultValue={[
-                            moment(
-                              itinerary.startTime !== ""
-                                ? itinerary.startTime
-                                : "09:00:00",
-                              "HH:mm:ss"
-                            ),
-                            moment(
-                              itinerary.endTime !== ""
-                                ? itinerary.endTime
-                                : "09:00:00",
-                              "HH:mm:ss"
-                            ),
-                          ]}
+                    <div className="itinerary_display_card_details row w_100">
+                      <div className="itinerary_display_card_image">
+                        <img
+                          style={{
+                            width: "100%",
+                            height: "100px",
+                          }}
+                          src={itinerary.item.imageUrl}
+                          alt=""
                         />
-                        <Select
-                          defaultValue={{ value: "1", label: "The1" }}
-                          onChange={(value) =>
-                            handleChange(value, item.arrayName, key)
-                          }
-                          className="itinerary_display_card_select"
-                        >
-                          <Option value="1">1</Option>
-                          <Option value="2">2</Option>
-                          <Option value="3">3</Option>
-                          <Option value="4">4</Option>
-                          <Option value="5">5</Option>
-                          <Option value="6">6</Option>
-                          <Option value="7">7</Option>
-                          <Option value="8">8</Option>
-                          <Option value="9">9</Option>
-                          <Option value="10">10</Option>
-                        </Select>
-                        <span
-                          className="itinerary_display_edit_button"
-                          onClick={() => handleDelete(item.arrayName, key)}
-                        >
-                          <BsFillPencilFill />
-                        </span>
-                        <span
-                          className="itinerary_display_delete_button"
-                          onClick={() => handleDelete(item.arrayName, key)}
-                        >
-                          <ImCancelCircle />
-                        </span>
+                      </div>
+                      <div className="itinerary_display_card_info">
+                        <p className="itinerary_display_card_title">
+                          {itinerary.item.title}
+                        </p>
+                        <p className="itinerary_display_card_desc">
+                          {itinerary.item.description.slice(0, 100)}...
+                        </p>
+                        <div className="itinerary_display_card_info_row">
+                          <Tooltip
+                            placement="top"
+                            title={
+                              itinerary.item?.location
+                                ? itinerary.item.location
+                                : itinerary.item.city
+                            }
+                          >
+                            <span className="itinerary_display_card_direction_tag">
+                              <MdLocationOn />
+                            </span>
+                          </Tooltip>
+                          <TimePicker.RangePicker
+                            className="itinerary_display_card_time"
+                            onChange={(time, timeString) =>
+                              handleTimeChange(
+                                time,
+                                timeString,
+                                item.arrayName,
+                                key
+                              )
+                            }
+                            defaultValue={[
+                              moment(
+                                itinerary.startTime !== ""
+                                  ? itinerary.startTime
+                                  : "09:00:00",
+                                "HH:mm:ss"
+                              ),
+                              moment(
+                                itinerary.endTime !== ""
+                                  ? itinerary.endTime
+                                  : "09:00:00",
+                                "HH:mm:ss"
+                              ),
+                            ]}
+                          />
+                          <Select
+                            defaultValue={{ value: "1", label: "The1" }}
+                            onChange={(value) =>
+                              handleChange(value, item.arrayName, key)
+                            }
+                            className="itinerary_display_card_select"
+                          >
+                            <Option value="1">1</Option>
+                            <Option value="2">2</Option>
+                            <Option value="3">3</Option>
+                            <Option value="4">4</Option>
+                            <Option value="5">5</Option>
+                            <Option value="6">6</Option>
+                            <Option value="7">7</Option>
+                            <Option value="8">8</Option>
+                            <Option value="9">9</Option>
+                            <Option value="10">10</Option>
+                          </Select>
+                          <span
+                            className="itinerary_display_card_direction_tag"
+                            onClick={() =>
+                              handleCustomNote(item.arrayName, key)
+                            }
+                          >
+                            <BsFillPencilFill />
+                          </span>
+                          <span
+                            className="itinerary_display_delete_button"
+                            onClick={() => handleDelete(item.arrayName, key)}
+                          >
+                            <ImCancelCircle />
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    <div className="itinerary_display_custom_note_container"></div>
+                    {itinerary.customNoteStatus ? (
+                      <div className="itinerary_display_custom_note_container row w_100">
+                        <input
+                          defaultValue={itinerary.customNote}
+                          onChange={(e) =>
+                            handleCustomNoteChange(e, item.arrayName, key)
+                          }
+                          className="w_90 basic_details_input"
+                          type="text"
+                          name=""
+                          id=""
+                          placeholder="Add custom Note"
+                        />
+                        <span className="itinerary_display_card_direction_tag w_10">
+                          <FaSave />
+                        </span>
+                      </div>
+                    ) : null}
                   </div>
                 ))
               ) : (

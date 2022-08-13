@@ -131,14 +131,13 @@ const Profile = (): any => {
                 getUserConsents(userId).then((userConsents) => {
                   setUserConsents(userConsents.data);
                   console.log(userConsents.data);
-                  setIsLoading(false);
                 });
 
                 // get user places wish to visit
-                // getUserPlacesWishToVisit(userId).then((result) => {
-                //   setWishToVisitPlaces(result.data.items);
-                //   setIsLoading(false);
-                // });
+                getUserPlacesWishToVisit(userId).then((result) => {
+                  setWishToVisitPlaces(result.data.items);
+                  setIsLoading(false);
+                });
               });
             });
           });

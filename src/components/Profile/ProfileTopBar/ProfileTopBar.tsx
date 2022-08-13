@@ -91,29 +91,29 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
       <Spin spinning={isLoading} size="large">
         <div className="profile_top_bar_container">
           <div className="user_profile">
-            {userProfile.profilePicture ? (
-              <div style={{ position: "relative" }}>
-                <img
-                  className="user_image"
-                  src={userProfile.profilePicture}
-                  alt=""
-                />
-                <ImageUploading value={images} onChange={onChange}>
-                  {({ onImageUpload, dragProps }) => (
-                    // write your building UI
-                    <div
-                      className="profile_top_bar_button"
-                      onClick={onImageUpload}
-                      {...dragProps}
-                    >
-                      <BsFillPencilFill />
-                    </div>
-                  )}
-                </ImageUploading>
-              </div>
-            ) : (
-              <img className="user_image" src={defaultImage} alt="" />
-            )}
+            <div style={{ position: "relative" }}>
+              <img
+                className="user_image"
+                src={
+                  userProfile?.profilePicture
+                    ? userProfile.profilePicture
+                    : defaultImage
+                }
+                alt=""
+              />
+              <ImageUploading value={images} onChange={onChange}>
+                {({ onImageUpload, dragProps }) => (
+                  // write your building UI
+                  <div
+                    className="profile_top_bar_button"
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    <BsFillPencilFill />
+                  </div>
+                )}
+              </ImageUploading>
+            </div>
             <h3 className="user_name">{`${userProfile.firstName} ${userProfile.lastName}`}</h3>
             {userProfile.emailVerified ? (
               <p className="user_identity">Identity verified</p>

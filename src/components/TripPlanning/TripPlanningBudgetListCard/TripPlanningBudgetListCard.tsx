@@ -81,6 +81,7 @@ const TripPlanningBudgetListCard = ({
         startTime: "",
         endTime: "",
         numberOfPeople: "1",
+        customNoteStatus: false,
       });
       // set itinerary data with the existing and the date changed
       setItineraryData({
