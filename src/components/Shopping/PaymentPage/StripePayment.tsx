@@ -9,9 +9,15 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./PaymentPage.css";
-import { stripeLiveKey } from "../../../utils/constants";
+import {
+  stripeTestKey,
+  runtimeEnvironment,
+  stripeLiveKey,
+} from "../../../utils/constants";
 
-const stripePromise = loadStripe(stripeLiveKey as string);
+const stripeKey = runtimeEnvironment === "test" ? stripeTestKey : stripeLiveKey;
+
+const stripePromise = loadStripe(stripeKey as string);
 
 const StripePayment = ({ orderReference, amount, clientSecret }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -92,12 +98,15 @@ const CheckoutForm = ({ orderReference, amount }) => {
         </p>
         <form className="payment_page_form" onSubmit={handleSubmit}>
           <PaymentElement />
-          <button
-            className="signin_button m_t_20 payment_button"
-            disabled={!stripe}
-          >
-            Submit
-          </button>
+          {stripe ? (
+            <button
+              className="signin_button m_t_20 payment_button"
+              disabled={!stripe}
+            >
+              Submit
+            </button>
+          ) : null}
+
           {/* Show error message */}
           {errorMessage && <div className="red_alert">{errorMessage}</div>}
         </form>

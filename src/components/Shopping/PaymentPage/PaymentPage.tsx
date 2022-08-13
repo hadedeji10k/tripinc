@@ -30,15 +30,15 @@ const PaymentPage = ({
       <div className="payment_page_container">
         <div className="info_container">
           <h3 className="payment_page_title">Payment Portal</h3>
-          <div className="saved_contact_info">
+          {/* <div className="saved_contact_info">
             <h3>Pay with: </h3>
             <div>
               <label className="payment_page_label">Saved contact info</label>
-              {/* <input
+              <input
                 className="payment_page_input"
                 type="text"
                 placeholder="Enter First Name"
-              /> */}
+              />
               <div className="select_container">
                 <select name="" id="">
                   <option value="">claire.gifford@tripinc.co </option>
@@ -47,7 +47,7 @@ const PaymentPage = ({
                 </select>
               </div>
             </div>
-          </div>
+          </div> */}
           <hr className="cart_line" />
           <div className="card_info_container">
             <div className="card_info_details">

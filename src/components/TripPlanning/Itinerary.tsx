@@ -7,6 +7,7 @@ import { generateItineraryMenuObject, dateSuffix } from "../../utils/helpers";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import Swal from "sweetalert2";
 import { ImCancelCircle } from "react-icons/im";
+import { BsFillPencilFill } from "react-icons/bs";
 const { Option } = Select;
 
 interface ItineraryProps {
@@ -212,6 +213,12 @@ const Itinerary = ({
                           <Option value="10">10</Option>
                         </Select>
                         <span
+                          className="itinerary_display_edit_button"
+                          onClick={() => handleDelete(item.arrayName, key)}
+                        >
+                          <BsFillPencilFill />
+                        </span>
+                        <span
                           className="itinerary_display_delete_button"
                           onClick={() => handleDelete(item.arrayName, key)}
                         >
@@ -219,6 +226,7 @@ const Itinerary = ({
                         </span>
                       </div>
                     </div>
+                    <div className="itinerary_display_custom_note_container"></div>
                   </div>
                 ))
               ) : (

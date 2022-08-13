@@ -82,7 +82,7 @@ const Shopping = () => {
                 01 Order View &nbsp;&nbsp;{" "}
               </span>{" "}
               {/* don't show if payment is already made */}
-              {!isOrderPending ? (
+              {isOrderPending ? (
                 <>
                   {/* <span
                     className={

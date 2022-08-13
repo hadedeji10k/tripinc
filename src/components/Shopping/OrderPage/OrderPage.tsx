@@ -127,92 +127,92 @@ const OrderPage = ({
       });
   };
 
-  const handleExportOrder = async () => {
-    setIsLoading(true);
+  // const handleExportOrder = async () => {
+  //   setIsLoading(true);
 
-    // const inputOptions = new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     resolve({
-    //       csv: "CSV",
-    //       excel: "EXCEL",
-    //     });
-    //   }, 100);
-    // });
+  //   // const inputOptions = new Promise((resolve) => {
+  //   //   setTimeout(() => {
+  //   //     resolve({
+  //   //       csv: "CSV",
+  //   //       excel: "EXCEL",
+  //   //     });
+  //   //   }, 100);
+  //   // });
 
-    // Swal.fire({
-    //   title: "Select Export type",
-    //   input: "radio",
-    //   inputOptions: inputOptions,
-    //   inputValidator: (value) => {
-    //     if (!value) {
-    //       return "You need to choose something!";
-    //     } else {
-    //       return "";
-    //     }
-    //   },
-    // })
-    //   .then(({ value }) => {
-    //     console.log(value);
-    //     if (value) {
-    //       setExportType(value);
-    setExportType("csv");
-    const query = `Status=${orderDetails?.status}&exportType=${exportType}`;
-    exportOrder(query)
-      .then((result) => {
-        const extension =
-          exportType === "csv"
-            ? "csv"
-            : exportType === "excel"
-            ? "xlsx"
-            : "csv";
-        const mimeType =
-          extension === "csv"
-            ? "text/csv"
-            : extension === "xlsx"
-            ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            : "application/json";
-        const fileName = "Orders-" + new Date().getTime() + `.${extension}`;
-        exportFromApi(fileName, result.data, mimeType);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-    // }
-    // })
-    // .catch(() => {
-    //   setIsLoading(false);
-    // });
+  //   // Swal.fire({
+  //   //   title: "Select Export type",
+  //   //   input: "radio",
+  //   //   inputOptions: inputOptions,
+  //   //   inputValidator: (value) => {
+  //   //     if (!value) {
+  //   //       return "You need to choose something!";
+  //   //     } else {
+  //   //       return "";
+  //   //     }
+  //   //   },
+  //   // })
+  //   //   .then(({ value }) => {
+  //   //     console.log(value);
+  //   //     if (value) {
+  //   //       setExportType(value);
+  //   setExportType("csv");
+  //   const query = `Status=${orderDetails?.status}&exportType=${exportType}`;
+  //   exportOrder(query)
+  //     .then((result) => {
+  //       const extension =
+  //         exportType === "csv"
+  //           ? "csv"
+  //           : exportType === "excel"
+  //           ? "xlsx"
+  //           : "csv";
+  //       const mimeType =
+  //         extension === "csv"
+  //           ? "text/csv"
+  //           : extension === "xlsx"
+  //           ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  //           : "application/json";
+  //       const fileName = "Orders-" + new Date().getTime() + `.${extension}`;
+  //       exportFromApi(fileName, result.data, mimeType);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  //   // }
+  //   // })
+  //   // .catch(() => {
+  //   //   setIsLoading(false);
+  //   // });
 
-    // // Get user export type, but for now, it's csv
-    // if (selectedExportType) {
-    //   setExportType(selectedExportType);
-    // } else {
-    //   setExportType("csv");
-    // }
+  //   // // Get user export type, but for now, it's csv
+  //   // if (selectedExportType) {
+  //   //   setExportType(selectedExportType);
+  //   // } else {
+  //   //   setExportType("csv");
+  //   // }
 
-    // const status = isPaymentCompleted ? "Completed" : "Pending";
-    // const query = `Status=${status}&exportType=${exportType}`;
-    // exportOrder(query)
-    //   .then((result) => {
-    //     const extension =
-    //       exportType === "csv"
-    //         ? "csv"
-    //         : exportType === "excel"
-    //         ? "xlsx"
-    //         : "csv";
-    //     const mimeType =
-    //       extension === "csv"
-    //         ? "text/csv"
-    //         : extension === "xlsx"
-    //         ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    //         : "application/json";
-    //     const fileName = "Orders-" + new Date().getTime() + `.${extension}`;
-    //     exportFromApi(fileName, result.data, mimeType);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
-  };
+  //   // const status = isPaymentCompleted ? "Completed" : "Pending";
+  //   // const query = `Status=${status}&exportType=${exportType}`;
+  //   // exportOrder(query)
+  //   //   .then((result) => {
+  //   //     const extension =
+  //   //       exportType === "csv"
+  //   //         ? "csv"
+  //   //         : exportType === "excel"
+  //   //         ? "xlsx"
+  //   //         : "csv";
+  //   //     const mimeType =
+  //   //       extension === "csv"
+  //   //         ? "text/csv"
+  //   //         : extension === "xlsx"
+  //   //         ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  //   //         : "application/json";
+  //   //     const fileName = "Orders-" + new Date().getTime() + `.${extension}`;
+  //   //     exportFromApi(fileName, result.data, mimeType);
+  //   //   })
+  //   //   .finally(() => {
+  //   //     setIsLoading(false);
+  //   //   });
+  // };
 
   return (
     <>
@@ -249,9 +249,9 @@ const OrderPage = ({
             </button>
           ) : null}
 
-          <button className="customer_info_button" onClick={handleExportOrder}>
+          {/* <button className="customer_info_button" onClick={handleExportOrder}>
             Export Order
-          </button>
+          </button> */}
 
           <div className="order_payment_status_tab w_80 center row">
             <p className="medium_title">Order Status:</p>

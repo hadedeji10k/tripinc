@@ -592,7 +592,7 @@ export const makeOrder = async (formData: IMakeOrder) => {
         confirmButtonText: "Ok",
       }).then((result) => {
         if (result.isConfirmed || result.isDenied || result.isDismissed) {
-          window.location.reload()
+          window.location.href = `/#/order/${response.data.data.orderId}`
         }
       })
       return true
