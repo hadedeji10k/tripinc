@@ -7,6 +7,12 @@ import "antd/dist/antd.min.css";
 
 import ScrollToTopOfPage from "./pages/scrollToTopOfPage";
 import { IoMdArrowRoundUp } from "react-icons/io";
+import { message } from "antd";
+
+message.config({
+  top: 100,
+  duration: 3,
+});
 
 function App() {
   return (

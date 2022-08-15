@@ -228,7 +228,7 @@ const Itinerary = ({
                             ]}
                           />
                           <Select
-                            defaultValue={{ value: "1", label: "The1" }}
+                            defaultValue={{ value: "1", label: "1" }}
                             onChange={(value) =>
                               handleChange(value, item.arrayName, key)
                             }

@@ -16,6 +16,7 @@ import {
   updateUserPassword,
   updateUserSocialPermission,
 } from "../../../api/responseHandlers";
+import { localGetUserId } from "../../../utils/helpers";
 
 interface AccountPageProps {
   userPreference: any;
@@ -34,6 +35,9 @@ const AccountPage = ({ userPreference, userConsents }: AccountPageProps) => {
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showNewConfirmPassword, setShowNewConfirmPassword] =
     useState<boolean>(false);
+
+  // get user Id
+  const userId = localGetUserId();
 
   // const toggleShowAccountModal = (e: React.FormEvent): void => {
   //   e.preventDefault();
@@ -106,7 +110,7 @@ const AccountPage = ({ userPreference, userConsents }: AccountPageProps) => {
     switch (action) {
       case "privacy":
         formData = {
-          userId: userPreference.userId,
+          userId,
           allowAllCookies: checked,
         };
         console.log(formData);
@@ -116,10 +120,9 @@ const AccountPage = ({ userPreference, userConsents }: AccountPageProps) => {
         break;
       case "social":
         formData = {
-          userId: userPreference.userId,
+          userId,
           shareActivitySocially: checked,
         };
-        console.log(formData);
         updateUserSocialPermission(formData).then(() => {
           setIsLoading(false);
         });

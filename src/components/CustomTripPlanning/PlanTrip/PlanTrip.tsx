@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./PlanTrip.css";
-// import { locationdata, attractiondata } from "../../currentUserData";
+import { DatePicker, message } from "antd";
+import { GOOGLEAPIKEY } from "../../../utils/constants";
+import Autocomplete from "react-google-autocomplete";
+import moment from "moment";
+
+const { RangePicker } = DatePicker;
 
 const tripTypedata = [
   {
@@ -25,77 +30,85 @@ const tripTypedata = [
   },
 ];
 
-const BasicDetails: React.FC = () => {
-  const initialFormData = {
-    location: "",
-    date: "",
-    tripType: "",
-    numberOfTraveler: 0,
-  };
-  // state to manage location data (to sort out clicked and unclicked location)
-  const [tripTypeData, setLocationData] = useState(tripTypedata);
-  const [tripType, setTripType] = useState("");
-  const [formData, setFormData] = useState(initialFormData);
+interface PlanTripProp {
+  tripData: any;
+  setTripData: any;
+  handleMenuChange: any;
+}
 
-  // function to manage the tripTypes button when it is clicked
-  const handleLocationsClick = (e: any) => {
-    // prevent default so it won't refresh the page
-    e.preventDefault();
-    // set input field to empty when location is clicked
+const PlanTrip = ({
+  tripData,
+  setTripData,
+  handleMenuChange,
+}: PlanTripProp) => {
+  const [tripTypeData, setTripTypeData] = useState(tripTypedata);
 
-    // get the id of the location tag clicked
-    const id = e.target.id;
-
-    // get the index of the location in the tripTypeData state
-    const index = tripTypeData.findIndex((item) => item.id === parseInt(id));
-
-    for (let i = 0; i < tripTypeData.length; i++) {
-      tripTypeData[i].stateOfClass = tripTypeData[i].stateOfClass = false;
-    }
-
-    // change the state of the class of the clicked location tag
-    tripTypeData[index].stateOfClass = !tripTypeData[index].stateOfClass;
-
-    // set the location data state to be the current location data
-    setLocationData([...tripTypeData]);
-
-    // set the trip type to the type clicked
-    setTripType(tripTypeData[index].title);
-
-    //  set trip type in form
-    setFormData({
-      ...formData,
-      tripType: tripTypeData[index].title.toLowerCase(),
+  const handleLocationChange = (tripLocation: any) => {
+    // set trip type
+    setTripData({
+      ...tripData,
+      tripLocation,
     });
-
-    // console.log(clickedLocations);
   };
 
-  useEffect(() => {
-    // console.log(tripType);
-    let familyDiv = document.getElementById("family_number") as HTMLDivElement;
-    if (tripType === "Family") {
-      // family_number
-      familyDiv.style.display = "block";
-      // let familyInput = document.getElementById(
-      //   "family_input"
-      // ) as HTMLInputElement;
+  const onDateChange = (date: any) => {
+    setTripData({
+      ...tripData,
+      startDate: new Date(date[0]),
+      endDate: new Date(date[1]),
+    });
+  };
+
+  const handleTripTypeChange = (id: any) => {
+    const selectedTripType = tripTypeData.filter(
+      (item) => item.id === parseInt(id)
+    );
+
+    let numberOfTraveler;
+    if (selectedTripType[0].title === "Solo") {
+      numberOfTraveler = 1;
+    } else if (selectedTripType[0].title === "Partner") {
+      numberOfTraveler = 2;
     } else {
-      familyDiv.style.display = "none";
+      numberOfTraveler = 1;
     }
-    console.log(formData);
-  }, [tripType, formData]);
 
-  // handle input change
-  const handleChange = (e: any) => {
-    e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // set trip type
+    setTripData({
+      ...tripData,
+      numberOfTraveler,
+      tripType: selectedTripType[0].title,
+    });
+    // change the status of the tripTypeData
+    for (let i = 0; i < tripTypeData.length; i++) {
+      const element = tripTypeData[i];
+      element.stateOfClass = false;
+    }
+    selectedTripType[0].stateOfClass = true;
+    setTripTypeData([...tripTypeData]);
   };
 
-  // submit
-  const submit = (e: any) => {
+  const handleNumberOfTraveler = (e: any) => {
     e.preventDefault();
-    console.log(formData);
+    setTripData({
+      ...tripData,
+      numberOfTraveler: parseInt(e.target.value),
+    });
+  };
+
+  // handle submit
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (
+      !tripData.tripType ||
+      !tripData.numberOfTraveler ||
+      !tripData.startDate ||
+      !tripData.endDate ||
+      !tripData.tripLocation
+    ) {
+      return message.error("Error, please make sure you fill all fields.", 3);
+    }
+    handleMenuChange("next");
   };
 
   return (
@@ -108,26 +121,31 @@ const BasicDetails: React.FC = () => {
         <form>
           <div>
             <label className="plan_trip_label">Where to?</label>
-            <input
-              name="location"
-              className="plan_trip_input"
-              type="text"
+            <Autocomplete
+              apiKey={GOOGLEAPIKEY}
+              onPlaceSelected={(selected: any) => {
+                handleLocationChange(selected.formatted_address);
+              }}
+              options={{
+                types: [],
+                fields: ["formatted_address"],
+              }}
               placeholder="Where are you going to?"
-              onChange={handleChange}
+              className="plan_trip_input"
+              defaultValue={tripData.tripLocation}
             />
           </div>
           <div className="select_container">
             <label className="plan_trip_label">Date</label> <br />
-            <select
-              name="date"
-              id="time"
-              onChange={handleChange}
-              onSelect={handleChange}
-            >
-              <option value="12:00 - 16:00">12:00 - 16:00</option>
-              <option value="13:00 - 19:00">13:00 - 19:00</option>
-              <option value="11:00 - 13:00">11:00 - 13:00</option>
-            </select>
+            <RangePicker
+              className="trip_date_select"
+              onChange={onDateChange}
+              size="small"
+              defaultValue={[
+                moment(tripData.startDate, "YYYY/MM/DD"),
+                moment(tripData.endDate, "YYYY/MM/DD"),
+              ]}
+            />
           </div>
           <br />
           <div>
@@ -135,6 +153,7 @@ const BasicDetails: React.FC = () => {
               Will anyone else be joining you?
             </label>
             <div
+              style={{ width: "100%" }}
               id="preferences_tag_container"
               className="preferences_tag_container"
             >
@@ -149,27 +168,34 @@ const BasicDetails: React.FC = () => {
                       ? "preferences_clicked"
                       : "preferences_not_clicked"
                   }
-                  onClick={handleLocationsClick}
+                  onClick={() => handleTripTypeChange(item.id)}
                 >
                   {item.title}
                 </span>
               ))}
             </div>
           </div>
-          <div id="family_number">
-            <label className="plan_trip_label">
-              Number of Family Members will be joining you?
-            </label>
-            <input
-              name="numberOfTraveler"
-              className="plan_trip_input"
-              type="text"
-              placeholder="Where are you going to?"
-              onChange={handleChange}
-            />
-          </div>
+          {tripData.tripType === "Family" || tripData.tripType === "Friends" ? (
+            <div id="family_number">
+              <label className="plan_trip_label">
+                Number of Family Members will be joining you?
+              </label>
+              <input
+                name="numberOfTraveler"
+                className="plan_trip_input"
+                type="text"
+                placeholder="How many people are you going with?"
+                onChange={handleNumberOfTraveler}
+                defaultValue={tripData.numberOfTraveler}
+              />
+            </div>
+          ) : null}
           <div className="plan_trip_button_container">
-            <button className="plan_trip_button" type="submit" onClick={submit}>
+            <button
+              className="plan_trip_button"
+              type="submit"
+              onClick={handleSubmit}
+            >
               Next!
             </button>
           </div>
@@ -179,4 +205,4 @@ const BasicDetails: React.FC = () => {
   );
 };
 
-export default BasicDetails;
+export default PlanTrip;

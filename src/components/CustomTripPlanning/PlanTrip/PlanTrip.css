@@ -69,7 +69,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.select_container select {
+.trip_date_select {
     width: 500px;
     font-family: "Poppins";
     font-size: 17px;
@@ -186,7 +186,7 @@ select::-ms-expand {
         width: 400px;
     }
 
-    .select_container select {
+    .trip_date_select {
         width: 400px;
     }
 }
@@ -201,7 +201,7 @@ select::-ms-expand {
         width: 300px;
     }
 
-    .select_container select {
+    .trip_date_select {
         width: 300px;
     }
 
@@ -219,7 +219,7 @@ select::-ms-expand {
         width: 400px;
     } */
 
-    .select_container select {
+    .trip_date_select {
         width: 300px;
     }
 }
@@ -235,7 +235,7 @@ select::-ms-expand {
         font-size: 0.8rem;
     }
 
-    .select_container select {
+    .trip_date_select {
         width: 250px;
         font-size: 0.8rem;
     }
@@ -264,7 +264,7 @@ select::-ms-expand {
         font-size: 0.7rem;
     }
 
-    .select_container select {
+    .trip_date_select {
         width: 200px;
         font-size: 0.7rem;
     }

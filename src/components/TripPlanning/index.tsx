@@ -367,6 +367,15 @@ const TripPlanning = () => {
             <hr className="general_faq_line" style={{ margin: "5px 0 15px" }} />
           </div>
           {/* End of Itinerary*/}
+
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              console.log(itineraryData);
+            }}
+          >
+            Save
+          </button>
         </div>
       </div>
     </div>

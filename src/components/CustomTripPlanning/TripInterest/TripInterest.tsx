@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { Spin } from "antd";
+import { getAllCategories } from "../../../api";
 import { preferencedata } from "../../../currentUserData";
 import "./TripInterest.css";
-// testing
-// import BudgetWarningModal from "../MessagePopup/BudgetWarningModal/BudgetWarningModal";
-// import EventsOverlapModal from "../MessagePopup/EventsOverlapModal/EventsOverlapModal";
-// import TimeConstraintModal from "../MessagePopup/TimeConstraintModal/TimeConstraintModal";
-import AddPlaceOfStay from "../../MessagePopup/AddPlaceOfPlace/AddPlaceOfStay";
+import { symbolHelper } from "../../../utils/helpers";
+import { IFormattedCategory } from "../../../api/interfaces";
 
-const TripInterest: React.FC = () => {
+const TripInterest = () => {
   // testing
-  const [showAccountPageModal, setShowAccountPageModal] =
-    useState<Boolean>(false);
-  const [preferenceData, setPreferenceData] = useState(preferencedata);
+  const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
+    []
+  );
+  const [isLoading, setIsLoading] = useState(false);
 
-  const toggleShowAccountModal = (e: React.FormEvent): void => {
-    e.preventDefault();
-    setShowAccountPageModal(!showAccountPageModal);
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    getAllCategories().then((res) => {
+      const arrayToPush: any = [];
+      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+      for (let i = 0; i < res.data.length; i++) {
+        const element = res.data[i];
+        const data = {
+          id: element.id,
+          title: element.name,
+          symbol: symbolHelper(element.name),
+          stateOfClass: false,
+        };
+        arrayToPush.push(data);
+      }
+      // set the preference data
+      setPreferenceData(arrayToPush);
+      setIsLoading(false);
+    });
+  }, []);
 
   // function to handle preference click
   const handlePreferencesClick = (e: any) => {
@@ -29,18 +45,8 @@ const TripInterest: React.FC = () => {
     setPreferenceData([...preferenceData]);
   };
 
-  // Function to handle save button
-  // const handleSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   let preferences = preferenceData.filter(
-  //     (item) => item.stateOfClass === true
-  //   );
-
-  //   console.log(preferences);
-  // };
-
   return (
-    <>
+    <Spin spinning={isLoading} size="large">
       <div className="trip_interest_container">
         <div className="trip_interest_word">
           <h1 className="trip_interest_header">What floats your boat?</h1>
@@ -65,7 +71,7 @@ const TripInterest: React.FC = () => {
                 }
                 onClick={handlePreferencesClick}
               >
-                {item.title}
+                {item.symbol} {item.title}
               </span>
             ))}
           </div>
@@ -73,12 +79,7 @@ const TripInterest: React.FC = () => {
 
         {/* Button */}
         <div className="trip_interest_button_container">
-          <button
-            className="trip_interest_button"
-            onClick={toggleShowAccountModal}
-          >
-            Let's go!
-          </button>
+          <button className="trip_interest_button">Let's go!</button>
         </div>
         <div className="trip_interest_other_text_container">
           <h3>
@@ -88,25 +89,8 @@ const TripInterest: React.FC = () => {
             </a>
           </h3>
         </div>
-        {/* testing */}
-        {/* <EventsOverlapModal
-          showReviewModal={showAccountPageModal}
-          setShowReviewModal={setShowAccountPageModal}
-        /> */}
-        <AddPlaceOfStay
-          showReviewModal={showAccountPageModal}
-          setShowReviewModal={setShowAccountPageModal}
-        />
-        {/* <TimeConstraintModal
-          showReviewModal={showAccountPageModal}
-          setShowReviewModal={setShowAccountPageModal}
-        /> */}
-        {/* <BudgetWarningModal
-          showReviewModal={showAccountPageModal}
-          setShowReviewModal={setShowAccountPageModal}
-        /> */}
       </div>
-    </>
+    </Spin>
   );
 };
 

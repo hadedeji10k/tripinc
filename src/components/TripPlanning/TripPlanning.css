@@ -172,6 +172,7 @@
     align-content: center;
     font-size: 1.2rem;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .trip_planning_budget_add {

@@ -13,9 +13,6 @@ import ExploreDetails from "../components/ExploreDetails/ExploreDetails";
 import BucketListPage from "../components/BucketList/BucketListPage";
 import Shopping from "../components/Shopping";
 import LandingPage from "../components/LandingPage/LandingPage";
-import PlanTrip from "../components/CustomTripPlanning/PlanTrip/PlanTrip";
-import SetBudget from "../components/CustomTripPlanning/SetBudget/SetBudget";
-import TripInterest from "../components/CustomTripPlanning/TripInterest/TripInterest";
 import MyTrip from "../components/MyTripPage/MyTrip";
 import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
 // import ExploreCategoryPage from "../components/ExploreCategory/ExploreCategoryPage";
@@ -32,6 +29,7 @@ import TripPlanning from "../components/TripPlanning";
 import SuccessfulPayment from "../components/Shopping/SuccessfulPayment/index";
 import AccountVerified from "../components/AccountVerification/AccountVerified/index";
 import ForgotPassword from "../components/Auth/ForgotPassword";
+import CustomTripPlanning from "../components/CustomTripPlanning";
 
 const MainRoute: React.FC = () => {
   return (
@@ -94,9 +92,7 @@ const MainRoute: React.FC = () => {
               element={<ExploreDetails />}
             />
           </Route>
-          <Route path="/custom-plan-trip" element={<PlanTrip />} />
-          <Route path="/set-budget" element={<SetBudget />} />
-          <Route path="/trip-interest" element={<TripInterest />} />
+          <Route path="/custom-plan-trip" element={<CustomTripPlanning />} />
           <Route path="/shopping/cart" element={<ShoppingCartPage />} />
           <Route
             path="/shopping/order/:orderId"
