@@ -583,7 +583,7 @@ export const removeFromCart = async (id: any) => {
 export const makeOrder = async (formData: IMakeOrder) => {
   try {
     const response = await api.makeOrder(formData);
-
+    
     if (response.status === 200 && response.data.status === true) {
       Swal.fire({
         title: "Success!",
@@ -592,7 +592,7 @@ export const makeOrder = async (formData: IMakeOrder) => {
         confirmButtonText: "Ok",
       }).then((result) => {
         if (result.isConfirmed || result.isDenied || result.isDismissed) {
-          window.location.href = `/#/order/${response.data.data.orderId}`
+          window.location.href = `/#/shopping/order/${response.data.data.orderId}`
         }
       })
       return true

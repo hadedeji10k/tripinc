@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Autocomplete from "react-google-autocomplete";
-import { getAllCategories, manageUserInterests } from "../../api";
 import {
+  getAllCategories,
   managePlacesVisited,
   managePlacesWishToVisit,
-} from "../../api/responseHandlers";
+  manageUserInterests,
+} from "../../api";
+
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import { localGetUserId, symbolHelper } from "../../utils/helpers";
@@ -13,7 +15,6 @@ import {
   IFormattedCategory,
   IManagePlacesVisited,
   IManagePlacesWishToVisit,
-  IManagePreference,
   IManageUserInterests,
 } from "../../api/interfaces";
 import { GOOGLEAPIKEY } from "../../utils/constants";
@@ -104,6 +105,10 @@ const Preferences: React.FC = () => {
                 longitude: data.geometry.location.toJSON().lng,
                 latitude: data.geometry.location.toJSON().lat,
                 mapUrl: data.url,
+                visitCount: 0,
+                postCode: "",
+                country: "",
+                city: "",
               },
             ];
           }
@@ -132,6 +137,10 @@ const Preferences: React.FC = () => {
                 longitude: data.geometry.location.toJSON().lng,
                 latitude: data.geometry.location.toJSON().lat,
                 mapUrl: data.url,
+                visitCount: 0,
+                postCode: "",
+                country: "",
+                city: "",
               },
             ];
           }

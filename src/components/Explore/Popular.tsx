@@ -184,7 +184,7 @@ const Popular = () => {
     };
     const response = await addToWishList(formData);
     if (response === true) {
-      setWishList([...wishList, data[0]]);
+      setWishList([...wishList, formData]);
     }
     setIsLoading(false);
   };
@@ -193,7 +193,11 @@ const Popular = () => {
     setIsLoading(true);
 
     const data = tourData.filter((item) => item.id === id);
-    const wishListData = wishList.filter((item) => item.id !== id);
+    const wishListData = wishList.filter(
+      (item) =>
+        item.itemId !== data[0].id ||
+        item.itemType.toLowerCase() !== data[0].itemType.toLowerCase()
+    );
 
     // remove from database, if successful, remove from state
     const response = await removeFromWishList(data[0].id, userId);
