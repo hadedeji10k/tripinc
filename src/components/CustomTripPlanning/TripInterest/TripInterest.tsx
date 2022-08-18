@@ -6,7 +6,7 @@ import "./TripInterest.css";
 import { symbolHelper } from "../../../utils/helpers";
 import { IFormattedCategory } from "../../../api/interfaces";
 
-const TripInterest = () => {
+const TripInterest = ({ handleMenuChange, tripData, setTripData }) => {
   // testing
   const [preferenceData, setPreferenceData] = useState<IFormattedCategory[]>(
     []
@@ -45,6 +45,18 @@ const TripInterest = () => {
     setPreferenceData([...preferenceData]);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const preferences = preferenceData
+      .filter((item) => item.stateOfClass === true)
+      .map((item) => item.id);
+    setTripData({
+      ...tripData,
+      selectedAreaOfInterest: preferences,
+    });
+    handleMenuChange("next");
+  };
+
   return (
     <Spin spinning={isLoading} size="large">
       <div className="trip_interest_container">
@@ -79,7 +91,9 @@ const TripInterest = () => {
 
         {/* Button */}
         <div className="trip_interest_button_container">
-          <button className="trip_interest_button">Let's go!</button>
+          <button className="trip_interest_button" onClick={handleSubmit}>
+            Let's go!
+          </button>
         </div>
         <div className="trip_interest_other_text_container">
           <h3>

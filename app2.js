@@ -225,3 +225,24 @@ const books = [
 //     cy.get('[data-test_order="hold_button"]').click();
 //   });
 // });
+
+console.log(Array(2).length);
+
+// [
+//     {
+//       date: new Date(),
+//       itineraries: [
+//         item: itemFetched,
+//         "customNote": "",
+//           "numberOfPeople": 2,
+//           "time": ""
+//       ]
+//     }
+// ]
+// 2022-08-10T21:06:51.724Z
+// console.log(s);
+
+const array = [3, 5, 7];
+array.map((item, myNum) => {
+  console.log(myNum, item);
+});

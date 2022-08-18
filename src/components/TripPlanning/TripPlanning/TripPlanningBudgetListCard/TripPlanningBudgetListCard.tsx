@@ -5,62 +5,43 @@ import { BsSuitHeartFill } from "react-icons/bs";
 import { AiFillStar } from "react-icons/ai";
 import { Card, Dropdown, Menu, Space } from "antd";
 import "antd/dist/antd.min.css";
-import { getKeysFromObject } from "../../../utils/helpers";
+import { getKeysFromObject } from "../../../../utils/helpers";
 import Swal from "sweetalert2";
 
 interface Props {
   itineraryData: any;
+  tripDays: any;
   setItineraryData: any;
-  wishListData: any;
-  itemId: any;
-  image: any;
-  title: any;
-  price: any;
-  reviews: any;
-  itemType: any;
+  item: any;
   liked: any;
   isBucketListLoading: any;
 }
 
 const TripPlanningBudgetListCard = ({
+  tripDays,
   itineraryData,
-  setItineraryData,
-  wishListData,
-  itemId,
-  image,
-  title,
-  price,
-  reviews,
-  itemType,
+  item,
   liked,
   isBucketListLoading,
 }: Props) => {
   const [selectedItemId, setSelectedItemId] = useState<null | number>(null);
   const [selectedItemType, setSelectedItemType] = useState<null | string>(null);
 
-  const itineraryDays = getKeysFromObject(itineraryData);
   const data: any = [];
 
-  for (let i = 0; i < itineraryDays.length; i++) {
+  for (let i = 0; i < tripDays.length; i++) {
     data.push({
-      label: `${itineraryDays[i]}`,
+      label: `${tripDays[i].month} ${tripDays[i].date}`,
       key: i,
     });
   }
 
   const onClick = ({ key }) => {
-    // get the dateClicked from the itineraryDays array
-    const dateClicked = itineraryDays[key];
-    // get the selected date array from the itineraryData
-    const itineraryDay = itineraryData[dateClicked];
+    // get the dateClicked from the tripDays array
+    const itineraryDay = itineraryData[key];
 
-    // get the selected item from the wishListData
-    const selectedItemFromWishlist = wishListData.find(
-      (item) => item.id === selectedItemId && item.itemType === selectedItemType
-    );
-
-    //check if it's already in the list
-    const isInList = itineraryDay.find(
+    // //check if it's already in the list
+    const isInList = itineraryDay.itineraries.find(
       (item) =>
         item.item.id === selectedItemId &&
         item.item.itemType === selectedItemType
@@ -75,19 +56,15 @@ const TripPlanningBudgetListCard = ({
       });
     } else {
       // push the data into the itinerary Day array gotten from the whole array
-      itineraryDay.push({
-        item: selectedItemFromWishlist,
+      itineraryDay.itineraries.push({
+        item, // item from explore
         customNote: "",
         startTime: "",
         endTime: "",
         numberOfPeople: "1",
         customNoteStatus: false,
       });
-      // set itinerary data with the existing and the date changed
-      setItineraryData({
-        ...itineraryData,
-        [dateClicked]: itineraryDay,
-      });
+      console.log(itineraryData);
       // on successful, display success message
       Swal.fire({
         title: "Success!",
@@ -100,11 +77,10 @@ const TripPlanningBudgetListCard = ({
     setSelectedItemId(null);
     setSelectedItemType(null);
   };
-
   const menu = <Menu onClick={onClick} items={data} />;
 
   return (
-    <div key={itemId} className="trip_planning_budget_card_container">
+    <div key={item.id} className="trip_planning_budget_card_container">
       {isBucketListLoading ? (
         <Card
           style={{
@@ -119,22 +95,25 @@ const TripPlanningBudgetListCard = ({
           <div className="trip_planning_budget_image_container">
             <img
               className="trip_planning_budget_image"
-              src={image.toString()}
-              alt={title}
+              src={item.imageUrl.toString()}
+              alt={item.title}
             />
           </div>
           <div className="trip_planning_budget_card_details">
-            <p className="trip_planning_budget_card_title">{title}</p>
+            <p className="trip_planning_budget_card_title">{item.title}</p>
             <hr />
             <div className="card_price_review">
-              <p className="trip_planning_budget_card_price"> from {price}</p>
+              <p className="trip_planning_budget_card_price">
+                {" "}
+                from {item.price}
+              </p>
               <p className="trip_planning_budget_card_price">
                 {" "}
                 {/* {reviews?.map((item) => {
                 newLocal.review += rating;
               })}{" "} */}
                 <AiFillStar /> &nbsp;
-                {reviews?.length}
+                {item.reviews?.length}
               </p>
             </div>
           </div>
@@ -144,8 +123,8 @@ const TripPlanningBudgetListCard = ({
                 <span
                   onClick={(e) => {
                     e.preventDefault();
-                    setSelectedItemId(itemId);
-                    setSelectedItemType(itemType);
+                    setSelectedItemId(item.id);
+                    setSelectedItemType(item.itemType);
                   }}
                 >
                   <Space>

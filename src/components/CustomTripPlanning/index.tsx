@@ -22,6 +22,12 @@ const menuBarData = [
     title: "What floats your boat",
     slug: "trip_interests",
   },
+  {
+    id: 4,
+    state: false,
+    title: "Plan your Trip",
+    slug: "trip_planning",
+  },
 ];
 
 const initialTripData = {
@@ -31,6 +37,7 @@ const initialTripData = {
   tripType: "",
   numberOfTraveler: 0,
   budget: 0,
+  selectedAreaOfInterest: [],
 };
 
 const CustomTripPlanning = () => {
@@ -76,7 +83,11 @@ const CustomTripPlanning = () => {
           handleMenuChange={handleMenuChange}
         />
       ) : data[0].slug === "trip_interests" ? (
-        <TripInterest />
+        <TripInterest
+          tripData={tripData}
+          setTripData={setTripData}
+          handleMenuChange={handleMenuChange}
+        />
       ) : (
         <></>
       )}

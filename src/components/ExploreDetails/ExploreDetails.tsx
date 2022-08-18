@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Spin } from "antd";
-import "antd/dist/antd.min.css";
 import GoogleMapReact from "google-map-react";
 import ReactStars from "react-rating-stars-component";
 import "./ExploreDetails.css";
@@ -10,20 +9,13 @@ import { BsSuitHeartFill } from "react-icons/bs";
 import CartModal from "../Cart/CartModal";
 import { useParams } from "react-router-dom";
 import { getAttractionByID, getTourByID, getUserWishList } from "../../api";
-import { IAddReview, ICart, IDeal, IRatings } from "../../api/interfaces";
-import {
-  getUserProfilePicture,
-  localGetUserFullName,
-  localGetUserId,
-} from "../../utils/helpers";
+import { ICart, IDeal, IRatings } from "../../api/interfaces";
+import { getUserProfilePicture, localGetUserId } from "../../utils/helpers";
 import Swal from "sweetalert2";
-import {
-  addReview,
-  addToWishList,
-  removeFromWishList,
-} from "../../api/responseHandlers";
+import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
 import { GOOGLEAPIKEY } from "../../utils/constants";
 import ReviewModal from "./ReviewModal/ReviewModal";
+import Marker from "./Marker";
 
 const ExploreDetails = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -235,6 +227,58 @@ const ExploreDetails = () => {
       });
   };
 
+  const places: any = [
+    {
+      id: 1,
+      name: "Chicago, Illinois",
+      position: { lat: 41.881832, lng: -87.623177 },
+    },
+    {
+      id: 2,
+      name: "Denver, Colorado",
+      position: { lat: 39.739235, lng: -104.99025 },
+    },
+    {
+      id: 3,
+      name: "Los Angeles, California",
+      position: { lat: 34.052235, lng: -118.243683 },
+    },
+    {
+      id: 4,
+      name: "New York, New York",
+      position: { lat: 40.712776, lng: -74.005974 },
+    },
+  ];
+
+  // Return map bounds based on list of places
+  const getMapBounds = (map, maps, places) => {
+    const bounds = new maps.LatLngBounds();
+
+    places.forEach((place) => {
+      bounds.extend(new maps.LatLng(place.position.lat, place.position.lng));
+    });
+    return bounds;
+  };
+
+  // Re-center map when resizing the window
+  const bindResizeListener = (map, maps, bounds) => {
+    maps.event.addDomListenerOnce(map, "idle", () => {
+      maps.event.addDomListener(window, "resize", () => {
+        map.fitBounds(bounds);
+      });
+    });
+  };
+
+  // testing google
+  const apiIsLoaded = (map, maps, places) => {
+    // Get bounds by our places
+    const bounds = getMapBounds(map, maps, places);
+    // Fit map to bounds
+    map.fitBounds(bounds);
+    // Bind the resize listener
+    bindResizeListener(map, maps, bounds);
+  };
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -418,20 +462,48 @@ const ExploreDetails = () => {
               >
                 {/* <img src={image} alt="" className="location_image" /> */}
                 {isLoading ? null : (
+                  // <>
+                  //   <GoogleMapReact
+                  //     bootstrapURLKeys={{ key: GOOGLEAPIKEY }}
+                  //     defaultCenter={{
+                  //       lat: attractionData?.latitude,
+                  //       lng: attractionData?.longitude,
+                  //     }}
+                  //     defaultZoom={11}
+                  //   >
+                  //     {Array(3).map(() => (
+                  //       <AnyReactComponent
+                  //         lat={attractionData?.latitude}
+                  //         lng={attractionData?.longitude}
+                  //         text={attractionData?.title}
+                  //       />
+                  //     ))}
+                  //   </GoogleMapReact>
+                  // </>
                   <>
                     <GoogleMapReact
                       bootstrapURLKeys={{ key: GOOGLEAPIKEY }}
+                      defaultZoom={10}
                       defaultCenter={{
                         lat: attractionData?.latitude,
                         lng: attractionData?.longitude,
                       }}
-                      defaultZoom={11}
+                      yesIWantToUseGoogleMapApiInternals
+                      onGoogleApiLoaded={({ map, maps }) =>
+                        apiIsLoaded(map, maps, places)
+                      }
                     >
-                      <AnyReactComponent
-                        lat={attractionData?.latitude}
-                        lng={attractionData?.longitude}
-                        text={attractionData?.title}
-                      />
+                      {places.map((place) => (
+                        <Marker
+                          key={place.id}
+                          onClick={(e) => {
+                            console.log(e);
+                          }}
+                          text={place.name}
+                          lat={place.position.lat}
+                          lng={place.position.lng}
+                        />
+                      ))}
                     </GoogleMapReact>
                   </>
                 )}

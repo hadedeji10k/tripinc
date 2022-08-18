@@ -409,6 +409,23 @@ export const generateDateArray = (startDate: Date, endDate: Date) => {
   return array;
 };
 
+// generate array with date
+export const generateDateArray2 = (startDate: Date, endDate: Date) => {
+  const date = new Date(startDate.getTime());
+  let array: any = [];
+
+  while (date <= endDate) {
+    // const arrayDateName = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+    array.push({
+      date: date.toISOString(),
+      itineraries: [],
+    });
+    date.setDate(date.getDate() + 1);
+  }
+
+  return array;
+};
+
 // generate itinerary dates object men for itineraries
 export const generateItineraryMenuObject = (array: any) => {
   let returnedArray: any = [];

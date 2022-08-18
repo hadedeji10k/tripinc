@@ -1,9 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import "./TripCard.css";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { currencySymbolHelper, localGetUserId } from "../../../utils/helpers";
+import {
+  currencySymbolHelper,
+  getKeysFromObject,
+  localGetUserId,
+} from "../../../utils/helpers";
+import Swal from "sweetalert2";
+import { Dropdown, Menu, Space } from "antd";
 
 interface Props {
   item: any;
@@ -11,6 +17,9 @@ interface Props {
   handleLikeButton: any;
   handleUnLikeButton?: any;
   url?: string;
+  tripPlanning?: boolean;
+  itineraryData?: any;
+  tripDays?: any;
 }
 
 const Card = ({
@@ -19,17 +28,66 @@ const Card = ({
   handleLikeButton,
   handleUnLikeButton,
   url,
+  tripPlanning,
+  itineraryData,
+  tripDays,
 }: Props) => {
-  // const newLocal = { review: 0, }
-  // const [attractionData, setAttractionData] = useState(data);
+  const [selectedItemId, setSelectedItemId] = useState<null | number>(null);
+  const [selectedItemType, setSelectedItemType] = useState<null | string>(null);
 
-  //   const handleLikeButton = (e): void => {
-  //     console.log(e.target.item.id);
-  //     const data1 = data.filter((item) => item.id.toString() === e.target.item.id);
-  //     data1[0].liked = !data[0].liked;
-  //     console.log(data1);
-  //     setAttractionData([...attractionData]);
-  //   };
+  const data: any = [];
+
+  for (let i = 0; i < tripDays.length; i++) {
+    data.push({
+      label: `${tripDays[i].month} ${tripDays[i].date}`,
+      key: i,
+    });
+  }
+
+  const onClick = ({ key }) => {
+    // get the dateClicked from the tripDays array
+    const itineraryDay = itineraryData[key];
+
+    // //check if it's already in the list
+    const isInList = itineraryDay.itineraries.find(
+      (item) =>
+        item.item.id === selectedItemId &&
+        item.item.itemType === selectedItemType
+    );
+
+    if (isInList) {
+      Swal.fire({
+        title: "Error!",
+        text: "Item already added to the date",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    } else {
+      // push the data into the itinerary Day array gotten from the whole array
+      itineraryDay.itineraries.push({
+        item, // item from explore
+        customNote: "",
+        startTime: "",
+        endTime: "",
+        numberOfPeople: "1",
+        customNoteStatus: false,
+      });
+      console.log(itineraryData);
+      // on successful, display success message
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully added it to the list",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    }
+    // set selected item id and type to null
+    setSelectedItemId(null);
+    setSelectedItemType(null);
+  };
+
+  const menu = <Menu onClick={onClick} items={data} />;
+
   const userId = localGetUserId();
   return (
     <>
@@ -69,9 +127,25 @@ const Card = ({
           </div>
         </div>
         <div className="arrow">
-          <p className="arrow_tag">
-            <IoIosArrowDown />
-          </p>
+          {tripPlanning ? (
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <span
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedItemId(item.id);
+                  setSelectedItemType(item.itemType);
+                }}
+              >
+                <Space>
+                  <IoIosArrowDown />
+                </Space>
+              </span>
+            </Dropdown>
+          ) : (
+            <p className="arrow_tag">
+              <IoIosArrowDown />
+            </p>
+          )}
         </div>
         {userId ? (
           <div

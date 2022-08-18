@@ -1,12 +1,13 @@
 // import { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
-import { getUserWishListAsAttraction } from "../../api";
-import { IDeal, IPagination } from "../../api/interfaces";
-import { localGetUserId } from "../../utils/helpers";
+import { getUserWishListAsAttraction } from "../../../api";
+import { IDeal, IPagination } from "../../../api/interfaces";
+import { localGetUserId } from "../../../utils/helpers";
 import TripPlanningBudgetListCard from "./TripPlanningBudgetListCard/TripPlanningBudgetListCard";
 
 interface Props {
+  tripDays: any;
   itineraryData: any;
   setItineraryData: any;
   wishListData: IDeal[];
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const TripPlanningBucketList = ({
+  tripDays,
   itineraryData,
   setItineraryData,
   wishListData,
@@ -79,14 +81,9 @@ const TripPlanningBucketList = ({
               {wishListData.map((item, key) => (
                 <TripPlanningBudgetListCard
                   key={key}
-                  wishListData={wishListData}
-                  itemId={item.id}
-                  image={item.imageUrl}
-                  title={item.title}
-                  price={item.price}
-                  reviews={item.ratings}
-                  itemType={item.itemType}
+                  item={item}
                   liked={true}
+                  tripDays={tripDays}
                   itineraryData={itineraryData}
                   setItineraryData={setItineraryData}
                   isBucketListLoading={isBucketListLoading}

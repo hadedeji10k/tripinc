@@ -3,14 +3,14 @@ import { useState } from "react";
 import { DatePicker, TimePicker } from "antd";
 import "antd/dist/antd.min.css";
 import moment from "moment";
-import { AddFlightSchema } from "../../schema/yupSchema";
+import { AddFlightSchema } from "../../../schema/yupSchema";
 import Swal from "sweetalert2";
-import { ITravelDetails } from "../../api/interfaces";
+import { ITravelDetails } from "../../../api/interfaces";
 import { MdModeEditOutline } from "react-icons/md";
 import { GrClose } from "react-icons/gr";
 import { BsCalendarCheck } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import { monthNames } from "../../utils/constants";
+import { monthNames } from "../../../utils/constants";
 
 interface Props {
   travelDetails: ITravelDetails;
