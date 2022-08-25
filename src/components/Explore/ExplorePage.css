@@ -291,6 +291,10 @@
     transition: all 0.2s ease-in-out;
 }
 
+.search_result_field {
+    text-align: center;
+}
+
 .explore_navigation_button {
     min-width: 100px;
     padding: 0.5rem;

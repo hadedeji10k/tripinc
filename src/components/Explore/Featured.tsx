@@ -485,8 +485,8 @@ const Featured = ({ handleMove }) => {
               Next
             </span>
           </div> */}
-          <div className="">
-            <p>Search Result for: {searchResultField}</p>
+          <div className="w_80">
+            <p className="search_result_field">Search Result for: {searchResultField}</p>
           </div>
           {/* <Card data={attractionData} /> */}
           {attractionData ? (

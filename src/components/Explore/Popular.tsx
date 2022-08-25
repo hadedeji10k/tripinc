@@ -82,11 +82,11 @@ const Popular = () => {
   }, [userId]);
 
   // function to handle the input data (using this for the onClick of button of the search and onChange of the input)
-  const handleInput = (e: any) => {
-    // get the input
-    let input = document.getElementById("input") as HTMLInputElement;
-    setInputField(input.value);
-  };
+  // const handleInput = (e: any) => {
+  //   // get the input
+  //   let input = document.getElementById("input") as HTMLInputElement;
+  //   setInputField(input.value);
+  // };
 
   // function to handle date change
   const onDateChange = (date: any) => {
@@ -301,9 +301,11 @@ const Popular = () => {
             </div>
           </div>
 
-          <div className="">
+          <div className="w_80">
             {searchResultField.length > 0 ? (
-              <p>Search Result for: {searchResultField}</p>
+              <p className="search_result_field">
+                Search Result for: {searchResultField}
+              </p>
             ) : null}
           </div>
           {/* <Card data={tourData} /> */}

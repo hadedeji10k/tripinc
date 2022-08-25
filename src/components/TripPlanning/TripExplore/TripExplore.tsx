@@ -268,11 +268,11 @@ const TripPlanningExplore = ({
   };
 
   // function to handle the input data (using this for the onClick of button of the search and onChange of the input)
-  const handleInput = (e: any) => {
-    // get the input
-    let input = document.getElementById("input") as HTMLInputElement;
-    setInputField(input.value);
-  };
+  // const handleInput = (e: any) => {
+  //   // get the input
+  //   let input = document.getElementById("input") as HTMLInputElement;
+  //   setInputField(input.value);
+  // };
 
   // use this function to handle when the "all" button is clicked
   const handleAllClick = (e: any) => {
@@ -555,7 +555,9 @@ const TripPlanningExplore = ({
             </span>
           </div> */}
           <div className="w_80">
-            <p>Search Result for: {searchResultField}</p>
+            <p className="search_result_field">
+              Search Result for: {searchResultField}
+            </p>
           </div>
           {/* <Card data={attractionData} /> */}
           {attractionData ? (

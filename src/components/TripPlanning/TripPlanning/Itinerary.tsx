@@ -114,7 +114,18 @@ const Itinerary = ({
     }).then(async (result) => {
       if (result.isConfirmed) {
         const itineraryDay = itineraryData[tripDayKey];
-        console.log(itineraryDay.itineraries);
+
+        // find the item to remove and number of people to remove the price from spentBudget
+        const selectedItemToDelete = itineraryDay.itineraries[itineraryKey];
+        const amountToDeduct =
+          parseInt(selectedItemToDelete.numberOfPeople) *
+          parseInt(selectedItemToDelete.item.price);
+        setTripPlanningData({
+          ...tripPlanningData,
+          spentBudget: tripPlanningData.spentBudget - amountToDeduct,
+        });
+
+        // filter the data and save
         const diff = itineraryDay.itineraries.filter(
           (item, key) => key !== parseInt(itineraryKey)
         );
