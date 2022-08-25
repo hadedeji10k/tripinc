@@ -111,7 +111,7 @@ const MainRoute: React.FC = () => {
               </RequireAuth>
             }
           />
-          <Route path="/plan-trip" element={<TripPlanning />} />
+          <Route path="/plan-trip/:tripId" element={<TripPlanning />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
         {/* </Route> */}

@@ -10,7 +10,7 @@ const Wrapper: any = styled.div`
   width: 15px;
   height: 15px;
   background-color: ${(props) => (props.color ? props.color : "black")};
-  border: 2px solid #fff;
+  border: 2px solid red;
   border-radius: 100%;
   user-select: none;
   transform: translate(-50%, -50%);

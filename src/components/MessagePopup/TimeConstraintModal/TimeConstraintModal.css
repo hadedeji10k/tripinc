@@ -150,10 +150,6 @@
         transform: translateX(40px);
         padding: 20px;
     }
-
-    .basic_details_input {
-        width: 400px;
-    }
 }
 
 @media screen and (max-width: 700px) {
@@ -174,10 +170,6 @@
 }
 
 @media screen and (max-width: 550px) {
-    .basic_details_input {
-        width: 300px;
-    }
-
     .password_box {
         display: flex;
         flex-direction: column;
@@ -199,13 +191,6 @@
     }
 }
 
-@media screen and (max-width: 400px) {
-    .basic_details_input {
-        width: 250px;
-        font-size: 0.8rem;
-    }
-}
-
 @media screen and (max-width: 350px) {
     .title {
         font-size: 0.8rem;
@@ -217,10 +202,6 @@
 }
 
 @media screen and (max-width: 300px) {
-    .basic_details_input {
-        width: 200px;
-        font-size: 0.7rem;
-    }
 
     .modal_wrapper {
         padding: 0;

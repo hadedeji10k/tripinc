@@ -133,7 +133,7 @@ const LandingPage = () => {
             <Autocomplete
               apiKey={GOOGLEAPIKEY}
               onPlaceSelected={(selected) => {
-                setCity(selected.formatted_address);
+                setCity(selected?.formatted_address as string);
               }}
               options={{
                 fields: ["formatted_address"],

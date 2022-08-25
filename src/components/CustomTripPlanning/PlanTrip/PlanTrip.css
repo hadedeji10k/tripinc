@@ -45,6 +45,14 @@
     letter-spacing: 0.3px;
 }
 
+.plan_trip_form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .plan_trip_label {
     text-transform: uppercase;
     font-size: 14px;

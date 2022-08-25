@@ -10,6 +10,8 @@ interface Props {
   tripDays: any;
   itineraryData: any;
   setItineraryData: any;
+  tripPlanningData: any;
+  setTripPlanningData: any;
   wishListData: IDeal[];
   setWishListData: any;
   pagination: IPagination | any;
@@ -22,6 +24,8 @@ const TripPlanningBucketList = ({
   tripDays,
   itineraryData,
   setItineraryData,
+  tripPlanningData,
+  setTripPlanningData,
   wishListData,
   setWishListData,
   pagination,
@@ -86,6 +90,8 @@ const TripPlanningBucketList = ({
                   tripDays={tripDays}
                   itineraryData={itineraryData}
                   setItineraryData={setItineraryData}
+                  tripPlanningData={tripPlanningData}
+                  setTripPlanningData={setTripPlanningData}
                   isBucketListLoading={isBucketListLoading}
                 />
               ))}

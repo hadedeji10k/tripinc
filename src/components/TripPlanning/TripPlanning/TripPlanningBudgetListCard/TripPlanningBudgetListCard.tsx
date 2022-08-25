@@ -12,6 +12,8 @@ interface Props {
   itineraryData: any;
   tripDays: any;
   setItineraryData: any;
+  tripPlanningData: any;
+  setTripPlanningData: any;
   item: any;
   liked: any;
   isBucketListLoading: any;
@@ -20,6 +22,8 @@ interface Props {
 const TripPlanningBudgetListCard = ({
   tripDays,
   itineraryData,
+  tripPlanningData,
+  setTripPlanningData,
   item,
   liked,
   isBucketListLoading,
@@ -55,16 +59,31 @@ const TripPlanningBudgetListCard = ({
         confirmButtonText: "Ok",
       });
     } else {
+      if (tripPlanningData.spentBudget + item.price > tripPlanningData.budget) {
+        return Swal.fire({
+          title: "Error!",
+          text: "Item cannot be added, you budget is running low. Try increasing your budget, and try again.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
       // push the data into the itinerary Day array gotten from the whole array
       itineraryDay.itineraries.push({
         item, // item from explore
         customNote: "",
         startTime: "",
         endTime: "",
-        numberOfPeople: "1",
+        numberOfPeople: tripPlanningData.numberOfTraveler,
         customNoteStatus: false,
+        mapColor: tripPlanningData.tripDaysColors[key],
       });
-      console.log(itineraryData);
+      // add the item amount to the spent budget
+      setTripPlanningData({
+        ...tripPlanningData,
+        spentBudget:
+          tripPlanningData.spentBudget +
+          parseInt(item.price) * parseInt(tripPlanningData.numberOfTraveler),
+      });
       // on successful, display success message
       Swal.fire({
         title: "Success!",

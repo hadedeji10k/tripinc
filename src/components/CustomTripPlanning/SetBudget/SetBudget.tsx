@@ -67,7 +67,7 @@ const SetBudget = ({
               type="number"
               onChange={handleChange}
               defaultValue={tripData.budget}
-              key={tripData.budget}
+              // key={tripData.budget}
             />
             <span
               className="trip_planning_budget_add"

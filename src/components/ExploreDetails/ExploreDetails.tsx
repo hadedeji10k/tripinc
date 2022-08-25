@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Spin } from "antd";
+import { Spin, Rate } from "antd";
 import GoogleMapReact from "google-map-react";
-import ReactStars from "react-rating-stars-component";
 import "./ExploreDetails.css";
 import { FiFlag } from "react-icons/fi";
 import { GoStar } from "react-icons/go";
@@ -15,7 +14,7 @@ import Swal from "sweetalert2";
 import { addToWishList, removeFromWishList } from "../../api/responseHandlers";
 import { GOOGLEAPIKEY } from "../../utils/constants";
 import ReviewModal from "./ReviewModal/ReviewModal";
-import Marker from "./Marker";
+import Marker from "../TripPlanning/TripMapPlanning/Marker";
 
 const ExploreDetails = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -50,7 +49,7 @@ const ExploreDetails = () => {
           title: "Error!",
           text: "You are not connected to the internet connection, or you have slow connectivity. Please try refreshing after stable connection",
           icon: "error",
-          showConfirmButton: false,
+          showConfirmButton: true,
           allowEnterKey: false,
           allowEscapeKey: false,
           allowOutsideClick: false,
@@ -225,58 +224,6 @@ const ExploreDetails = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  };
-
-  const places: any = [
-    {
-      id: 1,
-      name: "Chicago, Illinois",
-      position: { lat: 41.881832, lng: -87.623177 },
-    },
-    {
-      id: 2,
-      name: "Denver, Colorado",
-      position: { lat: 39.739235, lng: -104.99025 },
-    },
-    {
-      id: 3,
-      name: "Los Angeles, California",
-      position: { lat: 34.052235, lng: -118.243683 },
-    },
-    {
-      id: 4,
-      name: "New York, New York",
-      position: { lat: 40.712776, lng: -74.005974 },
-    },
-  ];
-
-  // Return map bounds based on list of places
-  const getMapBounds = (map, maps, places) => {
-    const bounds = new maps.LatLngBounds();
-
-    places.forEach((place) => {
-      bounds.extend(new maps.LatLng(place.position.lat, place.position.lng));
-    });
-    return bounds;
-  };
-
-  // Re-center map when resizing the window
-  const bindResizeListener = (map, maps, bounds) => {
-    maps.event.addDomListenerOnce(map, "idle", () => {
-      maps.event.addDomListener(window, "resize", () => {
-        map.fitBounds(bounds);
-      });
-    });
-  };
-
-  // testing google
-  const apiIsLoaded = (map, maps, places) => {
-    // Get bounds by our places
-    const bounds = getMapBounds(map, maps, places);
-    // Fit map to bounds
-    map.fitBounds(bounds);
-    // Bind the resize listener
-    bindResizeListener(map, maps, bounds);
   };
 
   return (
@@ -462,48 +409,21 @@ const ExploreDetails = () => {
               >
                 {/* <img src={image} alt="" className="location_image" /> */}
                 {isLoading ? null : (
-                  // <>
-                  //   <GoogleMapReact
-                  //     bootstrapURLKeys={{ key: GOOGLEAPIKEY }}
-                  //     defaultCenter={{
-                  //       lat: attractionData?.latitude,
-                  //       lng: attractionData?.longitude,
-                  //     }}
-                  //     defaultZoom={11}
-                  //   >
-                  //     {Array(3).map(() => (
-                  //       <AnyReactComponent
-                  //         lat={attractionData?.latitude}
-                  //         lng={attractionData?.longitude}
-                  //         text={attractionData?.title}
-                  //       />
-                  //     ))}
-                  //   </GoogleMapReact>
-                  // </>
                   <>
                     <GoogleMapReact
                       bootstrapURLKeys={{ key: GOOGLEAPIKEY }}
-                      defaultZoom={10}
                       defaultCenter={{
                         lat: attractionData?.latitude,
                         lng: attractionData?.longitude,
                       }}
-                      yesIWantToUseGoogleMapApiInternals
-                      onGoogleApiLoaded={({ map, maps }) =>
-                        apiIsLoaded(map, maps, places)
-                      }
+                      defaultZoom={8}
                     >
-                      {places.map((place) => (
-                        <Marker
-                          key={place.id}
-                          onClick={(e) => {
-                            console.log(e);
-                          }}
-                          text={place.name}
-                          lat={place.position.lat}
-                          lng={place.position.lng}
-                        />
-                      ))}
+                      <Marker
+                        key={attractionData?.id}
+                        lat={attractionData?.latitude as any}
+                        lng={attractionData?.longitude as any}
+                        text={attractionData?.title as string}
+                      />
                     </GoogleMapReact>
                   </>
                 )}
@@ -553,11 +473,11 @@ const ExploreDetails = () => {
                         &nbsp; &nbsp; &nbsp; &nbsp;
                         <span className="review_card_details_name_rating">
                           {/* {item.rating} star{item.rating > 0 ? "s" : ""} */}
-                          <ReactStars
-                            count={item.rating}
-                            edit={false}
-                            size={24}
-                            color="#ffd700"
+
+                          <Rate
+                            disabled
+                            defaultValue={item.rating}
+                            allowHalf={true}
                           />
                         </span>
                       </div>

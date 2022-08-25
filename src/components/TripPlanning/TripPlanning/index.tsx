@@ -5,13 +5,8 @@ import Budget from "./Budget";
 import TravelDetails from "./TravelDetails";
 import { IDeal, IPagination, ITravelDetails } from "../../../api/interfaces";
 import TripPlanningBucketList from "./BucketList";
-import {
-  generateDateArray,
-  localGetUserId,
-  generateDateArray2,
-} from "../../../utils/helpers";
+import { localGetUserId } from "../../../utils/helpers";
 import { getUserWishListAsAttraction } from "../../../api";
-import { dayNames, monthNames } from "../../../utils/constants";
 import Itinerary from "./Itinerary";
 
 interface Prop {
@@ -20,6 +15,7 @@ interface Prop {
   setItineraryData: any;
   tripPlanningData: any;
   setTripPlanningData: any;
+  handleMainTripPlanningMenuClick: any;
 }
 
 const tripmenu = [
@@ -51,13 +47,10 @@ const TripPlanning = ({
   setItineraryData,
   tripPlanningData,
   setTripPlanningData,
+  handleMainTripPlanningMenuClick,
 }: Prop) => {
   const [tripMenu, setTripMenu] = useState(tripmenu);
 
-  // Budget states
-  const [budget, setBudget] = useState(500);
-  const [budgetWarning, setBudgetWarning] = useState(0);
-  const [spentBudget, setSpentBudget] = useState(200);
   const [budgetWarningError, setBudgetWarningError] = useState("");
 
   // travel details states
@@ -74,30 +67,8 @@ const TripPlanning = ({
   const [isBucketListLoading, setIsBucketListLoading] =
     useState<boolean>(false);
 
-  // state to show date_nav_button
-  const [showDateNavButton, setShowDateNavButton] = useState<boolean>(false);
-
   // user ID
   const userId = localGetUserId();
-
-  // manage scroll buttons in date_component
-
-  let dateContainer = document.getElementById(
-    "trip_planning_date_tag_container"
-  ) as HTMLElement;
-  let dateTagContainer = document.getElementById(
-    "trip_planning_date_tag_container"
-  ) as HTMLElement;
-
-  useEffect(() => {
-    console.log(dateContainer?.scrollHeight);
-    console.log(dateTagContainer?.scrollHeight);
-    if (dateContainer?.scrollHeight >= dateTagContainer?.scrollHeight) {
-      setShowDateNavButton(false);
-    } else {
-      setShowDateNavButton(true);
-    }
-  }, [dateContainer, dateTagContainer]);
 
   // useEffect for wishlist on bucket_list
   useEffect(() => {
@@ -137,22 +108,10 @@ const TripPlanning = ({
     setTripMenu([...tripMenu]);
   };
 
-  const handleScrollUp = (e: any) => {
-    let element = document.getElementById(
-      "trip_planning_date_tag_container"
-    ) as HTMLElement;
-    console.log("Clicked", element.scrollTop);
-    element.scrollTop -= 70;
-    console.log(element.scrollTop);
-  };
-
-  const handleScrollDown = (e: any) => {
-    let element = document.getElementById(
-      "trip_planning_date_tag_container"
-    ) as HTMLElement;
-    console.log("Clicked", element.scrollTop);
-    element.scrollTop += 70;
-    console.log(element.scrollTop);
+  const handleSubmit = () => {
+    console.log("Trip days", tripDays);
+    console.log("Trip Planning data", tripPlanningData);
+    console.log("Itinerary Data", itineraryData);
   };
 
   return (
@@ -193,14 +152,10 @@ const TripPlanning = ({
           <div className="trip_planning_budget_container">
             {tripMenu[0].stateOfClass ? (
               <Budget
-                budget={budget}
-                setBudget={setBudget}
-                budgetWarning={budgetWarning}
-                setBudgetWarning={setBudgetWarning}
+                tripPlanningData={tripPlanningData}
+                setTripPlanningData={setTripPlanningData}
                 budgetWarningError={budgetWarningError}
                 setBudgetWarningError={setBudgetWarningError}
-                spentBudget={spentBudget}
-                setSpentBudget={setSpentBudget}
               />
             ) : (
               ""
@@ -270,6 +225,8 @@ const TripPlanning = ({
                   tripDays={tripDays}
                   itineraryData={itineraryData}
                   setItineraryData={setItineraryData}
+                  tripPlanningData={tripPlanningData}
+                  setTripPlanningData={setTripPlanningData}
                   wishListData={wishListData}
                   setWishListData={setWishListData}
                   pagination={pagination}
@@ -313,6 +270,8 @@ const TripPlanning = ({
                   tripDays={tripDays}
                   itineraryData={itineraryData}
                   setItineraryData={setItineraryData}
+                  tripPlanningData={tripPlanningData}
+                  setTripPlanningData={setTripPlanningData}
                 />
               </>
             ) : (
@@ -322,14 +281,19 @@ const TripPlanning = ({
           <hr className="general_faq_line" style={{ margin: "5px 0 15px" }} />
         </div>
         {/* End of Itinerary*/}
-
+      </div>
+      <div className="scroll_button">
         <button
-          onClick={(e) => {
-            e.preventDefault();
-            console.log(itineraryData);
-          }}
+          className={"explore_navigation_button_active"}
+          onClick={() => handleMainTripPlanningMenuClick("prev")}
         >
-          Save
+          Go back
+        </button>
+        <button
+          className={"explore_navigation_button_active"}
+          onClick={handleSubmit}
+        >
+          Proceed
         </button>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import * as api from ".";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
-import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview, IMakeOrder, IManagePreference, IManagePlacesWishToVisit, IManagePlacesVisited, IForgotPasswordRequest, IManageUserConsents } from "./interfaces";
+import { ISignIn, ISignUp, ISignUpAndInResponse, ISignUpFull, IEmailExists, ILocalUserProfile, IRefreshToken, IGoogleSignUpFull, IUpdateProfile, IUpdateUserTimeFormat, IUpdateUserCurrency, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IAddReview, IMakeOrder, IManagePreference, IManagePlacesWishToVisit, IManagePlacesVisited, IForgotPasswordRequest, IManageUserConsents, IInitiatePayment, IInitiateTripPlanning } from "./interfaces";
 
 export const signUp = async (formData: ISignUpFull) => {
   try {
@@ -583,7 +583,7 @@ export const removeFromCart = async (id: any) => {
 export const makeOrder = async (formData: IMakeOrder) => {
   try {
     const response = await api.makeOrder(formData);
-    
+
     if (response.status === 200 && response.data.status === true) {
       Swal.fire({
         title: "Success!",
@@ -1202,6 +1202,57 @@ export const managePlacesVisited = async (formData: IManagePlacesVisited) => {
     Swal.fire({
       title: "Error!",
       text: `Updating your visited places was not successful. Please try again later`,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+    return false
+  }
+};
+
+// Initiate a new trip
+export const initiateTripPlanning = async (formData: IInitiateTripPlanning) => {
+  try {
+    const response = await api.initiateTripPlanning(formData);
+
+    if (response.status === 200 && response.data.status === true) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully created a new trip.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed || result.isDenied || result.isDismissed) {
+          window.location.href = `/#/plan-trip/${response.data.data.id}`;
+        }
+      })
+      return true
+    }
+
+    if (response.status === 200 && response.data.status === false) {
+      Swal.fire({
+        title: "Error!",
+        text: `Creating new trip was not successful, ${response.data.message}`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+
+    // if there is error
+    if (response.status !== 200) {
+      Swal.fire({
+        title: "Error!",
+        text: `Creating new trip was not successful. Please try again later`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return false
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: `Creating new trip was not successful. Please try again later`,
       icon: "error",
       confirmButtonText: "Ok",
     });

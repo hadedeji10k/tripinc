@@ -1,30 +1,34 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { geocodeByAddress } from "react-google-places-autocomplete";
 import "./TripPlanning.css";
-import { IDeal, IPagination, ITravelDetails } from "../../api/interfaces";
+import { ITravelDetails } from "../../api/interfaces";
 import {
-  generateDateArray,
   localGetUserId,
-  generateDateArray2,
+  generateDateArray,
+  generateTripColorArray,
 } from "../../utils/helpers";
 import { dayNames, monthNames } from "../../utils/constants";
 import TripPlanningExplore from "./TripExplore/TripExplore";
 import MainTripPlanning from "./MainTripPlanning";
+import { getTripById } from "../../api";
 
 const trip_planning_menu = [
   {
     id: 1,
-    stateOfClass: false,
+    stateOfClass: true,
     slug: "trip_explore",
   },
   {
     id: 2,
-    stateOfClass: true,
+    stateOfClass: false,
     slug: "trip_planning",
   },
 ];
 
 const initialTripData = {
   tripLocation: "",
+  tripLocationPosition: { lat: 41.903839, lng: 12.45249 },
   startDate: new Date(),
   endDate: new Date(),
   tripType: "",
@@ -33,15 +37,18 @@ const initialTripData = {
   selectedAreaOfInterest: [],
   spentBudget: 0,
   budgetWarning: 0,
+  tripDaysColors: [], // to manage the colors of the trip days to show on map
 };
 
 const TripPlanning = () => {
-  const d1 = new Date("2022-01-17");
-  const d2 = new Date("2022-01-25");
+  const { tripId } = useParams();
 
   const [tripPlanningData, setTripPlanningData] = useState(initialTripData);
 
-  const [tripDate, setTripDate] = useState({ startDate: d1, endDate: d2 });
+  const [tripDate, setTripDate] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
 
   // this is for the trip days object, containing date, day, and month
   const [tripDays, setTripDays] = useState<any[]>([]);
@@ -58,11 +65,34 @@ const TripPlanning = () => {
 
   // states to manage itinerary, generateDateArray from a helper function
   const [itineraryData, setItineraryData] = useState(
-    generateDateArray2(tripDate.startDate, tripDate.endDate)
+    generateDateArray(tripDate.startDate, tripDate.endDate)
   );
 
   // user ID
   const userId = localGetUserId();
+
+  useEffect(() => {
+    getTripById(tripId).then((res) => {
+      setTripPlanningData((prev) => {
+        return {
+          ...prev,
+          tripLocation: res.data.startDestination,
+          startDate: new Date(res.data.startDate),
+          endDate: new Date(res.data.endDate),
+          tripType: res.data.noOfPartners,
+          numberOfTraveler: res.data.noOfPartners,
+          budget: res.data.budget,
+          selectedAreaOfInterest: JSON.parse(res.data.preferedInterests).map(
+            (item) => parseInt(item)
+          ),
+        };
+      });
+      setTripDate({
+        startDate: new Date(res.data.startDate),
+        endDate: new Date(res.data.endDate),
+      });
+    });
+  }, [tripId]);
 
   // useEffect to manage date
   useEffect(() => {
@@ -81,9 +111,65 @@ const TripPlanning = () => {
     }
     setTripDays(dates);
 
-    const generated = generateDateArray2(tripDate.startDate, tripDate.endDate);
+    const generated = generateDateArray(tripDate.startDate, tripDate.endDate);
     setItineraryData(generated);
+    const generatedColorArray = generateTripColorArray(
+      tripDate.startDate,
+      tripDate.endDate
+    );
+    setTripPlanningData((prev) => {
+      return {
+        ...prev,
+        tripDaysColors: generatedColorArray,
+      };
+    });
+    // geocodeByAddress("Ikeja, Nigeria")
+    //   .then((results) => {
+    //     // setTripPlanningData((prev) => {
+    //     //   return {
+    //     //     ...prev,
+    //     //     tripLocationPosition: {
+    //     //       lat: results[0].geometry.location.lat(),
+    //     //       lng: results[0].geometry.location.lng(),
+    //     //     },
+    //     //   };
+    //     // });
+    //     console.log({
+    //       lat: results[0].geometry.location.lat(),
+    //       lng: results[0].geometry.location.lng(),
+    //     });
+    //   })
+    //   .catch((error) => console.error(error));
   }, [tripDate]);
+
+  // function to handle menu click
+  const handleTripPlanningMenuClick = (action: string) => {
+    for (let i = 0; i < tripPlanningMenu.length; i++) {
+      const element = tripPlanningMenu[i];
+      element.stateOfClass = false;
+    }
+
+    let index;
+    switch (action) {
+      case "next":
+        index = tripPlanningMenu.findIndex(
+          (item) => item.id === data[0].id + 1
+        );
+        tripPlanningMenu[index].stateOfClass = true;
+        break;
+      case "prev":
+        index = tripPlanningMenu.findIndex(
+          (item) => item.id === data[0].id - 1
+        );
+        tripPlanningMenu[index].stateOfClass = true;
+        break;
+      default:
+        break;
+    }
+
+    window.scrollTo(0, 0);
+    setTripPlanningMenu([...tripPlanningMenu]);
+  };
 
   return (
     <div>
@@ -91,7 +177,9 @@ const TripPlanning = () => {
         <TripPlanningExplore
           tripDays={tripDays}
           itineraryData={itineraryData}
-          setItineraryData={setItineraryData}
+          tripPlanningData={tripPlanningData}
+          setTripPlanningData={setTripPlanningData}
+          handleTripPlanningMenuClick={handleTripPlanningMenuClick}
         />
       ) : data[0].slug === "trip_planning" ? (
         <MainTripPlanning
@@ -100,6 +188,7 @@ const TripPlanning = () => {
           setItineraryData={setItineraryData}
           tripPlanningData={tripPlanningData}
           setTripPlanningData={setTripPlanningData}
+          handleTripPlanningMenuClick={handleTripPlanningMenuClick}
         />
       ) : (
         <></>

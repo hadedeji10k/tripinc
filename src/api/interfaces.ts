@@ -495,3 +495,28 @@ export interface IPlaces {
     mapUrl: string,
     visitCount: number
 }
+
+export interface IInitiateTripPlanning {
+    userId: number,
+    startDestination: string,
+    startDestinationCity?: string,
+    startDestinationCountry?: string,
+    startDestinationLongitude?: number,
+    startDestinationLatitude?: number,
+    endDestination: string,
+    endDestinationCity?: string,
+    endDestinationCountry?: string,
+    endDestinationLongitude?: number,
+    endDestinationLatitude?: number,
+    endDestinationImage?: string,
+    pointOfStay?: string,
+    pointOfStayLongitude?: number,
+    pointOfStayLatitude?: number,
+    startDate: Date,
+    endDate: Date,
+    budget: number,
+    travelingPartner: string,
+    noOfPartners: number,
+    isCovidFriendly?: boolean,
+    interests: string[]
+}

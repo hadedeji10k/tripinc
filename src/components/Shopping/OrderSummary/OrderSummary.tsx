@@ -15,7 +15,7 @@ const OrderSummary = ({ totalAmountOfItems, isOrderPending }: Props) => {
         <div className="shopping_cart_price">
           <div className="shopping_price">
             <p>Subtotal</p>
-            <p>${totalAmountOfItems}</p>
+            <p>${totalAmountOfItems.toFixed(2)}</p>
           </div>
           <div className="shopping_price">
             <p>Service fee</p>
@@ -23,7 +23,7 @@ const OrderSummary = ({ totalAmountOfItems, isOrderPending }: Props) => {
           </div>
           <div className="total_shopping_price">
             <p>Total</p>
-            <p>${serviceFee + totalAmountOfItems}</p>
+            <p>${(serviceFee + totalAmountOfItems).toFixed(2)}</p>
           </div>
         </div>
 

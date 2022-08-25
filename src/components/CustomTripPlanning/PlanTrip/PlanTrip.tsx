@@ -118,7 +118,7 @@ const PlanTrip = ({
         <h3 className="plan_trip_title">Get your suitcases packed!</h3>
       </div>
       <div className="plan_trip">
-        <form>
+        <form className="plan_trip_form">
           <div>
             <label className="plan_trip_label">Where to?</label>
             <Autocomplete
@@ -153,7 +153,7 @@ const PlanTrip = ({
               Will anyone else be joining you?
             </label>
             <div
-              style={{ width: "100%" }}
+              style={{ width: "90%" }}
               id="preferences_tag_container"
               className="preferences_tag_container"
             >

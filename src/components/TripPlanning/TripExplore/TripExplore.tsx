@@ -9,7 +9,11 @@ import {
   IFormattedCategory,
   IPagination,
 } from "../../../api/interfaces";
-import { localGetUserId, symbolHelper } from "../../../utils/helpers";
+import {
+  checkForInterestStateOfClass,
+  localGetUserId,
+  symbolHelper,
+} from "../../../utils/helpers";
 import {
   addToWishList,
   removeFromWishList,
@@ -18,18 +22,23 @@ import Autocomplete from "react-google-autocomplete";
 import { GOOGLEAPIKEY } from "../../../utils/constants";
 import moment from "moment";
 
+const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 interface Prop {
   tripDays: any;
   itineraryData: any;
-  setItineraryData: any;
+  tripPlanningData: any;
+  setTripPlanningData: any;
+  handleTripPlanningMenuClick: any;
 }
 
 const TripPlanningExplore = ({
   tripDays,
   itineraryData,
-  setItineraryData,
+  tripPlanningData,
+  setTripPlanningData,
+  handleTripPlanningMenuClick,
 }: Prop) => {
   const userId = localGetUserId();
 
@@ -88,29 +97,31 @@ const TripPlanningExplore = ({
         totalPages: res.data.totalPages,
         totalCount: res.data.totalCount,
       });
+      // get all categories as preferenceData
+      getAllCategories().then((res) => {
+        const arrayToPush: any = [];
+        // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+        for (let i = 0; i < res.data.length; i++) {
+          const element = res.data[i];
+          const data = {
+            id: element.id,
+            title: element.name,
+            symbol: symbolHelper(element.name),
+            stateOfClass: checkForInterestStateOfClass(
+              tripPlanningData.selectedAreaOfInterest,
+              element.id as any,
+              "notUserInterestArray"
+            ),
+          };
+          arrayToPush.push(data);
+        }
+        // set the preference data
+        setPreferenceData(arrayToPush);
+
+        setIsLoading(false);
+      });
     });
-
-    // get all categories as preferenceData
-    getAllCategories().then((res) => {
-      const arrayToPush: any = [];
-      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
-      for (let i = 0; i < res.data.length; i++) {
-        const element = res.data[i];
-        const data = {
-          id: element.id,
-          title: element.name,
-          symbol: symbolHelper(element.name),
-          stateOfClass: false,
-        };
-        arrayToPush.push(data);
-      }
-
-      // set the preference data
-      setPreferenceData(arrayToPush);
-
-      setIsLoading(false);
-    });
-  }, [userId]);
+  }, [userId, tripPlanningData.selectedAreaOfInterest]);
 
   // useEffect to set preference data when the user click on the preference
   useEffect(() => {
@@ -437,7 +448,7 @@ const TripPlanningExplore = ({
 
   return (
     <>
-      <Spin spinning={isLoading}>
+      <Spin spinning={isLoading} size="large">
         <div className="explore_page_container">
           <div className="explore_page_header">
             {/* <img className="explore_page_header_image" src="https://images.unsplash.com/photo-1596889157941-d2651f70a4f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHRvdXJpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" /> */}
@@ -484,9 +495,9 @@ const TripPlanningExplore = ({
                 onChange={handleCategoryChange}
               >
                 {preferenceData.map((data) => (
-                  <option key={data.id} value={data.title}>
+                  <Option key={data.id} value={data.title}>
                     {data.title}
-                  </option>
+                  </Option>
                 ))}
               </Select>
               <button
@@ -496,6 +507,12 @@ const TripPlanningExplore = ({
                 <BiSearch />
               </button>
             </div>
+          </div>
+          <div className="spent_budget_row w_70">
+            <span>
+              Spent Budget: £ {tripPlanningData.spentBudget.toFixed(2)}
+            </span>
+            <span>Budget: £ {tripPlanningData.budget}</span>
           </div>
           <p>Sort using preferences:</p>
           <div
@@ -537,7 +554,7 @@ const TripPlanningExplore = ({
               Next
             </span>
           </div> */}
-          <div className="">
+          <div className="w_80">
             <p>Search Result for: {searchResultField}</p>
           </div>
           {/* <Card data={attractionData} /> */}
@@ -556,6 +573,8 @@ const TripPlanningExplore = ({
                         tripPlanning={true}
                         tripDays={tripDays}
                         itineraryData={itineraryData}
+                        tripPlanningData={tripPlanningData}
+                        setTripPlanningData={setTripPlanningData}
                       />
                     </Spin>
                   </div>
@@ -619,6 +638,21 @@ const TripPlanningExplore = ({
                 Next
               </button>
             ) : null}
+          </div>
+          <br />
+          <div className="scroll_button">
+            <button
+              className={"explore_navigation_button_active"}
+              onClick={() => handleTripPlanningMenuClick("next")}
+            >
+              Proceed
+            </button>
+            {/* <button
+              className={"explore_navigation_button_active"}
+              onClick={handlePaginationNext}
+            >
+              Proceed
+            </button> */}
           </div>
         </div>
       </Spin>

@@ -11,6 +11,7 @@ import Wallet from "./WalletPage/WalletPage";
 import HelpCenterPage from "./HelpCenterPage/HelpCenterPage";
 
 import {
+  checkForInterestStateOfClass,
   getFullUserProfile,
   localGetUserId,
   symbolHelper,
@@ -115,7 +116,7 @@ const Profile = (): any => {
                   id: element.id,
                   title: element.name,
                   symbol: symbolHelper(element.name),
-                  stateOfClass: checkForStateOfClass(
+                  stateOfClass: checkForInterestStateOfClass(
                     interestResponse.data.items,
                     element.id
                   ),
@@ -145,17 +146,6 @@ const Profile = (): any => {
       });
     }
   }, [userId]);
-
-  const checkForStateOfClass = (array: any, id: string) => {
-    const found = array.filter(
-      (item) => item.interestId.toString() === id.toString()
-    );
-    if (found.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   let data = menuBar.filter((item) => item.state === true);
 

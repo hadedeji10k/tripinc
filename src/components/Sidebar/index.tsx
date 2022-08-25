@@ -112,24 +112,11 @@ const Sidebar = ({
                   </ReactIcons>
                 </SidebarLink>
                 <SidebarLink to="/profile">
-                  <NavBtnProfileLink
-                    className="navbar_nature_color"
-                    to="/profile"
-                  >
-                    {profilePicture !== "" ? (
-                      <img
-                        className="navbar_profile_pics"
-                        src={profilePicture}
-                        alt="profile pic"
-                      />
-                    ) : (
-                      <img
-                        className="navbar_profile_pics"
-                        src={defaultImage}
-                        alt="profile pic"
-                      />
-                    )}
-                  </NavBtnProfileLink>
+                  <img
+                    className="navbar_profile_pics sidebar_profile_pics"
+                    src={profilePicture !== "" ? profilePicture : defaultImage}
+                    alt="profile pic"
+                  />
                 </SidebarLink>
                 <SidebarNoLink onClick={handleLogout}>Log out</SidebarNoLink>
               </>

@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 import { Spin } from "antd";
-import { getAllCategories } from "../../../api";
-import { preferencedata } from "../../../currentUserData";
+import { getAllCategories, getUserInterests } from "../../../api";
 import "./TripInterest.css";
-import { symbolHelper } from "../../../utils/helpers";
-import { IFormattedCategory } from "../../../api/interfaces";
+import {
+  checkForInterestStateOfClass,
+  localGetUserId,
+  symbolHelper,
+} from "../../../utils/helpers";
+import {
+  IFormattedCategory,
+  IInitiateTripPlanning,
+} from "../../../api/interfaces";
+import { initiateTripPlanning } from "../../../api/responseHandlers";
 
 const TripInterest = ({ handleMenuChange, tripData, setTripData }) => {
   // testing
@@ -12,25 +19,33 @@ const TripInterest = ({ handleMenuChange, tripData, setTripData }) => {
     []
   );
   const [isLoading, setIsLoading] = useState(false);
+  const userId = localGetUserId();
 
   useEffect(() => {
     setIsLoading(true);
-    getAllCategories().then((res) => {
-      const arrayToPush: any = [];
-      // loop through the response categories and push the category name and the icon into the array to be used in the preference data
-      for (let i = 0; i < res.data.length; i++) {
-        const element = res.data[i];
-        const data = {
-          id: element.id,
-          title: element.name,
-          symbol: symbolHelper(element.name),
-          stateOfClass: false,
-        };
-        arrayToPush.push(data);
-      }
-      // set the preference data
-      setPreferenceData(arrayToPush);
-      setIsLoading(false);
+    // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+
+    getUserInterests(userId).then((interestResponse) => {
+      // get all categories (interests)
+      getAllCategories().then((res) => {
+        const arrayToPush: any = [];
+        // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+        for (let i = 0; i < res.data.length; i++) {
+          const element = res.data[i];
+          const data = {
+            id: element.id,
+            title: element.name,
+            symbol: symbolHelper(element.name),
+            stateOfClass: checkForInterestStateOfClass(
+              interestResponse.data.items,
+              element.id
+            ),
+          };
+          arrayToPush.push(data);
+        }
+        setPreferenceData(arrayToPush);
+        setIsLoading(false);
+      });
     });
   }, []);
 
@@ -45,16 +60,31 @@ const TripInterest = ({ handleMenuChange, tripData, setTripData }) => {
     setPreferenceData([...preferenceData]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     const preferences = preferenceData
       .filter((item) => item.stateOfClass === true)
-      .map((item) => item.id);
+      .map((item) => item.id.toString());
     setTripData({
       ...tripData,
       selectedAreaOfInterest: preferences,
     });
-    handleMenuChange("next");
+
+    const formData: IInitiateTripPlanning = {
+      userId: userId as number,
+      startDestination: tripData.tripLocation,
+      endDestination: tripData.tripLocation,
+      startDate: tripData.startDate,
+      endDate: tripData.endDate,
+      budget: tripData.budget,
+      travelingPartner: "",
+      noOfPartners: tripData.numberOfTraveler,
+      interests: preferences,
+    };
+    console.log(formData);
+    await initiateTripPlanning(formData);
+    setIsLoading(true);
   };
 
   return (
@@ -93,6 +123,12 @@ const TripInterest = ({ handleMenuChange, tripData, setTripData }) => {
         <div className="trip_interest_button_container">
           <button className="trip_interest_button" onClick={handleSubmit}>
             Let's go!
+          </button>
+          <button
+            className="trip_interest_button"
+            onClick={() => handleMenuChange("prev")}
+          >
+            Back
           </button>
         </div>
         <div className="trip_interest_other_text_container">

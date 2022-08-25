@@ -18,6 +18,7 @@ import moment from "moment";
 import { GOOGLEAPIKEY } from "../../utils/constants";
 import Autocomplete from "react-google-autocomplete";
 
+const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const Popular = () => {
@@ -286,9 +287,9 @@ const Popular = () => {
                 onChange={handleCategoryChange}
               >
                 {preferenceData.map((data) => (
-                  <option key={data.id} value={data.name}>
+                  <Option key={data.id} value={data.name}>
                     {data.name}
-                  </option>
+                  </Option>
                 ))}
               </Select>
               <button

@@ -14,7 +14,7 @@ import {
   getUserOrder,
   getUserProfilePictureByID,
 } from "../api";
-import { CitiesPageSize, currencyList, monthNames } from "./constants";
+import { CitiesPageSize, currencyList } from "./constants";
 
 export const checkAuth = (): boolean => {
   let valid = false;
@@ -393,24 +393,24 @@ export const localGetOrdersLength = async () => {
 };
 
 // generate array with date
-export const generateDateArray = (startDate: Date, endDate: Date) => {
-  const date = new Date(startDate.getTime());
-  let array: any = {};
+// export const generateDateArray = (startDate: Date, endDate: Date) => {
+//   const date = new Date(startDate.getTime());
+//   let array: any = {};
 
-  while (date <= endDate) {
-    const arrayDateName = `${monthNames[date.getMonth()]} ${date.getDate()}`;
-    array = {
-      ...array,
-      [arrayDateName]: [],
-    };
-    date.setDate(date.getDate() + 1);
-  }
+//   while (date <= endDate) {
+//     const arrayDateName = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+//     array = {
+//       ...array,
+//       [arrayDateName]: [],
+//     };
+//     date.setDate(date.getDate() + 1);
+//   }
 
-  return array;
-};
+//   return array;
+// };
 
 // generate array with date
-export const generateDateArray2 = (startDate: Date, endDate: Date) => {
+export const generateDateArray = (startDate: Date, endDate: Date) => {
   const date = new Date(startDate.getTime());
   let array: any = [];
 
@@ -424,6 +424,26 @@ export const generateDateArray2 = (startDate: Date, endDate: Date) => {
   }
 
   return array;
+};
+
+export const generateTripColorArray = (startDate: Date, endDate: Date) => {
+  const date = new Date(startDate.getTime());
+  let colorArray: any = [];
+
+  const generateColor = (array: any) => {
+    const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    if (array.includes(randomColor)) {
+      generateColor(array);
+    }
+    return randomColor;
+  };
+
+  while (date <= endDate) {
+    colorArray.push(generateColor(colorArray));
+    date.setDate(date.getDate() + 1);
+  }
+
+  return colorArray;
 };
 
 // generate itinerary dates object men for itineraries
@@ -507,4 +527,24 @@ export const exportFromApi = (fileName: string, data: any, type: string) => {
   a.click();
   window.URL.revokeObjectURL(url);
   a.remove();
+};
+
+export const checkForInterestStateOfClass = (
+  array: any,
+  id: string,
+  type: string = "userInterestArray"
+) => {
+  let found;
+  if (type === "notUserInterestArray") {
+    found = array.filter((item) => item.toString() === id.toString());
+  } else {
+    found = array.filter(
+      (item) => item.interestId.toString() === id.toString()
+    );
+  }
+  if (found.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
 };

@@ -55,26 +55,6 @@
     letter-spacing: 0.3px;
 }
 
-.basic_details_input {
-    display: block;
-    margin-top: 7px;
-    margin-bottom: 20px;
-    padding: 0.6rem;
-    font-size: 1rem;
-    border-radius: 10px;
-    outline: none;
-    border: 2px solid #ccc;
-    width: 500px;
-    color: #000;
-    transition: all 0.3s ease-in-out;
-
-}
-
-.basic_details_input:focus {
-    border: 2px solid #252748;
-    transition: all 0.3s ease-in-out;
-}
-
 .stars {
     margin-bottom: 0.5rem;
 }
@@ -136,16 +116,6 @@
     .title {
         margin-bottom: 1.5rem;
     }
-
-    .basic_details_input {
-        width: 400px;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .basic_details_input {
-        width: 300px;
-    }
 }
 
 @media screen and (max-width: 415px) {
@@ -154,22 +124,8 @@
     }
 }
 
-@media screen and (max-width: 400px) {
-    .basic_details_input {
-        width: 250px;
-        font-size: 0.8rem;
-    }
-}
-
 @media screen and (max-width: 350px) {
     .title {
         font-size: 0.8rem;
-    }
-}
-
-@media screen and (max-width: 300px) {
-    .basic_details_input {
-        width: 200px;
-        font-size: 0.7rem;
     }
 }

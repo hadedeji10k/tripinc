@@ -20,6 +20,8 @@ interface Props {
   tripPlanning?: boolean;
   itineraryData?: any;
   tripDays?: any;
+  tripPlanningData?: any;
+  setTripPlanningData?: any;
 }
 
 const Card = ({
@@ -31,13 +33,15 @@ const Card = ({
   tripPlanning,
   itineraryData,
   tripDays,
+  tripPlanningData,
+  setTripPlanningData,
 }: Props) => {
   const [selectedItemId, setSelectedItemId] = useState<null | number>(null);
   const [selectedItemType, setSelectedItemType] = useState<null | string>(null);
 
   const data: any = [];
 
-  for (let i = 0; i < tripDays.length; i++) {
+  for (let i = 0; i < tripDays?.length; i++) {
     data.push({
       label: `${tripDays[i].month} ${tripDays[i].date}`,
       key: i,
@@ -63,16 +67,30 @@ const Card = ({
         confirmButtonText: "Ok",
       });
     } else {
+      if (tripPlanningData.spentBudget + item.price > tripPlanningData.budget) {
+        return Swal.fire({
+          title: "Error!",
+          text: "Item cannot be added, you budget is running low. Try increasing your budget, and try again.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
       // push the data into the itinerary Day array gotten from the whole array
       itineraryDay.itineraries.push({
         item, // item from explore
         customNote: "",
         startTime: "",
         endTime: "",
-        numberOfPeople: "1",
+        numberOfPeople: tripPlanningData.numberOfTraveler,
         customNoteStatus: false,
+        mapColor: tripPlanningData.tripDaysColors[key],
       });
-      console.log(itineraryData);
+      setTripPlanningData({
+        ...tripPlanningData,
+        spentBudget:
+          tripPlanningData.spentBudget +
+          parseInt(item.price) * parseInt(tripPlanningData.numberOfTraveler),
+      });
       // on successful, display success message
       Swal.fire({
         title: "Success!",
@@ -93,7 +111,10 @@ const Card = ({
     <>
       <div className="card_container">
         <div className="trip_card_image_container">
-          <Link to={url ? url : `/explore-details/attraction/${item.id}`}>
+          <Link
+            target={tripPlanning ? "_blank" : "_parent"}
+            to={url ? url : `/explore-details/attraction/${item.id}`}
+          >
             <img
               className="trip_card_image"
               src={
@@ -106,7 +127,10 @@ const Card = ({
           </Link>
         </div>
         <div className="card_details">
-          <Link to={url ? url : `/explore-details/attraction/${item.id}`}>
+          <Link
+            target={tripPlanning ? "_blank" : "_parent"}
+            to={url ? url : `/explore-details/attraction/${item.id}`}
+          >
             <p className="card_title">{item.title}</p>
           </Link>
           <p className="card_description">
@@ -128,19 +152,21 @@ const Card = ({
         </div>
         <div className="arrow">
           {tripPlanning ? (
-            <Dropdown overlay={menu} trigger={["click"]}>
-              <span
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedItemId(item.id);
-                  setSelectedItemType(item.itemType);
-                }}
-              >
-                <Space>
-                  <IoIosArrowDown />
-                </Space>
-              </span>
-            </Dropdown>
+            <div className="arrow_tag">
+              <Dropdown overlay={menu} trigger={["click"]}>
+                <span
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedItemId(item.id);
+                    setSelectedItemType(item.itemType);
+                  }}
+                >
+                  <Space>
+                    <IoIosArrowDown />
+                  </Space>
+                </span>
+              </Dropdown>
+            </div>
           ) : (
             <p className="arrow_tag">
               <IoIosArrowDown />

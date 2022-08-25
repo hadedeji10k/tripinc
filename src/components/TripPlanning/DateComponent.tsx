@@ -30,13 +30,7 @@ const DateComponent = ({ tripDays }: DateComponentProps) => {
     } else {
       console.log("false");
     }
-
-    // setTimeout(() => {
-    //   testing.scrollIntoView();
-    //   console.log("Clicked testing");
-    // }, 200);
-    // console.log("Testing found, ", !!testing);
-  });
+  }, []);
 
   const moveToDate = (id: string) => {
     const testing = document.getElementById("itinerary_data") as HTMLElement;

@@ -98,6 +98,25 @@
   /* margin-right: 10px; */
 }
 
+.sidebar_profile_pics {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
+  border: 3px solid #252748;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+}
+
+.sidebar_profile_pics:hover {
+  transition: all 0.2s ease-in-out;
+}
+
 .cart_number {
   font-size: 10px;
   background-color: #252748;
@@ -156,6 +175,43 @@
 }
 
 .m_b_5 {
+  margin-bottom: 5px !important;
+}
+
+.m_l_20 {
+  margin-left: 20px !important;
+}
+
+.m_l_15 {
+  margin-left: 15px !important;
+}
+
+.m_l_10 {
+  margin-left: 10px !important;
+}
+
+.m_l_5 {
+  margin-left: 5px !important;
+}
+
+.m_r_20 {
+  margin-right: 20px !important;
+}
+
+.m_r_15 {
+  margin-right: 15px !important;
+}
+
+.m_r_10 {
+  margin-right: 10px !important;
+}
+
+.m_r_5 {
+  margin-right: 5px !important;
+}
+
+.m_5 {
+  margin-top: 5px !important;
   margin-bottom: 5px !important;
 }
 
@@ -290,10 +346,10 @@
   flex-direction: row;
 }
 
-.large_title {
+.extra_large_title {
   font-family: 'Poppins';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 2.5rem;
   line-height: 33px;
 }
@@ -301,7 +357,7 @@
 .large_title {
   font-family: 'Poppins';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.5rem;
   line-height: 29px;
 }
@@ -310,18 +366,26 @@
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 26px;
 }
 
 .small_title {
   font-family: 'Poppins';
   font-style: normal;
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: 400;
+  font-size: 0.8rem;
   line-height: 24px;
 }
 
+/* slider */
+.budget_slider.ant-slider-disabled .ant-slider-track {
+  background-color: rgb(255, 209, 102) !important;
+}
+
+.budget_slider.ant-slider-disabled .ant-slider-rail {
+  background-color: rgb(120, 127, 142) !important;
+}
 
 @media screen and (max-width: 500px) {
   .close_modal_button {

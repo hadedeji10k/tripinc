@@ -102,6 +102,7 @@
     color: #000000;
     margin: auto;
     padding-top: 10px;
+    cursor: pointer;
 }
 
 .heart {

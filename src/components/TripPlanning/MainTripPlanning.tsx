@@ -1,17 +1,8 @@
 import { useState, useEffect } from "react";
 import "./TripPlanning.css";
 import DateComponent from "./DateComponent";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import { IDeal, IPagination, ITravelDetails } from "../../api/interfaces";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
-import {
-  generateDateArray,
-  localGetUserId,
-  generateDateArray2,
-} from "../../utils/helpers";
-import { getUserWishListAsAttraction } from "../../api";
-import { dayNames, monthNames } from "../../utils/constants";
-import TripPlanningExplore from "./TripExplore/TripExplore";
+import { generateDateArray, localGetUserId } from "../../utils/helpers";
 import TripMapPlanning from "./TripMapPlanning/TripMapPlanning";
 import TripPlanning from "./TripPlanning";
 
@@ -21,17 +12,18 @@ interface Prop {
   setItineraryData: any;
   tripPlanningData: any;
   setTripPlanningData: any;
+  handleTripPlanningMenuClick: any;
 }
 
 const trip_planning_menu = [
   {
     id: 1,
-    stateOfClass: false,
+    stateOfClass: true,
     slug: "trip_map_planning",
   },
   {
     id: 2,
-    stateOfClass: true,
+    stateOfClass: false,
     slug: "trip_planning",
   },
 ];
@@ -43,16 +35,18 @@ const MainTripPlanning = ({
   setItineraryData,
   tripPlanningData,
   setTripPlanningData,
+  handleTripPlanningMenuClick,
 }: Prop) => {
-  const [tripPlanningMenu, setTripPlanningMenu] = useState(trip_planning_menu);
-  let data = tripPlanningMenu.filter((item) => item.stateOfClass === true);
+  const [mainTripPlanningMenu, setMainTripPlanningMenu] =
+    useState(trip_planning_menu);
+  let data = mainTripPlanningMenu.filter((item) => item.stateOfClass === true);
 
   // travel details states
-  const [travelDetails, setTravelDetails] = useState<ITravelDetails>({
-    flights: [],
-    stays: [],
-    rentalCars: [],
-  });
+  // const [travelDetails, setTravelDetails] = useState<ITravelDetails>({
+  //   flights: [],
+  //   stays: [],
+  //   rentalCars: [],
+  // });
 
   // state to show date_nav_button
   const [showDateNavButton, setShowDateNavButton] = useState<boolean>(false);
@@ -69,24 +63,45 @@ const MainTripPlanning = ({
   ) as HTMLElement;
 
   useEffect(() => {
+    console.log(
+      "From DateContainer",
+      dateTagContainer?.scrollHeight,
+      dateContainer?.scrollHeight
+    );
     if (dateContainer?.scrollHeight >= dateTagContainer?.scrollHeight) {
       setShowDateNavButton(false);
     } else {
       setShowDateNavButton(true);
     }
-  }, [dateContainer, dateTagContainer]);
+  }, [dateContainer?.scrollHeight, dateTagContainer?.scrollHeight]);
 
-  // function to handle faqs click
-  const handleMenuClick = (id: any) => {
-    // e.preventDefault();
-    // console.log(e);
-    let prevState = tripPlanningMenu[id].stateOfClass;
-    for (let i = 0; i < tripPlanningMenu.length; i++) {
-      tripPlanningMenu[i].stateOfClass = false;
+  // function to handle menu click
+  const handleMainTripPlanningMenuClick = (action: string) => {
+    for (let i = 0; i < mainTripPlanningMenu.length; i++) {
+      const element = mainTripPlanningMenu[i];
+      element.stateOfClass = false;
     }
-    tripPlanningMenu[id].stateOfClass = !prevState;
-    // tripPlanningMenu[index].class = tripPlanningMenu[index].stateOfClass ? 'clicked' : 'not-clicked'
-    setTripPlanningMenu([...tripPlanningMenu]);
+
+    let index;
+    switch (action) {
+      case "next":
+        index = mainTripPlanningMenu.findIndex(
+          (item) => item.id === data[0].id + 1
+        );
+        mainTripPlanningMenu[index].stateOfClass = true;
+        break;
+      case "prev":
+        index = mainTripPlanningMenu.findIndex(
+          (item) => item.id === data[0].id - 1
+        );
+        mainTripPlanningMenu[index].stateOfClass = true;
+        break;
+      default:
+        break;
+    }
+
+    window.scrollTo(0, 0);
+    setMainTripPlanningMenu([...mainTripPlanningMenu]);
   };
 
   const handleScrollUp = (e: any) => {
@@ -131,7 +146,15 @@ const MainTripPlanning = ({
       </div>
       <div className="trip_planning_container">
         {data[0].slug === "trip_map_planning" ? (
-          <TripMapPlanning />
+          <TripMapPlanning
+            handleTripPlanningMenuClick={handleTripPlanningMenuClick}
+            handleMainTripPlanningMenuClick={handleMainTripPlanningMenuClick}
+            tripDays={tripDays}
+            itineraryData={itineraryData}
+            setItineraryData={setItineraryData}
+            tripPlanningData={tripPlanningData}
+            setTripPlanningData={setTripPlanningData}
+          />
         ) : data[0].slug === "trip_planning" ? (
           <TripPlanning
             tripDays={tripDays}
@@ -139,6 +162,7 @@ const MainTripPlanning = ({
             setItineraryData={setItineraryData}
             tripPlanningData={tripPlanningData}
             setTripPlanningData={setTripPlanningData}
+            handleMainTripPlanningMenuClick={handleMainTripPlanningMenuClick}
           />
         ) : (
           <></>

@@ -18,12 +18,16 @@ interface ItineraryProps {
   tripDays: any;
   itineraryData: any;
   setItineraryData: any;
+  setTripPlanningData: any;
+  tripPlanningData: any;
 }
 
 const Itinerary = ({
   tripDays,
   itineraryData,
   setItineraryData,
+  tripPlanningData,
+  setTripPlanningData,
 }: ItineraryProps) => {
   const [tripMenu, setTripMenu] = useState<any[]>([]);
 
@@ -42,20 +46,37 @@ const Itinerary = ({
     setTripMenu([...tripMenu]);
   };
 
-  const handleNumberOfPeopleChange = (
-    value: { value: string; label: React.ReactNode },
-    tripDayKey,
-    itineraryKey
-  ) => {
+  const handleNumberOfPeopleChange = (value, tripDayKey, itineraryKey) => {
     // { value: "lucy", key: "lucy", label: "Lucy (101)" }
     // get the day's itinerary array
     const itineraryDay = itineraryData[tripDayKey];
     // get the item using the key from the array
     let itemToEdit = itineraryDay.itineraries[itineraryKey];
-    // change the time
+
+    // get the previous numberOfPeople, then deduct the amount from spentBudget and add it again with the current numberOfPeople
+    // calculate the amount
+    const amountToDeduct =
+      parseInt(itemToEdit.item.price) * parseInt(itemToEdit.numberOfPeople);
+    const amountToAdd = parseInt(itemToEdit.item.price) * parseInt(value);
+    if (
+      tripPlanningData.spentBudget + amountToAdd - amountToDeduct >
+      tripPlanningData.budget
+    ) {
+      setItineraryData([...itineraryData]);
+      return Swal.fire({
+        title: "Error!",
+        text: "Number of people cannot be changed, you budget is running low. Try increasing your budget, and try again.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+    setTripPlanningData({
+      ...tripPlanningData,
+      spentBudget: tripPlanningData.spentBudget + amountToAdd - amountToDeduct,
+    });
+    // change the numberOfPeople
     itemToEdit.numberOfPeople = value;
     setItineraryData([...itineraryData]);
-    console.log(itineraryData);
   };
 
   const handleCustomNoteChange = (e, tripDayKey, itineraryKey) => {
@@ -99,7 +120,6 @@ const Itinerary = ({
         );
         itineraryDay.itineraries = diff;
         setItineraryData([...itineraryData]);
-        console.log(itineraryDay.itineraries);
       }
     });
   };
@@ -122,35 +142,50 @@ const Itinerary = ({
         tripMenu.map((item, tripDayKey) => (
           <div className="m_b_20 w_100" key={tripDayKey}>
             <div
-              className="trip_planning_menu_row"
+              className="itinerary_day_column"
               onClick={() => handleMenuClick(tripDayKey)}
               id={item.arrayName}
               data-itinerary-data={tripMenu[tripDayKey]?.stateOfClass}
             >
-              {tripMenu[tripDayKey]?.stateOfClass ? (
-                <span>
-                  <IoIosArrowDown className="trip_planning_arrow_drop" />
-                </span>
-              ) : (
-                <span>
-                  <IoIosArrowForward className="trip_planning_arrow_drop" />
-                </span>
-              )}
+              <div className="trip_planning_menu_row">
+                {tripMenu[tripDayKey]?.stateOfClass ? (
+                  <span>
+                    <IoIosArrowDown className="trip_planning_arrow_drop" />
+                  </span>
+                ) : (
+                  <span>
+                    <IoIosArrowForward className="trip_planning_arrow_drop" />
+                  </span>
+                )}
 
-              <div className="trip_planning_itinerary_menu w_90">
-                <h4 className="general_faq_question">
-                  <span className="trip_planning_itinerary_menu_date">
-                    {item.id}
-                  </span>{" "}
-                  Day {item.id}
-                </h4>
-                <h4 className="general_faq_question">{`${item.day}, ${
-                  item.date
-                }${dateSuffix(item.date)} ${item.month}`}</h4>
+                <div className="trip_planning_itinerary_menu w_90">
+                  <h4 className="medium_title">
+                    <span className="trip_planning_itinerary_menu_date">
+                      {item.id}
+                    </span>{" "}
+                    Day {item.id}
+                  </h4>
+                  <h4 className="medium_title">{`${item.day}, ${
+                    item.date
+                  }${dateSuffix(item.date)} ${item.month}`}</h4>
+                </div>
               </div>
+
+              {/* Check if the item is not open and display the number of attraction in it, i.e when it is open, it hides it */}
+              {!tripMenu[tripDayKey]?.stateOfClass ? (
+                <div className="trip_planning_itinerary_menu w_90">
+                  <p className="small_title">
+                    {itineraryData[tripDayKey].itineraries.length} attraction
+                    {itineraryData[tripDayKey].itineraries.length > 1
+                      ? "s"
+                      : ""}{" "}
+                    added
+                  </p>
+                </div>
+              ) : null}
             </div>
 
-            {/* Map the data in their itinerary array */}
+            {/* Map the data in their itinerary array, first chacking the stateOfClass then display the itineraries */}
             {tripMenu[tripDayKey]?.stateOfClass ? (
               itineraryData[tripDayKey].itineraries.length > 0 ? (
                 itineraryData[tripDayKey].itineraries.map(
@@ -216,7 +251,10 @@ const Itinerary = ({
                               ]}
                             />
                             <Select
-                              defaultValue={{ value: "1", label: "1" }}
+                              defaultValue={{
+                                value: itinerary.numberOfPeople,
+                                label: itinerary.numberOfPeople,
+                              }}
                               onChange={(value) =>
                                 handleNumberOfPeopleChange(
                                   value,
@@ -238,7 +276,7 @@ const Itinerary = ({
                               <Option value="10">10</Option>
                             </Select>
                             <span
-                              className="itinerary_display_card_direction_tag"
+                              className="itinerary_display_card_direction_tag m_l_10"
                               onClick={() =>
                                 handleCustomNote(tripDayKey, itineraryKey)
                               }
@@ -270,18 +308,22 @@ const Itinerary = ({
                                 itineraryKey
                               )
                             }
-                            className="w_90 basic_details_input"
+                            className="w_90 basic_details_input m_5"
                             type="text"
                             name=""
                             id=""
                             placeholder="Add custom Note"
                           />
-                          <span className="itinerary_display_card_direction_tag w_10">
+                          <span
+                            className="itinerary_display_card_direction_tag w_10"
+                            onClick={() =>
+                              handleCustomNote(tripDayKey, itineraryKey)
+                            }
+                          >
                             <FaSave />
                           </span>
                         </div>
                       ) : null}
-                      {console.log("Custom Status", itinerary.customNoteStatus)}
                     </div>
                   )
                 )
