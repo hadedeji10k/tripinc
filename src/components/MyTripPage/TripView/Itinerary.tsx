@@ -57,7 +57,7 @@ const Itinerary = ({
     // get the previous numberOfPeople, then deduct the amount from spentBudget and add it again with the current numberOfPeople
     // calculate the amount
     const amountToDeduct = itemToEdit.item.price * itemToEdit.numberOfPeople;
-    const amountToAdd = itemToEdit.item.price * parseInt(value);
+    const amountToAdd = itemToEdit.item.price * value;
     if (
       tripPlanningData.spentBudget + amountToAdd - amountToDeduct >
       tripPlanningData.budget
@@ -235,71 +235,16 @@ const Itinerary = ({
                                 <MdLocationOn />
                               </span>
                             </Tooltip>
-                            <TimePicker.RangePicker
-                              className="itinerary_display_card_time"
-                              onChange={(time, timeString) =>
-                                handleTimeChange(
-                                  time,
-                                  timeString,
-                                  tripDayKey,
-                                  itineraryKey
-                                )
-                              }
-                              defaultValue={[
-                                moment(
-                                  itinerary.startTime !== ""
-                                    ? itinerary.startTime
-                                    : "09:00:00",
-                                  "HH:mm:ss"
-                                ),
-                                moment(
-                                  itinerary.endTime !== ""
-                                    ? itinerary.endTime
-                                    : "09:00:00",
-                                  "HH:mm:ss"
-                                ),
-                              ]}
-                            />
-                            <Select
-                              defaultValue={{
-                                value: itinerary.numberOfPeople,
-                                label: itinerary.numberOfPeople,
-                              }}
-                              onChange={(value) =>
-                                handleNumberOfPeopleChange(
-                                  value,
-                                  tripDayKey,
-                                  itineraryKey
-                                )
-                              }
-                              className="itinerary_display_card_select"
-                            >
-                              <Option value="1">1</Option>
-                              <Option value="2">2</Option>
-                              <Option value="3">3</Option>
-                              <Option value="4">4</Option>
-                              <Option value="5">5</Option>
-                              <Option value="6">6</Option>
-                              <Option value="7">7</Option>
-                              <Option value="8">8</Option>
-                              <Option value="9">9</Option>
-                              <Option value="10">10</Option>
-                            </Select>
-                            <span
-                              className="itinerary_display_card_direction_tag m_l_10"
-                              onClick={() =>
-                                handleCustomNote(tripDayKey, itineraryKey)
-                              }
-                            >
-                              <BsFillPencilFill />
+                            <span className="itinerary_display_card_time">
+                              {itinerary.startTime
+                                ? itinerary.startTime
+                                : "09:00"}{" "}
+                              -{" "}
+                              {itinerary.endTime ? itinerary.endTime : "09:00"}
                             </span>
-                            <span
-                              className="itinerary_display_delete_button"
-                              onClick={() =>
-                                handleDelete(tripDayKey, itineraryKey)
-                              }
-                            >
-                              <ImCancelCircle />
+
+                            <span className="itinerary_display_card_time">
+                              No. of People: {itinerary.numberOfPeople}
                             </span>
                           </div>
                         </div>
@@ -350,93 +295,3 @@ const Itinerary = ({
 };
 
 export default Itinerary;
-
-/* <div className="itinerary_display_card_container">
-<div className="itinerary_display_card_image">
-  <img
-    style={{
-      width: "100%",
-      height: "100px",
-    }}
-    src="https://images.pexels.com/photos/12987389/pexels-photo-12987389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    alt=""
-  />
-</div>
-<div className="itinerary_display_card_info">
-  <p className="itinerary_display_card_title">{getExplore.title}</p>
-  <p className="itinerary_display_card_desc">{getExplore.description}</p>
-  <div className="itinerary_display_card_info_row">
-    <Tooltip placement="top" title="Direction">
-      <span className="itinerary_display_card_direction_tag">
-        <MdLocationOn />
-      </span>
-    </Tooltip>
-    <TimePicker
-      className="itinerary_display_card_time"
-      defaultValue={moment("09:00:00", "HH:mm:ss")}
-    />
-    <Select
-      labelInValue
-      defaultValue={{ value: "1", label: "1" }}
-      onChange={handleNumberOfPeopleChange}
-    >
-      <Option value="1">1</Option>
-      <Option value="2">2</Option>
-      <Option value="3">3</Option>
-      <Option value="4">4</Option>
-      <Option value="5">5</Option>
-      <Option value="6">6</Option>
-      <Option value="7">7</Option>
-      <Option value="8">8</Option>
-      <Option value="9">9</Option>
-      <Option value="10">10</Option>
-    </Select>
-  </div>
-</div>
-</div> */
-
-// <div className="itinerary_display_card_container">
-// <div className="itinerary_display_card_image">
-//   <img
-//     style={{
-//       width: "100%",
-//       height: "100px",
-//     }}
-//     src={item.imageUrl}
-//     alt=""
-//   />
-// </div>
-// <div className="itinerary_display_card_info">
-//   <p className="itinerary_display_card_title">{item.title}</p>
-//   <p className="itinerary_display_card_desc">
-//     {item.description.slice(0, 100)}...
-//   </p>
-//   <div className="itinerary_display_card_info_row">
-//     <Tooltip placement="top" title="Direction">
-//       <span className="itinerary_display_card_direction_tag">
-//         <MdLocationOn />
-//       </span>
-//     </Tooltip>
-//     <TimePicker
-//       className="itinerary_display_card_time"
-//       defaultValue={moment("09:00:00", "HH:mm:ss")}
-//     />
-//     <Select
-//       labelInValue
-//       defaultValue={{ value: "1", label: "1" }}
-//       onChange={handleNumberOfPeopleChange}
-//     >
-//       <Option value="1">1</Option>
-//       <Option value="2">2</Option>
-//       <Option value="3">3</Option>
-//       <Option value="4">4</Option>
-//       <Option value="5">5</Option>
-//       <Option value="6">6</Option>
-//       <Option value="7">7</Option>
-//       <Option value="8">8</Option>
-//       <Option value="9">9</Option>
-//       <Option value="10">10</Option>
-//     </Select>
-//   </div>
-// </div>
-// </div>

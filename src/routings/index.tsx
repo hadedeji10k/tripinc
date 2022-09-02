@@ -30,6 +30,7 @@ import SuccessfulPayment from "../components/Shopping/SuccessfulPayment/index";
 import AccountVerified from "../components/AccountVerification/AccountVerified/index";
 import ForgotPassword from "../components/Auth/ForgotPassword";
 import CustomTripPlanning from "../components/CustomTripPlanning";
+import TripView from "../components/MyTripPage/TripView";
 
 const MainRoute: React.FC = () => {
   return (
@@ -53,6 +54,14 @@ const MainRoute: React.FC = () => {
             element={
               <RequireAuth>
                 <MyTrip />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/my-trips/:tripId"
+            element={
+              <RequireAuth>
+                <TripView />
               </RequireAuth>
             }
           />

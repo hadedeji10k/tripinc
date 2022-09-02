@@ -520,3 +520,50 @@ export interface IInitiateTripPlanning {
     isCovidFriendly?: boolean,
     interests: string[]
 }
+
+export interface ITripPlanningData {
+    userId: number,
+    userFullName: string,
+    startDestination: string,
+    startDestinationCity: string,
+    startDestinationCountry?: string,
+    startDestinationLongitude?: number,
+    startDestinationLatitude?: number,
+    endDestination?: string,
+    endDestinationCity?: string,
+    endDestinationCountry?: string,
+    endDestinationLongitude?: number,
+    endDestinationLatitude?: number,
+    endDestinationImage?: string,
+    startDate: Date,
+    endDate: Date,
+    pointOfStay?: string,
+    pointOfStayLongitude?: number,
+    pointOfStayLatitude?: number,
+    budget: number,
+    travelingPartner: string,
+    noOfPartners: number,
+    preferedInterests: string[],
+    isCovidFriendly?: string,
+    readyForBooking?: boolean,
+    isBooked?: boolean,
+    isActive?: boolean,
+    id: number,
+    createdDate: Date,
+    updatedDate: Date
+}
+
+export interface ITripPlanningItineraries {
+    item: IDeal,
+    customNote: string,
+    startTime: string | Date,
+    endTime: string | Date,
+    numberOfPeople: number,
+    customNoteStatus: boolean,
+    mapColor: string,
+}
+
+export interface ITripPlanningItineraryDay {
+    date: Date,
+    itineraries: ITripPlanningItineraries[],
+}

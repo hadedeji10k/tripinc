@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { geocodeByAddress } from "react-google-places-autocomplete";
 import "./TripPlanning.css";
-import { ITravelDetails } from "../../api/interfaces";
+import {
+  ITravelDetails,
+  ITripPlanningItineraryDay,
+} from "../../api/interfaces";
 import {
   localGetUserId,
   generateDateArray,
@@ -64,9 +67,9 @@ const TripPlanning = () => {
   });
 
   // states to manage itinerary, generateDateArray from a helper function
-  const [itineraryData, setItineraryData] = useState(
-    generateDateArray(tripDate.startDate, tripDate.endDate)
-  );
+  const [itineraryData, setItineraryData] = useState<
+    ITripPlanningItineraryDay[]
+  >(generateDateArray(tripDate.startDate, tripDate.endDate));
 
   // user ID
   const userId = localGetUserId();
@@ -111,8 +114,13 @@ const TripPlanning = () => {
     }
     setTripDays(dates);
 
+    // for editing:: Fetch itineraryData from database
+    // so if editing is enabled, we make use of the fetched data else we generate a new data object
+    // Also map through the fetched data and set the spentBudget to the accumulated prices of the selected attractions
     const generated = generateDateArray(tripDate.startDate, tripDate.endDate);
     setItineraryData(generated);
+
+    // generate color array for map
     const generatedColorArray = generateTripColorArray(
       tripDate.startDate,
       tripDate.endDate
@@ -123,23 +131,6 @@ const TripPlanning = () => {
         tripDaysColors: generatedColorArray,
       };
     });
-    // geocodeByAddress("Ikeja, Nigeria")
-    //   .then((results) => {
-    //     // setTripPlanningData((prev) => {
-    //     //   return {
-    //     //     ...prev,
-    //     //     tripLocationPosition: {
-    //     //       lat: results[0].geometry.location.lat(),
-    //     //       lng: results[0].geometry.location.lng(),
-    //     //     },
-    //     //   };
-    //     // });
-    //     console.log({
-    //       lat: results[0].geometry.location.lat(),
-    //       lng: results[0].geometry.location.lng(),
-    //     });
-    //   })
-    //   .catch((error) => console.error(error));
   }, [tripDate]);
 
   // function to handle menu click

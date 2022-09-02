@@ -4,12 +4,11 @@ import { IoIosArrowDown } from "react-icons/io";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { AiFillStar } from "react-icons/ai";
 import { Card, Dropdown, Menu, Space } from "antd";
-import "antd/dist/antd.min.css";
-import { getKeysFromObject } from "../../../../utils/helpers";
 import Swal from "sweetalert2";
+import { ITripPlanningItineraryDay } from "../../../../api/interfaces";
 
 interface Props {
-  itineraryData: any;
+  itineraryData: ITripPlanningItineraryDay[];
   tripDays: any;
   setItineraryData: any;
   tripPlanningData: any;

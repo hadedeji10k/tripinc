@@ -2,13 +2,17 @@
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import { getUserWishListAsAttraction } from "../../../api";
-import { IDeal, IPagination } from "../../../api/interfaces";
+import {
+  IDeal,
+  IPagination,
+  ITripPlanningItineraryDay,
+} from "../../../api/interfaces";
 import { localGetUserId } from "../../../utils/helpers";
 import TripPlanningBudgetListCard from "./TripPlanningBudgetListCard/TripPlanningBudgetListCard";
 
 interface Props {
   tripDays: any;
-  itineraryData: any;
+  itineraryData: ITripPlanningItineraryDay[];
   setItineraryData: any;
   tripPlanningData: any;
   setTripPlanningData: any;

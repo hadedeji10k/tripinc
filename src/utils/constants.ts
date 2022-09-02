@@ -867,3 +867,1650 @@ export const currencyList = [
         Symbol: "ZWL"
     }
 ]
+
+export const newTripData = [
+    {
+        "date": "2022-08-25T07:34:29.926Z",
+        "itineraries": []
+    },
+    {
+        "date": "2022-08-26T07:34:29.926Z",
+        "itineraries": [
+            {
+                "item": {
+                    "itemType": "Tour",
+                    "title": "Vatican Museums & Sistine Chapel Skip-the-Ticket-Line Entry",
+                    "postalCode": null,
+                    "price": 18.02,
+                    "currency": "GBP",
+                    "location": "Vatican City",
+                    "city": null,
+                    "country": "IT",
+                    "longitude": 12.45249,
+                    "latitude": 41.903839,
+                    "distance": 0,
+                    "openingHour": "00:00:00",
+                    "closingHour": "00:00:00",
+                    "bestVisitingTime": [],
+                    "openingDaysList": [],
+                    "availableDates": [],
+                    "typicalTimeSpent": 0,
+                    "description": "Take a stirring journey through art and religious history with skip-the-ticket-line entry to the Vatican Museums and Sistine Chapel. Avoid the long ticket lines and then enjoy your visit at your own pace. \n\nTiptoe through the Greek Cross Gallery to see elaborately-carved sarcophagi that might just contain the earthly remains of some of antiquity's famous kings and queens! Peek at the Cabinet of the Masks, or tour the Sala degli Animali to see a virtual menagerie of fantastic beasts, real and imagined. Walk the Upper Galleries, including the Gallery of Maps, to see how cartographers depicted the world through the ages. See masterpieces by Renaissance masters in the Raphael Rooms, and rest for a while in the Borgia Apartments.\n\nThen, it’s time to marvel at Michelangelo’s exquisite Sistine Chapel, the crown jewel of the Vatican, and perhaps even of all the world’s art treasures.",
+                    "averageRating": 4.4,
+                    "numberOfRatings": 29789,
+                    "imageUrl": "https://cdn.getyourguide.com/img/tour/5f16d60cb3548.jpeg/116.jpg",
+                    "termsAndConditions": null,
+                    "greatForList": [],
+                    "thingsToPackList": [],
+                    "creatorUserId": 0,
+                    "creatorName": null,
+                    "updatedBy": null,
+                    "isActive": true,
+                    "isCovidFriendly": null,
+                    "isPublished": false,
+                    "featured": false,
+                    "liked": false,
+                    "photos": [
+                        {
+                            "id": 1,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60cb3548.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 2,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f318bf4f.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 3,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60c6be6a.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 4,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f320918c.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 5,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f3278690.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 6,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f346248b.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 7,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f34bf6cc.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 8,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f3531827.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 9,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60be476e.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 10,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60b18470.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 11,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f3308e8e.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 12,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60c360e6.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 13,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f360b48c.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 14,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f365d95b.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 15,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60a1f8f6.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 16,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f33ba36d.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 17,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60a84083.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 18,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60ad2049.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 19,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f310ddfc.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 20,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60b9d848.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 21,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60b56fdd.jpeg/116.jpg"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "id": 27,
+                            "name": "Culture & History",
+                            "code": null
+                        },
+                        {
+                            "id": 28,
+                            "name": "Art & Museums",
+                            "code": null
+                        },
+                        {
+                            "id": 32,
+                            "name": "Religious & Spiritual Activities",
+                            "code": null
+                        },
+                        {
+                            "id": 33,
+                            "name": "History & Heritage",
+                            "code": null
+                        },
+                        {
+                            "id": 103,
+                            "name": "Food & Drinks",
+                            "code": null
+                        },
+                        {
+                            "id": 105,
+                            "name": "Food & Gourmet Tours",
+                            "code": null
+                        },
+                        {
+                            "id": 123,
+                            "name": "Tickets",
+                            "code": null
+                        },
+                        {
+                            "id": 132,
+                            "name": "Museums & Exhibitions",
+                            "code": null
+                        },
+                        {
+                            "id": 133,
+                            "name": "Museum Tickets",
+                            "code": null
+                        },
+                        {
+                            "id": 144,
+                            "name": "Audio Guides",
+                            "code": null
+                        },
+                        {
+                            "id": 169,
+                            "name": "Gardens & Flowers",
+                            "code": null
+                        },
+                        {
+                            "id": 532,
+                            "name": "Local Food",
+                            "code": null
+                        },
+                        {
+                            "id": 1104,
+                            "name": "Medium-risk activities",
+                            "code": null
+                        }
+                    ],
+                    "tags": [],
+                    "ratings": [],
+                    "abstract": null,
+                    "highlights": [
+                        "Select your entrance to explore one of the world's busiest museums by yourself at your preferred time",
+                        "Marvel at Michelangelo's fresco \"The Creation of Adam\" in the Sistine Chapel",
+                        "Enter the Vatican Museums through the fastest entrance available and then enjoy your visit at your own pace",
+                        "Get a 20% discount at the Vatican Museums online shop"
+                    ],
+                    "inclusions": "Skip-the-ticket-line entry to the Vatican Museums and Sistine Chapel (if option selected)\nTour of the Vatican Gardens in a minivan (if option selected)\nAccess to Papal Villas or Vatican Garden (if option selected)\nAudio guide in Vatican Museums and Sistine Chapel (if option selected)\nBooking and handling fee\n20% discount at Vatican Museums online shop",
+                    "exclusions": "Guided tour\nAudio guide unless option chosen\nTicket to St.Peter's Basilica (free of charge, but access is not guaranteed. It may vary due to crowd control)\nAccess to St. Peter's Basilica's dome",
+                    "additionalInformation": "• On arrival at the Vatican, please follow the signs for the separate Partners Entrance\n• All visitors must pass through airport-style security. During high season the wait at security may be up to 30 minutes\n• St Peter’s Basilica and the Square may be closed in the morning due to Papal Audience\n• The opening hours are subject to change due to special events at the Vatican Museums, Sistine Chapel, and St Peter's Basilica\n• Children under 6 years old go free of charge with a valid ID\n• Those with a disability and their carer or companion go free of charge with a certificate of disability, which you must present at the Special Permits and/or the Reception desk in the hall of the museum\n• The minibus tour is not available for children 6 years old or younger\n• The Vatican can get very crowded all year round. June, July and August are particularly busy as they are high-season months",
+                    "bestseller": true,
+                    "certified": true,
+                    "tourUrl": "https://www.getyourguide.com/vatican-museums-l2738/skip-the-line-vatican-museums-sistine-chapel-ticket-t62214/?partner_id=QMFJN1D&psrc=partner_api&currency=GBP",
+                    "supplierId": 8437,
+                    "provider": "GetYourGuide",
+                    "tourId": 62214,
+                    "tourCode": "deprecated",
+                    "freeSale": true,
+                    "locationList": [
+                        {
+                            "locationId": 524,
+                            "type": "poi",
+                            "name": "Vatican City",
+                            "englishName": "Vatican City",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.902916,
+                                "long": 12.453389
+                            },
+                            "parentId": 33,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 4344,
+                            "type": "poi",
+                            "name": "Raphael Rooms",
+                            "englishName": "Raphael Rooms",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.903531,
+                                "long": 12.45617
+                            },
+                            "parentId": 2738,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 7915,
+                            "type": "poi",
+                            "name": "Apostolic Palace",
+                            "englishName": "Apostolic Palace",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.9035313,
+                                "long": 12.4561705
+                            },
+                            "parentId": 524,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 2738,
+                            "type": "poi",
+                            "name": "Vatican Museums",
+                            "englishName": "Vatican Museums",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.903839,
+                                "long": 12.45249
+                            },
+                            "parentId": 524,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 88261,
+                            "type": "poi",
+                            "name": "Papal Palace of Castel Gandolfo",
+                            "englishName": "Papal Palace of Castel Gandolfo",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.746982,
+                                "long": 12.650274
+                            },
+                            "parentId": 7914,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 862,
+                            "type": "area",
+                            "name": "Lazio",
+                            "englishName": "Lazio",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 42.02174,
+                                "long": 12.73821
+                            },
+                            "parentId": 0,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 90650,
+                            "type": "poi",
+                            "name": "Borgia Apartment",
+                            "englishName": "Borgia Apartment",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.9062377,
+                                "long": 12.454025
+                            },
+                            "parentId": 7915,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 33,
+                            "type": "city",
+                            "name": "Rome",
+                            "englishName": "Rome",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.903111,
+                                "long": 12.49576
+                            },
+                            "parentId": 862,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 7914,
+                            "type": "city",
+                            "name": "Castel Gandolfo",
+                            "englishName": "Castel Gandolfo",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.7497932,
+                                "long": 12.6485192
+                            },
+                            "parentId": 862,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 2616,
+                            "type": "poi",
+                            "name": "Sistine Chapel",
+                            "englishName": "Sistine Chapel",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.906921,
+                                "long": 12.45399
+                            },
+                            "parentId": 2738,
+                            "viewport": null
+                        }
+                    ],
+                    "durationList": [],
+                    "cancellationPolicyText": "Cancel up to 24 hours in advance to receive a full refund",
+                    "expiryDate": "2021-06-26T00:00:00+00:00",
+                    "id": 5,
+                    "createdDate": "2021-06-14T16:41:29.538276+00:00",
+                    "updatedDate": null
+                },
+                "customNote": "",
+                "startTime": "",
+                "endTime": "",
+                "numberOfPeople": 1,
+                "customNoteStatus": false,
+                "mapColor": "#e38696"
+            }
+        ]
+    },
+    {
+        "date": "2022-08-27T07:34:29.926Z",
+        "itineraries": [
+            {
+                "item": {
+                    "itemType": "Tour",
+                    "title": "Vatican Museums & Sistine Chapel Skip-the-Ticket-Line Entry",
+                    "postalCode": null,
+                    "price": 18.02,
+                    "currency": "GBP",
+                    "location": "Vatican City",
+                    "city": null,
+                    "country": "IT",
+                    "longitude": 12.45249,
+                    "latitude": 41.903839,
+                    "distance": 0,
+                    "openingHour": "00:00:00",
+                    "closingHour": "00:00:00",
+                    "bestVisitingTime": [],
+                    "openingDaysList": [],
+                    "availableDates": [],
+                    "typicalTimeSpent": 0,
+                    "description": "Take a stirring journey through art and religious history with skip-the-ticket-line entry to the Vatican Museums and Sistine Chapel. Avoid the long ticket lines and then enjoy your visit at your own pace. \n\nTiptoe through the Greek Cross Gallery to see elaborately-carved sarcophagi that might just contain the earthly remains of some of antiquity's famous kings and queens! Peek at the Cabinet of the Masks, or tour the Sala degli Animali to see a virtual menagerie of fantastic beasts, real and imagined. Walk the Upper Galleries, including the Gallery of Maps, to see how cartographers depicted the world through the ages. See masterpieces by Renaissance masters in the Raphael Rooms, and rest for a while in the Borgia Apartments.\n\nThen, it’s time to marvel at Michelangelo’s exquisite Sistine Chapel, the crown jewel of the Vatican, and perhaps even of all the world’s art treasures.",
+                    "averageRating": 4.4,
+                    "numberOfRatings": 29789,
+                    "imageUrl": "https://cdn.getyourguide.com/img/tour/5f16d60cb3548.jpeg/116.jpg",
+                    "termsAndConditions": null,
+                    "greatForList": [],
+                    "thingsToPackList": [],
+                    "creatorUserId": 0,
+                    "creatorName": null,
+                    "updatedBy": null,
+                    "isActive": true,
+                    "isCovidFriendly": null,
+                    "isPublished": false,
+                    "featured": false,
+                    "liked": false,
+                    "photos": [
+                        {
+                            "id": 1,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60cb3548.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 2,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f318bf4f.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 3,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60c6be6a.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 4,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f320918c.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 5,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f3278690.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 6,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f346248b.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 7,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f34bf6cc.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 8,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f3531827.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 9,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60be476e.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 10,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60b18470.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 11,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f3308e8e.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 12,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60c360e6.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 13,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f360b48c.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 14,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f365d95b.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 15,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60a1f8f6.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 16,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f33ba36d.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 17,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60a84083.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 18,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60ad2049.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 19,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5ca71f310ddfc.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 20,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60b9d848.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 21,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5f16d60b56fdd.jpeg/116.jpg"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "id": 27,
+                            "name": "Culture & History",
+                            "code": null
+                        },
+                        {
+                            "id": 28,
+                            "name": "Art & Museums",
+                            "code": null
+                        },
+                        {
+                            "id": 32,
+                            "name": "Religious & Spiritual Activities",
+                            "code": null
+                        },
+                        {
+                            "id": 33,
+                            "name": "History & Heritage",
+                            "code": null
+                        },
+                        {
+                            "id": 103,
+                            "name": "Food & Drinks",
+                            "code": null
+                        },
+                        {
+                            "id": 105,
+                            "name": "Food & Gourmet Tours",
+                            "code": null
+                        },
+                        {
+                            "id": 123,
+                            "name": "Tickets",
+                            "code": null
+                        },
+                        {
+                            "id": 132,
+                            "name": "Museums & Exhibitions",
+                            "code": null
+                        },
+                        {
+                            "id": 133,
+                            "name": "Museum Tickets",
+                            "code": null
+                        },
+                        {
+                            "id": 144,
+                            "name": "Audio Guides",
+                            "code": null
+                        },
+                        {
+                            "id": 169,
+                            "name": "Gardens & Flowers",
+                            "code": null
+                        },
+                        {
+                            "id": 532,
+                            "name": "Local Food",
+                            "code": null
+                        },
+                        {
+                            "id": 1104,
+                            "name": "Medium-risk activities",
+                            "code": null
+                        }
+                    ],
+                    "tags": [],
+                    "ratings": [],
+                    "abstract": null,
+                    "highlights": [
+                        "Select your entrance to explore one of the world's busiest museums by yourself at your preferred time",
+                        "Marvel at Michelangelo's fresco \"The Creation of Adam\" in the Sistine Chapel",
+                        "Enter the Vatican Museums through the fastest entrance available and then enjoy your visit at your own pace",
+                        "Get a 20% discount at the Vatican Museums online shop"
+                    ],
+                    "inclusions": "Skip-the-ticket-line entry to the Vatican Museums and Sistine Chapel (if option selected)\nTour of the Vatican Gardens in a minivan (if option selected)\nAccess to Papal Villas or Vatican Garden (if option selected)\nAudio guide in Vatican Museums and Sistine Chapel (if option selected)\nBooking and handling fee\n20% discount at Vatican Museums online shop",
+                    "exclusions": "Guided tour\nAudio guide unless option chosen\nTicket to St.Peter's Basilica (free of charge, but access is not guaranteed. It may vary due to crowd control)\nAccess to St. Peter's Basilica's dome",
+                    "additionalInformation": "• On arrival at the Vatican, please follow the signs for the separate Partners Entrance\n• All visitors must pass through airport-style security. During high season the wait at security may be up to 30 minutes\n• St Peter’s Basilica and the Square may be closed in the morning due to Papal Audience\n• The opening hours are subject to change due to special events at the Vatican Museums, Sistine Chapel, and St Peter's Basilica\n• Children under 6 years old go free of charge with a valid ID\n• Those with a disability and their carer or companion go free of charge with a certificate of disability, which you must present at the Special Permits and/or the Reception desk in the hall of the museum\n• The minibus tour is not available for children 6 years old or younger\n• The Vatican can get very crowded all year round. June, July and August are particularly busy as they are high-season months",
+                    "bestseller": true,
+                    "certified": true,
+                    "tourUrl": "https://www.getyourguide.com/vatican-museums-l2738/skip-the-line-vatican-museums-sistine-chapel-ticket-t62214/?partner_id=QMFJN1D&psrc=partner_api&currency=GBP",
+                    "supplierId": 8437,
+                    "provider": "GetYourGuide",
+                    "tourId": 62214,
+                    "tourCode": "deprecated",
+                    "freeSale": true,
+                    "locationList": [
+                        {
+                            "locationId": 524,
+                            "type": "poi",
+                            "name": "Vatican City",
+                            "englishName": "Vatican City",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.902916,
+                                "long": 12.453389
+                            },
+                            "parentId": 33,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 4344,
+                            "type": "poi",
+                            "name": "Raphael Rooms",
+                            "englishName": "Raphael Rooms",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.903531,
+                                "long": 12.45617
+                            },
+                            "parentId": 2738,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 7915,
+                            "type": "poi",
+                            "name": "Apostolic Palace",
+                            "englishName": "Apostolic Palace",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.9035313,
+                                "long": 12.4561705
+                            },
+                            "parentId": 524,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 2738,
+                            "type": "poi",
+                            "name": "Vatican Museums",
+                            "englishName": "Vatican Museums",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.903839,
+                                "long": 12.45249
+                            },
+                            "parentId": 524,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 88261,
+                            "type": "poi",
+                            "name": "Papal Palace of Castel Gandolfo",
+                            "englishName": "Papal Palace of Castel Gandolfo",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.746982,
+                                "long": 12.650274
+                            },
+                            "parentId": 7914,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 862,
+                            "type": "area",
+                            "name": "Lazio",
+                            "englishName": "Lazio",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 42.02174,
+                                "long": 12.73821
+                            },
+                            "parentId": 0,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 90650,
+                            "type": "poi",
+                            "name": "Borgia Apartment",
+                            "englishName": "Borgia Apartment",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.9062377,
+                                "long": 12.454025
+                            },
+                            "parentId": 7915,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 33,
+                            "type": "city",
+                            "name": "Rome",
+                            "englishName": "Rome",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.903111,
+                                "long": 12.49576
+                            },
+                            "parentId": 862,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 7914,
+                            "type": "city",
+                            "name": "Castel Gandolfo",
+                            "englishName": "Castel Gandolfo",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.7497932,
+                                "long": 12.6485192
+                            },
+                            "parentId": 862,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 2616,
+                            "type": "poi",
+                            "name": "Sistine Chapel",
+                            "englishName": "Sistine Chapel",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 41.906921,
+                                "long": 12.45399
+                            },
+                            "parentId": 2738,
+                            "viewport": null
+                        }
+                    ],
+                    "durationList": [],
+                    "cancellationPolicyText": "Cancel up to 24 hours in advance to receive a full refund",
+                    "expiryDate": "2021-06-26T00:00:00+00:00",
+                    "id": 5,
+                    "createdDate": "2021-06-14T16:41:29.538276+00:00",
+                    "updatedDate": null
+                },
+                "customNote": "",
+                "startTime": "",
+                "endTime": "",
+                "numberOfPeople": 1,
+                "customNoteStatus": false,
+                "mapColor": "#a068ae"
+            },
+            {
+                "item": {
+                    "itemType": "Tour",
+                    "title": "Isle of Wight Day Trip from London",
+                    "postalCode": null,
+                    "price": 99,
+                    "currency": "GBP",
+                    "location": "South East England",
+                    "city": null,
+                    "country": "GB",
+                    "longitude": -0.12714,
+                    "latitude": 51.506321,
+                    "distance": 0,
+                    "openingHour": "00:00:00",
+                    "closingHour": "00:00:00",
+                    "bestVisitingTime": [],
+                    "openingDaysList": [],
+                    "availableDates": [],
+                    "typicalTimeSpent": 0,
+                    "description": "Depart London and travel by luxury coach to cross by ferry to the Isle of Wight, a popular holiday destination since Victorian times. Separated from the mainland of England by the Solent, the Isle of Wight is home to annual festivals such as Bestival, along with well-conserved wildlife and some of the richest cliffs and quarries for dinosaur fossils in Europe.\n\nVisit some of the island's beautiful villages, including Godshill, home to some lovely thatched cottages and a model village. Go to the seaside village of Shanklin, where attractions include 2 sandy beaches and the wooded coastal ravine of the Shanklin Chine.\n\nBenefit from plenty of free time to explore at your leisure. Spend the rest of the day exploring the island's many charms before you return to the mainland by ferry and drive back to London by coach.",
+                    "averageRating": 4.2,
+                    "numberOfRatings": 8,
+                    "imageUrl": "https://cdn.getyourguide.com/img/tour/574408d3614a0.jpeg/116.jpg",
+                    "termsAndConditions": null,
+                    "greatForList": [],
+                    "thingsToPackList": [],
+                    "creatorUserId": 0,
+                    "creatorName": null,
+                    "updatedBy": null,
+                    "isActive": true,
+                    "isCovidFriendly": null,
+                    "isPublished": false,
+                    "featured": false,
+                    "liked": false,
+                    "photos": [
+                        {
+                            "id": 1,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/574408d3614a0.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 2,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/574409ad84dce.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 3,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/574408dccfc1a.jpeg/116.jpg"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "id": 1,
+                            "name": "Tours",
+                            "code": null
+                        },
+                        {
+                            "id": 4,
+                            "name": "Bus & Minivan Tours",
+                            "code": null
+                        },
+                        {
+                            "id": 35,
+                            "name": "Nature & Adventure",
+                            "code": null
+                        },
+                        {
+                            "id": 41,
+                            "name": "Nature & Panorama",
+                            "code": null
+                        },
+                        {
+                            "id": 63,
+                            "name": "Beach Trips",
+                            "code": null
+                        },
+                        {
+                            "id": 172,
+                            "name": "Day Trips",
+                            "code": null
+                        },
+                        {
+                            "id": 313,
+                            "name": "Island Tours",
+                            "code": null
+                        },
+                        {
+                            "id": 360,
+                            "name": "Day Trips From",
+                            "code": null
+                        },
+                        {
+                            "id": 361,
+                            "name": "Day Trips To",
+                            "code": null
+                        }
+                    ],
+                    "tags": [],
+                    "ratings": [],
+                    "abstract": null,
+                    "highlights": [
+                        "Spend the day on the Isle of Wight",
+                        "See Godshill, where attractions include thatched cottages and a scale model village",
+                        "Go to the seaside village of Shanklin and discover 2 sandy beaches"
+                    ],
+                    "inclusions": "Transportation by luxury coach\nReturn ferry crossings\nFree time to explore the Isle of Wight\nTour manager",
+                    "exclusions": "Food and drinks",
+                    "additionalInformation": null,
+                    "bestseller": false,
+                    "certified": false,
+                    "tourUrl": "https://www.getyourguide.com/london-l57/isle-of-wight-day-trip-from-london-t66705/?partner_id=QMFJN1D&psrc=partner_api&currency=GBP",
+                    "supplierId": 11124,
+                    "provider": "GetYourGuide",
+                    "tourId": 66705,
+                    "tourCode": "deprecated",
+                    "freeSale": true,
+                    "locationList": [
+                        {
+                            "locationId": 617,
+                            "type": "area",
+                            "name": "South East England",
+                            "englishName": "South East England",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 51.519291,
+                                "long": -0.25275
+                            },
+                            "parentId": 159651,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 93176,
+                            "type": "poi",
+                            "name": "Osborne House",
+                            "englishName": "Osborne House",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 50.7506406,
+                                "long": -1.2697465
+                            },
+                            "parentId": 32682,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 57,
+                            "type": "city",
+                            "name": "London",
+                            "englishName": "London",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 51.506321,
+                                "long": -0.12714
+                            },
+                            "parentId": 159651,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 32682,
+                            "type": "area",
+                            "name": "Isle of Wight",
+                            "englishName": "Isle of Wight",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 50.6938479,
+                                "long": -1.304734
+                            },
+                            "parentId": 617,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 159651,
+                            "type": "area",
+                            "name": "England",
+                            "englishName": "England",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 52.3555177,
+                                "long": -1.1743197
+                            },
+                            "parentId": 0,
+                            "viewport": null
+                        }
+                    ],
+                    "durationList": [
+                        {
+                            "duration": 14,
+                            "unit": "hour"
+                        }
+                    ],
+                    "cancellationPolicyText": "Cancel up to 24 hours in advance to receive a full refund",
+                    "expiryDate": "2021-06-30T00:00:00+00:00",
+                    "id": 1,
+                    "createdDate": "2021-06-13T15:28:55.743354+00:00",
+                    "updatedDate": null
+                },
+                "customNote": "",
+                "startTime": "",
+                "endTime": "",
+                "numberOfPeople": 1,
+                "customNoteStatus": false,
+                "mapColor": "#a068ae"
+            }
+        ]
+    },
+    {
+        "date": "2022-08-28T07:34:29.926Z",
+        "itineraries": []
+    },
+    {
+        "date": "2022-08-29T07:34:29.926Z",
+        "itineraries": [
+            {
+                "item": {
+                    "itemType": "Tour",
+                    "title": "Aquarium of Genoa: Skip-the-Line Ticket",
+                    "postalCode": null,
+                    "price": 23.17,
+                    "currency": "GBP",
+                    "location": "Aquarium of Genoa",
+                    "city": null,
+                    "country": "IT",
+                    "longitude": 8.93889,
+                    "latitude": 44.410332,
+                    "distance": 0,
+                    "openingHour": "00:00:00",
+                    "closingHour": "00:00:00",
+                    "bestVisitingTime": [],
+                    "openingDaysList": [],
+                    "availableDates": [],
+                    "typicalTimeSpent": 0,
+                    "description": "Make your way to the Aquarium of Genoa to see more than 15,000 animals from 400 species at Italy's largest aquatic zoo. Skip the line, and learn how the aquarium was built for the Genoa Expo '92. Now, it is home to the biggest display of aquatic biodiversity in Europe.\n\nVenture into the fascinating waters of the world as you explore more than 70 tanks of critters, including sea cows.\n\nMarvel at animals from the Antarctic, such as penguins, and see sharks, seals, jellyfish and the colorful fish of the coral barriers. Go to the Cetacean Pavilion, designed by Renzo Piano, and laugh along with the bottlenose dolphins at 4 open-air pools.",
+                    "averageRating": 4.5,
+                    "numberOfRatings": 1604,
+                    "imageUrl": "https://cdn.getyourguide.com/img/tour/609c0731043b9.jpg/116.jpg",
+                    "termsAndConditions": null,
+                    "greatForList": [],
+                    "thingsToPackList": [],
+                    "creatorUserId": 0,
+                    "creatorName": null,
+                    "updatedBy": null,
+                    "isActive": true,
+                    "isCovidFriendly": null,
+                    "isPublished": false,
+                    "featured": false,
+                    "liked": false,
+                    "photos": [
+                        {
+                            "id": 1,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c0731043b9.jpg/116.jpg"
+                        },
+                        {
+                            "id": 2,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c072d3a66f.jpg/116.jpg"
+                        },
+                        {
+                            "id": 3,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c072e9e94a.jpg/116.jpg"
+                        },
+                        {
+                            "id": 4,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c072ee481b.jpg/116.jpg"
+                        },
+                        {
+                            "id": 5,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c072f447ea.jpg/116.jpg"
+                        },
+                        {
+                            "id": 6,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c073094e21.jpg/116.jpg"
+                        },
+                        {
+                            "id": 7,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c07314fa5e.jpg/116.jpg"
+                        },
+                        {
+                            "id": 8,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c0732a316a.jpg/116.jpg"
+                        },
+                        {
+                            "id": 9,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/609c0733e82f2.jpg/116.jpg"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "id": 28,
+                            "name": "Art & Museums",
+                            "code": null
+                        },
+                        {
+                            "id": 49,
+                            "name": "Dolphin & Whale Watching",
+                            "code": null
+                        },
+                        {
+                            "id": 123,
+                            "name": "Tickets",
+                            "code": null
+                        },
+                        {
+                            "id": 124,
+                            "name": "Shows & Musicals",
+                            "code": null
+                        },
+                        {
+                            "id": 127,
+                            "name": "Shows",
+                            "code": null
+                        },
+                        {
+                            "id": 131,
+                            "name": "Theme Parks & Amusement Parks",
+                            "code": null
+                        },
+                        {
+                            "id": 132,
+                            "name": "Museums & Exhibitions",
+                            "code": null
+                        },
+                        {
+                            "id": 133,
+                            "name": "Museum Tickets",
+                            "code": null
+                        },
+                        {
+                            "id": 134,
+                            "name": "Exhibitions",
+                            "code": null
+                        },
+                        {
+                            "id": 135,
+                            "name": "Zoos & Aquariums",
+                            "code": null
+                        },
+                        {
+                            "id": 189,
+                            "name": "Children's Activities",
+                            "code": null
+                        },
+                        {
+                            "id": 192,
+                            "name": "Water Parks",
+                            "code": null
+                        },
+                        {
+                            "id": 239,
+                            "name": "Wheelchair Accessible",
+                            "code": null
+                        },
+                        {
+                            "id": 581,
+                            "name": "Theme Parks for Kids",
+                            "code": null
+                        },
+                        {
+                            "id": 1104,
+                            "name": "Medium-risk activities",
+                            "code": null
+                        },
+                        {
+                            "id": 1105,
+                            "name": "High-risk activities",
+                            "code": null
+                        }
+                    ],
+                    "tags": [],
+                    "ratings": [],
+                    "abstract": null,
+                    "highlights": [
+                        "Discover the creatures of the sea at Italy's largest aquarium",
+                        "See more than 15,000 animals from 400 different species",
+                        "Marvel at bottlenose dolphins, seals, jellyfish and more",
+                        "Visit the Cetacean Pavilion, designed by Renzo Piano",
+                        "Skip the lines to see the majestic sea creatures without the stress of lines"
+                    ],
+                    "inclusions": "Skip-the-line entrance ticket",
+                    "exclusions": "Guided tour",
+                    "additionalInformation": "• Last admission is at 6:00 PM\n• Due to COVID-19, the opening days and times may change. As such, you're advised to check the official website for updates information during this time",
+                    "bestseller": true,
+                    "certified": true,
+                    "tourUrl": "https://www.getyourguide.com/genoa-l1009/aquarium-of-genoa-skip-the-line-ticket-t399086/?partner_id=QMFJN1D&psrc=partner_api&currency=GBP",
+                    "supplierId": 27819,
+                    "provider": "GetYourGuide",
+                    "tourId": 399086,
+                    "tourCode": "deprecated",
+                    "freeSale": true,
+                    "locationList": [
+                        {
+                            "locationId": 87233,
+                            "type": "poi",
+                            "name": "Aquarium of Genoa",
+                            "englishName": "Aquarium of Genoa",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 44.4102211,
+                                "long": 8.9266709
+                            },
+                            "parentId": 1009,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 221,
+                            "type": "area",
+                            "name": "Liguria",
+                            "englishName": "Liguria",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 44.226318,
+                                "long": 9.68488
+                            },
+                            "parentId": 0,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 1009,
+                            "type": "city",
+                            "name": "Genoa",
+                            "englishName": "Genoa",
+                            "city": null,
+                            "country": "IT",
+                            "coordinates": {
+                                "lat": 44.410332,
+                                "long": 8.93889
+                            },
+                            "parentId": 221,
+                            "viewport": null
+                        }
+                    ],
+                    "durationList": [],
+                    "cancellationPolicyText": "Cancel up to 24 hours in advance to receive a full refund",
+                    "expiryDate": "2022-05-31T00:00:00+00:00",
+                    "id": 3,
+                    "createdDate": "2021-06-14T16:41:29.502525+00:00",
+                    "updatedDate": null
+                },
+                "customNote": "",
+                "startTime": "",
+                "endTime": "",
+                "numberOfPeople": 1,
+                "customNoteStatus": false,
+                "mapColor": "#eedd7b"
+            }
+        ]
+    },
+    {
+        "date": "2022-08-30T07:34:29.926Z",
+        "itineraries": [
+            {
+                "item": {
+                    "itemType": "Tour",
+                    "title": "From London: Margate and Broadstairs Round-Trip Transfer",
+                    "postalCode": null,
+                    "price": 35,
+                    "currency": "GBP",
+                    "location": "Broadstairs",
+                    "city": null,
+                    "country": "GB",
+                    "longitude": -0.12714,
+                    "latitude": 51.506321,
+                    "distance": 0,
+                    "openingHour": "00:00:00",
+                    "closingHour": "00:00:00",
+                    "bestVisitingTime": [],
+                    "openingDaysList": [],
+                    "availableDates": [],
+                    "typicalTimeSpent": 0,
+                    "description": "Hop onboard a luxury, air-conditioned coach from central London and head to the sandy beaches of Kent’s coastline. There are 3 destinations to choose from on the day, Margate Beach, Joss Bay, or Viking Bay.\n\nMargate is a popular choice for families, and has a shallow tide pool for swimming as well as an amusement park. There’s also plenty of shops, cafes, restaurants, and bars along the seafront. \n\nJoss Bay is a smaller beach with fewer facilities, but often has fewer crowds. The bay offers gorgeous views of the white cliffs as well as a surf school. Nearby Viking Bay is the main Broadstairs beach, and boasts a sandy shoreline and an array of popular cafes and restaurants.\n\nSpend the day exploring the beaches, bays, and seaside towns at your own leisure, then relax on the return journey to London at the end of your adventure.",
+                    "averageRating": 0,
+                    "numberOfRatings": 0,
+                    "imageUrl": "https://cdn.getyourguide.com/img/tour/607c64f7ad482.jpeg/116.jpg",
+                    "termsAndConditions": null,
+                    "greatForList": [],
+                    "thingsToPackList": [],
+                    "creatorUserId": 0,
+                    "creatorName": null,
+                    "updatedBy": null,
+                    "isActive": true,
+                    "isCovidFriendly": null,
+                    "isPublished": false,
+                    "featured": false,
+                    "liked": false,
+                    "photos": [
+                        {
+                            "id": 1,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/607c64f7ad482.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 2,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/607c658e40cf9.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 3,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/607c658e9930e.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 4,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/607c6590113e2.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 5,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/607c659593f7c.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 6,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/607c65b92f844.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 7,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/607c6da25e972.jpeg/116.jpg"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "id": 63,
+                            "name": "Beach Trips",
+                            "code": null
+                        },
+                        {
+                            "id": 152,
+                            "name": "Transportation",
+                            "code": null
+                        },
+                        {
+                            "id": 154,
+                            "name": "Port Transfers",
+                            "code": null
+                        },
+                        {
+                            "id": 155,
+                            "name": "Individual Transfers",
+                            "code": null
+                        },
+                        {
+                            "id": 172,
+                            "name": "Day Trips",
+                            "code": null
+                        },
+                        {
+                            "id": 250,
+                            "name": "Family-friendly",
+                            "code": null
+                        },
+                        {
+                            "id": 360,
+                            "name": "Day Trips From",
+                            "code": null
+                        },
+                        {
+                            "id": 361,
+                            "name": "Day Trips To",
+                            "code": null
+                        },
+                        {
+                            "id": 1104,
+                            "name": "Medium-risk activities",
+                            "code": null
+                        }
+                    ],
+                    "tags": [],
+                    "ratings": [],
+                    "abstract": null,
+                    "highlights": [
+                        "Enjoy round-trip transfer in a comfortable, air-conditioned coach",
+                        "Discover the sandy beaches and bays of Margate and Broadstairs",
+                        "Sunbathe on the beach, grab a bite to eat, or go swimming in the sea"
+                    ],
+                    "inclusions": "Round-trip transportation from central London to Margate and Broadstairs\nLuxury, air-conditioned coach\nProfessional driver",
+                    "exclusions": "Tour guide\nFood or drinks\nEntrance fees\nGratuities",
+                    "additionalInformation": "• Please note, this is not a guided tour and the day is free for you to explore. After drop-off at the beach, the driver will give you a meeting time and place to board the coach for the return journey\n• Wheelchair-accessible coaches are available on request and are subject to availability, please contact the local partner in advance if you require one\n• If you intend to bring a surfboard or other large item, please contact the local partner in advance so that an appropriate size vehicle with storage can be arranged",
+                    "bestseller": false,
+                    "certified": false,
+                    "tourUrl": "https://www.getyourguide.com/london-l57/from-london-margate-and-broadstairs-round-trip-transfer-t398175/?partner_id=QMFJN1D&psrc=partner_api&currency=GBP",
+                    "supplierId": 11124,
+                    "provider": "GetYourGuide",
+                    "tourId": 398175,
+                    "tourCode": "deprecated",
+                    "freeSale": true,
+                    "locationList": [
+                        {
+                            "locationId": 101076,
+                            "type": "city",
+                            "name": "Broadstairs",
+                            "englishName": "Broadstairs",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 51.360163,
+                                "long": 1.432038
+                            },
+                            "parentId": 2450,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 2450,
+                            "type": "area",
+                            "name": "Kent",
+                            "englishName": "Kent",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 51.198711,
+                                "long": 0.74267
+                            },
+                            "parentId": 617,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 57,
+                            "type": "city",
+                            "name": "London",
+                            "englishName": "London",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 51.506321,
+                                "long": -0.12714
+                            },
+                            "parentId": 159651,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 101007,
+                            "type": "city",
+                            "name": "Margate",
+                            "englishName": "Margate",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 51.389646,
+                                "long": 1.3868339
+                            },
+                            "parentId": 2450,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 159651,
+                            "type": "area",
+                            "name": "England",
+                            "englishName": "England",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 52.3555177,
+                                "long": -1.1743197
+                            },
+                            "parentId": 0,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 617,
+                            "type": "area",
+                            "name": "South East England",
+                            "englishName": "South East England",
+                            "city": null,
+                            "country": "GB",
+                            "coordinates": {
+                                "lat": 51.519291,
+                                "long": -0.25275
+                            },
+                            "parentId": 159651,
+                            "viewport": null
+                        }
+                    ],
+                    "durationList": [
+                        {
+                            "duration": 11,
+                            "unit": "hour"
+                        }
+                    ],
+                    "cancellationPolicyText": "Cancel up to 24 hours in advance to receive a full refund",
+                    "expiryDate": null,
+                    "id": 2,
+                    "createdDate": "2021-06-13T15:28:55.781282+00:00",
+                    "updatedDate": null
+                },
+                "customNote": "",
+                "startTime": "",
+                "endTime": "",
+                "numberOfPeople": 1,
+                "customNoteStatus": false,
+                "mapColor": "#40e55f"
+            },
+            {
+                "item": {
+                    "itemType": "Tour",
+                    "title": "Rotterdam Zoo: Entrance Ticket",
+                    "postalCode": null,
+                    "price": 20.17,
+                    "currency": "GBP",
+                    "location": "Rotterdam",
+                    "city": null,
+                    "country": "NL",
+                    "longitude": 4.47845,
+                    "latitude": 51.922829,
+                    "distance": 0,
+                    "openingHour": "00:00:00",
+                    "closingHour": "00:00:00",
+                    "bestVisitingTime": [],
+                    "openingDaysList": [],
+                    "availableDates": [],
+                    "typicalTimeSpent": 0,
+                    "description": "Rotterdam Zoo has become one of Europe’s most beautiful zoos. Wander through different parts of the world where you will see fascinating animals that feel perfectly at home in specially-imitated natural landscapes. \n\nRotterdam Zoo supports a number of conservation projects in the wild and actively participates in many breeding programmes for endangered species and is one of the international top ten of zoos in this field.\n\nDive into Oceanium and take a magical voyage over the bottom of the sea and along coastal regions, meeting many marine and coastal inhabitants such as fish (from herring to sharks), puffins, snakes and a large group of king penguins.\n\nDiscover beautiful butterfly paradise Amazonica where you'll experience tropical temperatures, fragrant flowers, thousands of colorful South American butterflies, the awesome anaconda and greedy piranhas. \n\nIn Africa, an exciting path takes you safely past a group of large crocodiles! Once you’re at the top of the path, stand eye to eye with the giraffes. At a safe altitude, admire the other inhabitants of the new savanna such as hyenas, kudus, ostriches and zebras. On the African Gorilla Island, you will be delighted by Bokito’s playful gorilla family.\n\n...and much more! On top of these experiences, see a rare species of forest giraffe, take a voyage through Asian marshes, and discover the Ice Cave for a magnificent view of polar bears.",
+                    "averageRating": 4.7,
+                    "numberOfRatings": 59,
+                    "imageUrl": "https://cdn.getyourguide.com/img/tour/5b923447375c3.jpeg/116.jpg",
+                    "termsAndConditions": null,
+                    "greatForList": [],
+                    "thingsToPackList": [],
+                    "creatorUserId": 0,
+                    "creatorName": null,
+                    "updatedBy": null,
+                    "isActive": true,
+                    "isCovidFriendly": null,
+                    "isPublished": false,
+                    "featured": false,
+                    "liked": false,
+                    "photos": [
+                        {
+                            "id": 1,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b923447375c3.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 2,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b92344496bd9.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 3,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b9234457ccbd.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 4,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b923444e70ff.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 5,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b9234452b227.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 6,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b923445c47e8.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 7,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b9234460c1e4.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 8,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b9234464f3be.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 9,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b92344690220.jpeg/116.jpg"
+                        },
+                        {
+                            "id": 10,
+                            "photoUrl": "https://cdn.getyourguide.com/img/tour/5b923446d554a.jpeg/116.jpg"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "id": 35,
+                            "name": "Nature & Adventure",
+                            "code": null
+                        },
+                        {
+                            "id": 41,
+                            "name": "Nature & Panorama",
+                            "code": null
+                        },
+                        {
+                            "id": 123,
+                            "name": "Tickets",
+                            "code": null
+                        },
+                        {
+                            "id": 131,
+                            "name": "Theme Parks & Amusement Parks",
+                            "code": null
+                        },
+                        {
+                            "id": 135,
+                            "name": "Zoos & Aquariums",
+                            "code": null
+                        },
+                        {
+                            "id": 189,
+                            "name": "Children's Activities",
+                            "code": null
+                        },
+                        {
+                            "id": 239,
+                            "name": "Wheelchair Accessible",
+                            "code": null
+                        },
+                        {
+                            "id": 250,
+                            "name": "Family-friendly",
+                            "code": null
+                        },
+                        {
+                            "id": 581,
+                            "name": "Theme Parks for Kids",
+                            "code": null
+                        },
+                        {
+                            "id": 1094,
+                            "name": "Family-friendly Activities",
+                            "code": null
+                        },
+                        {
+                            "id": 1104,
+                            "name": "Medium-risk activities",
+                            "code": null
+                        }
+                    ],
+                    "tags": [],
+                    "ratings": [],
+                    "abstract": null,
+                    "highlights": [
+                        "Discover the amazing and beautiful butterfly paradise of Amazonica",
+                        "Be surrounded and amazed by sharks, turtles and the renewed Great Barrier Reef in the fully covered Oceanium",
+                        "Get eye to eye with the graceful giraffes on the African Savanna",
+                        "Wander through Asia and meet elephants and rhinos in the tropical green of the (mostly covered) Taman Indah"
+                    ],
+                    "inclusions": "Entrance ticket",
+                    "exclusions": "Parking ticket\nTickets for the shuttle-service train that runs between the sides of the zoo",
+                    "additionalInformation": null,
+                    "bestseller": true,
+                    "certified": false,
+                    "tourUrl": "https://www.getyourguide.com/rotterdam-l37/special-encounters-at-rotterdam-zoo-entrance-ticket-t167792/?partner_id=QMFJN1D&psrc=partner_api&currency=GBP",
+                    "supplierId": 70382,
+                    "provider": "GetYourGuide",
+                    "tourId": 167792,
+                    "tourCode": "deprecated",
+                    "freeSale": true,
+                    "locationList": [
+                        {
+                            "locationId": 37,
+                            "type": "city",
+                            "name": "Rotterdam",
+                            "englishName": "Rotterdam",
+                            "city": null,
+                            "country": "NL",
+                            "coordinates": {
+                                "lat": 51.922829,
+                                "long": 4.47845
+                            },
+                            "parentId": 1178,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 1178,
+                            "type": "area",
+                            "name": "South Holland",
+                            "englishName": "South Holland",
+                            "city": null,
+                            "country": "NL",
+                            "coordinates": {
+                                "lat": 51.985958,
+                                "long": 4.49389
+                            },
+                            "parentId": 0,
+                            "viewport": null
+                        },
+                        {
+                            "locationId": 85274,
+                            "type": "poi",
+                            "name": "Rotterdam Zoo",
+                            "englishName": "Rotterdam Zoo",
+                            "city": null,
+                            "country": "NL",
+                            "coordinates": {
+                                "lat": 51.9037819,
+                                "long": 4.4664705
+                            },
+                            "parentId": 37,
+                            "viewport": null
+                        }
+                    ],
+                    "durationList": [],
+                    "cancellationPolicyText": "Cancel up to 24 hours in advance to receive a full refund",
+                    "expiryDate": "2021-06-30T00:00:00+00:00",
+                    "id": 4,
+                    "createdDate": "2021-06-14T16:41:29.538459+00:00",
+                    "updatedDate": null
+                },
+                "customNote": "",
+                "startTime": "",
+                "endTime": "",
+                "numberOfPeople": 1,
+                "customNoteStatus": false,
+                "mapColor": "#40e55f"
+            }
+        ]
+    },
+    {
+        "date": "2022-08-31T07:34:29.926Z",
+        "itineraries": []
+    }
+]
+
+// https://maps.googleapis.com/maps/api/place/autocomplete/json?input=TEXT_INPUT_VALUE&types=(cities)&key=YOUR_API_KEY

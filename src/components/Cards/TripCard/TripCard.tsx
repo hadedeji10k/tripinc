@@ -5,11 +5,11 @@ import { BsSuitHeartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import {
   currencySymbolHelper,
-  getKeysFromObject,
   localGetUserId,
 } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import { Dropdown, Menu, Space } from "antd";
+import { ITripPlanningItineraryDay } from "../../../api/interfaces";
 
 interface Props {
   item: any;
@@ -18,7 +18,7 @@ interface Props {
   handleUnLikeButton?: any;
   url?: string;
   tripPlanning?: boolean;
-  itineraryData?: any;
+  itineraryData?: ITripPlanningItineraryDay[];
   tripDays?: any;
   tripPlanningData?: any;
   setTripPlanningData?: any;
@@ -50,10 +50,10 @@ const Card = ({
 
   const onClick = ({ key }) => {
     // get the dateClicked from the tripDays array
-    const itineraryDay = itineraryData[key];
+    const itineraryDay = itineraryData && itineraryData[key];
 
     // //check if it's already in the list
-    const isInList = itineraryDay.itineraries.find(
+    const isInList = itineraryDay?.itineraries.find(
       (item) =>
         item.item.id === selectedItemId &&
         item.item.itemType === selectedItemType
@@ -76,7 +76,7 @@ const Card = ({
         });
       }
       // push the data into the itinerary Day array gotten from the whole array
-      itineraryDay.itineraries.push({
+      itineraryDay?.itineraries.push({
         item, // item from explore
         customNote: "",
         startTime: "",

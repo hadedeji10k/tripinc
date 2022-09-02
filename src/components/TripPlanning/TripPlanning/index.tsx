@@ -3,7 +3,12 @@ import "../TripPlanning.css";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import Budget from "./Budget";
 import TravelDetails from "./TravelDetails";
-import { IDeal, IPagination, ITravelDetails } from "../../../api/interfaces";
+import {
+  IDeal,
+  IPagination,
+  ITravelDetails,
+  ITripPlanningItineraryDay,
+} from "../../../api/interfaces";
 import TripPlanningBucketList from "./BucketList";
 import { localGetUserId } from "../../../utils/helpers";
 import { getUserWishListAsAttraction } from "../../../api";
@@ -11,7 +16,7 @@ import Itinerary from "./Itinerary";
 
 interface Prop {
   tripDays: any;
-  itineraryData: any;
+  itineraryData: ITripPlanningItineraryDay[];
   setItineraryData: any;
   tripPlanningData: any;
   setTripPlanningData: any;
@@ -112,6 +117,28 @@ const TripPlanning = ({
     console.log("Trip days", tripDays);
     console.log("Trip Planning data", tripPlanningData);
     console.log("Itinerary Data", itineraryData);
+
+    const newMapped = itineraryData.map((itineraryDay) => {
+      return {
+        ...itineraryDay,
+        itineraries: itineraryDay.itineraries.map((itinerary) => {
+          return {
+            customNote: itinerary.customNote,
+            startTime: itinerary.startTime,
+            endTime: itinerary.endTime,
+            numberOfPeople: itinerary.numberOfPeople,
+            item: itinerary.item.id,
+          };
+        }),
+      };
+    });
+
+    const dataToSend = {
+      tripId: 32,
+      itineraries: newMapped,
+    };
+
+    console.log("Data to send", dataToSend);
   };
 
   return (

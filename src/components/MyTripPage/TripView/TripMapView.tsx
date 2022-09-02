@@ -1,32 +1,16 @@
 import { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
-import Marker from "./Marker";
+import Marker from "../../TripPlanning/TripMapPlanning/Marker";
 import { GOOGLEAPIKEY } from "../../../utils/constants";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import Itinerary from "../TripPlanning/Itinerary";
-
 import { geocodeByAddress } from "react-google-places-autocomplete";
 import { ITripPlanningItineraryDay } from "../../../api/interfaces";
 
 interface Prop {
-  handleTripPlanningMenuClick: any;
-  handleMainTripPlanningMenuClick: any;
-  tripDays: any;
   itineraryData: ITripPlanningItineraryDay[];
-  setItineraryData: any;
   tripPlanningData: any;
-  setTripPlanningData: any;
 }
 
-const TripMapPlanning = ({
-  handleTripPlanningMenuClick,
-  handleMainTripPlanningMenuClick,
-  tripDays,
-  itineraryData,
-  setItineraryData,
-  tripPlanningData,
-  setTripPlanningData,
-}: Prop) => {
+const TripMapView = ({ itineraryData, tripPlanningData }: Prop) => {
   const [showItinerary, setShowItinerary] = useState<boolean>(true);
   const [places, setPlaces] = useState<any>([]);
 
@@ -48,7 +32,7 @@ const TripMapPlanning = ({
 
   useEffect(() => {
     let newPlace: any = [];
-    itineraryData.map((itinerary: any) => {
+    itineraryData.map((itinerary: ITripPlanningItineraryDay) => {
       itinerary.itineraries.map((item: any) => {
         const toBeAdded = {
           id: newPlace.length + 1,
@@ -106,10 +90,6 @@ const TripMapPlanning = ({
     }
   };
 
-  const options = {
-    minZoom: 10,
-  };
-
   return (
     <div className="w_100">
       <div className="explore_details_image_container">
@@ -155,58 +135,8 @@ const TripMapPlanning = ({
           </>
         </div>
       </div>
-      <div className="trip_planning_menu_container m_t_50">
-        <div
-          className="trip_planning_menu_row"
-          onClick={() => setShowItinerary(!showItinerary)}
-          id="itinerary_data"
-          data-itinerary-menu-status={showItinerary}
-        >
-          {showItinerary ? (
-            <span>
-              <IoIosArrowDown className="trip_planning_arrow_drop" />
-            </span>
-          ) : (
-            <span>
-              <IoIosArrowForward className="trip_planning_arrow_drop" />
-            </span>
-          )}
-
-          <h4 className="general_faq_question">Itinerary</h4>
-        </div>
-        <div className="trip_planning_budget_container">
-          {showItinerary ? (
-            <>
-              <Itinerary
-                tripDays={tripDays}
-                itineraryData={itineraryData}
-                setItineraryData={setItineraryData}
-                tripPlanningData={tripPlanningData}
-                setTripPlanningData={setTripPlanningData}
-              />
-            </>
-          ) : (
-            ""
-          )}
-        </div>
-        <hr className="general_faq_line" style={{ margin: "5px 0 15px" }} />
-      </div>
-      <div className="scroll_button">
-        <button
-          className={"explore_navigation_button_active"}
-          onClick={() => handleTripPlanningMenuClick("prev")}
-        >
-          Go back
-        </button>
-        <button
-          className={"explore_navigation_button_active"}
-          onClick={() => handleMainTripPlanningMenuClick("next")}
-        >
-          Proceed
-        </button>
-      </div>
     </div>
   );
 };
 
-export default TripMapPlanning;
+export default TripMapView;

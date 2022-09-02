@@ -1,7 +1,9 @@
 import "./PastTripCard.css";
 // import { IoIosArrowDown } from "react-icons/io";
+import { currencySymbolHelper } from "../../../utils/helpers";
+import { BsCalendarCheck } from "react-icons/bs";
 
-const PastTripCard = ({ image, title, description, price, reviews, liked }) => {
+const PastTripCard = ({ image, location, budget }) => {
   return (
     <>
       <div className="past_card_container">
@@ -9,21 +11,23 @@ const PastTripCard = ({ image, title, description, price, reviews, liked }) => {
           <img className="past_image" src={image.toString()} alt="" />
         </div>
         <div className="past_card_details">
-          <p className="past_card_title">{title}</p>
-          <p className="other_details">free wifi &nbsp; &nbsp; 30 mins ride</p>
-          <div className="button_container">
+          <p className="past_card_title">{location}</p>
+          <p className="other_details">
+            <BsCalendarCheck /> March 1, 2022 - March 3, 25 2022
+          </p>
+          {/* <div className="button_container">
             <button className="past_card_button">View Invoice</button>
-          </div>
-          {/* <p className="card_description">{description.slice(0, 100)}...</p> */}
-          {/* <hr /> */}
-          {/* <div className="card_price_review">
-            <p className="price"> from {price}</p>
-
-            <p className="price"> {reviews?.length} reviews</p>
-            <p className="price"> {reviews?.map((item) => { 
-                            newLocal.review += rating
-                        })} {reviews?.length} reviews</p>
           </div> */}
+          {/* <p className="card_description">{description.slice(0, 100)}...</p> */}
+          <hr />
+          <div className="row m_5">
+            <p className="small_title"> Budget Set</p>
+            <p className="">
+              <b>
+                {currencySymbolHelper("GBP")} {budget}
+              </b>
+            </p>
+          </div>
         </div>
         {/* <div className="arrow">
           <p className="arrow_tag">

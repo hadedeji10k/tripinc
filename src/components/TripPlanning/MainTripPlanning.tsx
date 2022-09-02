@@ -5,10 +5,11 @@ import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import { generateDateArray, localGetUserId } from "../../utils/helpers";
 import TripMapPlanning from "./TripMapPlanning/TripMapPlanning";
 import TripPlanning from "./TripPlanning";
+import { ITripPlanningItineraryDay } from "../../api/interfaces";
 
 interface Prop {
   tripDays: any;
-  itineraryData: any;
+  itineraryData: ITripPlanningItineraryDay[];
   setItineraryData: any;
   tripPlanningData: any;
   setTripPlanningData: any;

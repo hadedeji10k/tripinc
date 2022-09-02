@@ -9,3 +9,4 @@ window.tripInc = {
   REACT_APP_GOOGLE_PROVIDER_ID: "Em-vDxa3hunSvByFWyUocmYX",
   REACT_APP_GOOGLE_API_KEY: "AIzaSyDnyZ4kOYvlHECURxnQVGrWUKiq4qzvikw",
 };
+

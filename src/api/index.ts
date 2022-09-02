@@ -6,7 +6,7 @@ import USERAPI from "./axiosInstances/usersecurity";
 import TRIPAPI from "./axiosInstances/tripservice";
 
 import axios, { AxiosResponse } from "axios";
-import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePreference, IManagePlacesVisited, IForgotPasswordRequest, IConfirmForgotPasswordRequest, IManageUserFoods, IManageUserConsents, IManageUserInterests, IInitiateTripPlanning } from './interfaces';
+import { ISignUpFull, ISignIn, IEmailExists, IRefreshToken, IGetUserByID, IGoogleSignUpFull, IUpdateProfile, IUpdateUserCurrency, IUpdateUserTimeFormat, IUpdateUserPassword, ISignUpNewsLetter, IWishList, IAddCart, IVerifyAccount, IResendVerification, IUpdateCart, IAddReview, IMakeOrder, IInitiatePayment, IManagePlacesWishToVisit, IManagePlacesVisited, IForgotPasswordRequest, IConfirmForgotPasswordRequest, IManageUserFoods, IManageUserConsents, IManageUserInterests, IInitiateTripPlanning } from './interfaces';
 
 // checks if email exists
 export const checkIfEmailExists = async (formData: IEmailExists): Promise<AxiosResponse<any>> => {
@@ -281,6 +281,15 @@ export const initiatePayment = async (formData: IInitiatePayment): Promise<Axios
 export const initiateTripPlanning = async (formData: IInitiateTripPlanning): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.post("/api/TripPlannings", formData);
 }
+
 export const getTripById = async (tripId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/TripPlannings/${tripId}`);
+}
+
+export const getUserTrips = async (userId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/TripPlannings/GetByUser/${userId}`);
+}
+
+export const getTripItinerariesById = async (tripId: any): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/TripPlannings/GetItineraries/${tripId}`);
 }

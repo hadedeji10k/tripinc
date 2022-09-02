@@ -8,6 +8,7 @@ import {
   IDeal,
   IFormattedCategory,
   IPagination,
+  ITripPlanningItineraryDay,
 } from "../../../api/interfaces";
 import {
   checkForInterestStateOfClass,
@@ -27,7 +28,7 @@ const { RangePicker } = DatePicker;
 
 interface Prop {
   tripDays: any;
-  itineraryData: any;
+  itineraryData: ITripPlanningItineraryDay[];
   tripPlanningData: any;
   setTripPlanningData: any;
   handleTripPlanningMenuClick: any;

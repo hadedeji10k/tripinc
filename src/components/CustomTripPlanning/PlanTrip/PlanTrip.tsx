@@ -124,11 +124,13 @@ const PlanTrip = ({
             <Autocomplete
               apiKey={GOOGLEAPIKEY}
               onPlaceSelected={(selected: any) => {
+                console.log(selected);
+                console.log(selected.photos[0].getUrl());
                 handleLocationChange(selected.formatted_address);
               }}
               options={{
                 types: [],
-                fields: ["formatted_address"],
+                fields: ["formatted_address", "photos"],
               }}
               placeholder="Where are you going to?"
               className="plan_trip_input"
