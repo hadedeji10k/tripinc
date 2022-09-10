@@ -35,12 +35,14 @@ const SetBudget = ({
             ...tripData,
             budget: tripData.budget + 1,
           });
+          console.log(tripData);
         } else if (action === "-") {
           if (tripData.budget > 0) {
             setTripData({
               ...tripData,
               budget: tripData.budget - 1,
             });
+            console.log(tripData);
           }
         }
         break;
@@ -67,6 +69,7 @@ const SetBudget = ({
               type="number"
               onChange={handleChange}
               defaultValue={tripData.budget}
+              value={tripData.budget}
               // key={tripData.budget}
             />
             <span

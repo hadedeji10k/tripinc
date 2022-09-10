@@ -2,16 +2,21 @@ import "./PastTripCard.css";
 // import { IoIosArrowDown } from "react-icons/io";
 import { currencySymbolHelper } from "../../../utils/helpers";
 import { BsCalendarCheck } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
-const PastTripCard = ({ image, location, budget }) => {
+const PastTripCard = ({ image, location, budget, tripId }) => {
   return (
     <>
       <div className="past_card_container">
         <div className="past_image_container">
-          <img className="past_image" src={image.toString()} alt="" />
+          <Link to={`/my-trips/${tripId}`}>
+            <img className="past_image" src={image.toString()} alt="" />
+          </Link>
         </div>
         <div className="past_card_details">
-          <p className="past_card_title">{location}</p>
+          <Link to={`/my-trips/${tripId}`}>
+            <p className="past_card_title">{location}</p>
+          </Link>
           <p className="other_details">
             <BsCalendarCheck /> March 1, 2022 - March 3, 25 2022
           </p>

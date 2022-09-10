@@ -78,7 +78,7 @@ const TripInterest = ({ handleMenuChange, tripData, setTripData }) => {
       startDate: tripData.startDate,
       endDate: tripData.endDate,
       budget: tripData.budget,
-      travelingPartner: "",
+      travelingPartner: tripData.tripType,
       noOfPartners: tripData.numberOfTraveler,
       interests: preferences,
     };
