@@ -28,7 +28,7 @@ const General = () => {
           <hr className="general_faq_line" />
           {/* <div className="question_answer_container"> */}
           <div
-            className="row"
+            className="general_row"
             id={item.id.toString()}
             onClick={() => handleFaqsClick(item)}
           >

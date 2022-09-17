@@ -78,16 +78,16 @@
 }
 
 .trip_date_select {
-    width: 500px;
-    font-family: "Poppins";
-    font-size: 17px;
-    padding: 10px 40px 10px 10px;
-    margin: 0.5rem auto;
-    border: 2px solid #ccc;
-    border-radius: 14px;
-    outline: none;
-    background-color: #fff;
-    color: #000;
+    width: 500px !important;
+    font-family: "Poppins" !important;
+    font-size: 17px !important;
+    padding: 10px 40px 10px 10px !important;
+    margin: 0.5rem auto !important;
+    border: 2px solid #ccc !important;
+    border-radius: 14px !important;
+    outline: none !important;
+    background-color: #fff !important;
+    color: #000 !important;
 }
 
 select::-ms-expand {

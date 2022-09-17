@@ -4,6 +4,7 @@ import "./App.css";
 import MainRoute from "./routings";
 import { BackTop } from "antd";
 import "antd/dist/antd.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import ScrollToTopOfPage from "./pages/scrollToTopOfPage";
 import { IoMdArrowRoundUp } from "react-icons/io";

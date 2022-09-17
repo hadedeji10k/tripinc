@@ -25,7 +25,7 @@ const PastTripCard = ({ image, location, budget, tripId }) => {
           </div> */}
           {/* <p className="card_description">{description.slice(0, 100)}...</p> */}
           <hr />
-          <div className="row m_5">
+          <div className="app_row m_5 justify-content-between">
             <p className="small_title"> Budget Set</p>
             <p className="">
               <b>

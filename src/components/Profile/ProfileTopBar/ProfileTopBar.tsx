@@ -79,6 +79,7 @@ const ProfileTopBar: React.FC<ProfileTopBarProps> = ({
   const onChange = async (imageList: ImageListType) => {
     setIsLoading(true);
     const formData = new FormData();
+    console.log(imageList);
     const file: any = imageList[0].file;
     formData.append("Photo", file, file.name);
     formData.append("UserId", userId);

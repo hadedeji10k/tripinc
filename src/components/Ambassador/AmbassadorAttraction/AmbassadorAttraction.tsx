@@ -1,41 +1,42 @@
 import { useState, useEffect } from "react";
-import "./MyTrip.css";
 import { Spin } from "antd";
-import PastTripCard from "../Cards/PastTripCard/PastTripCard";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { TiLocationArrowOutline } from "react-icons/ti";
-import { getUserTrips } from "../../api";
-import { localGetUserId } from "../../utils/helpers";
-import { ITripPlanningData } from "../../api/interfaces";
+import { getAllDeals } from "../../../api";
+import { localGetUserId } from "../../../utils/helpers";
+import { IDeal, IPagination, ITripPlanningData } from "../../../api/interfaces";
 import { BiSearch } from "react-icons/bi";
+import Card from "../../Cards/TripCard/TripCard";
 
 const menudata = [
   {
     id: 1,
     stateOfClass: true,
-    title: "Upcoming Trips",
-    slug: "upcoming_trips",
+    title: "Approved",
+    slug: "approved",
   },
   {
     id: 2,
     stateOfClass: false,
-    title: "Past Trips",
-    slug: "past_trips",
+    title: "Pending",
+    slug: "pending",
   },
 ];
 
-const MyTrip = () => {
+const AmbassadorAttraction = () => {
   // set the menudata to a state to manage the menu
   const [menuData, setMenuData] = useState(menudata);
   //   get the dummy data and set the attraction data
-  const [attractionData, setAttractionData] = useState<ITripPlanningData[]>([]);
-  const [initialAttractionData, setInitialAttractionData] = useState<
-    ITripPlanningData[]
-  >([]);
+  const [attractionData, setAttractionData] = useState<IDeal[]>([]);
+  const [initialAttractionData, setInitialAttractionData] = useState<IDeal[]>(
+    []
+  );
   //   using this to set the current data to filter the data
   const [currentData, setCurrentData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+
+  const [pagination, setPagination] = useState<IPagination | any>();
 
   const userId = localGetUserId();
 
@@ -48,10 +49,19 @@ const MyTrip = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    getUserTrips(userId).then((res) => {
-      console.log(res.data);
+
+    getAllDeals().then((res) => {
       setAttractionData(res.data.items);
       setInitialAttractionData(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
       setIsLoading(false);
     });
   }, []);
@@ -97,9 +107,54 @@ const MyTrip = () => {
       setIsSearching(false);
     }
     const filtered = initialAttractionData.filter((item) =>
-      item.startDestination.toLowerCase().includes(e.target.value.toLowerCase())
+      item.title.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setAttractionData(filtered);
+  };
+
+  const handlePaginationPrev = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage - 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getAllDeals(query).then((res) => {
+      setInitialAttractionData(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
+  const handlePaginationNext = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage + 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getAllDeals(query).then((res) => {
+      setInitialAttractionData(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
+  const handleAllClick = (e: any) => {
+    // therefore setting the attractiondata to the original data fetched from external
+    setAttractionData(initialAttractionData);
   };
 
   // when working on this uncomment line 38 - 41 inside useEffect
@@ -113,7 +168,7 @@ const MyTrip = () => {
               type="search"
               name=""
               id=""
-              placeholder="Search with cities..."
+              placeholder="Search with title..."
               className="w_85 trip_search_input"
               onChange={handleInput}
             />
@@ -127,7 +182,7 @@ const MyTrip = () => {
             </span>
           </div>
           <div className="header_container">
-            <h3 className="trip_page_header">My Trips</h3>
+            <h3 className="trip_page_header">My Attractions</h3>
           </div>
           <div className="navigation_container">
             <div className="trips_button_container">
@@ -167,40 +222,33 @@ const MyTrip = () => {
               </div>
             </div>
             <div className="plan_new_trip">
-              <a href="/#/custom-plan-trip">
+              <a href="/#/ambassador/attractions/new">
                 <span className="plan_new_trip_text">
                   <BsFillPlusCircleFill className="plus_icon" />
-                  Plan a new trip
+                  Create a new attraction
                 </span>
               </a>
             </div>
           </div>
           <div className="my_trip_container">
-            {/* <h3>tripPage</h3> */}
-            {attractionData.length > 0 ? (
-              <div className="trip_card">
-                {attractionData.map((item) => (
-                  <PastTripCard
-                    key={item.id}
-                    image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                    location={item.startDestination}
-                    budget={item.budget}
-                    tripId={item.id}
-                  />
-                ))}
-              </div>
-            ) : (
-              <>
-                <h3 className="no_data_text">
-                  {currentData === "Upcoming Trips"
-                    ? "You do not have any upcoming Trips"
-                    : currentData === "Past Trips"
-                    ? "You do not have any past Trips"
-                    : ""}
-                </h3>
-                <br />
-              </>
-            )}
+            {attractionData ? (
+              attractionData.length > 0 ? (
+                <div className="featured_card">
+                  {attractionData.map((item) => (
+                    <div key={item.id}>
+                      <Spin spinning={isLoading}>
+                        <Card
+                          item={item}
+                          ambassador={true}
+                          url={`/explore-details/attraction/${item.id}`}
+                        />
+                      </Spin>
+                    </div>
+                  ))}
+                </div>
+              ) : null
+            ) : null}
+
             {isSearching ? (
               <button
                 onClick={() => {
@@ -212,10 +260,49 @@ const MyTrip = () => {
               </button>
             ) : null}
           </div>
+          <div className="explore_page_number">
+            <span>
+              Page {pagination?.currentPage} of {pagination?.totalPages}
+            </span>
+            <span>
+              {(pagination?.currentPage - 1) * pagination?.pageSize + 1} -
+              {pagination?.hasNext
+                ? pagination?.pageSize * pagination?.currentPage
+                : pagination?.totalCount}
+            </span>
+          </div>
+          <div className="scroll_button">
+            {pagination?.hasPrevious ? (
+              <button
+                className={
+                  pagination?.hasPrevious
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationPrev}
+                disabled={!pagination?.hasPrevious}
+              >
+                Prev
+              </button>
+            ) : null}
+            {pagination?.hasNext ? (
+              <button
+                className={
+                  pagination?.hasNext
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationNext}
+                disabled={!pagination?.hasNext}
+              >
+                Next
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     </Spin>
   );
 };
 
-export default MyTrip;
+export default AmbassadorAttraction;

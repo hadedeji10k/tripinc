@@ -1,30 +1,29 @@
 import { useState, useEffect } from "react";
-import "./MyTrip.css";
 import { Spin } from "antd";
-import PastTripCard from "../Cards/PastTripCard/PastTripCard";
+import PastTripCard from "../../Cards/PastTripCard/PastTripCard";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { TiLocationArrowOutline } from "react-icons/ti";
-import { getUserTrips } from "../../api";
-import { localGetUserId } from "../../utils/helpers";
-import { ITripPlanningData } from "../../api/interfaces";
+import { getUserTrips } from "../../../api";
+import { localGetUserId } from "../../../utils/helpers";
+import { ITripPlanningData } from "../../../api/interfaces";
 import { BiSearch } from "react-icons/bi";
 
 const menudata = [
   {
     id: 1,
     stateOfClass: true,
-    title: "Upcoming Trips",
-    slug: "upcoming_trips",
+    title: "Approved",
+    slug: "approved",
   },
   {
     id: 2,
     stateOfClass: false,
-    title: "Past Trips",
-    slug: "past_trips",
+    title: "Pending",
+    slug: "pending",
   },
 ];
 
-const MyTrip = () => {
+const AmbassadorTrip = () => {
   // set the menudata to a state to manage the menu
   const [menuData, setMenuData] = useState(menudata);
   //   get the dummy data and set the attraction data
@@ -170,7 +169,7 @@ const MyTrip = () => {
               <a href="/#/custom-plan-trip">
                 <span className="plan_new_trip_text">
                   <BsFillPlusCircleFill className="plus_icon" />
-                  Plan a new trip
+                  Create a new trip
                 </span>
               </a>
             </div>
@@ -192,10 +191,10 @@ const MyTrip = () => {
             ) : (
               <>
                 <h3 className="no_data_text">
-                  {currentData === "Upcoming Trips"
-                    ? "You do not have any upcoming Trips"
-                    : currentData === "Past Trips"
-                    ? "You do not have any past Trips"
+                  {currentData === "Approved"
+                    ? "You do not have any approved Trips"
+                    : currentData === "Pending"
+                    ? "You do not have any pending Trips"
                     : ""}
                 </h3>
                 <br />
@@ -218,4 +217,4 @@ const MyTrip = () => {
   );
 };
 
-export default MyTrip;
+export default AmbassadorTrip;

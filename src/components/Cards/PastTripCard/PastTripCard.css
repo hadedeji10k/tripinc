@@ -1,4 +1,4 @@
-.card {
+.trip_card {
     max-width: 97%;
     width: 100%;
     height: 100%;
@@ -16,6 +16,7 @@
 .past_card_container {
     max-width: 320px;
     max-height: 430px;
+    min-width: 250px;
     border: 2px solid #E6E8EC;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;

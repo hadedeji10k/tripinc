@@ -1,8 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { MainLayout, AmbassadorLayout } from "../pages";
 
-// import Navbar from "../components/Navbar";
-// import Sidebar from "../components/Sidebar";
-// import Footer from "../components/Footer/Footer";
 import Signup from "../components/Auth/SignUp";
 import Signin from "../components/Auth/SignIn";
 import BasicDetails from "../components/Auth/BasicDetails/BasicDetails";
@@ -15,12 +13,10 @@ import Shopping from "../components/Shopping";
 import LandingPage from "../components/LandingPage/LandingPage";
 import MyTrip from "../components/MyTripPage/MyTrip";
 import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
-// import ExploreCategoryPage from "../components/ExploreCategory/ExploreCategoryPage";
 import Orders from "../components/Shopping/OrdersPage";
 import ShoppingCartPage from "../components/ShoppingCartPage";
 
 // import AuthVerify from "../pages/AuthVerify";
-import MainLayout from "../pages";
 import SocialBasicDetails from "../components/Auth/SocialBasicDetails/SocialBasicDetails";
 import RequireAuth from "../pages/RequiredAuth";
 import VerifyAccount from "../components/AccountVerification/VerifyAccount/VerifyAccount";
@@ -31,11 +27,17 @@ import AccountVerified from "../components/AccountVerification/AccountVerified/i
 import ForgotPassword from "../components/Auth/ForgotPassword";
 import CustomTripPlanning from "../components/CustomTripPlanning";
 import TripView from "../components/MyTripPage/TripView";
+import CreateAttraction from "../components/Attraction/Attraction";
+import AmbassadorApplication from "../components/Attraction/AmbassadorApplication";
+import Dashboard from "../components/Ambassador/AmbassadorDashboard/Dashboard";
+import AmbassadorAttraction from "../components/Ambassador/AmbassadorAttraction/AmbassadorAttraction";
+import AmbassadorTrip from "../components/Ambassador/AmbassadorTrip/AmbassadorTrip";
 
 const MainRoute: React.FC = () => {
   return (
     <>
       <Routes>
+        {/* MAIN ROUTES */}
         <Route element={<MainLayout />}>
           {/* <Route element={<AuthVerify />}> */}
           <Route path="/" element={<LandingPage />} />
@@ -121,9 +123,27 @@ const MainRoute: React.FC = () => {
             }
           />
           <Route path="/plan-trip/:tripId" element={<TripPlanning />} />
+          <Route path="/create-attraction" element={<CreateAttraction />} />
+          <Route
+            path="/ambassador-application"
+            element={<AmbassadorApplication />}
+          />
           <Route path="*" element={<PageNotFound />} />
         </Route>
-        {/* </Route> */}
+
+        {/* AMBASSADOR ROUTES */}
+        <Route element={<AmbassadorLayout />}>
+          <Route path="/ambassador" element={<Dashboard />} />
+          <Route
+            path="/ambassador/attractions"
+            element={<AmbassadorAttraction />}
+          />
+          <Route
+            path="/ambassador/attractions/new"
+            element={<CreateAttraction />}
+          />
+          <Route path="/ambassador/trips" element={<AmbassadorTrip />} />
+        </Route>
       </Routes>
     </>
   );

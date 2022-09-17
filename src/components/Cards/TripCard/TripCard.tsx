@@ -3,18 +3,17 @@ import "./TripCard.css";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import {
-  currencySymbolHelper,
-  localGetUserId,
-} from "../../../utils/helpers";
+import { currencySymbolHelper, localGetUserId } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import { Dropdown, Menu, Space } from "antd";
 import { ITripPlanningItineraryDay } from "../../../api/interfaces";
+import { FiEdit2 } from "react-icons/fi";
 
 interface Props {
   item: any;
-  liked: any;
-  handleLikeButton: any;
+  liked?: any;
+  ambassador?: any;
+  handleLikeButton?: any;
   handleUnLikeButton?: any;
   url?: string;
   tripPlanning?: boolean;
@@ -26,6 +25,7 @@ interface Props {
 
 const Card = ({
   item,
+  ambassador,
   liked,
   handleLikeButton,
   handleUnLikeButton,
@@ -167,25 +167,33 @@ const Card = ({
                 </span>
               </Dropdown>
             </div>
+          ) : ambassador ? (
+            <div className="arrow_tag">
+              <Link to={`/ambassador/attractions/${item.id}`}>
+                <FiEdit2 className="fs-5" />
+              </Link>
+            </div>
           ) : (
             <p className="arrow_tag">
               <IoIosArrowDown />
             </p>
           )}
         </div>
-        {userId ? (
-          <div
-            className="heart"
-            onClick={
-              liked
-                ? () => handleUnLikeButton(item.id)
-                : () => handleLikeButton(item.id)
-            }
-          >
-            <p className={liked ? "heart_tag_liked" : "heart_tag"}>
-              <BsSuitHeartFill />
-            </p>
-          </div>
+        {!ambassador ? (
+          userId ? (
+            <div
+              className="heart"
+              onClick={
+                liked
+                  ? () => handleUnLikeButton(item.id)
+                  : () => handleLikeButton(item.id)
+              }
+            >
+              <p className={liked ? "heart_tag_liked" : "heart_tag"}>
+                <BsSuitHeartFill />
+              </p>
+            </div>
+          ) : null
         ) : null}
       </div>
     </>

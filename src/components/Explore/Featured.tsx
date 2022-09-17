@@ -486,7 +486,9 @@ const Featured = ({ handleMove }) => {
             </span>
           </div> */}
           <div className="w_80">
-            <p className="search_result_field">Search Result for: {searchResultField}</p>
+            <p className="search_result_field">
+              Search Result for: {searchResultField}
+            </p>
           </div>
           {/* <Card data={attractionData} /> */}
           {attractionData ? (
@@ -512,7 +514,7 @@ const Featured = ({ handleMove }) => {
                   <>
                     <br />
                     <br />
-                    <h3>
+                    <h3 className="medium_title">
                       Please check our popular destinations for more attraction
                       you may like.
                     </h3>

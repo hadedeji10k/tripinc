@@ -204,7 +204,7 @@ const Itinerary = ({
                       className="itinerary_display_card_container"
                       key={itineraryKey}
                     >
-                      <div className="itinerary_display_card_details row w_100">
+                      <div className="itinerary_display_card_details app_row w_100">
                         <div className="itinerary_display_card_image">
                           <img
                             style={{
@@ -251,7 +251,7 @@ const Itinerary = ({
                       </div>
                       {itinerary.customNoteStatus ? (
                         <div
-                          className="itinerary_display_custom_note_container row w_100"
+                          className="itinerary_display_custom_note_container app_row w_100"
                           key={itineraryKey}
                         >
                           <input

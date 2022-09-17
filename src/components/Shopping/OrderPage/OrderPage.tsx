@@ -253,7 +253,7 @@ const OrderPage = ({
             Export Order
           </button> */}
 
-          <div className="order_payment_status_tab w_80 center row">
+          <div className="order_payment_status_tab w_80 center app_row">
             <p className="medium_title">Order Status:</p>
             <p className="medium_title">{orderDetails?.status}</p>
           </div>

@@ -132,7 +132,7 @@ const TripInterest = ({ handleMenuChange, tripData, setTripData }) => {
           </button>
         </div>
         <div className="trip_interest_other_text_container">
-          <h3>
+          <h3 className="medium_title">
             Not sure where you want to go? No problem we have some ideas.{" "}
             <a href="/" className="trip_interest_other_text">
               Show me!

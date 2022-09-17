@@ -330,7 +330,7 @@ const Popular = () => {
               <>
                 <br />
                 <br />
-                <h3>No search Result</h3>
+                <h3 className="medium_title">No search Result</h3>
                 <br />
               </>
             ) : null
