@@ -11,6 +11,7 @@ import moment from "moment";
 import { GOOGLEAPIKEY } from "../../utils/constants";
 import { Formik } from "formik";
 import { AmbassadorApplicationSchema } from "../../schema/yupSchema";
+import { localGetUserFullName } from "../../utils/helpers";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -29,6 +30,8 @@ const AmbassadorApplication = () => {
   const [countriesVisited, setCountriesVisited] = useState<any>([]);
   const [citiesForPlanning, setCitiesForPlanning] = useState<string[]>([]);
 
+  const [fullName] = useState(localGetUserFullName());
+
   //   Full Name
   // Date Of Birth
   // Country of Residence
@@ -39,7 +42,7 @@ const AmbassadorApplication = () => {
   // Amount of time available/week/month for activities
 
   const initialValues = {
-    fullName: "",
+    fullName,
     dateOfBirth: "",
     // countryOfOrigin: "",
     meansOfIdentification: "",
@@ -163,6 +166,7 @@ const AmbassadorApplication = () => {
                       className="basic_details_input"
                       type="text"
                       placeholder="Full Name"
+                      defaultValue={fullName}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />

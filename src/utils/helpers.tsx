@@ -273,11 +273,11 @@ export const getUserProfilePicture = async (id?: any) => {
 };
 
 // get user full name
-export const localGetUserFullName = (): string | null => {
+export const localGetUserFullName = (): string => {
   const user = JSON.parse(localStorage.getItem("profile") as any)?.user;
 
   if (!user) {
-    return null;
+    return "";
   }
   const parsedUser = JSON.parse(user);
 
