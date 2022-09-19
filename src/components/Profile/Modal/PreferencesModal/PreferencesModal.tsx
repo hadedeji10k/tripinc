@@ -318,7 +318,7 @@ const PreferencesModal = ({
       {showPreferencesModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div className="modal" style={animation}>
+          <animated.div className="z_modal" style={animation}>
             <div className="preferences_modal_wrapper">
               <h3 className="preferences_modal_header">
                 Edit your Preferences details

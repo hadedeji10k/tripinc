@@ -96,7 +96,7 @@ const TimeConstraintModal = ({
       {showReviewModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div className="modal" style={animation}>
+          <animated.div className="z_modal" style={animation}>
             <div className="modal_wrapper">
               <h3 className="header">⌛ </h3>
               <h3 className="header">Ain’t nobody got time for that</h3>

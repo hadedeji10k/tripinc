@@ -1,289 +1,62 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Button as BootStrapButton,
-} from "react-bootstrap";
-import { BsInfoSquare } from "react-icons/bs";
+import { useState } from "react";
 import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
 import "antd/dist/antd.css";
-import {
-  AutoComplete,
-  Cascader,
-  Checkbox,
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  Button,
-  Rate,
-  TimePicker,
-  message,
-} from "antd";
+import { Input, Select, message, Spin, DatePicker, Button } from "antd";
 import Autocomplete from "react-google-autocomplete";
-import { DeleteOutlined, UploadOutlined } from "@mui/icons-material";
-import { ImLocation } from "react-icons/im";
-import { MdAccessTime } from "react-icons/md";
-import { FaInfoCircle } from "react-icons/fa";
+import { UploadOutlined } from "@mui/icons-material";
 import moment from "moment";
 import { GOOGLEAPIKEY } from "../../utils/constants";
+import { Formik } from "formik";
+import { AmbassadorApplicationSchema } from "../../schema/yupSchema";
 
 const { Option } = Select;
 const { TextArea } = Input;
 const ratingDesc = ["terrible", "bad", "normal", "good", "wonderful"];
 
 const AmbassadorApplication = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [dateOfBirth, setDateOfBirth] = useState<string>("");
+  const [meansOfIdentification, setMeansOfIdentification] =
+    useState<string>("");
+  const [country, setCountry] = useState<string>("");
   const [images] = useState([]);
-  const [otherImages, setOtherImages] = useState<
-    ImageListType[] | ImageType[] | any
-  >([]);
-  const [ratingValue, setRatingValue] = useState(3);
-  const [form] = Form.useForm();
+  const [hobbies, setHobbies] = useState<string[]>([]);
+  const [citiesVisited, setCitiesVisited] = useState<any>([]);
+  const [citiesOfPlanning, setCitiesOfPlanning] = useState<any>([]);
+  const [countriesVisited, setCountriesVisited] = useState<any>([]);
+  const [citiesForPlanning, setCitiesForPlanning] = useState<string[]>([]);
 
-  const [images2, setImages2] = useState([]);
+  //   Full Name
+  // Date Of Birth
+  // Country of Residence
+  // Means of identification
+  // Hobbies/Interest
+  // Cities/Countries visited
+  // Cities of interest for Planning
+  // Amount of time available/week/month for activities
 
-  const [bestVisitingTime, setBestVisitingTime] = useState<any>([]);
-  const [bestVisitingTimeError, setBestVisitingTimeError] = useState("");
-
-  // Location states
-  const [city, setCity] = useState("");
-  const [location, setLocation] = useState("");
-  const [country, setCountry] = useState("");
-
-  const LocationInputs: any = () => {
-    interface LocationInputsProps {
-      onChange?: (value: string) => void;
-    }
-
-    const CountryInput: React.FC<LocationInputsProps> = ({ onChange }) => {
-      const triggerChange = (changedValue: string) => {
-        onChange?.(changedValue);
-      };
-
-      const onCountryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newCountry = e.target.value;
-        triggerChange(newCountry);
-      };
-
-      return (
-        <Autocomplete
-          apiKey={GOOGLEAPIKEY}
-          onPlaceSelected={(selected: any) => {
-            setCountry(selected.formatted_address);
-          }}
-          defaultValue={country}
-          onChange={onCountryChange}
-          options={{
-            types: ["country"],
-            fields: ["formatted_address"],
-          }}
-          className="ant-input ant-input-lg"
-        />
-      );
-    };
-
-    const CityInput: React.FC<LocationInputsProps> = ({ onChange }) => {
-      const triggerChange = (changedValue: string) => {
-        onChange?.(changedValue);
-      };
-
-      const onCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newCity = e.target.value;
-        triggerChange(newCity);
-      };
-
-      return (
-        <Autocomplete
-          apiKey={GOOGLEAPIKEY}
-          onPlaceSelected={(selected: any) => {
-            setCity(selected.formatted_address);
-          }}
-          defaultValue={city}
-          onChange={onCityChange}
-          options={{
-            types: [],
-            fields: ["formatted_address"],
-          }}
-          className="ant-input ant-input-lg"
-        />
-      );
-    };
-
-    const LocationInput: React.FC<LocationInputsProps> = ({ onChange }) => {
-      const triggerChange = (changedValue: string) => {
-        onChange?.(changedValue);
-      };
-
-      const onLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newLocation = e.target.value;
-        triggerChange(newLocation);
-      };
-
-      return (
-        <Autocomplete
-          apiKey={GOOGLEAPIKEY}
-          onPlaceSelected={(selected: any) => {
-            setLocation(selected.formatted_address);
-          }}
-          defaultValue={location}
-          onChange={onLocationChange}
-          options={{
-            types: [],
-            fields: ["formatted_address"],
-          }}
-          className="ant-input ant-input-lg"
-        />
-      );
-    };
-
-    // <Autocomplete
-    //   apiKey={GOOGLEAPIKEY}
-    //   onPlaceSelected={(selected: any) => {
-    //     setCountry(selected.formatted_address);
-    //   }}
-    //   defaultValue={country}
-    //   onChange={onCountryChange}
-    //   options={{
-    //     types: ["country"],
-    //     fields: ["formatted_address"],
-    //   }}
-    //   className="ant-input ant-input-lg"
-    // />
-    return (
-      <>
-        <Row className="my-3">
-          <Col>
-            <Form.Item
-              name="location"
-              label="Location"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input a location!",
-                },
-              ]}
-            >
-              <LocationInput />
-            </Form.Item>
-          </Col>
-          <Col>
-            <Form.Item
-              name="post_code"
-              label="Post Code"
-              rules={[
-                {
-                  type: "string",
-                  message: "The input is not valid!",
-                },
-                {
-                  required: true,
-                  message: "Please input a post code!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row className="my-3">
-          <Col>
-            <Form.Item
-              name="city"
-              label="City"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input a valid city!",
-                },
-              ]}
-            >
-              <CityInput />
-            </Form.Item>
-          </Col>
-          <Col>
-            <Form.Item
-              name="country"
-              label="Country"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input a country!",
-                },
-              ]}
-            >
-              <CountryInput />
-            </Form.Item>
-          </Col>
-        </Row>
-      </>
-    );
+  const initialValues = {
+    fullName: "",
+    dateOfBirth: "",
+    // countryOfOrigin: "",
+    meansOfIdentification: "",
+    // hobbies: "",
+    // citiesVisited: "",
+    // countriesVisited: "",
+    // citiesForPlanning: "",
+    timeAvailability: 0,
   };
 
-  const handleTime = (time: any, timeString: string): void => {
-    console.log(time, timeString);
-    // setTime(timeString);
+  const handleDate = (date, dateString) => {
+    setDateOfBirth(date._d);
   };
 
-  const deleteBestVisitingTime = (index) => {
-    const filtered = bestVisitingTime.filter((item, id) => index !== id);
-    setBestVisitingTime(filtered);
-  };
-
-  const addBestVisitingTime = () => {
-    if (bestVisitingTime.length < 4) {
-      setBestVisitingTime([...bestVisitingTime, {}]);
-    } else {
-      message.error("Error, you can only add up to 5 best visiting time", 3);
-    }
-  };
-
-  const otherImageChanges = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages2(imageList);
-  };
-
-  const onFinish = (values) => {
-    let bestVisitingTime = [
-      values.bestVisitingTime && values.bestVisitingTime,
-      values.bestVisitingTime2 && values.bestVisitingTime2,
-      values.bestVisitingTime3 && values.bestVisitingTime3,
-      values.bestVisitingTime4 && values.bestVisitingTime4,
-      values.bestVisitingTime5 && values.bestVisitingTime5,
-    ];
-    bestVisitingTime = bestVisitingTime.filter((item) => !!item);
-    delete values.bestVisitingTime2;
-    delete values.bestVisitingTime3;
-    delete values.bestVisitingTime4;
-    delete values.bestVisitingTime5;
-    const newValues = {
-      ...values,
-      country,
-      location,
-      city,
-      bestVisitingTime,
-    };
-    console.log("Received values of form: ", newValues);
-  };
-
-  const handleSelectChange = (value: string[]) => {
-    console.log(`selected ${value}`);
-  };
-
-  const onImageChanges = async (imageList: ImageListType) => {
-    console.log("Image List", imageList);
-    setOtherImages([...otherImages, ...imageList]);
-    console.log("Other Images", otherImages);
-  };
-
-  const removeFromMultipleImages = (id) => {
-    const filtered = otherImages.filter((item, index) => id !== index);
-    console.log(filtered);
-    setOtherImages(filtered);
+  const handleMeansOfIdentification = (e: any) => {
+    const value = e.target.value;
+    setMeansOfIdentification(value);
   };
 
   const onImageChange = async (imageList: ImageListType) => {
@@ -298,510 +71,379 @@ const AmbassadorApplication = () => {
     const image = document.getElementById(
       "main_photo_preview"
     ) as HTMLImageElement;
-    image.style.display = "";
+    image.style.display = "block";
     image.src = imageList[0].dataURL as string;
+  };
+
+  // function to handle placesBeenTo click to delete
+  const handlePlacesRemove = (action: string, id: any) => {
+    let data: any;
+    switch (action) {
+      case "countriesVisited":
+        data = countriesVisited.filter((item, key) => key !== parseInt(id));
+        setCountriesVisited([...data]);
+        break;
+      case "citiesVisited":
+        data = citiesVisited.filter((item, key) => key !== parseInt(id));
+        setCitiesVisited([...data]);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const onSubmit = (data: any) => {
+    console.log({ ...data, countriesVisited, citiesVisited });
+
+    // setIsLoading(true);
+
+    if (countriesVisited.length >= 0) {
+      message.error(
+        "Error, please make sure you select at least one country.",
+        3
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    if (countriesVisited.length <= 0) {
+      message.error("Error, please make sure you select at least one city.", 3);
+      setIsLoading(false);
+      return;
+    }
+
+    // send data to backend
+    // signUp(formData)
+    //   .then((res) => {
+    //     authContext.login();
+    //     authContext.setUserId(res.userId);
+    //   })
+    //   .catch(() => {
+    //     setIsLoading(false);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   return (
     <>
-      <h3 className="fs-2 text-center my-4">Ambassador Application</h3>
-      <Container className="p-3">
-        <Form
-          form={form}
-          name="register"
-          onFinish={onFinish}
-          initialValues={{ country, city, location }}
-          scrollToFirstError
-          size="large"
-          layout="inline"
-        >
-          <Container className="border border-2 rounded-1 my-3">
-            <div className="border-bottom text-start my-3">
-              <span className="fs-4 me-3">
-                <BsInfoSquare />
-              </span>
-              <h3 className="d-inline fs-3">Basic Info</h3>
-            </div>
-            <div className="my-4">
-              <p>The field marked with * are required</p>
+      <Spin spinning={isLoading} size="large">
+        <div className="basic_details_container">
+          <div className="basic_details_word">
+            <h1 className="basic_details_header fs-1">
+              Ambassador Application
+            </h1>
+            <h3 className="basic_details_title">Kindly fill in all details.</h3>
+          </div>
+          <div>
+            {/* Formik */}
+            <Formik
+              initialValues={initialValues}
+              validationSchema={AmbassadorApplicationSchema}
+              onSubmit={(values) => {
+                onSubmit(values);
+              }}
+            >
+              {({
+                errors,
+                touched,
+                handleSubmit,
+                handleChange,
+                handleBlur,
+              }) => (
+                //  ambassador form
 
-              <div className="border-bottom text-start my-3">
-                <span className="fs-4 me-3">
-                  <ImLocation />
-                </span>
-                <h3 className="d-inline fs-3">Current Address</h3>
-              </div>
-              <div className="my-4">
-                <LocationInputs />
-              </div>
-            </div>
-          </Container>
-          <Container className="border border-2 rounded-1 my-3">
-            <div className="border-bottom text-start my-3">
-              <span className="fs-4 me-3">
-                <MdAccessTime />
-              </span>
-              <h3 className="d-inline fs-3">Other Details</h3>
-            </div>
-            <Row className="my-3">
-              <Col>
-                <Form.Item
-                  name="phoneNumber"
-                  label="Mobile number"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input a phone number!",
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              {/* <Col>
-                <Form.Item
-                  name="photo"
-                  label="Main photo"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please upload an image!",
-                    },
-                  ]}
-                >
-                  <ImageUploading value={images} onChange={onImageChange}>
-                    {({ onImageUpload, dragProps }) => (
-                      // write your building UI
-                      <Button
-                        onClick={onImageUpload}
-                        {...dragProps}
-                        icon={<UploadOutlined />}
-                      >
-                        Click to Upload
-                      </Button>
-                    )}
-                  </ImageUploading>
-                </Form.Item>
-                <span>
-                  <img
-                    width={150}
-                    height={100}
-                    style={{ display: "none" }}
-                    src=""
-                    alt=""
-                    id="main_photo_preview"
-                  />
-                </span>
-              </Col> */}
-            </Row>
-            {/* <Row className="my-3">
-              <Col>
-                <Form.Item
-                  name="title"
-                  label="Title"
-                  rules={[
-                    {
-                      type: "string",
-                      message: "The input is not valid!",
-                    },
-                    {
-                      required: true,
-                      message: "Please input a title!",
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-            </Row> */}
-            {/* <Row className="my-3">
-              <Col>
-                <Form.Item
-                  name="price"
-                  label="Price"
-                  rules={[
-                    {
-                      type: "number",
-                      message: "Please enter number!",
-                    },
-                    {
-                      required: true,
-                      message: "Please input the price!",
-                    },
-                  ]}
-                >
-                  <InputNumber />
-                </Form.Item>
-              </Col>
-              <Col>
-                <Form.Item
-                  name="rating"
-                  label="Average Rating"
-                  //   rules={[
-                  //     {
-                  //       type: "string",
-                  //     },
-                  //     {
-                  //       required: true,
-                  //       message: "Please select a range!",
-                  //     },
-                  //   ]}
-                >
-                  <Rate
-                    tooltips={ratingDesc}
-                    onChange={setRatingValue}
-                    value={ratingValue}
-                  />
-                </Form.Item>
-                {ratingValue ? (
-                  <span className="ant-rate-text">
-                    {ratingDesc[ratingValue - 1]}
-                  </span>
-                ) : (
-                  ""
-                )}
-              </Col>
-            </Row> */}
-            <Row className="my-3">
-              <Col>
-                <Form.Item
-                  name="interest"
-                  label="Your Interest"
-                  rules={[
-                    {
-                      type: "string",
-                    },
-                    {
-                      required: true,
-                      message: "Please enter your interest!",
-                    },
-                  ]}
-                >
-                  <TextArea
-                    style={{
-                      resize: "none",
-                    }}
-                    rows={7}
-                    placeholder="Why are you interested in becoming an ambassador?"
-                  />
-                </Form.Item>
-              </Col>
-              <Col>
-                <Form.Item
-                  name="insight"
-                  label="Insight"
-                  rules={[
-                    {
-                      type: "string",
-                    },
-                  ]}
-                >
-                  <TextArea
-                    style={{
-                      resize: "none",
-                    }}
-                    rows={7}
-                    placeholder="How would you help us improve?"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            {/* <Row className="my-3">
-              <Form.Item name="keywords" label="Keywords / Tags">
-                <Select
-                  mode="tags"
-                  style={{ width: "100%" }}
-                  placeholder="Add tags"
-                >
-                  <Option key={1}>1</Option>
-                  <Option key={2}>2</Option>
-                  <Option key={3}>3</Option>
-                  <Option key={4}>4</Option>
-                  <Option key={5}>5</Option>
-                  <Option key={6}>6</Option>
-                </Select>
-              </Form.Item>
-              <p>Please press enter to separate each tag</p>
-            </Row> */}
-          </Container>
-          {/* <Container className="border border-2 rounded-1 my-3">
-            <div className="border-bottom text-start my-3">
-              <span className="fs-4 me-3">
-                <MdAccessTime />
-              </span>
-              <h3 className="d-inline fs-3">Visiting Details</h3>
-            </div>
-            <div className="my-4">
-              <Row className="my-3">
-                <Col>
-                  <Form.Item
-                    name="openingDay"
-                    label="Opening Day"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please select at least a day!",
-                      },
-                    ]}
-                  >
-                    <Select
-                      mode="multiple"
-                      allowClear
-                      style={{ width: "100%" }}
-                      placeholder="Please select days"
-                    >
-                      <Option key={1} value="Monday">
-                        Monday
-                      </Option>
-                      <Option key={2} value="Tuesday">
-                        Tuesday
-                      </Option>
-                      <Option key={3} value="Wednesday">
-                        Wednesday
-                      </Option>
-                      <Option key={4} value="Thursday">
-                        Thursday
-                      </Option>
-                      <Option key={5} value="Friday">
-                        Friday
-                      </Option>
-                      <Option key={6} value="Saturday">
-                        Saturday
-                      </Option>
-                      <Option key={7} value="Sunday">
-                        Sunday
-                      </Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col>
-                  <Form.Item
-                    name="typicalTimeSpent"
-                    label="Typical Time spent"
-                    rules={[
-                      {
-                        type: "number",
-                        message: "The input is not valid!",
-                      },
-                      {
-                        required: true,
-                        message: "Please input a valid number!",
-                      },
-                    ]}
-                  >
-                    <InputNumber />
-                  </Form.Item>
-                  <small>(Enter time in mins e.g 120 for 2hours)</small>
-                </Col>
-              </Row>
-              <Row className="my-3">
-                <Col>
-                  <Form.Item
-                    name="openingHour"
-                    label="Opening Hour"
-                    rules={[
-                      {
-                        type: "object" as const,
-                        required: true,
-                        message: "Please select time!",
-                      },
-                    ]}
-                  >
-                    <TimePicker />
-                  </Form.Item>
-                </Col>
-                <Col>
-                  <Form.Item
-                    name="closingHour"
-                    label="Closing Hour"
-                    rules={[
-                      {
-                        type: "object" as const,
-                        required: true,
-                        message: "Please select time!",
-                      },
-                    ]}
-                  >
-                    <TimePicker />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Form.Item
-                    className="d-inline"
-                    name="bestVisitingTime"
-                    label="Best Visiting Time"
-                    rules={[
-                      {
-                        type: "object" as const,
-                        required: true,
-                        message: "Please select best visiting time!",
-                      },
-                    ]}
-                  >
-                    <TimePicker
-                      onChange={handleTime}
-                      defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+                <form onSubmit={handleSubmit} autoComplete="none">
+                  <div>
+                    <label className="basic_details_label">Full Name</label>
+                    <input
+                      name="fullName"
+                      className="basic_details_input"
+                      type="text"
+                      placeholder="Full Name"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
-                  </Form.Item>
-                  <Button onClick={addBestVisitingTime}>Add</Button>
-                  {bestVisitingTime &&
-                    bestVisitingTime.length > 0 &&
-                    bestVisitingTime.map((item, index) => (
-                      <div className="my-2" key={index}>
-                        <Form.Item
-                          className="d-inline"
-                          name={`bestVisitingTime${index + 2}`}
-                          label={`Best Visiting Time ${index + 2}`}
-                          rules={[
-                            {
-                              type: "object" as const,
-                              required: true,
-                              message: "Please select best visiting time!",
-                            },
-                          ]}
-                        >
-                          <TimePicker
-                            onChange={handleTime}
-                            defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
-                          />
-                        </Form.Item>
-                        <Button
-                          danger
-                          icon={<DeleteOutlined />}
-                          onClick={() => deleteBestVisitingTime(index)}
-                        >
-                          Delete
-                        </Button>
+                    {errors.fullName && touched.fullName ? (
+                      <p className="red_alert">{errors.fullName}</p>
+                    ) : null}
+                  </div>
+                  <div>
+                    <label className="basic_details_label">Date of Birth</label>
+                    <DatePicker
+                      name="dateOfBirth"
+                      style={{
+                        display: "flex",
+                        height: "45px",
+                        borderRadius: "10px",
+                        margin: "7px auto 20px",
+                        border: "2px solid #ccc",
+                      }}
+                      className="basic_details_input"
+                      onChange={handleDate}
+                    />
+                    {errors.dateOfBirth && touched.dateOfBirth ? (
+                      <p className="red_alert">{errors.dateOfBirth}</p>
+                    ) : null}
+                  </div>
+
+                  <div className="basic_details_country">
+                    <label className="basic_details_label">
+                      Country of Residence
+                    </label>
+                    <Autocomplete
+                      apiKey={GOOGLEAPIKEY}
+                      onPlaceSelected={(selected: any) => {
+                        setCountry(selected.formatted_address);
+                      }}
+                      options={{
+                        types: ["country"],
+                        fields: ["formatted_address"],
+                      }}
+                      placeholder="Country of Residence"
+                      className="basic_details_input"
+                      id="country_input"
+                    />
+                  </div>
+                  <div className="basic_details_country">
+                    <label className="basic_details_label">
+                      Countries visited
+                    </label>
+                    <Autocomplete
+                      apiKey={GOOGLEAPIKEY}
+                      onPlaceSelected={(selected: any) => {
+                        setCountriesVisited((prev) => {
+                          if (prev.includes(selected.formatted_address)) {
+                            return [...prev];
+                          } else {
+                            return [...prev, selected.formatted_address];
+                          }
+                        });
+                        (
+                          document.getElementById(
+                            "countries_input"
+                          ) as HTMLInputElement
+                        ).value = "";
+                      }}
+                      options={{
+                        types: ["country"],
+                        fields: ["formatted_address"],
+                      }}
+                      placeholder="Enter country name"
+                      className="basic_details_input"
+                      id="countries_input"
+                    />
+                    {countriesVisited.length > 0 && (
+                      <div className="bucket_list_tag_container">
+                        {countriesVisited.map((item, key) => (
+                          // <span key={item.id} className="bucket_list_tag">{item.title}</span>
+                          <span
+                            key={key}
+                            id={key.toString()}
+                            className="location_tag"
+                            onClick={() =>
+                              handlePlacesRemove("countriesVisited", key)
+                            }
+                          >
+                            x {item}
+                          </span>
+                        ))}
                       </div>
-                    ))}
-                </Col>
-              </Row>
-            </div>
-          </Container>
-          <Container className="border border-2 rounded-1 my-3">
-            <div className="border-bottom text-start my-3">
-              <span className="fs-4 me-3">
-                <FaInfoCircle />
-              </span>
-              <h3 className="d-inline fs-3">Others</h3>
-            </div>
-            <div className="my-4">
-              <Row className="my-3">
-                <Col>
-                  <Form.Item name="greatFor" label="Great For">
-                    <Select
-                      mode="multiple"
-                      allowClear
-                      style={{ width: "100%" }}
-                      placeholder="Please select "
+                    )}
+                  </div>
+                  <div>
+                    <label className="basic_details_label">
+                      Cities visited
+                    </label>
+                    <Autocomplete
+                      // ref={inputRef}
+                      apiKey={GOOGLEAPIKEY}
+                      onPlaceSelected={(selected: any) => {
+                        setCitiesVisited((prev) => {
+                          if (prev.includes(selected.formatted_address)) {
+                            return [...prev];
+                          } else {
+                            return [...prev, selected.formatted_address];
+                          }
+                        });
+                        (
+                          document.getElementById(
+                            "city_input"
+                          ) as HTMLInputElement
+                        ).value = "";
+                      }}
+                      options={{
+                        types: [],
+                        fields: ["formatted_address"],
+                      }}
+                      placeholder="Enter city name"
+                      className="basic_details_input"
+                      id="city_input"
+                    />
+                    {citiesVisited.length > 0 && (
+                      <div className="bucket_list_tag_container">
+                        {citiesVisited.map((item, key) => (
+                          // <span key={item.id} className="bucket_list_tag">{item.title}</span>
+                          <span
+                            key={key}
+                            id={key.toString()}
+                            className="location_tag"
+                            onClick={() =>
+                              handlePlacesRemove("citiesVisited", key)
+                            }
+                          >
+                            x {item}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="basic_details_country">
+                    <label className="basic_details_label">
+                      Means of Identification
+                    </label>
+                    <select
+                      name="meansOfIdentity"
+                      className="basic_details_input"
+                      onChange={handleMeansOfIdentification}
                     >
-                      <Option key={1} value="Kids">
-                        Kids
-                      </Option>
-                      <Option key={2} value="Couples">
-                        Couples
-                      </Option>
-                      <Option key={3} value="Family">
-                        Family
-                      </Option>
-                      <Option key={4} value="Friends">
-                        Friends
-                      </Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col>
-                  <Form.Item name="thingsToPackList" label="Things to pack">
-                    <Select
-                      mode="tags"
-                      style={{ width: "100%" }}
-                      placeholder="Add Items"
-                    ></Select>
-                  </Form.Item>
-                  <p>Please press enter to separate each tag</p>
-                </Col>
-              </Row>
-              <Row className="my-3">
-                <Col>
-                  <Form.Item name="other_pictures" label="Other Pictures">
-                    <ImageUploading
-                      multiple
-                      value={images2}
-                      onChange={otherImageChanges}
-                      maxNumber={15}
-                      maxFileSize={2097152}
-                      acceptType={["jpg", "png", "jpeg"]}
-                    >
-                      {({
-                        imageList,
-                        onImageUpload,
-                        onImageRemoveAll,
-                        onImageUpdate,
-                        onImageRemove,
-                        isDragging,
-                        dragProps,
-                      }) => (
+                      <option value="NIN">National ID card</option>
+                      <option value="DRV">Driver's license</option>
+                      <option value="IPASS">International Passport</option>
+                    </select>
+                  </div>
+                  <div className="basic_details_country my-2">
+                    <label className="basic_details_label">
+                      Upload Document
+                    </label>{" "}
+                    <br />
+                    <ImageUploading value={images} onChange={onImageChange}>
+                      {({ onImageUpload, dragProps }) => (
                         // write your building UI
-                        <div className="upload__image-wrapper">
-                          <div className="mb-3">
-                            <Button
-                              style={isDragging ? { color: "red" } : undefined}
-                              onClick={onImageUpload}
-                              {...dragProps}
-                              icon={<UploadOutlined />}
-                              className="me-3"
-                            >
-                              Click or Drop here
-                            </Button>
-                            &nbsp;
-                            <Button onClick={onImageRemoveAll}>
-                              Remove all images
-                            </Button>
-                          </div>
-                          {imageList.map((image, index) => (
-                            <span
-                              key={index}
-                              className="d-inline-flex flex-column align-items-center me-3"
-                            >
-                              <img
-                                src={image.dataURL}
-                                alt=""
-                                width="100"
-                                height="100"
-                                className="d-block mb-2"
-                              />
-                              <span className="">
-                                <Button
-                                  onClick={() => onImageUpdate(index)}
-                                  className="me-2"
-                                >
-                                  Update
-                                </Button>
-                                <Button onClick={() => onImageRemove(index)}>
-                                  Remove
-                                </Button>
-                              </span>
-                            </span>
-                          ))}
-                        </div>
+                        <Button
+                          onClick={onImageUpload}
+                          {...dragProps}
+                          icon={<UploadOutlined />}
+                          className="mb-3 mt-2"
+                        >
+                          Click to Upload
+                        </Button>
                       )}
                     </ImageUploading>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </div>
-          </Container> */}
-          <div className="text-center mx-auto">
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
+                    <span>
+                      <img
+                        width={150}
+                        height={100}
+                        style={{ display: "none" }}
+                        src=""
+                        alt=""
+                        id="main_photo_preview"
+                        className="mb-3"
+                      />
+                    </span>
+                  </div>
+
+                  <div>
+                    <label className="basic_details_label">
+                      Hobbies / Interests
+                    </label>
+                    <div className="basic_details_country my-2">
+                      <Select
+                        size="large"
+                        mode="tags"
+                        placeholder="Add tags"
+                        style={{
+                          width: "100%",
+                        }}
+                      ></Select>
+                    </div>
+                    <small>Please press enter to separate each tag</small>
+                  </div>
+                  <br />
+                  <div>
+                    <label className="basic_details_label">
+                      Cities of Interest for Planning
+                    </label>
+                    <Autocomplete
+                      // ref={inputRef}
+                      apiKey={GOOGLEAPIKEY}
+                      onPlaceSelected={(selected: any) => {
+                        setCitiesOfPlanning((prev) => {
+                          if (prev.includes(selected.formatted_address)) {
+                            return [...prev];
+                          } else {
+                            return [...prev, selected.formatted_address];
+                          }
+                        });
+                        (
+                          document.getElementById(
+                            "cities_of_interest"
+                          ) as HTMLInputElement
+                        ).value = "";
+                      }}
+                      options={{
+                        types: [],
+                        fields: ["formatted_address"],
+                      }}
+                      placeholder="Enter city name"
+                      className="basic_details_input"
+                      id="cities_of_interest"
+                    />
+                    {citiesOfPlanning.length > 0 && (
+                      <div className="bucket_list_tag_container">
+                        {citiesOfPlanning.map((item, key) => (
+                          // <span key={item.id} className="bucket_list_tag">{item.title}</span>
+                          <span
+                            key={key}
+                            id={key.toString()}
+                            className="location_tag"
+                            onClick={() =>
+                              handlePlacesRemove("citiesVisited", key)
+                            }
+                          >
+                            x {item}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <label className="basic_details_label">
+                      Amount of time available / week for activities
+                    </label>
+                    <small style={{ display: "block" }}>
+                      (Enter time in mins e.g 120 for 2hours)
+                    </small>
+                    <input
+                      name="timeAvailability"
+                      className="basic_details_input"
+                      type="number"
+                      placeholder="Time availability"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      defaultValue={0}
+                    />
+                    {errors.timeAvailability && touched.timeAvailability ? (
+                      <p className="red_alert">{errors.timeAvailability}</p>
+                    ) : null}
+                  </div>
+
+                  <div className="basic_details_button_container">
+                    <button className="basic_details_button" type="submit">
+                      Submit!
+                    </button>
+                  </div>
+                </form>
+
+                // End of ambassador form
+              )}
+            </Formik>
+            {/* End of Formik */}
           </div>
-        </Form>
-      </Container>
+        </div>
+      </Spin>
     </>
   );
 };

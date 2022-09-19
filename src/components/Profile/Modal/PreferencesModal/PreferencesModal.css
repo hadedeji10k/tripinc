@@ -190,7 +190,7 @@
 }
 
 .preferences_modal_bucket_list_tag_container {
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
     display: flex;
     flex-flow: wrap;
     flex-direction: row;

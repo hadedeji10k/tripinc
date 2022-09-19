@@ -79,7 +79,7 @@ const AddPlaceOfStay = ({
       {showReviewModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div className="modal" style={animation}>
+          <animated.div className="z_modal" style={animation}>
             <div className="modal_wrapper">
               <h3 className="header">🛏️🏡🛖</h3>
               <h3 className="header">Add place of stay</h3>

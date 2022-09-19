@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Button as BootStrapButton,
-} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { BsInfoSquare } from "react-icons/bs";
 import ImageUploading, {
   ImageListType,
@@ -12,9 +7,6 @@ import ImageUploading, {
 } from "react-images-uploading";
 import "antd/dist/antd.css";
 import {
-  AutoComplete,
-  Cascader,
-  Checkbox,
   Form,
   Input,
   InputNumber,
@@ -53,7 +45,6 @@ const CreateAttraction = () => {
   const [images2, setImages2] = useState([]);
 
   const [bestVisitingTime, setBestVisitingTime] = useState<any>([]);
-  const [bestVisitingTimeError, setBestVisitingTimeError] = useState("");
 
   // Location states
   const [city, setCity] = useState("");
@@ -286,12 +277,6 @@ const CreateAttraction = () => {
 
   const handleSelectChange = (value: string[]) => {
     console.log(`selected ${value}`);
-  };
-
-  const onImageChanges = async (imageList: ImageListType) => {
-    console.log("Image List", imageList);
-    setOtherImages([...otherImages, ...imageList]);
-    console.log("Other Images", otherImages);
   };
 
   const removeFromMultipleImages = (id) => {

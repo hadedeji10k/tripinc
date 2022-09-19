@@ -126,7 +126,7 @@ const SecurityCodeModal = ({
       {showSecurityModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div className="modal" style={animation}>
+          <animated.div className="z_modal" style={animation}>
             <div className="security_modal_wrapper">
               <h3 className="header">Enter your Security Code</h3>
               <p className="title">We texted your code to +1 234 567 890</p>

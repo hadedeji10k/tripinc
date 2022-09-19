@@ -127,7 +127,7 @@ const ProfileModal = ({
       {showProfileModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div className="modal" style={animation}>
+          <animated.div className="z_modal" style={animation}>
             <div className="profile_modal_wrapper">
               <h3 className="profile_modal_header">
                 Edit your profile details

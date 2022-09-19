@@ -73,7 +73,7 @@ const SuccessMessageModal = ({showSuccessMessageModal, setShowSuccessMessageModa
       (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div className="modal" style={animation}>
+          <animated.div className="z_modal" style={animation}>
             <div className="success_message_modal_wrapper">
               <h3 className="message_title">✈️</h3>
               <p className="message_header">Oh Yes!</p>

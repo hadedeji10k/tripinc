@@ -1,13 +1,13 @@
-import React, { useRef, useEffect, useCallback } from 'react'
-import { useSpring, animated } from 'react-spring'
-import styled from 'styled-components';
-import './ErrorMessageModal.css'
-import { MdClose } from 'react-icons/md'
+import React, { useRef, useEffect, useCallback } from "react";
+import { useSpring, animated } from "react-spring";
+import styled from "styled-components";
+import "./ErrorMessageModal.css";
+import { MdClose } from "react-icons/md";
 
 // interface for ErrorMessageModal
 interface ErrorMessageModalProp {
-  showErrorMessageModal: Boolean,
-  setShowErrorMessageModal: React.Dispatch<React.SetStateAction<Boolean>>
+  showErrorMessageModal: Boolean;
+  setShowErrorMessageModal: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 // styled component for the ErrorMessageModal
@@ -23,24 +23,26 @@ const Background: any = styled.div`
   z-index: 1000;
   top: 0;
   transition: all 0.3s ease-in-out;
-`
+`;
 
 // component for the ErrorMessageModal
-const ErrorMessageModal = ({showErrorMessageModal, setShowErrorMessageModal}: ErrorMessageModalProp) => {
-
+const ErrorMessageModal = ({
+  showErrorMessageModal,
+  setShowErrorMessageModal,
+}: ErrorMessageModalProp) => {
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
   // animation for the modal to pop up when the modal is clicked
   const animation = useSpring({
     opacity: showErrorMessageModal ? 1 : 0,
-    transform: showErrorMessageModal ? 'translateZ(0)' : 'translateZ(-100%)',
-    config: { 
-      // mass: 1, 
-      // tension: 300, 
-      // friction: 20, 
-      duration: 800 
-    }
+    transform: showErrorMessageModal ? "translateZ(0)" : "translateZ(-100%)",
+    config: {
+      // mass: 1,
+      // tension: 300,
+      // friction: 20,
+      duration: 800,
+    },
   });
 
   // function for closing the modal
@@ -49,51 +51,57 @@ const ErrorMessageModal = ({showErrorMessageModal, setShowErrorMessageModal}: Er
     if (modalRef.current === e.target) {
       setShowErrorMessageModal(false);
     }
-  }
+  };
 
   // function for checking for the esc key press
-  const keyPress = useCallback((e: React.KeyboardEvent | any) => {
-    if (e.key === 'Escape' && showErrorMessageModal) {
-      setShowErrorMessageModal(false);
-    }
-  }, [setShowErrorMessageModal, showErrorMessageModal])
+  const keyPress = useCallback(
+    (e: React.KeyboardEvent | any) => {
+      if (e.key === "Escape" && showErrorMessageModal) {
+        setShowErrorMessageModal(false);
+      }
+    },
+    [setShowErrorMessageModal, showErrorMessageModal]
+  );
 
   // useEffect for checking for the esc key press
   useEffect(() => {
-    document.addEventListener('keydown', keyPress);
+    document.addEventListener("keydown", keyPress);
     return () => {
-      document.removeEventListener('keydown', keyPress);
-    }
-  }, [keyPress])
+      document.removeEventListener("keydown", keyPress);
+    };
+  }, [keyPress]);
 
   // return the ErrorMessageModal
   return (
     <>
-    { showErrorMessageModal ? 
-      (
+      {showErrorMessageModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div className="modal" style={animation}>
+          <animated.div className="z_modal" style={animation}>
             <div className="error_message_modal_wrapper">
               <h3 className="message_title">💔</h3>
               <p className="message_header">Ooops!</p>
               <p>Sorry it seems the bank card enter does not work. </p>
-              <p>Please try a diffrent card or one of our other payment menthods!</p>
+              <p>
+                Please try a diffrent card or one of our other payment menthods!
+              </p>
               <br />
               <div>
                 <button className="button">Continue</button>
               </div>
               <div>
-                <MdClose className="close_modal_button" onClick={() => setShowErrorMessageModal(prev => !prev)} />
+                <MdClose
+                  className="close_modal_button"
+                  onClick={() => setShowErrorMessageModal((prev) => !prev)}
+                />
               </div>
             </div>
           </animated.div>
-        {/* </div> */}
+          {/* </div> */}
         </Background>
-      ) : null
-    }
-  </>
-  )
-}
+      ) : null}
+    </>
+  );
+};
 
-export default ErrorMessageModal
+export default ErrorMessageModal;
