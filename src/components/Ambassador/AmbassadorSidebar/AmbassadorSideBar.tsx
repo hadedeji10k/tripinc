@@ -22,6 +22,11 @@ const AmbassadorSideBar = () => {
           <MdTour /> &nbsp; Manage Trips
         </Link>
       </DashboardSideBarList>
+      <DashboardSideBarList>
+        <Link to={`/admin/trip-planners`} className="text-white">
+          <MdTour /> &nbsp; Trip Planner Applications
+        </Link>
+      </DashboardSideBarList>
     </DashboardSideBarMenu>
   );
 };

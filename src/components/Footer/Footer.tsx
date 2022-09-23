@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import { BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
 import { signUpToNewsLetter } from "../../api/responseHandlers";
 import { newsLetterSchema } from "../../schema/yupSchema";
+import LogoWhite from "../../images/logo-tripinc-white.svg";
 
 const Footer = () => {
   // state for loading of newsletter
@@ -118,7 +119,7 @@ const Footer = () => {
           <div className="footer_item_menu">
             <p className="brand_name">
               <a className="footer_item_link" href="/">
-                TripInc
+                <img src={LogoWhite} alt="TripInc's logo" />
               </a>
             </p>
           </div>

@@ -101,6 +101,9 @@ const AmbassadorSidebar = ({
             <SidebarLink to="/ambassadors/trips">
               <MdTour /> &nbsp; Manage Trips
             </SidebarLink>
+            <SidebarLink to="/admin/trip-planners">
+              <MdTour /> &nbsp; Trip Planner Applications
+            </SidebarLink>
             {isLoggedIn ? (
               <>
                 <SidebarLink to="/profile">

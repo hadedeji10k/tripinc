@@ -18,17 +18,18 @@ const { TextArea } = Input;
 const ratingDesc = ["terrible", "bad", "normal", "good", "wonderful"];
 
 const AmbassadorApplication = () => {
+  const [edit, setEdit] = useState(true);
+  const [formEdit, setFormEdit] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [dateOfBirth, setDateOfBirth] = useState<string>("");
   const [meansOfIdentification, setMeansOfIdentification] =
     useState<string>("");
   const [country, setCountry] = useState<string>("");
-  const [images] = useState([]);
+  const [images, setImages] = useState<any>([]);
   const [hobbies, setHobbies] = useState<string[]>([]);
   const [citiesVisited, setCitiesVisited] = useState<any>([]);
   const [citiesOfPlanning, setCitiesOfPlanning] = useState<any>([]);
   const [countriesVisited, setCountriesVisited] = useState<any>([]);
-  const [citiesForPlanning, setCitiesForPlanning] = useState<string[]>([]);
 
   const [fullName] = useState(localGetUserFullName());
 
@@ -63,9 +64,9 @@ const AmbassadorApplication = () => {
   };
 
   const onImageChange = async (imageList: ImageListType) => {
+    setImages(imageList);
     // setIsLoading(true);
     const formData = new FormData();
-    console.log(imageList);
     const file: any = imageList[0].file;
     formData.append("Photo", file, file.name);
     // formData.append("UserId", userId);
@@ -96,12 +97,28 @@ const AmbassadorApplication = () => {
     }
   };
 
+  const handleHobbiesChange = (value: string[]) => {
+    setHobbies(value);
+    console.log(`selected ${value}`);
+  };
+
   const onSubmit = (data: any) => {
-    console.log({ ...data, countriesVisited, citiesVisited });
+    console.log({
+      ...data,
+      images,
+      countriesVisited,
+      citiesVisited,
+      citiesOfPlanning,
+      dateOfBirth,
+      meansOfIdentification,
+      country,
+      hobbies,
+    });
 
     // setIsLoading(true);
-
-    if (countriesVisited.length >= 0) {
+    console.log(countriesVisited.length);
+    console.log(citiesVisited.length);
+    if (countriesVisited.length <= 0) {
       message.error(
         "Error, please make sure you select at least one country.",
         3
@@ -110,7 +127,7 @@ const AmbassadorApplication = () => {
       return;
     }
 
-    if (countriesVisited.length <= 0) {
+    if (citiesVisited.length <= 0) {
       message.error("Error, please make sure you select at least one city.", 3);
       setIsLoading(false);
       return;
@@ -134,9 +151,33 @@ const AmbassadorApplication = () => {
     <>
       <Spin spinning={isLoading} size="large">
         <div className="basic_details_container">
+          {edit ? (
+            <div className="d-flex flex-row my-3 mx-auto w_90 justify-content-around align-items-center">
+              <span className="">Status: Pending</span>
+              <span className="">
+                {formEdit ? (
+                  <button
+                    className="basic_details_button bg-danger"
+                    type="submit"
+                    onClick={() => setFormEdit(false)}
+                  >
+                    Cancel edit!
+                  </button>
+                ) : (
+                  <button
+                    className="basic_details_button"
+                    type="submit"
+                    onClick={() => setFormEdit(true)}
+                  >
+                    Edit!
+                  </button>
+                )}
+              </span>
+            </div>
+          ) : null}
           <div className="basic_details_word">
             <h1 className="basic_details_header fs-1">
-              Ambassador Application
+              Trip Planner Application
             </h1>
             <h3 className="basic_details_title">Kindly fill in all details.</h3>
           </div>
@@ -169,6 +210,7 @@ const AmbassadorApplication = () => {
                       defaultValue={fullName}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      disabled={!formEdit}
                     />
                     {errors.fullName && touched.fullName ? (
                       <p className="red_alert">{errors.fullName}</p>
@@ -187,6 +229,7 @@ const AmbassadorApplication = () => {
                       }}
                       className="basic_details_input"
                       onChange={handleDate}
+                      disabled={!formEdit}
                     />
                     {errors.dateOfBirth && touched.dateOfBirth ? (
                       <p className="red_alert">{errors.dateOfBirth}</p>
@@ -197,48 +240,60 @@ const AmbassadorApplication = () => {
                     <label className="basic_details_label">
                       Country of Residence
                     </label>
-                    <Autocomplete
-                      apiKey={GOOGLEAPIKEY}
-                      onPlaceSelected={(selected: any) => {
-                        setCountry(selected.formatted_address);
-                      }}
-                      options={{
-                        types: ["country"],
-                        fields: ["formatted_address"],
-                      }}
-                      placeholder="Country of Residence"
-                      className="basic_details_input"
-                      id="country_input"
-                    />
+                    {edit ? (
+                      <input
+                        name="country"
+                        className="basic_details_input"
+                        type="text"
+                        placeholder="Country of Residence"
+                        disabled={!formEdit}
+                      />
+                    ) : (
+                      <Autocomplete
+                        apiKey={GOOGLEAPIKEY}
+                        onPlaceSelected={(selected: any) => {
+                          setCountry(selected.formatted_address);
+                        }}
+                        options={{
+                          types: ["country"],
+                          fields: ["formatted_address"],
+                        }}
+                        placeholder="Country of Residence"
+                        className="basic_details_input"
+                        id="country_input"
+                      />
+                    )}
                   </div>
                   <div className="basic_details_country">
                     <label className="basic_details_label">
                       Countries visited
                     </label>
-                    <Autocomplete
-                      apiKey={GOOGLEAPIKEY}
-                      onPlaceSelected={(selected: any) => {
-                        setCountriesVisited((prev) => {
-                          if (prev.includes(selected.formatted_address)) {
-                            return [...prev];
-                          } else {
-                            return [...prev, selected.formatted_address];
-                          }
-                        });
-                        (
-                          document.getElementById(
-                            "countries_input"
-                          ) as HTMLInputElement
-                        ).value = "";
-                      }}
-                      options={{
-                        types: ["country"],
-                        fields: ["formatted_address"],
-                      }}
-                      placeholder="Enter country name"
-                      className="basic_details_input"
-                      id="countries_input"
-                    />
+                    {!edit ? (
+                      <Autocomplete
+                        apiKey={GOOGLEAPIKEY}
+                        onPlaceSelected={(selected: any) => {
+                          setCountriesVisited((prev) => {
+                            if (prev.includes(selected.formatted_address)) {
+                              return [...prev];
+                            } else {
+                              return [...prev, selected.formatted_address];
+                            }
+                          });
+                          (
+                            document.getElementById(
+                              "countries_input"
+                            ) as HTMLInputElement
+                          ).value = "";
+                        }}
+                        options={{
+                          types: ["country"],
+                          fields: ["formatted_address"],
+                        }}
+                        placeholder="Enter country name"
+                        className="basic_details_input"
+                        id="countries_input"
+                      />
+                    ) : null}
                     {countriesVisited.length > 0 && (
                       <div className="bucket_list_tag_container">
                         {countriesVisited.map((item, key) => (
@@ -261,31 +316,33 @@ const AmbassadorApplication = () => {
                     <label className="basic_details_label">
                       Cities visited
                     </label>
-                    <Autocomplete
-                      // ref={inputRef}
-                      apiKey={GOOGLEAPIKEY}
-                      onPlaceSelected={(selected: any) => {
-                        setCitiesVisited((prev) => {
-                          if (prev.includes(selected.formatted_address)) {
-                            return [...prev];
-                          } else {
-                            return [...prev, selected.formatted_address];
-                          }
-                        });
-                        (
-                          document.getElementById(
-                            "city_input"
-                          ) as HTMLInputElement
-                        ).value = "";
-                      }}
-                      options={{
-                        types: [],
-                        fields: ["formatted_address"],
-                      }}
-                      placeholder="Enter city name"
-                      className="basic_details_input"
-                      id="city_input"
-                    />
+                    {!edit ? (
+                      <Autocomplete
+                        // ref={inputRef}
+                        apiKey={GOOGLEAPIKEY}
+                        onPlaceSelected={(selected: any) => {
+                          setCitiesVisited((prev) => {
+                            if (prev.includes(selected.formatted_address)) {
+                              return [...prev];
+                            } else {
+                              return [...prev, selected.formatted_address];
+                            }
+                          });
+                          (
+                            document.getElementById(
+                              "city_input"
+                            ) as HTMLInputElement
+                          ).value = "";
+                        }}
+                        options={{
+                          types: [],
+                          fields: ["formatted_address"],
+                        }}
+                        placeholder="Enter city name"
+                        className="basic_details_input"
+                        id="city_input"
+                      />
+                    ) : null}
                     {citiesVisited.length > 0 && (
                       <div className="bucket_list_tag_container">
                         {citiesVisited.map((item, key) => (
@@ -295,10 +352,12 @@ const AmbassadorApplication = () => {
                             id={key.toString()}
                             className="location_tag"
                             onClick={() =>
-                              handlePlacesRemove("citiesVisited", key)
+                              !edit || formEdit
+                                ? handlePlacesRemove("citiesVisited", key)
+                                : ""
                             }
                           >
-                            x {item}
+                            {edit ? item : `x ${item}`}
                           </span>
                         ))}
                       </div>
@@ -308,34 +367,48 @@ const AmbassadorApplication = () => {
                     <label className="basic_details_label">
                       Means of Identification
                     </label>
-                    <select
-                      name="meansOfIdentity"
-                      className="basic_details_input"
-                      onChange={handleMeansOfIdentification}
-                    >
-                      <option value="NIN">National ID card</option>
-                      <option value="DRV">Driver's license</option>
-                      <option value="IPASS">International Passport</option>
-                    </select>
+                    {formEdit ? (
+                      <select
+                        name="meansOfIdentity"
+                        className="basic_details_input"
+                        onChange={handleMeansOfIdentification}
+                      >
+                        <option value="NIN">National ID card</option>
+                        <option value="DRV">Driver's license</option>
+                        <option value="IPASS">International Passport</option>
+                      </select>
+                    ) : (
+                      <input
+                        name="country"
+                        className="basic_details_input"
+                        type="text"
+                        placeholder="Means of Identification"
+                        disabled
+                      />
+                    )}
                   </div>
                   <div className="basic_details_country my-2">
                     <label className="basic_details_label">
-                      Upload Document
+                      {formEdit || !edit
+                        ? "Upload Document"
+                        : "Document uploaded"}
                     </label>{" "}
                     <br />
-                    <ImageUploading value={images} onChange={onImageChange}>
-                      {({ onImageUpload, dragProps }) => (
-                        // write your building UI
-                        <Button
-                          onClick={onImageUpload}
-                          {...dragProps}
-                          icon={<UploadOutlined />}
-                          className="mb-3 mt-2"
-                        >
-                          Click to Upload
-                        </Button>
-                      )}
-                    </ImageUploading>
+                    {formEdit || !edit ? (
+                      <ImageUploading value={images} onChange={onImageChange}>
+                        {({ onImageUpload, dragProps }) => (
+                          // write your building UI
+                          <Button
+                            onClick={onImageUpload}
+                            {...dragProps}
+                            icon={<UploadOutlined />}
+                            className="mb-3 mt-2"
+                          >
+                            Click to Upload
+                          </Button>
+                        )}
+                      </ImageUploading>
+                    ) : null}
                     <span>
                       <img
                         width={150}
@@ -354,47 +427,68 @@ const AmbassadorApplication = () => {
                       Hobbies / Interests
                     </label>
                     <div className="basic_details_country my-2">
-                      <Select
-                        size="large"
-                        mode="tags"
-                        placeholder="Add tags"
-                        style={{
-                          width: "100%",
-                        }}
-                      ></Select>
+                      {formEdit || !edit ? (
+                        <>
+                          <Select
+                            size="large"
+                            mode="tags"
+                            placeholder="Add tags"
+                            style={{
+                              width: "100%",
+                            }}
+                            onChange={handleHobbiesChange}
+                          ></Select>
+                          <small>Please press enter to separate each tag</small>
+                        </>
+                      ) : hobbies.length > 0 ? (
+                        <div className="bucket_list_tag_container">
+                          {hobbies.map((item, key) => (
+                            <span
+                              key={key}
+                              id={key.toString()}
+                              className="location_tag"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p>No hobbies</p>
+                      )}
                     </div>
-                    <small>Please press enter to separate each tag</small>
                   </div>
                   <br />
                   <div>
                     <label className="basic_details_label">
                       Cities of Interest for Planning
                     </label>
-                    <Autocomplete
-                      // ref={inputRef}
-                      apiKey={GOOGLEAPIKEY}
-                      onPlaceSelected={(selected: any) => {
-                        setCitiesOfPlanning((prev) => {
-                          if (prev.includes(selected.formatted_address)) {
-                            return [...prev];
-                          } else {
-                            return [...prev, selected.formatted_address];
-                          }
-                        });
-                        (
-                          document.getElementById(
-                            "cities_of_interest"
-                          ) as HTMLInputElement
-                        ).value = "";
-                      }}
-                      options={{
-                        types: [],
-                        fields: ["formatted_address"],
-                      }}
-                      placeholder="Enter city name"
-                      className="basic_details_input"
-                      id="cities_of_interest"
-                    />
+                    {formEdit || !edit ? (
+                      <Autocomplete
+                        // ref={inputRef}
+                        apiKey={GOOGLEAPIKEY}
+                        onPlaceSelected={(selected: any) => {
+                          setCitiesOfPlanning((prev) => {
+                            if (prev.includes(selected.formatted_address)) {
+                              return [...prev];
+                            } else {
+                              return [...prev, selected.formatted_address];
+                            }
+                          });
+                          (
+                            document.getElementById(
+                              "cities_of_interest"
+                            ) as HTMLInputElement
+                          ).value = "";
+                        }}
+                        options={{
+                          types: [],
+                          fields: ["formatted_address"],
+                        }}
+                        placeholder="Enter city name"
+                        className="basic_details_input"
+                        id="cities_of_interest"
+                      />
+                    ) : null}
                     {citiesOfPlanning.length > 0 && (
                       <div className="bucket_list_tag_container">
                         {citiesOfPlanning.map((item, key) => (
@@ -428,17 +522,23 @@ const AmbassadorApplication = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       defaultValue={0}
+                      disabled={!formEdit}
                     />
                     {errors.timeAvailability && touched.timeAvailability ? (
                       <p className="red_alert">{errors.timeAvailability}</p>
                     ) : null}
                   </div>
-
-                  <div className="basic_details_button_container">
-                    <button className="basic_details_button" type="submit">
-                      Submit!
-                    </button>
-                  </div>
+                  {!edit || formEdit ? (
+                    <div className="basic_details_button_container">
+                      <button className="basic_details_button" type="submit">
+                        Submit!
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <br />
+                    </>
+                  )}
                 </form>
 
                 // End of ambassador form

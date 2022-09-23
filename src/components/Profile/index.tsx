@@ -25,6 +25,7 @@ import {
   getUserConsents,
 } from "../../api";
 import { IFormattedCategory, IPlaces } from "../../api/interfaces";
+import { Link } from "react-router-dom";
 
 const menuBarData = [
   {
@@ -196,6 +197,20 @@ const Profile = (): any => {
               userProfile={fullUserProfile}
               userId={userId}
             />
+            <div className="ambassador_banner my-3">
+              <p className="my-1 me-2">
+                Do you wish to apply as a trip planner?
+              </p>
+              <p className="my-1">
+                <Link to={"/ambassador-application"}>Click to apply</Link>
+              </p>
+            </div>
+            <div className="ambassador_banner my-3">
+              <p className="my-1 me-2">
+                Do you want to see your trip planner's application status?
+              </p>
+              <p className="my-1">Click here</p>
+            </div>
             {data[0].slug === "personal_info" ? (
               <PersonalInfoPage
                 userProfile={fullUserProfile}

@@ -1,3 +1,16 @@
+.ambassador_banner {
+    max-width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    border: 2px solid gray;
+    border-radius: 10px;
+    margin: auto;
+    padding: 0 10px;
+}
+
 .profile_top_bar_container {
     background: #F26A4D;
     height: 60vh;

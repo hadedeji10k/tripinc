@@ -32,6 +32,8 @@ import AmbassadorApplication from "../components/Attraction/AmbassadorApplicatio
 import Dashboard from "../components/Ambassador/AmbassadorDashboard/Dashboard";
 import AmbassadorAttraction from "../components/Ambassador/AmbassadorAttraction/AmbassadorAttraction";
 import AmbassadorTrip from "../components/Ambassador/AmbassadorTrip/AmbassadorTrip";
+import AdminAmbassadorApplication from "../components/Ambassador/Admin/AdminAmbassadorApplication";
+import TripPlannerApplications from "../components/Ambassador/Admin/TripPlannerApplications";
 
 const MainRoute: React.FC = () => {
   return (
@@ -128,6 +130,7 @@ const MainRoute: React.FC = () => {
             path="/ambassador-application"
             element={<AmbassadorApplication />}
           />
+
           <Route path="*" element={<PageNotFound />} />
         </Route>
 
@@ -141,6 +144,14 @@ const MainRoute: React.FC = () => {
           <Route
             path="/ambassador/attractions/new"
             element={<CreateAttraction />}
+          />
+          <Route
+            path="/admin/trip-planners"
+            element={<TripPlannerApplications />}
+          />
+          <Route
+            path="/admin/trip-planners/:formId"
+            element={<AdminAmbassadorApplication />}
           />
           <Route path="/ambassador/trips" element={<AmbassadorTrip />} />
         </Route>
