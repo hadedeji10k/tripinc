@@ -166,12 +166,12 @@ const AmbassadorTrip = () => {
               </div>
             </div>
             <div className="plan_new_trip">
-              <a href="/#/custom-plan-trip">
-                <span className="plan_new_trip_text">
-                  <BsFillPlusCircleFill className="plus_icon" />
-                  Create a new trip
-                </span>
-              </a>
+              {/* <a href="/#/custom-plan-trip"> */}
+              <span className="plan_new_trip_text">
+                <BsFillPlusCircleFill className="plus_icon" />
+                Create a new trip
+              </span>
+              {/* </a> */}
             </div>
           </div>
           <div className="my_trip_container">

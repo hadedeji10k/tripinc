@@ -163,62 +163,9 @@
     transition: all 0.3s ease-in-out;
 }
 
-.preferences_tag_container {
-    width: 80%;
-    padding: 0 2rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 1rem;
-    align-self: center;
-    overflow: hidden;
-}
 
 .scroll_button {
     margin-bottom: 80px;
-}
-
-.preferences_not_clicked {
-    min-width: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-    border-radius: 20px;
-    background: #fff;
-    color: #353945;
-    cursor: pointer;
-    margin: 0.5rem;
-    border: 2px solid #ccc;
-    transition: all 0.2s ease-in-out;
-}
-
-.preferences_not_clicked:hover {
-    background: #353945;
-    color: #fff;
-    transition: all 0.2s ease-in-out;
-}
-
-.preferences_clicked {
-    min-width: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-    border-radius: 20px;
-    background: #353945;
-    color: #fff;
-    cursor: pointer;
-    margin: 0.5rem;
-    transition: all 0.2s ease-in-out;
-}
-
-.preferences_clicked:hover {
-    background: #1b1d22;
-    color: fff;
-    transition: all 0.2s ease-in-out;
 }
 
 .navigation_button {

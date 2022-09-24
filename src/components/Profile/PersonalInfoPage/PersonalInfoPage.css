@@ -112,12 +112,12 @@
 .places_been_to {
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    /* background: #adb6da; */
     color: #56585e;
     border: 2px solid #44474d;
     cursor: pointer;
     margin: 0.5rem;
     transition: all 0.2s ease-in-out;
+    font-size: 14px;
 }
 
 .places_been_to:hover {
@@ -132,18 +132,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.preferences_tag_container {
-    padding: 0 2rem;
-    display: flex;
-    flex-flow: wrap;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    align-self: center;
 }
 
 .preferences_clicked {

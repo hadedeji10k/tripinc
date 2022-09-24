@@ -26,6 +26,7 @@ import {
 } from "../../api";
 import { IFormattedCategory, IPlaces } from "../../api/interfaces";
 import { Link } from "react-router-dom";
+import { isAmbassador } from "../../utils/helpers";
 
 const menuBarData = [
   {
@@ -74,6 +75,8 @@ const Profile = (): any => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [userId] = useState<number | null>(() => localGetUserId());
 
+  const [isUserAmbassador, setIsUserAmbassador] = useState(false);
+
   // All interests
   const [interestData, setInterestData] = useState<IFormattedCategory[]>([]);
 
@@ -100,6 +103,11 @@ const Profile = (): any => {
       setIsLoading(true);
       getFullUserProfile().then((res) => {
         setFullUserProfile(res);
+        setIsUserAmbassador(
+          res.role
+            ? res?.role.map((item) => item.toLowerCase()).includes("ambassador")
+            : true
+        );
 
         getUserPreferences(userId).then((response) => {
           setUserPreferenceData(response.data);
@@ -198,19 +206,35 @@ const Profile = (): any => {
               userId={userId}
             />
             <div className="ambassador_banner my-3">
-              <p className="my-1 me-2">
-                Do you wish to apply as a trip planner?
-              </p>
-              <p className="my-1">
-                <Link to={"/ambassador-application"}>Click to apply</Link>
-              </p>
+              {fullUserProfile?.emailVerified ? (
+                <>
+                  <p className="my-1 me-2">
+                    Do you want to see your trip planner's application status?
+                  </p>
+                  <p className="my-1">
+                    <Link to={"/ambassador-application/edit"}>Click here</Link>
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="my-1 me-2">
+                    Do you wish to apply as a trip planner?
+                  </p>
+                  <p className="my-1">
+                    <Link to={"/ambassador-application/new"}>Click here</Link>
+                  </p>
+                </>
+              )}
             </div>
-            <div className="ambassador_banner my-3">
-              <p className="my-1 me-2">
-                Do you want to see your trip planner's application status?
-              </p>
-              <p className="my-1">Click here</p>
-            </div>
+
+            {isUserAmbassador ? (
+              <div className="ambassador_banner my-3">
+                <p className="my-1 me-2">Go to Ambassador's Dashboard</p>
+                <p className="my-1">
+                  <Link to={"/ambassador"}>Click here</Link>
+                </p>
+              </div>
+            ) : null}
             {data[0].slug === "personal_info" ? (
               <PersonalInfoPage
                 userProfile={fullUserProfile}

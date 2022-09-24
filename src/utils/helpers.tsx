@@ -254,7 +254,7 @@ export const getFullUserProfile = async () => {
   if (!userId) return {};
 
   const user = await getUserByID(userId);
-  console.log(user);
+
   return user.data;
 };
 
@@ -294,6 +294,25 @@ export const localGetUserFirstName = (): string | null => {
   const parsedUser = JSON.parse(user);
 
   return `${parsedUser.firstName}`;
+};
+
+export const isAmbassador = () => {
+  const user = localGetUser();
+  let user2;
+  getFullUserProfile().then((result) => {
+    console.log("result", result);
+    user2 = result;
+    console.log("User 1", user);
+    console.log("User 2", user2);
+    // return user?.role.map((item) => item.toLowerCase()).includes("ambassador");
+  });
+  return user2;
+};
+
+export const isTripPlanner = (): boolean => {
+  const user = localGetUser();
+
+  return user.role.map((item) => item.toLowerCase()).includes("tripPlanne");
 };
 
 // get user id

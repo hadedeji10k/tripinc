@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ImageUploading, {
   ImageListType,
   ImageType,
@@ -12,26 +13,58 @@ import { GOOGLEAPIKEY } from "../../utils/constants";
 import { Formik } from "formik";
 import { AmbassadorApplicationSchema } from "../../schema/yupSchema";
 import { localGetUserFullName } from "../../utils/helpers";
+import { TripPlannerApplicationData } from "../Ambassador/Admin/AdminAmbassadorApplication";
+import Swal from "sweetalert2";
 
 const { Option } = Select;
 const { TextArea } = Input;
 const ratingDesc = ["terrible", "bad", "normal", "good", "wonderful"];
 
-const AmbassadorApplication = () => {
-  const [edit, setEdit] = useState(true);
-  const [formEdit, setFormEdit] = useState(true);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [dateOfBirth, setDateOfBirth] = useState<string>("");
-  const [meansOfIdentification, setMeansOfIdentification] =
-    useState<string>("");
-  const [country, setCountry] = useState<string>("");
-  const [images, setImages] = useState<any>([]);
-  const [hobbies, setHobbies] = useState<string[]>([]);
-  const [citiesVisited, setCitiesVisited] = useState<any>([]);
-  const [citiesOfPlanning, setCitiesOfPlanning] = useState<any>([]);
-  const [countriesVisited, setCountriesVisited] = useState<any>([]);
+const TripPlannerApplication = {
+  fullName: "",
+  dateOfBirth: "",
+  meansOfIdentification: "",
+  timeAvailability: 0,
+  images: [],
+  countriesVisited: [],
+  citiesVisited: [],
+  citiesOfPlanning: [],
+  country: "",
+  hobbies: [],
+};
 
-  const [fullName] = useState(localGetUserFullName());
+const AmbassadorApplication = () => {
+  const { type } = useParams();
+
+  const [edit, setEdit] = useState(false);
+  const [formEdit, setFormEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [data, setData] = useState<any>(TripPlannerApplication);
+  const [tempData, setTempData] = useState<any>(TripPlannerApplication);
+
+  useEffect(() => {
+    if (type === "edit") {
+      setEdit(true);
+      setData(TripPlannerApplicationData);
+      setTempData(TripPlannerApplicationData);
+      // here set the data fetched from the backend
+    } else {
+      setEdit(false);
+      setData((prev) => {
+        return {
+          ...prev,
+          fullName: localGetUserFullName(),
+        };
+      });
+      setTempData((prev) => {
+        return {
+          ...prev,
+          fullName: localGetUserFullName(),
+        };
+      });
+    }
+  }, [type]);
 
   //   Full Name
   // Date Of Birth
@@ -43,7 +76,7 @@ const AmbassadorApplication = () => {
   // Amount of time available/week/month for activities
 
   const initialValues = {
-    fullName,
+    fullName: data.fullName,
     dateOfBirth: "",
     // countryOfOrigin: "",
     meansOfIdentification: "",
@@ -54,17 +87,49 @@ const AmbassadorApplication = () => {
     timeAvailability: 0,
   };
 
+  const handleCancelEdit = () => {
+    Swal.fire({
+      title: "Warning!",
+      text: "Are you sure you want to cancel editing?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel!",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setData(tempData);
+        setFormEdit(false);
+      }
+    });
+  };
+
   const handleDate = (date, dateString) => {
-    setDateOfBirth(date._d);
+    setData((prev) => {
+      return {
+        ...prev,
+        dateOfBirth: date._d,
+      };
+    });
   };
 
   const handleMeansOfIdentification = (e: any) => {
     const value = e.target.value;
-    setMeansOfIdentification(value);
+    setData((prev) => {
+      return {
+        ...prev,
+        meansOfIdentification: value,
+      };
+    });
   };
 
   const onImageChange = async (imageList: ImageListType) => {
-    setImages(imageList);
+    setData((prev) => {
+      return {
+        ...prev,
+        images: imageList,
+      };
+    });
     // setIsLoading(true);
     const formData = new FormData();
     const file: any = imageList[0].file;
@@ -81,15 +146,40 @@ const AmbassadorApplication = () => {
 
   // function to handle placesBeenTo click to delete
   const handlePlacesRemove = (action: string, id: any) => {
-    let data: any;
+    let filtered: any;
     switch (action) {
       case "countriesVisited":
-        data = countriesVisited.filter((item, key) => key !== parseInt(id));
-        setCountriesVisited([...data]);
+        filtered = data.countriesVisited.filter(
+          (item, key) => key !== parseInt(id)
+        );
+        setData((prev) => {
+          return {
+            ...prev,
+            countriesVisited: filtered,
+          };
+        });
         break;
       case "citiesVisited":
-        data = citiesVisited.filter((item, key) => key !== parseInt(id));
-        setCitiesVisited([...data]);
+        filtered = data.citiesVisited.filter(
+          (item, key) => key !== parseInt(id)
+        );
+        setData((prev) => {
+          return {
+            ...prev,
+            citiesVisited: filtered,
+          };
+        });
+        break;
+      case "citiesOfPlanning":
+        filtered = data.citiesOfPlanning.filter(
+          (item, key) => key !== parseInt(id)
+        );
+        setData((prev) => {
+          return {
+            ...prev,
+            citiesOfPlanning: filtered,
+          };
+        });
         break;
 
       default:
@@ -98,27 +188,21 @@ const AmbassadorApplication = () => {
   };
 
   const handleHobbiesChange = (value: string[]) => {
-    setHobbies(value);
-    console.log(`selected ${value}`);
+    setData((prev) => {
+      return {
+        ...prev,
+        hobbies: value,
+      };
+    });
   };
 
   const onSubmit = (data: any) => {
     console.log({
       ...data,
-      images,
-      countriesVisited,
-      citiesVisited,
-      citiesOfPlanning,
-      dateOfBirth,
-      meansOfIdentification,
-      country,
-      hobbies,
     });
 
     // setIsLoading(true);
-    console.log(countriesVisited.length);
-    console.log(citiesVisited.length);
-    if (countriesVisited.length <= 0) {
+    if (data.countriesVisited.length <= 0) {
       message.error(
         "Error, please make sure you select at least one country.",
         3
@@ -127,7 +211,7 @@ const AmbassadorApplication = () => {
       return;
     }
 
-    if (citiesVisited.length <= 0) {
+    if (data.citiesVisited.length <= 0) {
       message.error("Error, please make sure you select at least one city.", 3);
       setIsLoading(false);
       return;
@@ -152,14 +236,14 @@ const AmbassadorApplication = () => {
       <Spin spinning={isLoading} size="large">
         <div className="basic_details_container">
           {edit ? (
-            <div className="d-flex flex-row my-3 mx-auto w_90 justify-content-around align-items-center">
+            <div className="d-flex flex-row mt-3 mx-auto w_90 justify-content-around align-items-center">
               <span className="">Status: Pending</span>
               <span className="">
                 {formEdit ? (
                   <button
                     className="basic_details_button bg-danger"
                     type="submit"
-                    onClick={() => setFormEdit(false)}
+                    onClick={handleCancelEdit}
                   >
                     Cancel edit!
                   </button>
@@ -176,7 +260,7 @@ const AmbassadorApplication = () => {
             </div>
           ) : null}
           <div className="basic_details_word">
-            <h1 className="basic_details_header fs-1">
+            <h1 className="basic_details_header fs-1 mt-3">
               Trip Planner Application
             </h1>
             <h3 className="basic_details_title">Kindly fill in all details.</h3>
@@ -207,10 +291,10 @@ const AmbassadorApplication = () => {
                       className="basic_details_input"
                       type="text"
                       placeholder="Full Name"
-                      defaultValue={fullName}
+                      defaultValue={data.fullName}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      disabled={!formEdit}
+                      disabled={edit ? !formEdit : false}
                     />
                     {errors.fullName && touched.fullName ? (
                       <p className="red_alert">{errors.fullName}</p>
@@ -229,7 +313,10 @@ const AmbassadorApplication = () => {
                       }}
                       className="basic_details_input"
                       onChange={handleDate}
-                      disabled={!formEdit}
+                      disabled={edit ? !formEdit : false}
+                      defaultValue={
+                        data.dateOfBirth ? moment(data.dateOfBirth) : moment()
+                      }
                     />
                     {errors.dateOfBirth && touched.dateOfBirth ? (
                       <p className="red_alert">{errors.dateOfBirth}</p>
@@ -247,12 +334,18 @@ const AmbassadorApplication = () => {
                         type="text"
                         placeholder="Country of Residence"
                         disabled={!formEdit}
+                        defaultValue={data.country}
                       />
                     ) : (
                       <Autocomplete
                         apiKey={GOOGLEAPIKEY}
                         onPlaceSelected={(selected: any) => {
-                          setCountry(selected.formatted_address);
+                          setData((prev) => {
+                            return {
+                              ...prev,
+                              country: selected.formatted_address,
+                            };
+                          });
                         }}
                         options={{
                           types: ["country"],
@@ -268,17 +361,28 @@ const AmbassadorApplication = () => {
                     <label className="basic_details_label">
                       Countries visited
                     </label>
-                    {!edit ? (
+                    {formEdit || !edit ? (
                       <Autocomplete
                         apiKey={GOOGLEAPIKEY}
                         onPlaceSelected={(selected: any) => {
-                          setCountriesVisited((prev) => {
-                            if (prev.includes(selected.formatted_address)) {
-                              return [...prev];
-                            } else {
-                              return [...prev, selected.formatted_address];
-                            }
+                          // setCountriesVisited((prev) => {
+                          //   if (prev.includes(selected.formatted_address)) {
+                          //     return [...prev];
+                          //   } else {
+                          //     return [...prev, selected.formatted_address];
+                          //   }
+                          // });
+
+                          setData((prev) => {
+                            return {
+                              ...prev,
+                              countriesVisited: [
+                                ...prev.countriesVisited,
+                                selected.formatted_address,
+                              ],
+                            };
                           });
+
                           (
                             document.getElementById(
                               "countries_input"
@@ -294,19 +398,21 @@ const AmbassadorApplication = () => {
                         id="countries_input"
                       />
                     ) : null}
-                    {countriesVisited.length > 0 && (
+                    {data.countriesVisited.length > 0 && (
                       <div className="bucket_list_tag_container">
-                        {countriesVisited.map((item, key) => (
+                        {data.countriesVisited.map((item, key) => (
                           // <span key={item.id} className="bucket_list_tag">{item.title}</span>
                           <span
                             key={key}
                             id={key.toString()}
-                            className="location_tag"
+                            className="preferences_not_clicked"
                             onClick={() =>
-                              handlePlacesRemove("countriesVisited", key)
+                              formEdit || !edit
+                                ? handlePlacesRemove("countriesVisited", key)
+                                : ""
                             }
                           >
-                            x {item}
+                            {formEdit || !edit ? `x ${item}` : item}
                           </span>
                         ))}
                       </div>
@@ -316,17 +422,26 @@ const AmbassadorApplication = () => {
                     <label className="basic_details_label">
                       Cities visited
                     </label>
-                    {!edit ? (
+                    {formEdit || !edit ? (
                       <Autocomplete
                         // ref={inputRef}
                         apiKey={GOOGLEAPIKEY}
                         onPlaceSelected={(selected: any) => {
-                          setCitiesVisited((prev) => {
-                            if (prev.includes(selected.formatted_address)) {
-                              return [...prev];
-                            } else {
-                              return [...prev, selected.formatted_address];
-                            }
+                          // setCitiesVisited((prev) => {
+                          //   if (prev.includes(selected.formatted_address)) {
+                          //     return [...prev];
+                          //   } else {
+                          //     return [...prev, selected.formatted_address];
+                          //   }
+                          // });
+                          setData((prev) => {
+                            return {
+                              ...prev,
+                              citiesVisited: [
+                                ...prev.citiesVisited,
+                                selected.formatted_address,
+                              ],
+                            };
                           });
                           (
                             document.getElementById(
@@ -343,21 +458,21 @@ const AmbassadorApplication = () => {
                         id="city_input"
                       />
                     ) : null}
-                    {citiesVisited.length > 0 && (
+                    {data.citiesVisited.length > 0 && (
                       <div className="bucket_list_tag_container">
-                        {citiesVisited.map((item, key) => (
+                        {data.citiesVisited.map((item, key) => (
                           // <span key={item.id} className="bucket_list_tag">{item.title}</span>
                           <span
                             key={key}
                             id={key.toString()}
-                            className="location_tag"
+                            className="preferences_not_clicked"
                             onClick={() =>
                               !edit || formEdit
                                 ? handlePlacesRemove("citiesVisited", key)
                                 : ""
                             }
                           >
-                            {edit ? item : `x ${item}`}
+                            {formEdit || !edit ? `x ${item}` : item}
                           </span>
                         ))}
                       </div>
@@ -367,7 +482,7 @@ const AmbassadorApplication = () => {
                     <label className="basic_details_label">
                       Means of Identification
                     </label>
-                    {formEdit ? (
+                    {formEdit || !edit ? (
                       <select
                         name="meansOfIdentity"
                         className="basic_details_input"
@@ -384,6 +499,7 @@ const AmbassadorApplication = () => {
                         type="text"
                         placeholder="Means of Identification"
                         disabled
+                        defaultValue={data.meanOfIdentification}
                       />
                     )}
                   </div>
@@ -395,7 +511,10 @@ const AmbassadorApplication = () => {
                     </label>{" "}
                     <br />
                     {formEdit || !edit ? (
-                      <ImageUploading value={images} onChange={onImageChange}>
+                      <ImageUploading
+                        value={data.images}
+                        onChange={onImageChange}
+                      >
                         {({ onImageUpload, dragProps }) => (
                           // write your building UI
                           <Button
@@ -414,7 +533,7 @@ const AmbassadorApplication = () => {
                         width={150}
                         height={100}
                         style={{ display: "none" }}
-                        src=""
+                        src={data.images[0]?.dataURL}
                         alt=""
                         id="main_photo_preview"
                         className="mb-3"
@@ -437,16 +556,17 @@ const AmbassadorApplication = () => {
                               width: "100%",
                             }}
                             onChange={handleHobbiesChange}
+                            defaultValue={data.hobbies}
                           ></Select>
                           <small>Please press enter to separate each tag</small>
                         </>
-                      ) : hobbies.length > 0 ? (
+                      ) : data.hobbies.length > 0 ? (
                         <div className="bucket_list_tag_container">
-                          {hobbies.map((item, key) => (
+                          {data.hobbies.map((item, key) => (
                             <span
                               key={key}
                               id={key.toString()}
-                              className="location_tag"
+                              className="preferences_not_clicked"
                             >
                               {item}
                             </span>
@@ -467,13 +587,16 @@ const AmbassadorApplication = () => {
                         // ref={inputRef}
                         apiKey={GOOGLEAPIKEY}
                         onPlaceSelected={(selected: any) => {
-                          setCitiesOfPlanning((prev) => {
-                            if (prev.includes(selected.formatted_address)) {
-                              return [...prev];
-                            } else {
-                              return [...prev, selected.formatted_address];
-                            }
+                          setData((prev) => {
+                            return {
+                              ...prev,
+                              citiesOfPlanning: [
+                                ...prev.citiesOfPlanning,
+                                selected.formatted_address,
+                              ],
+                            };
                           });
+
                           (
                             document.getElementById(
                               "cities_of_interest"
@@ -489,19 +612,21 @@ const AmbassadorApplication = () => {
                         id="cities_of_interest"
                       />
                     ) : null}
-                    {citiesOfPlanning.length > 0 && (
+                    {data.citiesOfPlanning.length > 0 && (
                       <div className="bucket_list_tag_container">
-                        {citiesOfPlanning.map((item, key) => (
+                        {data.citiesOfPlanning.map((item, key) => (
                           // <span key={item.id} className="bucket_list_tag">{item.title}</span>
                           <span
                             key={key}
                             id={key.toString()}
-                            className="location_tag"
+                            className="preferences_not_clicked"
                             onClick={() =>
-                              handlePlacesRemove("citiesVisited", key)
+                              formEdit || !edit
+                                ? handlePlacesRemove("citiesOfPlanning", key)
+                                : ""
                             }
                           >
-                            x {item}
+                            {formEdit || !edit ? `x ${item}` : item}
                           </span>
                         ))}
                       </div>
@@ -521,8 +646,8 @@ const AmbassadorApplication = () => {
                       placeholder="Time availability"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      defaultValue={0}
-                      disabled={!formEdit}
+                      defaultValue={data.timeAvailability}
+                      disabled={edit ? !formEdit : false}
                     />
                     {errors.timeAvailability && touched.timeAvailability ? (
                       <p className="red_alert">{errors.timeAvailability}</p>

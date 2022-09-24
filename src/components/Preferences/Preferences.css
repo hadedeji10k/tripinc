@@ -149,6 +149,7 @@
     margin: 0.5rem;
     border: 2px solid #ccc;
     transition: all 0.2s ease-in-out;
+    font-size: 14px;
 }
 
 .location_tag:hover {
@@ -165,37 +166,36 @@
     flex-direction: column;
 }
 
-.preferences_tag_container {
-    padding: 0 2rem;
+.preferences_not_clicked {
+    min-width: 100px;
     display: flex;
-    flex-flow: wrap;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    align-self: center;
-}
-
-.preferences_not_clicked {
-    display: inline;
     padding: 0.5rem;
     border-radius: 20px;
     background: #fff;
-    color: #000;
+    color: #353945;
     cursor: pointer;
     margin: 0.5rem;
     border: 2px solid #ccc;
     transition: all 0.2s ease-in-out;
+    font-size: 14px;
 }
 
 .preferences_not_clicked:hover {
-    background: #e4ecee;
-    color: #000;
+    background: #353945;
+    color: #fff;
     transition: all 0.2s ease-in-out;
 }
 
+
 .preferences_clicked {
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 0.5rem;
     border-radius: 20px;
     background: #353945;
@@ -203,11 +203,12 @@
     cursor: pointer;
     margin: 0.5rem;
     transition: all 0.2s ease-in-out;
+    font-size: 14px;
 }
 
 .preferences_clicked:hover {
     background: #1b1d22;
-    color: #fff;
+    color: fff;
     transition: all 0.2s ease-in-out;
 }
 
@@ -224,7 +225,7 @@
 }
 
 .bucket_list_tag_container {
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
     display: flex;
     flex-flow: wrap;
     flex-direction: row;

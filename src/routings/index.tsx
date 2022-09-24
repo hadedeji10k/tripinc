@@ -127,7 +127,7 @@ const MainRoute: React.FC = () => {
           <Route path="/plan-trip/:tripId" element={<TripPlanning />} />
           <Route path="/create-attraction" element={<CreateAttraction />} />
           <Route
-            path="/ambassador-application"
+            path="/ambassador-application/:type"
             element={<AmbassadorApplication />}
           />
 

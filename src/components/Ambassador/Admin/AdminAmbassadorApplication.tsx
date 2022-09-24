@@ -11,7 +11,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 const ratingDesc = ["terrible", "bad", "normal", "good", "wonderful"];
 
-const Data = {
+export const TripPlannerApplicationData = {
   fullName: "string string",
   dateOfBirth: "2022-09-22T10:56:55.066Z",
   meansOfIdentification: "",
@@ -31,7 +31,7 @@ const Data = {
 };
 
 const AdminAmbassadorApplication = () => {
-  const [data, setData] = useState(Data);
+  const [data, setData] = useState(TripPlannerApplicationData);
   console.log(data);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
