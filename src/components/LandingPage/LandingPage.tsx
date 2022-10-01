@@ -56,8 +56,6 @@ const LandingPage = () => {
     let categoryElement = document.getElementById(
       "category_tag_container"
     ) as HTMLElement;
-    console.log("Category Client element ", categoryElement?.clientWidth);
-    console.log("Category scroll element ", categoryElement?.scrollWidth);
     let prev = document.getElementById("prev") as HTMLElement;
     let next = document.getElementById("next") as HTMLElement;
     setTimeout(() => {

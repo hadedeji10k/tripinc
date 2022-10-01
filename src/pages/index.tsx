@@ -3,7 +3,6 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer/Footer";
-import AuthVerify from "./AuthVerify";
 import LoggedInBanner from "./LoggedInBanner";
 import {
   localGetCartLength,
@@ -49,28 +48,26 @@ export const MainLayout: React.FC = () => {
 
   return (
     <>
-      <AuthVerify>
-        <LoggedInBanner />
-        <Sidebar
-          isOpen={isOpen}
-          toggleIsOpen={toggleIsOpen}
-          profilePicture={profilePicture}
-          isLoggedIn={isLoggedIn}
-          cartLength={cartLength}
-          ordersLength={ordersLength}
-        />
-        <Navbar
-          isOpen={isOpen}
-          toggleIsOpen={toggleIsOpen}
-          profilePicture={profilePicture}
-          isLoggedIn={isLoggedIn}
-          cartLength={cartLength}
-          ordersLength={ordersLength}
-        />
+      <LoggedInBanner />
+      <Sidebar
+        isOpen={isOpen}
+        toggleIsOpen={toggleIsOpen}
+        profilePicture={profilePicture}
+        isLoggedIn={isLoggedIn}
+        cartLength={cartLength}
+        ordersLength={ordersLength}
+      />
+      <Navbar
+        isOpen={isOpen}
+        toggleIsOpen={toggleIsOpen}
+        profilePicture={profilePicture}
+        isLoggedIn={isLoggedIn}
+        cartLength={cartLength}
+        ordersLength={ordersLength}
+      />
 
-        <Outlet />
-        <Footer />
-      </AuthVerify>
+      <Outlet />
+      <Footer />
     </>
   );
 };
@@ -107,35 +104,33 @@ export const AmbassadorLayout: React.FC = () => {
 
   return (
     <>
-      <AuthVerify>
-        <LoggedInBanner />
-        <AmbassadorSidebar
-          isOpen={isOpen}
-          toggleIsOpen={toggleIsOpen}
-          profilePicture={profilePicture}
-          isLoggedIn={isLoggedIn}
-          cartLength={cartLength}
-          ordersLength={ordersLength}
-        />
-        <AmbassadorNavbar
-          isOpen={isOpen}
-          toggleIsOpen={toggleIsOpen}
-          profilePicture={profilePicture}
-          isLoggedIn={isLoggedIn}
-          cartLength={cartLength}
-          ordersLength={ordersLength}
-        />
-        <Div>
-          <div className="row w-100 m-auto">
-            <DashboardSideBar className="">
-              <AmbassadorSideBar />
-            </DashboardSideBar>
-            <Main className="">
-              <Outlet />
-            </Main>
-          </div>
-        </Div>
-      </AuthVerify>
+      <LoggedInBanner />
+      <AmbassadorSidebar
+        isOpen={isOpen}
+        toggleIsOpen={toggleIsOpen}
+        profilePicture={profilePicture}
+        isLoggedIn={isLoggedIn}
+        cartLength={cartLength}
+        ordersLength={ordersLength}
+      />
+      <AmbassadorNavbar
+        isOpen={isOpen}
+        toggleIsOpen={toggleIsOpen}
+        profilePicture={profilePicture}
+        isLoggedIn={isLoggedIn}
+        cartLength={cartLength}
+        ordersLength={ordersLength}
+      />
+      <Div>
+        <div className="row w-100 m-auto">
+          <DashboardSideBar className="">
+            <AmbassadorSideBar />
+          </DashboardSideBar>
+          <Main className="">
+            <Outlet />
+          </Main>
+        </div>
+      </Div>
     </>
   );
 };

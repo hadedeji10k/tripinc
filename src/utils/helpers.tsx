@@ -15,6 +15,7 @@ import {
   getUserProfilePictureByID,
 } from "../api";
 import { CitiesPageSize, currencyList } from "./constants";
+import { addDays, differenceInDays, isPast } from "date-fns";
 
 export const checkAuth = (): boolean => {
   let valid = false;
@@ -24,13 +25,6 @@ export const checkAuth = (): boolean => {
         localStorage.getItem("profile") as any
       );
 
-      // let token = profile.access_Token;
-      // const decoded: any = jwt_decode(token);
-      // const expires: Date = new Date(decoded?.exp * 1000);
-
-      // if (expires > new Date()) valid = true;
-      // console.log(expires);
-      // console.log(new Date());
       if (profile.access_Token) valid = true;
     } catch {
       valid = false;
@@ -124,43 +118,34 @@ export const countries = async () => {
   }
 };
 
-export const checkAuthForRefresh = () => {
-  let tokenExpired: boolean | null = false;
-  let can_still_refresh: boolean | null = false;
-  let refreshToken: string = "";
+export const checkForAuth = async () => {
+  let profile: ILocalUserProfile = JSON.parse(
+    localStorage.getItem("profile") as any
+  );
+  if (profile) {
+    const decoded: any = jwt_decode(profile.access_Token);
+    const expiryDate = new Date(decoded?.exp * 1000);
 
-  if (localStorage.getItem("profile")) {
-    let profile: ILocalUserProfile = JSON.parse(
-      localStorage.getItem("profile") as any
-    );
-    let token = profile.access_Token;
-    const decoded: any = jwt_decode(token);
-    const expired = new Date(decoded?.exp * 1000);
-    const expires = new Date(decoded?.exp * 1000).getTime();
-    const maxRefToken = new Date(expires + 1000 * 60 * 15);
-    // const timeFromExpires = new Date(expires - 1000 * 60 * 2);
-    let time = new Date();
-    // let time = new Date(Date.now() - 1000 * 60 * 2);
-    if (expired > time) {
-      tokenExpired = false;
-      can_still_refresh = false;
-    } else if (maxRefToken > time) {
-      can_still_refresh = true;
-      tokenExpired = true;
-      refreshToken = profile.refresh_Token;
+    const maximumExpiryDate = new Date(addDays(expiryDate, 1));
+
+    const difference = differenceInDays(new Date(), maximumExpiryDate);
+
+    if (difference === 0 && isPast(expiryDate)) {
+      const formData: IRefreshToken = {
+        refreshToken: profile.refresh_Token,
+      };
+      console.log("Refreshing token");
+      await refreshToken(formData);
+      return;
+    } else if (isPast(maximumExpiryDate)) {
+      console.log("Logging out");
+      localLogoutProfile();
+      return;
     } else {
-      tokenExpired = null;
-      can_still_refresh = null;
+      console.log("Still okay");
+      return;
     }
-  } else {
-    tokenExpired = null;
-    can_still_refresh = null;
   }
-  return {
-    tokenExpired,
-    can_still_refresh,
-    refreshToken,
-  };
 };
 
 export const refreshAccessToken = async () => {

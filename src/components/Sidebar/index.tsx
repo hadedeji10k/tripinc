@@ -2,7 +2,7 @@
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import defaultImage from "../../images/default_profile_image.jpg";
 import { BsBagCheck } from "react-icons/bs";
-import { NavBtnProfileLink, ReactIcons } from "../Navbar/NavbarElements";
+import { ReactIcons } from "../Navbar/NavbarElements";
 import {
   SidebarContainer,
   Icon,

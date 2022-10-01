@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { geocodeByAddress } from "react-google-places-autocomplete";
+// import { geocodeByAddress } from "react-google-places-autocomplete";
 import "./TripPlanning.css";
 import {
   ITravelDetails,
@@ -60,11 +60,11 @@ const TripPlanning = () => {
   let data = tripPlanningMenu.filter((item) => item.stateOfClass === true);
 
   // travel details states
-  const [travelDetails, setTravelDetails] = useState<ITravelDetails>({
-    flights: [],
-    stays: [],
-    rentalCars: [],
-  });
+  // const [travelDetails, setTravelDetails] = useState<ITravelDetails>({
+  //   flights: [],
+  //   stays: [],
+  //   rentalCars: [],
+  // });
 
   // states to manage itinerary, generateDateArray from a helper function
   const [itineraryData, setItineraryData] = useState<
@@ -72,7 +72,7 @@ const TripPlanning = () => {
   >(generateDateArray(tripDate.startDate, tripDate.endDate));
 
   // user ID
-  const userId = localGetUserId();
+  // const userId = localGetUserId();
 
   useEffect(() => {
     getTripById(tripId).then((res) => {

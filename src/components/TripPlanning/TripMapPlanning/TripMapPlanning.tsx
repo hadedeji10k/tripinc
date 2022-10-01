@@ -5,7 +5,7 @@ import { GOOGLEAPIKEY } from "../../../utils/constants";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import Itinerary from "../TripPlanning/Itinerary";
 
-import { geocodeByAddress } from "react-google-places-autocomplete";
+// import { geocodeByAddress } from "react-google-places-autocomplete";
 import { ITripPlanningItineraryDay } from "../../../api/interfaces";
 
 interface Prop {
@@ -59,7 +59,6 @@ const TripMapPlanning = ({
         newPlace.push(toBeAdded);
       });
     });
-    console.log(newPlace);
     setPlaces(newPlace);
   }, [itineraryData]);
 
@@ -106,9 +105,9 @@ const TripMapPlanning = ({
     }
   };
 
-  const options = {
-    minZoom: 10,
-  };
+  // const options = {
+  //   minZoom: 10,
+  // };
 
   return (
     <div className="w_100">

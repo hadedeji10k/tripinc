@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { DatePicker, TimePicker } from "antd";
+// import { DatePicker, TimePicker } from "antd";
 import "antd/dist/antd.min.css";
-import moment from "moment";
+// import moment from "moment";
 import { AddFlightSchema } from "../../../schema/yupSchema";
 import Swal from "sweetalert2";
 import { ITravelDetails } from "../../../api/interfaces";
@@ -41,27 +41,27 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
   //   console.log(time, timeString);
   // };
 
-  const flightClick = (e: any) => {
-    if (e === "cancel") {
-      Swal.fire({
-        title: "Warning!",
-        text: "Are you sure you want to cancel all your changes?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, cancel!",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          setShowAddDetails((prev) => !prev);
-          setShowAddFlightDetails((prev) => !prev);
-        }
-      });
-    } else {
-      setShowAddDetails((prev) => !prev);
-      setShowAddFlightDetails((prev) => !prev);
-    }
-  };
+  // const flightClick = (e: any) => {
+  //   if (e === "cancel") {
+  //     Swal.fire({
+  //       title: "Warning!",
+  //       text: "Are you sure you want to cancel all your changes?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonText: "Yes, cancel!",
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //     }).then(async (result) => {
+  //       if (result.isConfirmed) {
+  //         setShowAddDetails((prev) => !prev);
+  //         setShowAddFlightDetails((prev) => !prev);
+  //       }
+  //     });
+  //   } else {
+  //     setShowAddDetails((prev) => !prev);
+  //     setShowAddFlightDetails((prev) => !prev);
+  //   }
+  // };
 
   const addFlight = (data: any) => {
     // customize date and time

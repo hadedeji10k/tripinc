@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "../../TripPlanning/TripMapPlanning/Marker";
 import { GOOGLEAPIKEY } from "../../../utils/constants";
-import { geocodeByAddress } from "react-google-places-autocomplete";
+// import { geocodeByAddress } from "react-google-places-autocomplete";
 import { ITripPlanningItineraryDay } from "../../../api/interfaces";
 
 interface Prop {
@@ -11,7 +11,7 @@ interface Prop {
 }
 
 const TripMapView = ({ itineraryData, tripPlanningData }: Prop) => {
-  const [showItinerary, setShowItinerary] = useState<boolean>(true);
+  // const [showItinerary, setShowItinerary] = useState<boolean>(true);
   const [places, setPlaces] = useState<any>([]);
 
   // useEffect(() => {

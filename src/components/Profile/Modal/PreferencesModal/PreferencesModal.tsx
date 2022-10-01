@@ -10,7 +10,6 @@ import Swal from "sweetalert2";
 import {
   IManagePlacesVisited,
   IManagePlacesWishToVisit,
-  IManagePreference,
   IManageUserInterests,
 } from "../../../../api/interfaces";
 import {
@@ -59,7 +58,7 @@ const PreferencesModal = ({
   wishToVisitPlaces,
   setWishToVisitPlaces,
 }: PreferencesModalProp) => {
-  const [removedInterest, setRemovedInterest] = useState<any[]>([]);
+  // const [removedInterest, setRemovedInterest] = useState<any[]>([]);
   const [interestClone, setInterestClone] = useState<any[]>([]);
   const [placesVisitedClone, setPlacesVisitedClone] = useState<any[]>([]);
   const [wishToVisitPlacesClone, setWishToVisitPlacesClone] = useState<any[]>(

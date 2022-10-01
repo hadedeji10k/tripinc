@@ -1,4 +1,3 @@
-import React from "react";
 import { HashRouter as Router } from "react-router-dom";
 import "./App.css";
 import MainRoute from "./routings";
@@ -6,7 +5,7 @@ import { BackTop } from "antd";
 import "antd/dist/antd.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import ScrollToTopOfPage from "./pages/scrollToTopOfPage";
+import PageConfiguration from "./pages/PageConfiguration";
 import { IoMdArrowRoundUp } from "react-icons/io";
 import { message } from "antd";
 
@@ -24,7 +23,7 @@ function App() {
         </div>
       </BackTop>
       <Router>
-        <ScrollToTopOfPage />
+        <PageConfiguration />
         <MainRoute />
       </Router>
     </>

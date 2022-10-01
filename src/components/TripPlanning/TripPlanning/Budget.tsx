@@ -1,4 +1,4 @@
-import { Slider, Switch } from "antd";
+import { Slider } from "antd";
 
 interface Props {
   tripPlanningData: any;

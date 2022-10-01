@@ -8,9 +8,9 @@ import {
   IInitiatePayment,
   IOrderDetails,
 } from "../../../api/interfaces";
-import { exportOrder, initiatePayment } from "../../../api/index";
+import { initiatePayment } from "../../../api/index";
 import Swal from "sweetalert2";
-import { exportFromApi } from "../../../utils/helpers";
+// import { exportFromApi } from "../../../utils/helpers";
 
 interface Props {
   orderItems: IOrderItem[];
@@ -34,7 +34,7 @@ const OrderPage = ({
   const [isLoading, setIsLoading] = useState(false);
 
   // state for download type
-  const [exportType, setExportType] = useState("csv");
+  // const [exportType, setExportType] = useState("csv");
 
   const handleClickMenu = (id: any) => {
     for (let i = 0; i < menuBar.length; i++) {

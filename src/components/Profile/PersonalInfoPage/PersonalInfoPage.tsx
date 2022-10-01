@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./PersonalInfoPage.css";
 import ProfileModal from "../Modal/ProfileModal/ProfileModal";
 import PreferencesModal from "../Modal/PreferencesModal/PreferencesModal";
-import { userData } from "../../../currentUserData";
 
 // testing
 // import ErrorMessageModal from "../../MessageModal/ErrorMessageModal/ErrorMessageModal";

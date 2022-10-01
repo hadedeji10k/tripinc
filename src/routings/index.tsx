@@ -12,7 +12,7 @@ import BucketListPage from "../components/BucketList/BucketListPage";
 import Shopping from "../components/Shopping";
 import LandingPage from "../components/LandingPage/LandingPage";
 import MyTrip from "../components/MyTripPage/MyTrip";
-import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
+// import AddCard from "../components/Profile/BankingPage/AddCard/AddCard";
 import Orders from "../components/Shopping/OrdersPage";
 import ShoppingCartPage from "../components/ShoppingCartPage";
 
@@ -41,18 +41,32 @@ const MainRoute: React.FC = () => {
       <Routes>
         {/* MAIN ROUTES */}
         <Route element={<MainLayout />}>
-          {/* <Route element={<AuthVerify />}> */}
+          <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<LandingPage />} />
-          {/* <Route path="/explore" element={<ExplorePage />} /> */}
-          {/* <Route
-            path="/explore/category/new/:catNameParam"
-            element={<ExploreCategoryPage />}
-          /> */}
           <Route path="/explore" element={<ExplorePage />}>
             <Route path="city/:cityParam" element={<ExplorePage />} />
             <Route path="category/:catNameParam" element={<ExplorePage />} />
           </Route>
+          <Route path="/explore-details">
+            <Route path="tour/:tourId" element={<ExploreDetails />} />
+            <Route
+              path="attraction/:attractionId"
+              element={<ExploreDetails />}
+            />
+          </Route>
+          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-in" element={<Signin />} />
+          <Route path="/reset-password" element={<ForgotPassword />} />
+          <Route path="/basic-details" element={<BasicDetails />} />
+          <Route
+            path="/social-basic-details"
+            element={<SocialBasicDetails />}
+          />
+          <Route path="/account-activation" element={<AccountVerified />} />
 
+          {/* <Route path="/profile/add-card" element={<AddCard />} /> */}
+
+          {/* Authenticated route */}
           <Route
             path="/my-trips"
             element={
@@ -85,28 +99,41 @@ const MainRoute: React.FC = () => {
               </RequireAuth>
             }
           />
-          <Route path="/sign-up" element={<Signup />} />
-          <Route path="/sign-in" element={<Signin />} />
-          <Route path="/reset-password" element={<ForgotPassword />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/basic-details" element={<BasicDetails />} />
+
           <Route
-            path="/social-basic-details"
-            element={<SocialBasicDetails />}
+            path="/profile"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
           />
-          <Route path="/account-activation" element={<AccountVerified />} />
-          <Route path="/preferences" element={<Preferences />} />
-          <Route path="/profile/add-card" element={<AddCard />} />
-          {/* <Route path="/explore-details/:id" element={<ExploreDetails />} /> */}
-          <Route path="/explore-details">
-            <Route path="tour/:tourId" element={<ExploreDetails />} />
-            <Route
-              path="attraction/:attractionId"
-              element={<ExploreDetails />}
-            />
-          </Route>
-          <Route path="/custom-plan-trip" element={<CustomTripPlanning />} />
-          <Route path="/shopping/cart" element={<ShoppingCartPage />} />
+
+          <Route
+            path="/preferences"
+            element={
+              <RequireAuth>
+                <Preferences />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path="/custom-plan-trip"
+            element={
+              <RequireAuth>
+                <CustomTripPlanning />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/shopping/cart"
+            element={
+              <RequireAuth>
+                <ShoppingCartPage />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/shopping/order/:orderId"
             element={
@@ -115,7 +142,14 @@ const MainRoute: React.FC = () => {
               </RequireAuth>
             }
           />
-          <Route path="/successful-payment" element={<SuccessfulPayment />} />
+          <Route
+            path="/successful-payment"
+            element={
+              <RequireAuth>
+                <SuccessfulPayment />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/orders"
             element={
@@ -124,14 +158,31 @@ const MainRoute: React.FC = () => {
               </RequireAuth>
             }
           />
-          <Route path="/plan-trip/:tripId" element={<TripPlanning />} />
-          <Route path="/create-attraction" element={<CreateAttraction />} />
           <Route
-            path="/ambassador-application/:type"
-            element={<AmbassadorApplication />}
+            path="/plan-trip/:tripId"
+            element={
+              <RequireAuth>
+                <TripPlanning />
+              </RequireAuth>
+            }
           />
 
-          <Route path="*" element={<PageNotFound />} />
+          <Route
+            path="/create-attraction"
+            element={
+              <RequireAuth>
+                <CreateAttraction />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/ambassador-application/:type"
+            element={
+              <RequireAuth>
+                <AmbassadorApplication />
+              </RequireAuth>
+            }
+          />
         </Route>
 
         {/* AMBASSADOR ROUTES */}

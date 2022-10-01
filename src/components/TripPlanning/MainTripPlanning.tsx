@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./TripPlanning.css";
 import DateComponent from "./DateComponent";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
-import { generateDateArray, localGetUserId } from "../../utils/helpers";
+import { localGetUserId } from "../../utils/helpers";
 import TripMapPlanning from "./TripMapPlanning/TripMapPlanning";
 import TripPlanning from "./TripPlanning";
 import { ITripPlanningItineraryDay } from "../../api/interfaces";
@@ -53,7 +53,7 @@ const MainTripPlanning = ({
   const [showDateNavButton, setShowDateNavButton] = useState<boolean>(false);
 
   // user ID
-  const userId = localGetUserId();
+  // const userId = localGetUserId();
 
   // manage scroll buttons in date_component
   let dateContainer = document.getElementById(

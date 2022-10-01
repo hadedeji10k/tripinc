@@ -14,7 +14,7 @@ import {
   generateTripColorArray,
   localGetUserId,
 } from "../../../utils/helpers";
-import { getTripById, getUserWishListAsAttraction } from "../../../api";
+import { getTripById } from "../../../api";
 import Itinerary from "./Itinerary";
 import TripMapView from "./TripMapView";
 import { Link, useParams } from "react-router-dom";
@@ -84,8 +84,8 @@ const TripView = () => {
 
   // Bucket list states
   // fetch user wishlist to use in Bucket List
-  const [wishListData, setWishListData] = useState<IDeal[]>([]);
-  const [pagination, setPagination] = useState<IPagination | any>();
+  // const [wishListData, setWishListData] = useState<IDeal[]>([]);
+  // const [pagination, setPagination] = useState<IPagination | any>();
   const [isBucketListLoading, setIsBucketListLoading] =
     useState<boolean>(false);
 

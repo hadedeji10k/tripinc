@@ -24,13 +24,10 @@ const DateComponent = ({ tripDays }: DateComponentProps) => {
 
   useEffect(() => {
     if (dateTagContainer?.scrollHeight <= dateContainer?.scrollHeight) {
-      console.log("true");
       dateNavigationDown.style.display = "none";
       dateNavigationUp.style.display = "none";
-    } else {
-      console.log("false");
     }
-  }, []);
+  }, [dateTagContainer?.scrollHeight, dateContainer?.scrollHeight]);
 
   const moveToDate = (id: string) => {
     const testing = document.getElementById("itinerary_data") as HTMLElement;
