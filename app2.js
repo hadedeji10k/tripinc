@@ -25,20 +25,81 @@ const books = [
   },
 ];
 
-function arrayToJSON(arr) {
-  return arr.map((item) => {
-    if (
-      typeof item === "object" &&
-      item !== null &&
-      typeof item.toJSON === "function"
-    ) {
-      console.log("Here 1: ", true);
-      return item.toJSON();
+// function arrayToJSON(arr) {
+//   return arr.map((item) => {
+//     if (
+//       typeof item === "object" &&
+//       item !== null &&
+//       typeof item.toJSON === "function"
+//     ) {
+//       console.log("Here 1: ", true);
+//       return item.toJSON();
+//     }
+//     return item.toJSON();
+//   });
+// }
+
+// // console.log(arrayToJSON(books));
+// console.log(new Date());
+// console.log(new Date() > new Date("2022-10-01T16:44:40.043Z"));
+
+function computeJoinPoint(s1, s2) {
+  // Write your code here
+  // To debug: console.error('Debug messages...');
+  console.time();
+  const maximum = 20000000;
+  let s1sum = s1;
+  let s2sum = s2;
+
+  let joinPoint = 0;
+
+  const calcSum = (num) => {
+    let nums = num.toString().split("");
+    let sum = nums.reduce((a, b) => parseInt(a) + parseInt(b));
+    return num + sum;
+  };
+
+  const run = () => {
+    s1sum = calcSum(s1sum);
+    s2sum = calcSum(s2sum);
+
+    const found = checkForJoin(s1sum, s2sum);
+
+    if (found) {
+      joinPoint = s1sum;
+      return;
+    } else {
+      run();
     }
-    return item.toJSON();
-  });
+  };
+
+  const checkForJoin = (a, b) => {
+    if (a === b) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  run();
+  console.timeEnd();
+  return joinPoint;
 }
 
-// console.log(arrayToJSON(books));
-console.log(new Date());
-console.log(new Date() > new Date("2022-10-01T16:44:40.043Z"));
+function computeJoinPointa(s1, s2) {
+  console.time();
+  const numbers = (nb) =>
+    String(nb)
+      .split("")
+      .reduce((a, b) => parseInt(a) + parseInt(b));
+  while (s1 !== s2) {
+    s1 += numbers(s1);
+    s2 += numbers(s2);
+  }
+  console.timeEnd();
+  return s1;
+}
+
+console.log(computeJoinPoint(471, 480));
+
+console.log(computeJoinPointa(471, 480));

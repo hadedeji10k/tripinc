@@ -15,6 +15,7 @@ import AmbassadorNavbar from "../components/Ambassador/AmbassadorNavbar";
 import AmbassadorSidebar from "../components/Ambassador/AmbassadorMobileSidebar";
 import AmbassadorSideBar from "../components/Ambassador/AmbassadorSidebar/AmbassadorSideBar";
 import styled from "styled-components";
+import NewDashboard from "../components/Dashboard/Dashboard";
 
 export const MainLayout: React.FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -121,16 +122,9 @@ export const AmbassadorLayout: React.FC = () => {
         cartLength={cartLength}
         ordersLength={ordersLength}
       />
-      <Div>
-        <div className="row w-100 m-auto">
-          <DashboardSideBar className="">
-            <AmbassadorSideBar />
-          </DashboardSideBar>
-          <Main className="">
-            <Outlet />
-          </Main>
-        </div>
-      </Div>
+      <NewDashboard>
+        <Outlet />
+      </NewDashboard>
     </>
   );
 };

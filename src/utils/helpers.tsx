@@ -14,7 +14,7 @@ import {
   getUserOrder,
   getUserProfilePictureByID,
 } from "../api";
-import { CitiesPageSize, currencyList } from "./constants";
+import { CitiesPageSize, currencyList, monthNames } from "./constants";
 import { addDays, differenceInDays, isPast } from "date-fns";
 
 export const checkAuth = (): boolean => {
@@ -134,15 +134,12 @@ export const checkForAuth = async () => {
       const formData: IRefreshToken = {
         refreshToken: profile.refresh_Token,
       };
-      console.log("Refreshing token");
       await refreshToken(formData);
       return;
     } else if (isPast(maximumExpiryDate)) {
-      console.log("Logging out");
       localLogoutProfile();
       return;
     } else {
-      console.log("Still okay");
       return;
     }
   }
@@ -551,4 +548,11 @@ export const checkForInterestStateOfClass = (
   } else {
     return false;
   }
+};
+
+export const formatDateToMonthAndDay = (dateString: Date | string) => {
+  const date = new Date(dateString);
+  return `${
+    monthNames[date.getMonth()]
+  }, ${date.getDate()} ${date.getFullYear()}`;
 };

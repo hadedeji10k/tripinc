@@ -321,9 +321,9 @@ const ExploreDetails = () => {
               <h3 className="sub_heading">Details</h3>
               {attractionData && attractionData?.openingHour ? (
                 <>
-                  <h3>Opens: </h3>
+                  <h5>Opens: </h5>
                   <div className="explore_details_tag_container">
-                    <span className="explore_details_tags">
+                    <span className="explore_details_tags medium_title">
                       {attractionData?.openingHour}
                     </span>
                   </div>
@@ -331,9 +331,9 @@ const ExploreDetails = () => {
               ) : null}
               {attractionData && attractionData?.closingHour ? (
                 <>
-                  <h3>Closes: </h3>
+                  <h5>Closes: </h5>
                   <div className="explore_details_tag_container">
-                    <span className="explore_details_tags">
+                    <span className="explore_details_tags medium_title">
                       {attractionData?.closingHour}
                     </span>
                   </div>
@@ -341,9 +341,9 @@ const ExploreDetails = () => {
               ) : null}
               {attractionData && attractionData?.typicalTimeSpent ? (
                 <>
-                  <h3>Typical time spent: </h3>
+                  <h5>Typical time spent: </h5>
                   <div className="explore_details_tag_container">
-                    <span className="explore_details_tags">
+                    <span className="explore_details_tags medium_title">
                       {Math.floor(attractionData?.typicalTimeSpent / 60)} hour
                       {Math.floor(attractionData?.typicalTimeSpent / 60) > 1
                         ? "s"
@@ -359,20 +359,20 @@ const ExploreDetails = () => {
               ) : null}
               {attractionData && attractionData?.greatForList?.length > 0 ? (
                 <>
-                  <h3>Great For: </h3>
+                  <h5>Great For: </h5>
                   <div className="explore_details_tag_container">
                     {attractionData?.greatForList.map((item) => (
-                      <span className="explore_details_tags">{item}</span>
+                      <span className="explore_details_tags medium_title">{item}</span>
                     ))}
                   </div>
                 </>
               ) : null}
               {attractionData && attractionData?.openingDaysList?.length > 0 ? (
                 <>
-                  <h3>Opening Days: </h3>
+                  <h5>Opening Days: </h5>
                   <div className="explore_details_tag_container">
                     {attractionData?.openingDaysList.map((item) => (
-                      <span className="explore_details_tags">{item}</span>
+                      <span className="explore_details_tags medium_title">{item}</span>
                     ))}
                   </div>
                 </>
@@ -380,10 +380,10 @@ const ExploreDetails = () => {
               {attractionData &&
               attractionData?.bestVisitingTime?.length > 0 ? (
                 <>
-                  <h3>Best Visiting Times: </h3>
+                  <h5>Best Visiting Times: </h5>
                   <div className="explore_details_tag_container">
                     {attractionData?.bestVisitingTime.map((item) => (
-                      <span className="explore_details_tags">{item}</span>
+                      <span className="explore_details_tags medium_title">{item}</span>
                     ))}
                   </div>
                 </>

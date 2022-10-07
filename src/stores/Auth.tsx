@@ -1,5 +1,7 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect, createContext } from "react";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
+import { auth } from "../utils/firebase";
 import { checkAuth, localGetUser, localGetUserId } from "../utils/helpers";
 
 export const AuthContext = createContext({
@@ -13,6 +15,7 @@ export const AuthContext = createContext({
   setUserId: (userId: number) => {},
   setUserProfile: () => {},
   setLoggedIn: (loggedIn: boolean) => {},
+  currentChatUser: {},
 });
 
 export const AuthProvider = ({ children }: { children: any }) => {
@@ -20,13 +23,26 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const [user, setUser] = useState(() => localGetUser());
   const [username, setUsername] = useState<string>("");
   const [userId, setUserId] = useState<number | null>(0);
+  const [currentChatUser, setCurrentChatUser] = useState({});
 
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   const checkAuthFunc = checkAuth();
 
+  // chat settings
   useEffect(() => {
-    checkAuth() ? login() : logout();
-  }, [pathname]);
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setCurrentChatUser(user ? user : {});
+      console.log(user);
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   checkAuth() ? login() : logout();
+  // }, [pathname]);
 
   useEffect(() => {
     setUserProfile();
@@ -57,6 +73,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
         setUserId: setUserId,
         setUserProfile: setUserProfile,
         setLoggedIn: setLoggedIn,
+        currentChatUser: currentChatUser,
       }}
     >
       {children}

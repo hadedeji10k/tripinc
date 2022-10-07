@@ -360,16 +360,24 @@ a {
   flex-direction: row;
 }
 
-.extra_large_title {
-  font-family: 'Poppins';
+.x_extra_large_title {
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 700;
   font-size: 2.5rem;
   line-height: 33px;
 }
 
+.extra_large_title {
+  font-family: 'Poppins' !important;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2.0rem;
+  line-height: 33px;
+}
+
 .large_title {
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 600;
   font-size: 1.5rem;
@@ -377,7 +385,7 @@ a {
 }
 
 .medium_title {
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 500;
   font-size: 1rem;
@@ -385,7 +393,7 @@ a {
 }
 
 .small_title {
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 400;
   font-size: 0.8rem;

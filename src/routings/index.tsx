@@ -34,6 +34,8 @@ import AmbassadorAttraction from "../components/Ambassador/AmbassadorAttraction/
 import AmbassadorTrip from "../components/Ambassador/AmbassadorTrip/AmbassadorTrip";
 import AdminAmbassadorApplication from "../components/Ambassador/Admin/AdminAmbassadorApplication";
 import TripPlannerApplications from "../components/Ambassador/Admin/TripPlannerApplications";
+import NewDashboard from "../components/Dashboard/Dashboard";
+import ChatComponent from "../components/Chat";
 
 const MainRoute: React.FC = () => {
   return (
@@ -63,6 +65,7 @@ const MainRoute: React.FC = () => {
             element={<SocialBasicDetails />}
           />
           <Route path="/account-activation" element={<AccountVerified />} />
+          {/* <Route path="/new-dashboard" element={<NewDashboard />} /> */}
 
           {/* <Route path="/profile/add-card" element={<AddCard />} /> */}
 
@@ -168,14 +171,6 @@ const MainRoute: React.FC = () => {
           />
 
           <Route
-            path="/create-attraction"
-            element={
-              <RequireAuth>
-                <CreateAttraction />
-              </RequireAuth>
-            }
-          />
-          <Route
             path="/ambassador-application/:type"
             element={
               <RequireAuth>
@@ -196,6 +191,7 @@ const MainRoute: React.FC = () => {
             path="/ambassador/attractions/new"
             element={<CreateAttraction />}
           />
+          <Route path="/ambassador/chat" element={<ChatComponent />} />
           <Route
             path="/admin/trip-planners"
             element={<TripPlannerApplications />}

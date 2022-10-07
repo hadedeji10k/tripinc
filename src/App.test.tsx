@@ -7,3 +7,5 @@ test("renders learn react link", () => {
   const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
+
+// https://console.cloud.google.com/apis/api/firebasestorage.googleapis.com/metrics?project=testing-e9431

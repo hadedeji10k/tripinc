@@ -293,3 +293,9 @@ export const getUserTrips = async (userId: any): Promise<AxiosResponse<any>> => 
 export const getTripItinerariesById = async (tripId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/TripPlannings/GetItineraries/${tripId}`);
 }
+
+
+// ADMIN
+export const getAdminDashboard = async (tripLimit: number = 10): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/Dashboard/GetDashboard?isAdmin=true&limit=${tripLimit}`);
+}

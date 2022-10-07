@@ -567,3 +567,14 @@ export interface ITripPlanningItineraryDay {
     date: Date,
     itineraries: ITripPlanningItineraries[],
 }
+
+export interface IAdminDashboard {
+    customEvents: number,
+    pendingBooking: number,
+    completedBooking: number,
+    totalFeedback: number,
+    totalTrips: number,
+    totalWishlists: number,
+    totalBookings: number,
+    recentTrips: ITripPlanningData[]
+}
