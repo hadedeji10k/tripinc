@@ -85,20 +85,31 @@ const ShoppingCart = ({ cartData, setCartData, userId }: Props) => {
   };
 
   const handleLikeButton = async (id: any) => {
-    console.log(wishList);
     setIsLoading(true);
+    // const data = cartData.filter(
+    //   (item) => item.itemId.toString() === id.toString()
+    // );
     const attractionData = await (await getAttractionByID(id)).data;
     const formData = {
       userId,
       itemId: attractionData.id,
       itemType: attractionData.itemType,
       provider: attractionData.provider,
-      tripId: attractionData.tourId,
+      tripId: 0,
     };
 
     const response = await addToWishList(formData);
     if (response === true) {
-      setWishList([...wishList, attractionData]);
+      setWishList([
+        ...wishList,
+        {
+          isAvailable: true,
+          itemId: id,
+          itemType: attractionData.itemType,
+          provider: attractionData.provider,
+          tripId: attractionData.tripId,
+        },
+      ]);
     }
     setIsLoading(false);
   };
@@ -121,7 +132,7 @@ const ShoppingCart = ({ cartData, setCartData, userId }: Props) => {
             if (res === true) {
               // set the wishListData to the new data after removing
               const data = wishList.filter(
-                (item) => item.id.toString() !== id.toString()
+                (item) => item.itemId.toString() !== id.toString()
               );
               setWishList([...data]);
               setIsLoading(false);
@@ -139,7 +150,7 @@ const ShoppingCart = ({ cartData, setCartData, userId }: Props) => {
   const handleLike = (a: any) => {
     let returnState: boolean = false;
     if (wishList.length > 0) {
-      let index = wishList.find((item) => item?.id === a.itemId);
+      let index = wishList.find((item) => item?.itemId === a.itemId);
       if (index) {
         returnState = true;
       } else {

@@ -290,9 +290,11 @@ const LandingPage = () => {
 
         {/* find your next stop */}
         <div className="next_stop">
-          <h3 className="landing_page_header">How it works</h3>
+          <h3 className="landing_page_header fs-2 mb-2">
+            Explore attractions based on interest
+          </h3>
           <p className="landing_page_sub_header">
-            See how Tripinc can help you plan your next Trip!
+            Find attractions that floats your boat
           </p>
           <div id="category_tag_container" className="category_tag_container">
             {categoryData?.map((item) => (

@@ -36,6 +36,7 @@ import AdminAmbassadorApplication from "../components/Ambassador/Admin/AdminAmba
 import TripPlannerApplications from "../components/Ambassador/Admin/TripPlannerApplications";
 import NewDashboard from "../components/Dashboard/Dashboard";
 import ChatComponent from "../components/Chat";
+import AboutUs from "../components/AboutUs/AboutUs";
 
 const MainRoute: React.FC = () => {
   return (
@@ -45,6 +46,7 @@ const MainRoute: React.FC = () => {
         <Route element={<MainLayout />}>
           <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about-us" element={<AboutUs />} />
           <Route path="/explore" element={<ExplorePage />}>
             <Route path="city/:cityParam" element={<ExplorePage />} />
             <Route path="category/:catNameParam" element={<ExplorePage />} />

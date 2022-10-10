@@ -3,7 +3,7 @@ import "./Footer.css";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import { Formik } from "formik";
-import { BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
+import { BsFacebook, BsLinkedin, BsInstagram } from "react-icons/bs";
 import { signUpToNewsLetter } from "../../api/responseHandlers";
 import { newsLetterSchema } from "../../schema/yupSchema";
 import LogoWhite from "../../images/logo-tripinc-white.svg";
@@ -34,35 +34,35 @@ const Footer = () => {
       <div className="footer_menu">
         <div className="footer_item">
           <div className="footer_item_menu">
-            <p className="footer_item_menu_name">
+            {/* <p className="footer_item_menu_name">
               <a className="footer_item_link" href="/">
                 Press
               </a>
-            </p>
+            </p> */}
             <p className="footer_item_menu_name">
-              <a className="footer_item_link" href="/">
+              <a className="footer_item_link" href="/#/about-us">
                 About us
               </a>
             </p>
             <p className="footer_item_menu_name">
-              <a className="footer_item_link" href="/">
+              <a className="footer_item_link" href="/#/about-us">
                 Help Center
               </a>
             </p>
           </div>
           <div className="footer_item_menu">
             <p className="footer_item_menu_name">
-              <a className="footer_item_link" href="/">
+              <a className="footer_item_link" href="/#/about-us">
                 What we do
               </a>
             </p>
             <p className="footer_item_menu_name">
-              <a className="footer_item_link" href="/">
+              <a className="footer_item_link" href="/#/about-us">
                 Our Team
               </a>
             </p>
             <p className="footer_item_menu_name">
-              <a className="footer_item_link" href="/">
+              <a className="footer_item_link" href="/#/about-us">
                 Refer a friend
               </a>
             </p>
@@ -126,15 +126,27 @@ const Footer = () => {
           <div className="footer_item_menu">
             <p className="footer_item_menu_name">
               Stay Connected &nbsp; &nbsp;{" "}
-              <a className="footer_item_link" href="/">
+              <a
+                className="footer_item_link"
+                href="https://www.facebook.com/TripInc.co/"
+                target="_blank"
+              >
                 <BsFacebook />
               </a>{" "}
               &nbsp; &nbsp;{" "}
-              <a className="footer_item_link" href="/">
-                <BsTwitter />
+              <a
+                className="footer_item_link"
+                href=" https://www.linkedin.com/company/trip-incorporated/"
+                target="_blank"
+              >
+                <BsLinkedin />
               </a>{" "}
               &nbsp; &nbsp;{" "}
-              <a className="footer_item_link" href="/">
+              <a
+                className="footer_item_link"
+                href="https://www.instagram.com/tripincorporated/"
+                target="_blank"
+              >
                 <BsInstagram />
               </a>{" "}
             </p>

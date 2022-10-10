@@ -52,10 +52,6 @@ const PaymentPage = ({
           <div className="card_info_container">
             <div className="card_info_details">
               <p className="payment_card_info_text">Credit Card</p>
-              <small>
-                Safe money transfer using your bank account. Visa, Maestro,
-                Discover, American Express.
-              </small>
             </div>
             <StripePayment
               orderReference={orderDetails.orderReference}
