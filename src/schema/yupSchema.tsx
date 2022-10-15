@@ -110,13 +110,13 @@ export const CustomerInfoSchema = Yup.object().shape({
 });
 
 export const AmbassadorApplicationSchema = Yup.object().shape({
-  fullName: Yup.string().required("Full name is required"),
+  // fullName: Yup.string().required("Full name is required"),
   timeAvailability: Yup.number().required("Time availability is required"),
 });
 
 export const AddFlightSchema = Yup.object().shape({
   flightName: Yup.string().required("Flight name is required"),
   airportName: Yup.string().required("Airport name is required"),
-  arrivalTime: Yup.array().required("Arrival time is required"),
+  arrivalTime: Yup.string().required("Arrival time is required"),
   arrivalDate: Yup.string().required("Arrival date is required"),
 });

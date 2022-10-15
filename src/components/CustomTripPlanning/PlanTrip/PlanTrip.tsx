@@ -180,7 +180,9 @@ const PlanTrip = ({
           {tripData.tripType === "Family" || tripData.tripType === "Friends" ? (
             <div id="family_number">
               <label className="plan_trip_label">
-                Number of Family Members will be joining you?
+                Number of{" "}
+                {tripData.tripType === "Family" ? "Family Members" : "Friends"}{" "}
+                that will be joining you?
               </label>
               <input
                 name="numberOfTraveler"

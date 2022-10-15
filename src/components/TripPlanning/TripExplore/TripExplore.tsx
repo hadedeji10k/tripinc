@@ -1,12 +1,13 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect } from "react";
 import { DatePicker, Select, Spin } from "antd";
-import Card from "../../Cards/TripCard/TripCard";
+import Card from "../../Cards/AttractionCard/AttractionCard";
 import { BiSearch } from "react-icons/bi";
 import { getAllCategories, getAllTours, getUserWishList } from "../../../api";
 import {
   IDeal,
   IFormattedCategory,
+  IInitialTripData,
   IPagination,
   ITripPlanningItineraryDay,
 } from "../../../api/interfaces";
@@ -29,7 +30,7 @@ const { RangePicker } = DatePicker;
 interface Prop {
   tripDays: any;
   itineraryData: ITripPlanningItineraryDay[];
-  tripPlanningData: any;
+  tripPlanningData: IInitialTripData;
   setTripPlanningData: any;
   handleTripPlanningMenuClick: any;
 }
@@ -63,14 +64,27 @@ const TripPlanningExplore = ({
     useState("");
 
   // state to manage the search input in the page
-  const [inputField, setInputField] = useState("");
+  const [inputField, setInputField] = useState(tripPlanningData.tripLocation);
+  const [cityFirstName, setCityFirstName] = useState(
+    tripPlanningData.tripLocation.split(" ")[0].replace(/[,.-]/g, "")
+  );
 
   //   state for dateInput
   const [dateInput, setDateInput] = useState<Date[] | any>([]);
 
   const [category, setCategory] = useState<any>([]);
 
+  const [numberOfSelectedCategory, setNumberOfSelectedCategory] =
+    useState<number>(0);
+
   const [currentQuery, setCurrentQuery] = useState("");
+
+  // set cityFirstName and query on page load
+  useEffect(() => {
+    setCityFirstName(
+      tripPlanningData.tripLocation.split(" ")[0].replace(/[,.-]/g, "")
+    );
+  }, [tripPlanningData.tripLocation]);
 
   // useEffect to get the attraction data and category as preferenceData
   useEffect(() => {
@@ -86,43 +100,49 @@ const TripPlanningExplore = ({
         });
     }
 
-    getAllTours().then((res) => {
-      setAttractionData(res.data.items);
-      setInitialAttractionData(res.data.items);
+    if (tripPlanningData.tripLocation.length !== 0) {
+      getAllTours(`Location=${tripPlanningData.tripLocation}`).then((res) => {
+        setAttractionData(res.data.items);
+        setInitialAttractionData(res.data.items);
 
-      setPagination({
-        hasNext: res.data.hasNext,
-        hasPrevious: res.data.hasPrevious,
-        currentPage: res.data.currentPage,
-        pageSize: res.data.pageSize,
-        totalPages: res.data.totalPages,
-        totalCount: res.data.totalCount,
-      });
-      // get all categories as preferenceData
-      getAllCategories().then((res) => {
-        const arrayToPush: any = [];
-        // loop through the response categories and push the category name and the icon into the array to be used in the preference data
-        for (let i = 0; i < res.data.length; i++) {
-          const element = res.data[i];
-          const data = {
-            id: element.id,
-            title: element.name,
-            symbol: symbolHelper(element.name),
-            stateOfClass: checkForInterestStateOfClass(
-              tripPlanningData.selectedAreaOfInterest,
-              element.id as any,
-              "notUserInterestArray"
-            ),
-          };
-          arrayToPush.push(data);
-        }
-        // set the preference data
-        setPreferenceData(arrayToPush);
+        setPagination({
+          hasNext: res.data.hasNext,
+          hasPrevious: res.data.hasPrevious,
+          currentPage: res.data.currentPage,
+          pageSize: res.data.pageSize,
+          totalPages: res.data.totalPages,
+          totalCount: res.data.totalCount,
+        });
+        // get all categories as preferenceData
+        getAllCategories().then((res) => {
+          const arrayToPush: any = [];
+          // loop through the response categories and push the category name and the icon into the array to be used in the preference data
+          for (let i = 0; i < res.data.length; i++) {
+            const element = res.data[i];
+            const data = {
+              id: element.id,
+              title: element.name,
+              symbol: symbolHelper(element.name),
+              stateOfClass: checkForInterestStateOfClass(
+                tripPlanningData.selectedAreaOfInterest,
+                element.id as any,
+                "notUserInterestArray"
+              ),
+            };
+            arrayToPush.push(data);
+          }
+          // set the preference data
+          setPreferenceData(arrayToPush);
 
-        setIsLoading(false);
+          setIsLoading(false);
+        });
       });
-    });
-  }, [userId, tripPlanningData.selectedAreaOfInterest]);
+    }
+  }, [
+    userId,
+    tripPlanningData.selectedAreaOfInterest,
+    tripPlanningData.tripLocation,
+  ]);
 
   // useEffect to set preference data when the user click on the preference
   useEffect(() => {
@@ -130,6 +150,8 @@ const TripPlanningExplore = ({
     let preferences = preferenceData.filter(
       (item) => item.stateOfClass === true
     );
+
+    setNumberOfSelectedCategory(preferences.length);
 
     if (preferences.length > 0) {
       // if the preference tag clicked is not empty, set the search result field to the preference tag clicked
@@ -284,9 +306,6 @@ const TripPlanningExplore = ({
     // set the input field to empty
     setInputField("");
     setCategorySearchResultField("");
-    // using this to shadow mark the input field and set it to empty
-    let input = document.getElementById("input") as HTMLInputElement;
-    input.value = "";
     // and setting the preference tags to false
     preferenceData.forEach((item) => {
       item.stateOfClass = false;
@@ -350,6 +369,7 @@ const TripPlanningExplore = ({
     const query = `${currentQuery}PageNumber=${
       pagination?.currentPage - 1
     }&PageSize=${pagination?.pageSize}`;
+    console.log("Query: ", query);
     await getAllTours(query).then((res) => {
       setInitialAttractionData(res.data.items);
 
@@ -370,6 +390,7 @@ const TripPlanningExplore = ({
     const query = `${currentQuery}PageNumber=${
       pagination?.currentPage + 1
     }&PageSize=${pagination?.pageSize}`;
+    console.log("Query: ", query);
     await getAllTours(query).then((res) => {
       setInitialAttractionData(res.data.items);
 
@@ -454,42 +475,22 @@ const TripPlanningExplore = ({
           <div className="explore_page_header">
             {/* <img className="explore_page_header_image" src="https://images.unsplash.com/photo-1596889157941-d2651f70a4f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHRvdXJpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" /> */}
             <div className="explore_page_header_text">
-              <h3 className="explore_page_header_title">Explore Cities!</h3>
+              <h3 className="explore_page_header_title">
+                Explore {cityFirstName}!
+              </h3>
               <p className="explore_page_header_description">
-                You can search cities you wish on this page using the search
-                form.
+                You can search for attractions you wish using the search form.
               </p>
             </div>
           </div>
           <div className="explore_page_search_container">
             <div className="explore_page_search_featured_form">
-              {/* <input
-                id="input"
-                className="explore_page_search_third_input"
-                type="text"
-                placeholder="Search for a city"
-                defaultValue={inputField}
-                onChange={handleInput}
-              /> */}
-              <Autocomplete
-                // ref={inputRef}
-                apiKey={GOOGLEAPIKEY}
-                onPlaceSelected={(selected: any) => {
-                  setInputField(selected.formatted_address);
-                }}
-                options={{
-                  fields: ["formatted_address"],
-                }}
-                placeholder="Search for a city"
-                className="explore_page_search_third_input"
-                id="input"
-              />
-              <span className="third_party_date_picker">
+              <span className="third_party_date_picker w_40">
                 <RangePicker onChange={onDateChange} size="small" />
               </span>
               <Select
                 mode="tags"
-                className="explorer_page_third_party_select explore_page_select"
+                className="explorer_page_third_party_select explore_page_select w_50"
                 size="small"
                 placeholder="What floats your boat"
                 // defaultValue={['a10', 'c12']}
@@ -585,20 +586,28 @@ const TripPlanningExplore = ({
               </div>
             ) : (
               <>
-                {isLoading ? (
+                {isLoading ? null : (
                   <>
                     <br />
                     <br />
                     <br />
+                    <h3 className="fs-4">
+                      No result matches your selected categor
+                      {numberOfSelectedCategory > 0 ? "ies" : "y"}.
+                    </h3>
+                    <p>
+                      You can see all or fetch next results using the next
+                      button below
+                    </p>
                     <span
                       id="next"
                       className="preferences_clicked m_b_20"
                       onClick={handleAllClick}
                     >
-                      See all Featured
+                      See all instead
                     </span>
                   </>
-                ) : null}
+                )}
               </>
             )
           ) : null}

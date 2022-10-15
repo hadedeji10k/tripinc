@@ -6,7 +6,7 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 import { TiLocationArrowOutline } from "react-icons/ti";
 import { getUserTrips } from "../../api";
 import { localGetUserId } from "../../utils/helpers";
-import { ITripPlanningData } from "../../api/interfaces";
+import { IPagination, ITripPlanningData } from "../../api/interfaces";
 import { BiSearch } from "react-icons/bi";
 
 const menudata = [
@@ -32,6 +32,8 @@ const MyTrip = () => {
   const [initialAttractionData, setInitialAttractionData] = useState<
     ITripPlanningData[]
   >([]);
+  const [pagination, setPagination] = useState<IPagination | any>();
+
   //   using this to set the current data to filter the data
   const [currentData, setCurrentData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -49,12 +51,19 @@ const MyTrip = () => {
   useEffect(() => {
     setIsLoading(true);
     getUserTrips(userId).then((res) => {
-      console.log(res.data);
       setAttractionData(res.data.items);
       setInitialAttractionData(res.data.items);
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
       setIsLoading(false);
     });
-  }, []);
+  }, [userId]);
 
   // function to manage the trips button when it is clicked
   const handleLocationsClick = (e: any, action: string) => {
@@ -102,11 +111,60 @@ const MyTrip = () => {
     setAttractionData(filtered);
   };
 
+  const handlePaginationPrev = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage - 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getUserTrips(userId, query).then((res) => {
+      setAttractionData(res.data.items);
+      setInitialAttractionData(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
+  const handlePaginationNext = async () => {
+    setIsLoading(true);
+    const query = `PageNumber=${pagination?.currentPage + 1}&PageSize=${
+      pagination?.pageSize
+    }`;
+    await getUserTrips(userId, query).then((res) => {
+      setAttractionData(res.data.items);
+      setInitialAttractionData(res.data.items);
+
+      setPagination({
+        hasNext: res.data.hasNext,
+        hasPrevious: res.data.hasPrevious,
+        currentPage: res.data.currentPage,
+        pageSize: res.data.pageSize,
+        totalPages: res.data.totalPages,
+        totalCount: res.data.totalCount,
+      });
+    });
+    setIsLoading(false);
+  };
+
   // when working on this uncomment line 38 - 41 inside useEffect
   return (
     <Spin spinning={isLoading} size="large">
       <div className="trip_page">
         <div className="trip_page_container">
+          <div className="plan_new_trip">
+            <h3 className="fs-3 mt-3 mb-5">
+              <a href="/#/custom-plan-trip" className="text-black">
+                <BsFillPlusCircleFill className="plus_icon" /> Plan a new trip
+              </a>
+            </h3>
+          </div>
           <div className="search_container w_90">
             <TiLocationArrowOutline className="w_5 trip_search_icon" />
             <input
@@ -166,14 +224,6 @@ const MyTrip = () => {
                 </select>
               </div>
             </div>
-            <div className="plan_new_trip">
-              <a href="/#/custom-plan-trip">
-                <span className="plan_new_trip_text">
-                  <BsFillPlusCircleFill className="plus_icon" />
-                  Plan a new trip
-                </span>
-              </a>
-            </div>
           </div>
           <div className="my_trip_container">
             {/* <h3>tripPage</h3> */}
@@ -183,15 +233,13 @@ const MyTrip = () => {
                   <PastTripCard
                     key={item.id}
                     image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                    location={item.startDestination}
-                    budget={item.budget}
-                    tripId={item.id}
+                    item={item}
                   />
                 ))}
               </div>
             ) : (
               <>
-                <h3 className="no_data_text">
+                <h3 className="mb-3 mt-3 fs-5 text-center">
                   {currentData === "Upcoming Trips"
                     ? "You do not have any upcoming Trips"
                     : currentData === "Past Trips"
@@ -209,6 +257,46 @@ const MyTrip = () => {
                 }}
               >
                 All
+              </button>
+            ) : null}
+          </div>
+
+          <div className="explore_page_number">
+            <span>
+              Page {pagination?.currentPage} of {pagination?.totalPages}
+            </span>
+            <span>
+              {(pagination?.currentPage - 1) * pagination?.pageSize + 1} -
+              {pagination?.hasNext
+                ? pagination?.pageSize * pagination?.currentPage
+                : pagination?.totalCount}
+            </span>
+          </div>
+          <div className="scroll_button">
+            {pagination?.hasPrevious ? (
+              <button
+                className={
+                  pagination?.hasPrevious
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationPrev}
+                disabled={!pagination?.hasPrevious}
+              >
+                Prev
+              </button>
+            ) : null}
+            {pagination?.hasNext ? (
+              <button
+                className={
+                  pagination?.hasNext
+                    ? "explore_navigation_button_active"
+                    : "explore_navigation_button"
+                }
+                onClick={handlePaginationNext}
+                disabled={!pagination?.hasNext}
+              >
+                Next
               </button>
             ) : null}
           </div>

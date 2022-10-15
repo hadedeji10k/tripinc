@@ -6,7 +6,7 @@ import { getAllDeals } from "../../../api";
 import { localGetUserId } from "../../../utils/helpers";
 import { IDeal, IPagination, ITripPlanningData } from "../../../api/interfaces";
 import { BiSearch } from "react-icons/bi";
-import Card from "../../Cards/TripCard/TripCard";
+import Card from "../../Cards/AttractionCard/AttractionCard";
 
 const menudata = [
   {

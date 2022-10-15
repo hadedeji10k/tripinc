@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./ExploreCategoryPage.css";
-import Card from "../Cards/TripCard/TripCard";
+import Card from "../Cards/AttractionCard/AttractionCard";
 
 import { getAllDeals } from "../../api";
 import { IDeal } from "../../api/interfaces";

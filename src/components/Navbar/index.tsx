@@ -143,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 }
                 to="/my-trips"
               >
-                My Trips
+                Plan a Trip
               </NavLink>
             </NavItem>
             {/* <NavItem>

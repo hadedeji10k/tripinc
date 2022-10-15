@@ -57,7 +57,7 @@
 }
 
 .trip_planning_menu_container {
-    width: 60%;
+    width: 75%;
 }
 
 /* .trip_planning_date_tag_container {
@@ -409,6 +409,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
 }
 
 .itinerary_display_card_image {
@@ -423,7 +424,7 @@
     align-items: center;
     width: 40px;
     height: 40px;
-    border: 2px solid #E6E8EC;
+    border: 2px solid #ccc !important;
     border-radius: 12px;
     font-size: 1rem;
     color: #999999;
@@ -450,12 +451,13 @@
 }
 
 .itinerary_display_card_time {
-    height: 40px;
-    border-radius: 20px;
-    margin-right: 15px;
+    height: 47px;
+    border-radius: 10px !important;
+    margin-right: 15px !important;
     text-align: center;
     display: flex;
     align-items: center;
+    border: 2px solid #ccc !important;
 }
 
 .itinerary_display_card_select.ant-select:not(.ant-select-customize-input) .ant-select-selector {
@@ -505,5 +507,12 @@
 
     .trip_planning_container {
         width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .trip_planning_menu_container {
+        width: 90%;
     }
 }

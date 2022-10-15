@@ -5,7 +5,7 @@ import "antd/dist/antd.min.css";
 import "./BucketListPage.css";
 import { locationdata } from "../../currentUserData";
 // import { attraction } from '../../interfaces';
-import Card from "../Cards/TripCard/TripCard";
+import Card from "../Cards/AttractionCard/AttractionCard";
 
 import { BiSearch } from "react-icons/bi";
 import { localGetUserId } from "../../utils/helpers";

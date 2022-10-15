@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./TripCard.css";
+import "./AttractionCard.css";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -138,13 +138,13 @@ const Card = ({
           </p>
           <hr />
           <div className="card_price_review">
-            <p className="card_price">
+            <p className="card_price mb-0">
               {" "}
               from {currencySymbolHelper(item.currency)}
               {item.price}
             </p>
 
-            <p className="card_price"> {item.ratings?.length} reviews</p>
+            <p className="card_price mb-0"> {item.ratings?.length} reviews</p>
             {/* <p className="price"> {item.ratings?.map((item) => { 
                             newLocal.review += rating
                         })} {item.ratings?.length} item.ratings</p> */}

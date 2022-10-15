@@ -4,6 +4,7 @@ import "antd/dist/antd.min.css";
 import { getUserWishListAsAttraction } from "../../../api";
 import {
   IDeal,
+  IInitialTripData,
   IPagination,
   ITripPlanningItineraryDay,
 } from "../../../api/interfaces";
@@ -14,7 +15,7 @@ interface Props {
   tripDays: any;
   itineraryData: ITripPlanningItineraryDay[];
   setItineraryData: any;
-  tripPlanningData: any;
+  tripPlanningData: IInitialTripData;
   setTripPlanningData: any;
   wishListData: IDeal[];
   setWishListData: any;
@@ -41,9 +42,11 @@ const TripPlanningBucketList = ({
 
   const handlePaginationPrev = async () => {
     setIsBucketListLoading(true);
-    const query = `PageSize=5&PageNumber=${
-      pagination?.currentPage - 1
-    }&PageSize=${pagination?.pageSize}`;
+    const query = `Location=${
+      tripPlanningData.tripLocation
+    }&PageSize=5&PageNumber=${pagination?.currentPage - 1}&PageSize=${
+      pagination?.pageSize
+    }`;
     await getUserWishListAsAttraction(userId, query).then((res) => {
       setWishListData(res.data.items);
 
@@ -61,9 +64,11 @@ const TripPlanningBucketList = ({
 
   const handlePaginationNext = async () => {
     setIsBucketListLoading(true);
-    const query = `PageSize=5&PageNumber=${
-      pagination?.currentPage + 1
-    }&PageSize=${pagination?.pageSize}`;
+    const query = `Location=${
+      tripPlanningData.tripLocation
+    }&PageSize=5&PageNumber=${pagination?.currentPage + 1}&PageSize=${
+      pagination?.pageSize
+    }`;
     await getUserWishListAsAttraction(userId, query).then((res) => {
       setWishListData(res.data.items);
 
@@ -138,8 +143,9 @@ const TripPlanningBucketList = ({
           </>
         ) : (
           <>
-            <h3 className="no_data_text">
-              You do not have any item in your bucket list
+            <h3 className="mb-3 mt-3 fs-5 text-center">
+              You do not have any item in your bucket list that matches your
+              trip location.
             </h3>
             <br />
           </>

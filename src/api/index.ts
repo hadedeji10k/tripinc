@@ -286,8 +286,8 @@ export const getTripById = async (tripId: any): Promise<AxiosResponse<any>> => {
     return await TRIPAPI.get(`/api/TripPlannings/${tripId}`);
 }
 
-export const getUserTrips = async (userId: any): Promise<AxiosResponse<any>> => {
-    return await TRIPAPI.get(`/api/TripPlannings/GetByUser/${userId}`);
+export const getUserTrips = async (userId: any, query?: string): Promise<AxiosResponse<any>> => {
+    return await TRIPAPI.get(`/api/TripPlannings/GetByUser/${userId}?${query}`);
 }
 
 export const getTripItinerariesById = async (tripId: any): Promise<AxiosResponse<any>> => {

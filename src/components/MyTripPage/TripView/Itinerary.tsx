@@ -251,7 +251,7 @@ const Itinerary = ({
                       </div>
                       {itinerary.customNoteStatus ? (
                         <div
-                          className="itinerary_display_custom_note_container app_row w_100"
+                          className="w_100 d-flex flex-row align-items-center mt-2"
                           key={itineraryKey}
                         >
                           <input
@@ -284,7 +284,7 @@ const Itinerary = ({
                 )
               ) : (
                 <div className="itinerary_display_no_card_container">
-                  <h3>You have no Item on this day</h3>
+                  <h3 className="fs-5">You have no Item on this day</h3>
                 </div>
               )
             ) : null}

@@ -5,13 +5,16 @@ import { BsSuitHeartFill } from "react-icons/bs";
 import { AiFillStar } from "react-icons/ai";
 import { Card, Dropdown, Menu, Space } from "antd";
 import Swal from "sweetalert2";
-import { ITripPlanningItineraryDay } from "../../../../api/interfaces";
+import {
+  IInitialTripData,
+  ITripPlanningItineraryDay,
+} from "../../../../api/interfaces";
 
 interface Props {
   itineraryData: ITripPlanningItineraryDay[];
   tripDays: any;
   setItineraryData: any;
-  tripPlanningData: any;
+  tripPlanningData: IInitialTripData;
   setTripPlanningData: any;
   item: any;
   liked: any;
@@ -81,7 +84,7 @@ const TripPlanningBudgetListCard = ({
         ...tripPlanningData,
         spentBudget:
           tripPlanningData.spentBudget +
-          parseInt(item.price) * parseInt(tripPlanningData.numberOfTraveler),
+          parseInt(item.price) * tripPlanningData.numberOfTraveler,
       });
       // on successful, display success message
       Swal.fire({

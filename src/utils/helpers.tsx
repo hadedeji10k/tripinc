@@ -3,6 +3,7 @@ import {
   IRefreshToken,
   ISignUpAndInResponse,
   ILocalUserProfile,
+  ITripPlanningItineraryDay,
 } from "../api/interfaces";
 import { refreshToken } from "../api/responseHandlers";
 import Swal from "sweetalert2";
@@ -413,13 +414,14 @@ export const localGetOrdersLength = async () => {
 // generate array with date
 export const generateDateArray = (startDate: Date, endDate: Date) => {
   const date = new Date(startDate.getTime());
-  let array: any = [];
+  let array: ITripPlanningItineraryDay[] = [];
 
   while (date <= endDate) {
     // const arrayDateName = `${monthNames[date.getMonth()]} ${date.getDate()}`;
     array.push({
       date: date.toISOString(),
       itineraries: [],
+      customEvents: [],
     });
     date.setDate(date.getDate() + 1);
   }

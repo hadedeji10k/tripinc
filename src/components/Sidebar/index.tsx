@@ -92,7 +92,7 @@ const Sidebar = ({
           <SidebarMenu>
             <SidebarLink to="/explore">Explore</SidebarLink>
             <SidebarLink to="/bucket-list">Bucket List</SidebarLink>
-            <SidebarLink to="/my-trips">My Trips</SidebarLink>
+            <SidebarLink to="/my-trips">Plan a trip</SidebarLink>
             {/* <SidebarLink to="/">
               <MdOutlineLanguage />
               &nbsp; Language

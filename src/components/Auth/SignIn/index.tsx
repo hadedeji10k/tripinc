@@ -285,7 +285,7 @@ const Signin = () => {
             </Formik>
           </div>
           <div className="have_account">
-            <h3>
+            <h3 className="fs-5">
               Don’t have an account?{" "}
               <a href="/#/sign-up" className="login_text">
                 Sign up here.

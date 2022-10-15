@@ -38,6 +38,7 @@ Marker.propTypes = {
   lng: PropTypes.string,
   lat: PropTypes.string,
   color: PropTypes.string,
+  options: PropTypes.object,
 };
 
 export default Marker;

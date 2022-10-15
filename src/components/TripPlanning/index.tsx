@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 // import { geocodeByAddress } from "react-google-places-autocomplete";
 import "./TripPlanning.css";
 import {
+  IInitialTripData,
   ITravelDetails,
   ITripPlanningItineraryDay,
 } from "../../api/interfaces";
@@ -29,7 +30,7 @@ const trip_planning_menu = [
   },
 ];
 
-const initialTripData = {
+const initialTripData: IInitialTripData = {
   tripLocation: "",
   tripLocationPosition: { lat: 41.903839, lng: 12.45249 },
   startDate: new Date(),

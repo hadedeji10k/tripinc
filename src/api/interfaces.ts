@@ -563,9 +563,35 @@ export interface ITripPlanningItineraries {
     mapColor: string,
 }
 
-export interface ITripPlanningItineraryDay {
+export interface ITripPlanningCustomEventItem {
+    eventName: string,
+    location: string,
     date: Date,
+    time: string,
+    categories?: string,
+    city: string,
+    country: string,
+    longitude: number,
+    latitude: number,
+    postalCode: string,
+    expectedDuration: number,
+    eventImage: string
+}
+
+export interface ITripPlanningCustomEvents {
+    item: ITripPlanningCustomEventItem,
+    customNote: string,
+    startTime: string | Date,
+    endTime: string | Date,
+    numberOfPeople: number,
+    customNoteStatus: boolean,
+    mapColor: string,
+}
+
+export interface ITripPlanningItineraryDay {
+    date: Date | string,
     itineraries: ITripPlanningItineraries[],
+    customEvents: ITripPlanningCustomEvents[]
 }
 
 export interface IAdminDashboard {
@@ -578,3 +604,17 @@ export interface IAdminDashboard {
     totalBookings: number,
     recentTrips: ITripPlanningData[]
 }
+
+export interface IInitialTripData {
+    tripLocation: string,
+    tripLocationPosition: { lat: number, lng: number },
+    startDate: Date,
+    endDate: Date,
+    tripType: string,
+    numberOfTraveler: number,
+    budget: number,
+    selectedAreaOfInterest: string[],
+    spentBudget: number,
+    budgetWarning: number,
+    tripDaysColors: string[]
+};

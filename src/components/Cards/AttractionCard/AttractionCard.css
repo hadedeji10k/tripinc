@@ -15,7 +15,7 @@
 
 .card_container {
     max-width: 320px;
-    max-height: 430px;
+    /* max-height: 430px; */
     border: 2px solid #E6E8EC;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
@@ -39,7 +39,7 @@
 .card_details {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
 }
 
 .card_title {

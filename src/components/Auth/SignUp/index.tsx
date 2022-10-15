@@ -202,7 +202,7 @@ const Signup = () => {
           {/* End of Formik */}
         </div>
         <div className="have_account">
-          <h3>
+          <h3 className="fs-5">
             Already have an account?{" "}
             <a href="/#/sign-in" className="login_text">
               Login

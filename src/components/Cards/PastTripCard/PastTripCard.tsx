@@ -1,24 +1,35 @@
 import "./PastTripCard.css";
 // import { IoIosArrowDown } from "react-icons/io";
-import { currencySymbolHelper } from "../../../utils/helpers";
+import {
+  currencySymbolHelper,
+  formatDateToMonthAndDay,
+} from "../../../utils/helpers";
 import { BsCalendarCheck } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { ITripPlanningData } from "../../../api/interfaces";
 
-const PastTripCard = ({ image, location, budget, tripId }) => {
+const PastTripCard = ({
+  item,
+  image,
+}: {
+  item: ITripPlanningData;
+  image: string;
+}) => {
   return (
     <>
       <div className="past_card_container">
         <div className="past_image_container">
-          <Link to={`/my-trips/${tripId}`}>
+          <Link to={`/my-trips/${item.id}`}>
             <img className="past_image" src={image.toString()} alt="" />
           </Link>
         </div>
         <div className="past_card_details">
-          <Link to={`/my-trips/${tripId}`}>
-            <p className="past_card_title">{location}</p>
+          <Link to={`/my-trips/${item.id}`}>
+            <p className="past_card_title">{item.startDestination}</p>
           </Link>
           <p className="other_details">
-            <BsCalendarCheck /> March 1, 2022 - March 3, 25 2022
+            <BsCalendarCheck /> {formatDateToMonthAndDay(item.startDate)} -{" "}
+            {formatDateToMonthAndDay(item.endDate)}
           </p>
           {/* <div className="button_container">
             <button className="past_card_button">View Invoice</button>
@@ -29,7 +40,7 @@ const PastTripCard = ({ image, location, budget, tripId }) => {
             <p className="small_title"> Budget Set</p>
             <p className="">
               <b>
-                {currencySymbolHelper("GBP")} {budget}
+                {currencySymbolHelper("GBP")} {item.budget}
               </b>
             </p>
           </div>

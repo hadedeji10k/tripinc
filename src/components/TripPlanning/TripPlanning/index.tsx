@@ -5,6 +5,7 @@ import Budget from "./Budget";
 import TravelDetails from "./TravelDetails";
 import {
   IDeal,
+  IInitialTripData,
   IPagination,
   ITravelDetails,
   ITripPlanningItineraryDay,
@@ -18,7 +19,7 @@ interface Prop {
   tripDays: any;
   itineraryData: ITripPlanningItineraryDay[];
   setItineraryData: any;
-  tripPlanningData: any;
+  tripPlanningData: IInitialTripData;
   setTripPlanningData: any;
   handleMainTripPlanningMenuClick: any;
 }
@@ -79,7 +80,8 @@ const TripPlanning = ({
   useEffect(() => {
     setIsBucketListLoading(true);
     if (userId) {
-      getUserWishListAsAttraction(userId, "PageSize=5")
+      const query = `Location=${tripPlanningData.tripLocation}&PageSize=5`;
+      getUserWishListAsAttraction(userId, query)
         .then((res) => {
           const wishListItems = res.data.items ? res.data.items : [];
           setWishListData(wishListItems);
@@ -146,11 +148,12 @@ const TripPlanning = ({
       {/* THE IMAGE CONTAINER */}
 
       <div className="trip_planning_header">
-        {/* <img className="trip_planning_header_image" src="https://images.unsplash.com/photo-1596889157941-d2651f70a4f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHRvdXJpc3R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" /> */}
         <div className="trip_planning_header_text">
-          <h3 className="trip_planning_header_title">Explore Cities!</h3>
+          <h3 className="trip_planning_header_title fs-1 fw-bold">
+            {tripPlanningData.tripLocation}
+          </h3>
           <p className="trip_planning_header_description">
-            You can search cities you wish on this page using the search form.
+            You can edit and plan your trip.
           </p>
         </div>
       </div>

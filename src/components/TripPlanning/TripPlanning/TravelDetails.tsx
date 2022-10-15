@@ -68,12 +68,11 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
     const date = new Date(data.arrivalDate),
       day = date.getDate(),
       month = monthNames[date.getMonth()],
-      timeCombo = `${day} ${month}, ${data.arrivalTime[0]} - ${data.arrivalTime[1]}`,
+      timeCombo = `${day} ${month}, ${data.arrivalTime} - ${data.arrivalTime}`,
       time = {
         day,
         month,
-        time1: data.arrivalTime[0],
-        time2: data.arrivalTime[1],
+        arrivalTime: data.arrivalTime,
       };
 
     const newFlight = {
@@ -188,7 +187,7 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
               <div className="w_100">
                 <label className="signin_label">Time of Arrival</label>
 
-                <TimePicker.RangePicker
+                <TimePicker
                   style={{ display: "inline-flex" }}
                   className="signin_input m_b_15 w_80 travel_details_time_picker"
                   onChange={(time, timeString) => {
@@ -196,10 +195,7 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
                     formik.setFieldValue("arrivalTime", timeString);
                   }}
                   name="arrivalTime"
-                  defaultValue={[
-                    moment("00:00:00", "HH:mm:ss"),
-                    moment("00:00:00", "HH:mm:ss"),
-                  ]}
+                  defaultValue={moment("00:00:00", "HH:mm:ss")}
                 />
                 {formik.errors.arrivalTime && formik.touched.arrivalTime ? (
                   <p className="red_alert">{formik.errors.arrivalTime}</p>

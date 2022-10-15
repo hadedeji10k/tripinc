@@ -327,12 +327,13 @@
     .explore_page_search_featured_form {
         flex-direction: column;
         justify-content: center;
+        gap: 10px;
     }
 
     .explore_page_search_third_input,
     .third_party_date_picker,
     .explorer_page_third_party_select {
-        width: 80%;
+        width: 80% !important;
         margin: auto;
         margin-bottom: 10px;
     }

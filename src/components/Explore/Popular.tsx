@@ -6,7 +6,7 @@ import "antd/dist/antd.min.css";
 import "./ExplorePage.css";
 // import { preferencedata, tourData } from "../../currentUserData";
 // import { attraction } from '../../interfaces';
-import Card from "../Cards/TripCard/TripCard";
+import Card from "../Cards/AttractionCard/AttractionCard";
 
 import { BiSearch } from "react-icons/bi";
 import { getAllCategories, getAllTours, getUserWishList } from "../../api";

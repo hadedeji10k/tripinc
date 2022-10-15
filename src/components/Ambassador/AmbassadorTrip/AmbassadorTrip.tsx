@@ -182,15 +182,13 @@ const AmbassadorTrip = () => {
                   <PastTripCard
                     key={item.id}
                     image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                    location={item.startDestination}
-                    budget={item.budget}
-                    tripId={item.id}
+                    item={item}
                   />
                 ))}
               </div>
             ) : (
               <>
-                <h3 className="no_data_text">
+                <h3 className="mb-3 mt-3 fs-5 text-center">
                   {currentData === "Approved"
                     ? "You do not have any approved Trips"
                     : currentData === "Pending"

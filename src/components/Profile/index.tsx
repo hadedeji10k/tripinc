@@ -103,10 +103,13 @@ const Profile = (): any => {
       setIsLoading(true);
       getFullUserProfile().then((res) => {
         setFullUserProfile(res);
+        console.log(res);
         setIsUserAmbassador(
-          res.role
-            ? res?.role.map((item) => item.toLowerCase()).includes("ambassador")
-            : true
+          res.roles
+            ? res?.roles
+                .map((item) => item.toLowerCase())
+                .includes("ambassador")
+            : false
         );
 
         getUserPreferences(userId).then((response) => {
@@ -208,11 +211,17 @@ const Profile = (): any => {
             <div className="ambassador_banner my-3">
               {fullUserProfile?.emailVerified ? (
                 <>
-                  <p className="my-1 me-2">
+                  {/* <p className="my-1 me-2">
                     Do you want to see your trip planner's application status?
                   </p>
                   <p className="my-1">
                     <Link to={"/ambassador-application/edit"}>Click here</Link>
+                  </p> */}
+                  <p className="my-1 me-2">
+                    Do you wish to apply as a trip planner?
+                  </p>
+                  <p className="my-1">
+                    <Link to={"/ambassador-application/new"}>Click here</Link>
                   </p>
                 </>
               ) : (
@@ -235,6 +244,7 @@ const Profile = (): any => {
                 </p>
               </div>
             ) : null}
+
             {data[0].slug === "personal_info" ? (
               <PersonalInfoPage
                 userProfile={fullUserProfile}

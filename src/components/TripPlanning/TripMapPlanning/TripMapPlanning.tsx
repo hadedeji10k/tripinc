@@ -47,6 +47,7 @@ const TripMapPlanning = ({
   // }, []);
 
   useEffect(() => {
+    console.time("From UseEffect");
     let newPlace: any = [];
     itineraryData.map((itinerary: any) => {
       itinerary.itineraries.map((item: any) => {
@@ -59,7 +60,9 @@ const TripMapPlanning = ({
         newPlace.push(toBeAdded);
       });
     });
+    console.log("Place selected", newPlace);
     setPlaces(newPlace);
+    console.timeEnd("From UseEffect");
   }, [itineraryData]);
 
   // Return map bounds based on list of places
@@ -95,14 +98,19 @@ const TripMapPlanning = ({
 
   // testing google
   const apiIsLoaded = (map, maps, places) => {
+    console.time("From Api");
     if (places.length > 0) {
+      console.log("Places is more than zero places");
       // Get bounds by our places
       const bounds = getMapBounds(map, maps, places);
       // Fit map to bounds
       map.fitBounds(bounds);
       // Bind the resize listener
       bindResizeListener(map, maps, bounds);
+    } else {
+      console.log("Places is zero");
     }
+    console.timeEnd("From Api");
   };
 
   // const options = {
@@ -116,7 +124,7 @@ const TripMapPlanning = ({
           <>
             {places.length > 0 ? (
               <GoogleMapReact
-                bootstrapURLKeys={{ key: GOOGLEAPIKEY }}
+                bootstrapURLKeys={{ key: GOOGLEAPIKEY, libraries: ["places"] }}
                 defaultZoom={8}
                 defaultCenter={{
                   lat: places[0].position.lat,
@@ -146,8 +154,9 @@ const TripMapPlanning = ({
                 <Marker
                   key={1}
                   text={""}
-                  lat={tripPlanningData.tripLocationPosition.lat as any}
-                  lng={tripPlanningData.tripLocationPosition.lng as any}
+                  lat={tripPlanningData.tripLocationPosition.lat.toString()}
+                  lng={tripPlanningData.tripLocationPosition.lng.toString()}
+                  options={{ collisionBehavior: "REQUIRED" }}
                 />
               </GoogleMapReact>
             )}

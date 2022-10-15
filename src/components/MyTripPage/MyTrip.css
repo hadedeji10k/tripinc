@@ -117,12 +117,6 @@ select::-ms-expand {
     display: none;
 }
 
-.no_data_text {
-    margin-top: 60px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
 .plus_icon {
     color: #92A5EF;
     /* background: #; */

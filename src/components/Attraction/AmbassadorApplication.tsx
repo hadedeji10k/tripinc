@@ -294,11 +294,8 @@ const AmbassadorApplication = () => {
                       defaultValue={data.fullName}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      disabled={edit ? !formEdit : false}
+                      disabled
                     />
-                    {errors.fullName && touched.fullName ? (
-                      <p className="red_alert">{errors.fullName}</p>
-                    ) : null}
                   </div>
                   <div>
                     <label className="basic_details_label">Date of Birth</label>
