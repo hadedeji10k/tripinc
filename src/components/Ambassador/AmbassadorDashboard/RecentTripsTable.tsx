@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IAdminDashboard } from "../../../api/interfaces";
 import { formatDateToMonthAndDay } from "../../../utils/helpers";
+import "./Dashboard.css";
 
 const RecentTripsTable = ({
   props,
@@ -15,7 +16,7 @@ const RecentTripsTable = ({
   props: IAdminDashboard["recentTrips"];
 }) => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className="dashboard_trips_table" component={Paper}>
       <Table>
         <TableHead>
           <TableRow>

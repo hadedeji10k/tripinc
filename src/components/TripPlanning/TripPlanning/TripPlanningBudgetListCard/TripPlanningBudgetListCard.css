@@ -40,7 +40,7 @@
 .trip_planning_budget_card_details {
     display: flex;
     flex-direction: column;
-    padding: 10px 20px;
+    padding: 10px;
     background: #fff;
     overflow: hidden;
     border-bottom-left-radius: 20px;

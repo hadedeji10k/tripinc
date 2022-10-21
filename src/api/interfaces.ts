@@ -470,9 +470,11 @@ export interface IFlight {
     time: any,
     timeCombo: any,
     airportName: string,
+    date: string,
+    dateDetails: string,
 }
 export interface ITravelDetails {
-    flights?: IFlight[],
+    flights: IFlight[],
     stays?: any[],
     rentalCars?: any[],
 }

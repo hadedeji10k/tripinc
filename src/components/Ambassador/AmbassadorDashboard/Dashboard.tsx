@@ -104,7 +104,7 @@ const Dashboard = () => {
 
         <br />
         <h2 className="large_title fs-4 mb-2">Recent Trips</h2>
-        <div className="" style={{ width: "100%", maxWidth: "100%" }}>
+        <div className="" style={{ width: "100%", maxWidth: "100%", overflowX: "auto" }}>
           <RecentTripsTable props={dashboard ? dashboard?.recentTrips : []} />
         </div>
         <br />

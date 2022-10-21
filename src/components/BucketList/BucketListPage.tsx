@@ -307,7 +307,7 @@ const BucketListPage = () => {
           ) : null}
 
           {wishListData.length > 0 ? (
-            <div className="card">
+            <div className="featured_card">
               {wishListData.map((item) => (
                 <div key={`${item.id}${item.itemType}`}>
                   <Card

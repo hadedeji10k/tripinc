@@ -117,28 +117,33 @@ const TripPlanningBucketList = ({
               </span>
             </div>
             <div className="explore_page_number">
-              <button
-                className={
-                  pagination?.hasPrevious
-                    ? "explore_navigation_button_active"
-                    : "explore_navigation_button"
-                }
-                onClick={handlePaginationPrev}
-                disabled={!pagination?.hasPrevious}
-              >
-                Prev
-              </button>
-              <button
-                className={
-                  pagination?.hasNext
-                    ? "explore_navigation_button_active"
-                    : "explore_navigation_button"
-                }
-                onClick={handlePaginationNext}
-                disabled={!pagination?.hasNext}
-              >
-                Next
-              </button>
+              {pagination?.hasPrevious ? (
+                <button
+                  className={
+                    pagination?.hasPrevious
+                      ? "explore_navigation_button_active"
+                      : "explore_navigation_button"
+                  }
+                  onClick={handlePaginationPrev}
+                  disabled={!pagination?.hasPrevious}
+                >
+                  Prev
+                </button>
+              ) : null}
+
+              {pagination?.hasNext ? (
+                <button
+                  className={
+                    pagination?.hasNext
+                      ? "explore_navigation_button_active"
+                      : "explore_navigation_button"
+                  }
+                  onClick={handlePaginationNext}
+                  disabled={!pagination?.hasNext}
+                >
+                  Next
+                </button>
+              ) : null}
             </div>
           </>
         ) : (

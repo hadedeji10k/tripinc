@@ -123,7 +123,7 @@ const TripPlanningBudgetListCard = ({
           <div className="trip_planning_budget_card_details">
             <p className="trip_planning_budget_card_title">{item.title}</p>
             <hr />
-            <div className="card_price_review">
+            <div className="card_price_review mb-0 mt-0">
               <p className="trip_planning_budget_card_price">
                 {" "}
                 from {item.price}

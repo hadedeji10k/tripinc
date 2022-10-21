@@ -1,0 +1,11 @@
+.dashboard_trips_table {
+    width: 100% !important
+}
+
+@media screen and (max-width: 550px) {
+    .dashboard_trips_table {
+        width: 0 !important;
+        overflow-x: visible !important;
+    }
+
+}

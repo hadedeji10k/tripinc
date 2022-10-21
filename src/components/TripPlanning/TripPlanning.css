@@ -114,7 +114,7 @@
 .trip_planning_menu_row {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    /* align-items: center; */
     width: 100%;
     margin-top: 10px;
     cursor: pointer;
@@ -284,7 +284,6 @@
 .travel_details_button_container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     width: 90%;
     flex-wrap: wrap;
     justify-items: flex-start;
@@ -297,6 +296,7 @@
     border: 3px solid #dbdde1;
     border-radius: 15px;
     margin-bottom: 20px;
+    max-width: 450px;
 }
 
 .flight_details_large_row {
@@ -370,7 +370,7 @@
     width: 90%;
     margin-top: 10px;
     cursor: pointer;
-    margin-left: 10%;
+    margin-left: 5%;
 }
 
 
