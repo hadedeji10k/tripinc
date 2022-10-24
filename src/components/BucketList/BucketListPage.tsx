@@ -45,7 +45,7 @@ const BucketListPage = () => {
   useEffect(() => {
     setIsLoading(true);
     if (userId) {
-      getUserWishListAsAttraction(userId, "PageSize=5")
+      getUserWishListAsAttraction(userId)
         .then((res) => {
           setWishListData(res.data.items ? res.data.items : []);
           setInitialWishListData(res.data.items ? res.data.items : []);
