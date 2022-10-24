@@ -9,11 +9,11 @@ import { Input, Select, message, Spin, DatePicker, Button } from "antd";
 import Autocomplete from "react-google-autocomplete";
 import { UploadOutlined } from "@mui/icons-material";
 import moment from "moment";
-import { GOOGLEAPIKEY } from "../../utils/constants";
+import { GOOGLEAPIKEY } from "../../../utils/constants";
 import { Formik } from "formik";
-import { AmbassadorApplicationSchema } from "../../schema/yupSchema";
-import { localGetUserFullName } from "../../utils/helpers";
-import { TripPlannerApplicationData } from "../Ambassador/Admin/AdminAmbassadorApplication";
+import { AmbassadorApplicationSchema } from "../../../schema/yupSchema";
+import { localGetUserFullName } from "../../../utils/helpers";
+import { TripPlannerApplicationData } from "../Admin/AdminAmbassadorApplication";
 import Swal from "sweetalert2";
 
 const { Option } = Select;
@@ -362,14 +362,6 @@ const AmbassadorApplication = () => {
                       <Autocomplete
                         apiKey={GOOGLEAPIKEY}
                         onPlaceSelected={(selected: any) => {
-                          // setCountriesVisited((prev) => {
-                          //   if (prev.includes(selected.formatted_address)) {
-                          //     return [...prev];
-                          //   } else {
-                          //     return [...prev, selected.formatted_address];
-                          //   }
-                          // });
-
                           setData((prev) => {
                             return {
                               ...prev,
@@ -398,7 +390,6 @@ const AmbassadorApplication = () => {
                     {data.countriesVisited.length > 0 && (
                       <div className="bucket_list_tag_container">
                         {data.countriesVisited.map((item, key) => (
-                          // <span key={item.id} className="bucket_list_tag">{item.title}</span>
                           <span
                             key={key}
                             id={key.toString()}
@@ -424,13 +415,6 @@ const AmbassadorApplication = () => {
                         // ref={inputRef}
                         apiKey={GOOGLEAPIKEY}
                         onPlaceSelected={(selected: any) => {
-                          // setCitiesVisited((prev) => {
-                          //   if (prev.includes(selected.formatted_address)) {
-                          //     return [...prev];
-                          //   } else {
-                          //     return [...prev, selected.formatted_address];
-                          //   }
-                          // });
                           setData((prev) => {
                             return {
                               ...prev,

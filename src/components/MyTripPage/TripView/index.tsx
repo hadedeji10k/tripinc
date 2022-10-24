@@ -10,7 +10,7 @@ import {
   ITripPlanningItineraryDay,
 } from "../../../api/interfaces";
 import {
-  generateDateArray,
+  generateTripDateArray,
   generateTripColorArray,
   localGetUserId,
 } from "../../../utils/helpers";
@@ -138,7 +138,10 @@ const TripView = () => {
     setTripDays(dates);
 
     // update this with the fetched data
-    const generated = generateDateArray(tripDate.startDate, tripDate.endDate);
+    const generated = generateTripDateArray(
+      tripDate.startDate,
+      tripDate.endDate
+    );
     const data = newTripData as any;
     console.log(newTripData);
     setItineraryData(data);

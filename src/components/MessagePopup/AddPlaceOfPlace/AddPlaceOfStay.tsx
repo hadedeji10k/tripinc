@@ -3,13 +3,12 @@ import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import "./AddPlaceOfStay.css";
 import { MdClose } from "react-icons/md";
-// import { FaFacebookF } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
 
 // interface for AddPlaceOfStay
-interface ReviewModalProp {
-  showReviewModal: Boolean;
-  setShowReviewModal: React.Dispatch<React.SetStateAction<Boolean>>;
+interface ModalProp {
+  showModal: Boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // styled component for the AddPlaceOfStay
@@ -28,17 +27,14 @@ const Background: any = styled.div`
 `;
 
 // component for the AddPlaceOfStay
-const AddPlaceOfStay = ({
-  showReviewModal,
-  setShowReviewModal,
-}: ReviewModalProp) => {
+const AddPlaceOfStay = ({ showModal, setShowModal }: ModalProp) => {
   // this for checking for mainly when the esc key is pressed to close the modal
   const modalRef = useRef<HTMLDivElement>();
 
   // animation for the modal to pop up when the modal is clicked
   const animation = useSpring({
-    opacity: showReviewModal ? 1 : 0,
-    transform: showReviewModal ? "translateZ(0)" : "translateZ(-100%)",
+    opacity: showModal ? 1 : 0,
+    transform: showModal ? "translateZ(0)" : "translateZ(-100%)",
     config: {
       // mass: 1,
       // tension: 300,
@@ -51,18 +47,18 @@ const AddPlaceOfStay = ({
   const closeModal = (e: React.FormEvent): void => {
     e.preventDefault();
     if (modalRef.current === e.target) {
-      setShowReviewModal(false);
+      setShowModal(false);
     }
   };
 
   // function for checking for the esc key press
   const keyPress = useCallback(
     (e: React.KeyboardEvent | any) => {
-      if (e.key === "Escape" && showReviewModal) {
-        setShowReviewModal(false);
+      if (e.key === "Escape" && showModal) {
+        setShowModal(false);
       }
     },
-    [setShowReviewModal, showReviewModal]
+    [setShowModal, showModal]
   );
 
   // useEffect for checking for the esc key press
@@ -76,7 +72,7 @@ const AddPlaceOfStay = ({
   // return the AddPlaceOfStay
   return (
     <>
-      {showReviewModal ? (
+      {showModal ? (
         // <div className="background">
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div className="z_modal" style={animation}>
@@ -101,7 +97,7 @@ const AddPlaceOfStay = ({
               <div>
                 <MdClose
                   className="close_modal_button"
-                  onClick={() => setShowReviewModal((prev) => !prev)}
+                  onClick={() => setShowModal((prev) => !prev)}
                 />
               </div>
             </div>

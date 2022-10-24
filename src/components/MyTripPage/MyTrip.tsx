@@ -28,10 +28,10 @@ const MyTrip = () => {
   // set the menudata to a state to manage the menu
   const [menuData, setMenuData] = useState(menudata);
   //   get the dummy data and set the attraction data
-  const [attractionData, setAttractionData] = useState<ITripPlanningData[]>([]);
-  const [initialAttractionData, setInitialAttractionData] = useState<
-    ITripPlanningData[]
-  >([]);
+  const [tripData, setTripData] = useState<ITripPlanningData[]>([]);
+  const [initialTripData, setInitialTripData] = useState<ITripPlanningData[]>(
+    []
+  );
   const [pagination, setPagination] = useState<IPagination | any>();
 
   //   using this to set the current data to filter the data
@@ -51,8 +51,8 @@ const MyTrip = () => {
   useEffect(() => {
     setIsLoading(true);
     getUserTrips(userId).then((res) => {
-      setAttractionData(res.data.items);
-      setInitialAttractionData(res.data.items);
+      setTripData(res.data.items);
+      setInitialTripData(res.data.items);
       setPagination({
         hasNext: res.data.hasNext,
         hasPrevious: res.data.hasPrevious,
@@ -105,10 +105,10 @@ const MyTrip = () => {
     } else {
       setIsSearching(false);
     }
-    const filtered = initialAttractionData.filter((item) =>
+    const filtered = initialTripData.filter((item) =>
       item.startDestination.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setAttractionData(filtered);
+    setTripData(filtered);
   };
 
   const handlePaginationPrev = async () => {
@@ -117,8 +117,8 @@ const MyTrip = () => {
       pagination?.pageSize
     }`;
     await getUserTrips(userId, query).then((res) => {
-      setAttractionData(res.data.items);
-      setInitialAttractionData(res.data.items);
+      setTripData(res.data.items);
+      setInitialTripData(res.data.items);
 
       setPagination({
         hasNext: res.data.hasNext,
@@ -138,8 +138,8 @@ const MyTrip = () => {
       pagination?.pageSize
     }`;
     await getUserTrips(userId, query).then((res) => {
-      setAttractionData(res.data.items);
-      setInitialAttractionData(res.data.items);
+      setTripData(res.data.items);
+      setInitialTripData(res.data.items);
 
       setPagination({
         hasNext: res.data.hasNext,
@@ -227,9 +227,9 @@ const MyTrip = () => {
           </div>
           <div className="my_trip_container">
             {/* <h3>tripPage</h3> */}
-            {attractionData.length > 0 ? (
+            {tripData.length > 0 ? (
               <div className="trip_card">
-                {attractionData.map((item) => (
+                {tripData.map((item) => (
                   <PastTripCard
                     key={item.id}
                     image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
@@ -252,7 +252,7 @@ const MyTrip = () => {
             {isSearching ? (
               <button
                 onClick={() => {
-                  setAttractionData(initialAttractionData);
+                  setTripData(initialTripData);
                   setIsSearching(false);
                 }}
               >

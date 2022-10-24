@@ -9,7 +9,7 @@ import {
 } from "../../api/interfaces";
 import {
   localGetUserId,
-  generateDateArray,
+  generateTripDateArray,
   generateTripColorArray,
 } from "../../utils/helpers";
 import { dayNames, monthNames } from "../../utils/constants";
@@ -67,10 +67,10 @@ const TripPlanning = () => {
   //   rentalCars: [],
   // });
 
-  // states to manage itinerary, generateDateArray from a helper function
+  // states to manage itinerary, generateTripDateArray from a helper function
   const [itineraryData, setItineraryData] = useState<
     ITripPlanningItineraryDay[]
-  >(generateDateArray(tripDate.startDate, tripDate.endDate));
+  >(generateTripDateArray(tripDate.startDate, tripDate.endDate));
 
   // user ID
   // const userId = localGetUserId();
@@ -118,7 +118,10 @@ const TripPlanning = () => {
     // for editing:: Fetch itineraryData from database
     // so if editing is enabled, we make use of the fetched data else we generate a new data object
     // Also map through the fetched data and set the spentBudget to the accumulated prices of the selected attractions
-    const generated = generateDateArray(tripDate.startDate, tripDate.endDate);
+    const generated = generateTripDateArray(
+      tripDate.startDate,
+      tripDate.endDate
+    );
     setItineraryData(generated);
 
     // generate color array for map

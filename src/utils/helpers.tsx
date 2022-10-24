@@ -395,24 +395,39 @@ export const localGetOrdersLength = async () => {
 };
 
 // generate array with date
-// export const generateDateArray = (startDate: Date, endDate: Date) => {
-//   const date = new Date(startDate.getTime());
-//   let array: any = {};
+export const generateBucketListTripDateArray = (
+  itemId: number,
+  tripId: number,
+  noOfPartner: number,
+  startDate: Date,
+  endDate: Date
+) => {
+  startDate = new Date(startDate);
+  endDate = new Date(endDate);
+  const date = new Date(startDate.getTime());
+  let array: any = [];
 
-//   while (date <= endDate) {
-//     const arrayDateName = `${monthNames[date.getMonth()]} ${date.getDate()}`;
-//     array = {
-//       ...array,
-//       [arrayDateName]: [],
-//     };
-//     date.setDate(date.getDate() + 1);
-//   }
+  while (date <= endDate) {
+    const arrayDateName = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+    array.push({
+      label: arrayDateName,
+      date: date.toISOString(),
+    });
+    date.setDate(date.getDate() + 1);
+  }
 
-//   return array;
-// };
+  array = array.map((item) => {
+    return {
+      label: item.label,
+      key: `${itemId},${tripId},${item.date},${noOfPartner}`,
+    };
+  });
+
+  return array;
+};
 
 // generate array with date
-export const generateDateArray = (startDate: Date, endDate: Date) => {
+export const generateTripDateArray = (startDate: Date, endDate: Date) => {
   const date = new Date(startDate.getTime());
   let array: ITripPlanningItineraryDay[] = [];
 

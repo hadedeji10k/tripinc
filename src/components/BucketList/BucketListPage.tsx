@@ -3,24 +3,33 @@ import { useState, useEffect } from "react";
 import { Spin } from "antd";
 import "antd/dist/antd.min.css";
 import "./BucketListPage.css";
-import { locationdata } from "../../currentUserData";
-// import { attraction } from '../../interfaces';
-import Card from "../Cards/AttractionCard/AttractionCard";
-
 import { BiSearch } from "react-icons/bi";
-import { localGetUserId } from "../../utils/helpers";
-import { getUserWishListAsAttraction } from "../../api";
-import { IDeal, IPagination } from "../../api/interfaces";
+import {
+  localGetUserId,
+  generateBucketListTripDateArray,
+} from "../../utils/helpers";
+import { getUserTrips, getUserWishListAsAttraction } from "../../api";
+import {
+  IWishListData,
+  IPagination,
+  ITripPlanningData,
+} from "../../api/interfaces";
 import { removeFromWishList } from "../../api/responseHandlers";
 import Swal from "sweetalert2";
+import BucketListCard from "../Cards/BucketListCard/BucketListCard";
 
 // React component of this page
 const BucketListPage = () => {
   // Defining states of this page
 
   // state to manage the attraction data to be mapped into cards (using this in order to manage the attraction data in case it is filtered)
-  const [wishListData, setWishListData] = useState<IDeal[]>([]);
-  const [initialWishListData, setInitialWishListData] = useState<IDeal[]>([]);
+  const [wishListData, setWishListData] = useState<IWishListData[]>([]);
+  const [initialWishListData, setInitialWishListData] = useState<
+    IWishListData[]
+  >([]);
+
+  // trip data to book from bucket list
+  const [tripData, setTripData] = useState<ITripPlanningData[]>([]);
 
   const [pagination, setPagination] = useState<IPagination | any>();
 
@@ -36,7 +45,7 @@ const BucketListPage = () => {
   useEffect(() => {
     setIsLoading(true);
     if (userId) {
-      getUserWishListAsAttraction(userId)
+      getUserWishListAsAttraction(userId, "PageSize=5")
         .then((res) => {
           setWishListData(res.data.items ? res.data.items : []);
           setInitialWishListData(res.data.items ? res.data.items : []);
@@ -49,7 +58,50 @@ const BucketListPage = () => {
             totalPages: res.data.totalPages,
             totalCount: res.data.totalCount,
           });
-          setIsLoading(false);
+
+          getUserTrips(userId, "Status=true&PageSize=10").then((result) => {
+            setTripData(result.data.items);
+            // // create empty array to store the results after looping
+            // let emptyArray: IWishListData[] = [];
+            // // loop through the items on bucketList
+            // for (let i = 0; i < res.data.items.length; i++) {
+            //   // get the element from the bucket
+            //   const wishListElement: IWishListData = res.data.items[i];
+            //   // create an empty dropdown array for an item in bucketList
+            //   let dropDownMenu: any = [];
+            //   // loop through the items in the trips
+            //   for (let k = 0; k < result.data.items.length; k++) {
+            //     // get an element of a trip
+            //     const tripElement: ITripPlanningData = result.data.items[k];
+            //     // check if the location of the trip and the location of the bucket item matches
+            //     if (
+            //       wishListElement.location
+            //         .toLowerCase()
+            //         .includes(tripElement.startDestination.toLowerCase())
+            //     ) {
+            //       // if it matches, create a new array of the days in the trip
+            //       const generatedDay = generateBucketListTripDateArray(
+            //         tripElement.startDate,
+            //         tripElement.endDate
+            //       );
+            //       // create an object to add to the bucket item dropDownMenu
+            //       let obj = {
+            //         label: tripElement.startDestination,
+            //         children: generatedDay,
+            //       };
+            //       dropDownMenu.push(obj);
+            //     }
+            //   }
+            //   // assign the dropDownMenu generated to the bucket list item dropdown
+            //   wishListElement.dropDown = dropDownMenu;
+            //   // push the bucket item into the bucket lists
+            //   emptyArray.push(wishListElement);
+            // }
+            // // set them into the state
+            // setWishListData(emptyArray);
+            // setInitialWishListData(emptyArray);
+            setIsLoading(false);
+          });
         })
         .catch((err) => {
           setWishListData([]);
@@ -60,118 +112,83 @@ const BucketListPage = () => {
   }, [userId]);
 
   useEffect(() => {
-    // getting the input element
-    let input = document.getElementById("input") as HTMLInputElement;
     // if the input value is not null, set the search result field to the input's value
-    if (input.value !== "") {
-      setSearchResultField(input.value);
+    if (inputField !== "") {
+      setSearchResultField(inputField);
+    } else {
+      setSearchResultField("All");
     }
 
     return () => {};
-  }, [wishListData, inputField, initialWishListData]);
+  }, [inputField]);
 
-  // useEffect to manage the prev and next buttons, it determines if there are location tags more than the screen width and hide them (the buttons) if there is no location tags more than the screen width
-  // useEffect(() => {
-  //   let element = document.getElementById(
-  //     "preferences_tag_container"
-  //   ) as HTMLElement;
-  //   if (
-  //     element.clientWidth === element.scrollWidth ||
-  //     element.clientWidth > element.scrollWidth
-  //   ) {
-  //     let prev = document.getElementById("prev") as HTMLElement;
-  //     let next = document.getElementById("next") as HTMLElement;
-  //     prev.style.display = "none";
-  //     next.style.display = "none";
-  //   }
-  // }, []);
+  useEffect(() => {
+    // create empty array to store the results after looping
+    let emptyArray: IWishListData[] = [];
+    // loop through the items on bucketList
+    for (let i = 0; i < initialWishListData.length; i++) {
+      // get the element from the bucket
+      const wishListElement: IWishListData = initialWishListData[i];
+      // create an empty dropdown array for an item in bucketList
+      let dropDownMenu: any = [];
+      // loop through the items in the trips
+      for (let k = 0; k < tripData.length; k++) {
+        // get an element of a trip
+        const tripElement: ITripPlanningData = tripData[k];
+        // check if the location of the trip and the location of the bucket item matches
+        if (
+          wishListElement.location
+            .toLowerCase()
+            .includes(tripElement.startDestination.toLowerCase())
+        ) {
+          // if it matches, create a new array of the days in the trip
+          const generatedDay = generateBucketListTripDateArray(
+            wishListElement.id,
+            tripElement.id,
+            tripElement.noOfPartners,
+            tripElement.startDate,
+            tripElement.endDate
+          );
+          // create an object to add to the bucket item dropDownMenu
+          let obj = {
+            label: tripElement.startDestination,
+            children: generatedDay,
+          };
+          dropDownMenu.push(obj);
+        }
+      }
+      // assign the dropDownMenu generated to the bucket list item dropdown
+      wishListElement.dropDown = dropDownMenu;
+      // push the bucket item into the bucket lists
+      emptyArray.push(wishListElement);
+    }
+    // set them into the state
+    setWishListData(emptyArray);
+    // setInitialWishListData(emptyArray);
+  }, [initialWishListData, tripData]);
 
-  // function to handle next button scroll of location if there is overflow in the element's data
-  // const handleScrollRight = (e: any) => {
-  //   let element = document.getElementById(
-  //     "preferences_tag_container"
-  //   ) as HTMLElement;
-  //   element.scrollLeft += 70;
-  // };
-
-  // function to handle prev button scroll of location if there is overflow in the element's data
-  // const handleScrollLeft = (e: any) => {
-  //   let element = document.getElementById(
-  //     "preferences_tag_container"
-  //   ) as HTMLElement;
-  //   element.scrollLeft -= 70;
-  // };
-
-  // function to manage the locations button when it is clicked
-  // const handleLocationsClick = (e: any) => {
-  //   // prevent default so it won't refresh the page
-  //   e.preventDefault();
-  //   // set input field to empty when location is clicked
-  //   setInputField("");
-  //   // console.log(e.target.id)
-
-  //   // get the id of the location tag clicked
-  //   const id = e.target.id;
-
-  //   let newData: any = [];
-  //   let searchResultField1: string = "";
-
-  //   // loop through all clicked locations and filter the attraction data to the clicked locations
-  //   for (let i = 0; i < clickedLocations.length; i++) {
-  //     const element = clickedLocations[i];
-  //     let locations = initialWishListData.filter(
-  //       (item) => item.location === element.title
-  //     );
-  //     // if the location is not undefined, it should push the filtered data into a new array
-  //     if (locations.length >= 1 && locations !== undefined) {
-  //       // newData.push(locations[0]);
-  //       locations.forEach((item) => {
-  //         newData.push(item);
-  //       });
-  //     }
-
-  //     // set the search result field to the selected location
-  //     if (searchResultField1 === "") {
-  //       searchResultField1 = searchResultField1 + " " + element.title;
-  //     } else {
-  //       searchResultField1 = searchResultField1 + ". " + element.title;
-  //     }
-  //     setSearchResultField(searchResultField1);
-  //   }
-
-  //   // set the attraction data to the new array
-  //   if (newData.length > 0) {
-  //     setWishListData(newData);
-  //     // clicked
-  //     // console.log(wishListData);
-  //   } else {
-  //     setWishListData([]);
-  //     // console.log(wishListData);
-  //   }
-  // };
-
-  // function to handle the input data (using this for the onClick of button of the search and onChange of the input)
-  const handleInput = (e: any) => {
-    // get the input
-    let input = document.getElementById("input") as HTMLInputElement;
-    // console.log(input.value);
-
+  useEffect(() => {
     // filter the original attraction data fetched from external using the input data
-    let data = initialWishListData.filter((item) =>
-      item.location.toLowerCase().includes(input.value.toLowerCase())
+    let data = initialWishListData.filter(
+      (item) =>
+        item.location.toLowerCase().includes(inputField.toLowerCase()) ||
+        item.title.toLowerCase().includes(inputField.toLowerCase())
     );
     // if the data is not empty
     if (data.length !== 0) {
       // set the attractiondata to the new data filtered
       setWishListData(data);
-      // set the search result to the input value
-      // setSearchResultField("input.value");
     } else {
       setWishListData([]);
     }
+  }, [inputField, initialWishListData]);
+
+  // function to handle the input data (using this for the onClick of button of the search and onChange of the input)
+  const handleInput = (e: any) => {
+    // get the input
+    let input = document.getElementById("input") as HTMLInputElement;
     setSearchResultField(input.value);
-    // setWishListData([...data]);
-    // console.log(wishListData);
+    setInputField(input.value);
   };
 
   // use this function to handle when the all button is clicked
@@ -228,7 +245,7 @@ const BucketListPage = () => {
     const query = `PageNumber=${pagination?.currentPage - 1}&PageSize=${
       pagination?.pageSize
     }`;
-    await getUserWishListAsAttraction(query).then((res) => {
+    await getUserWishListAsAttraction(userId, query).then((res) => {
       setInitialWishListData(res.data.items);
 
       setPagination({
@@ -248,7 +265,7 @@ const BucketListPage = () => {
     const query = `PageNumber=${pagination?.currentPage + 1}&PageSize=${
       pagination?.pageSize
     }`;
-    await getUserWishListAsAttraction(query).then((res) => {
+    await getUserWishListAsAttraction(userId, query).then((res) => {
       setInitialWishListData(res.data.items);
 
       setPagination({
@@ -310,7 +327,7 @@ const BucketListPage = () => {
             <div className="featured_card">
               {wishListData.map((item) => (
                 <div key={`${item.id}${item.itemType}`}>
-                  <Card
+                  <BucketListCard
                     item={item}
                     liked={true}
                     handleLikeButton={handleLikeButton}

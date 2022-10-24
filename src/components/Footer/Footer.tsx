@@ -45,7 +45,7 @@ const Footer = () => {
               </a>
             </p>
             <p className="footer_item_menu_name">
-              <a className="footer_item_link" href="/#/about-us">
+              <a className="footer_item_link" href="/#/contact-us">
                 Help Center
               </a>
             </p>

@@ -481,8 +481,20 @@ export const addToCart = async (formData: IAddCart) => {
       const cart = JSON.parse(
         localStorage.getItem("cart_data") as any
       );
+      console.log(cart.length)
       if (cart?.length > 0) {
-        const newCart = [...cart, response.data.data]
+        let newCart: any = []
+        if (response.data.data) {
+          newCart = [...cart, response.data.data]
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: `Item already in your cart, kindly update on your cart.`,
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+          return false
+        }
         localStorage.setItem("cart_data", JSON.stringify(newCart));
       } else {
         const newCart = [response.data.data]

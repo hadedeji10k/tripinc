@@ -120,3 +120,10 @@ export const AddFlightSchema = Yup.object().shape({
   arrivalTime: Yup.string().required("Arrival time is required"),
   arrivalDate: Yup.string().required("Arrival date is required"),
 });
+
+export const AddStaySchema = Yup.object().shape({
+  stayLocation: Yup.string().required("Location is required"),
+  stayName: Yup.string().required("Stay name is required"),
+  time: Yup.string().required("Time is required"),
+  date: Yup.string().required("Date is required"),
+});

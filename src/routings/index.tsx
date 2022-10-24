@@ -28,7 +28,7 @@ import ForgotPassword from "../components/Auth/ForgotPassword";
 import CustomTripPlanning from "../components/CustomTripPlanning";
 import TripView from "../components/MyTripPage/TripView";
 import CreateAttraction from "../components/Attraction/Attraction";
-import AmbassadorApplication from "../components/Attraction/AmbassadorApplication";
+import AmbassadorApplication from "../components/Ambassador/AmbassadorApplication/AmbassadorApplication";
 import Dashboard from "../components/Ambassador/AmbassadorDashboard/Dashboard";
 import AmbassadorAttraction from "../components/Ambassador/AmbassadorAttraction/AmbassadorAttraction";
 import AmbassadorTrip from "../components/Ambassador/AmbassadorTrip/AmbassadorTrip";
@@ -37,6 +37,7 @@ import TripPlannerApplications from "../components/Ambassador/Admin/TripPlannerA
 import NewDashboard from "../components/Dashboard/Dashboard";
 import ChatComponent from "../components/Chat";
 import AboutUs from "../components/AboutUs/AboutUs";
+import ContactUs from "../components/ContactUs/ContactUs";
 
 const MainRoute: React.FC = () => {
   return (
@@ -47,6 +48,7 @@ const MainRoute: React.FC = () => {
           <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/explore" element={<ExplorePage />}>
             <Route path="city/:cityParam" element={<ExplorePage />} />
             <Route path="category/:catNameParam" element={<ExplorePage />} />

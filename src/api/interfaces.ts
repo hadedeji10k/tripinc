@@ -452,6 +452,10 @@ export interface IDeal {
     expiryDate?: Date
 }
 
+export interface IWishListData extends IDeal {
+    dropDown: any;
+}
+
 export interface IPagination {
     hasNext: boolean,
     hasPrevious: boolean,
@@ -473,9 +477,18 @@ export interface IFlight {
     date: string,
     dateDetails: string,
 }
+
+export interface IStay {
+    stayLocation: string,
+    stayName: string,
+    timeCombo: any,
+    time: any,
+    date: string,
+    dateDetails: string,
+}
 export interface ITravelDetails {
     flights: IFlight[],
-    stays?: any[],
+    stays: IStay[],
     rentalCars?: any[],
 }
 
