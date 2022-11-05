@@ -1,5 +1,4 @@
-//we need to inject this somehow
-export const runtimeEnvironment = "test";
+export const runtimeEnvironment = window.tripInc?.REACT_APP_RUNTIME_ENVIRONMENT || "test";
 
 //dev
 export const devTripServiceUrl = "http://localhost:21200";
@@ -16,15 +15,16 @@ export const onboardingServiceUrl = "https://onboarding.tripinc.co";
 
 export const GoogleLoginClientId = window.tripInc?.REACT_APP_GOOGLE_CLIENT_ID;
 export const GoogleProviderKey = window.tripInc?.REACT_APP_GOOGLE_PROVIDER_ID;
-export const CitiesPageSize = 100
-export const GOOGLEAPIKEY = window.tripInc?.REACT_APP_GOOGLE_API_KEY
-export const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
-export const fullMonthNames = ["January", "February", "March", "April", "May", "June",
+export const CitiesPageSize = 100;
+export const GOOGLEAPIKEY = window.tripInc?.REACT_APP_GOOGLE_API_KEY;
+export const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+export const fullMonthNames = [
+	"January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
-]
-export const stripeTestKey = window.tripInc?.REACT_APP_STRIPE_TEST_PUBLIC_KEY
-export const stripeLiveKey = window.tripInc?.REACT_APP_STRIPE_LIVE_PUBLIC_KEY
+];
+export const stripeTestKey = window.tripInc?.REACT_APP_STRIPE_TEST_PUBLIC_KEY;
+export const stripeLiveKey = window.tripInc?.REACT_APP_STRIPE_LIVE_PUBLIC_KEY;
 export const currencyList = [
     {
         Name: "Afghan Afghani",
@@ -866,7 +866,7 @@ export const currencyList = [
         Code: "ZWL",
         Symbol: "ZWL"
     }
-]
+];
 
 export const newTripData = [
     {
@@ -2511,6 +2511,6 @@ export const newTripData = [
         "date": "2022-08-31T07:34:29.926Z",
         "itineraries": []
     }
-]
+];
 
 // https://maps.googleapis.com/maps/api/place/autocomplete/json?input=TEXT_INPUT_VALUE&types=(cities)&key=YOUR_API_KEY

@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./AccountVerified.css";
 import { Spin } from "antd";
+import { verifyAccount } from "api";
+import { IVerifyAccount } from "api/interfaces";
+
 import "antd/dist/antd.min.css";
-import MyGif from "../../../images/success.gif";
-import { verifyAccount } from "../../../api";
-import { IVerifyAccount } from "../../../api/interfaces";
+import MyGif from "images/success.gif";
 
 const AccountVerified = () => {
   const [accountVerified, setAccountVerified] = useState<boolean>(false);

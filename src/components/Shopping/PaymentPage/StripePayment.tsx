@@ -15,7 +15,7 @@ import {
   stripeLiveKey,
 } from "../../../utils/constants";
 
-const stripeKey = runtimeEnvironment === "test" ? stripeTestKey : stripeLiveKey;
+const stripeKey = runtimeEnvironment === "prod" ? stripeLiveKey : stripeTestKey;
 
 const stripePromise = loadStripe(stripeKey as string);
 

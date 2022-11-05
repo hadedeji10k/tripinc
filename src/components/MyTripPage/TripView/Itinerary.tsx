@@ -236,11 +236,9 @@ const Itinerary = ({
                               </span>
                             </Tooltip>
                             <span className="itinerary_display_card_time">
-                              {itinerary.startTime
-                                ? itinerary.startTime
-                                : "09:00"}{" "}
-                              -{" "}
-                              {itinerary.endTime ? itinerary.endTime : "09:00"}
+                              {itinerary.startTime ? itinerary.startTime.toString() : "09:00"}
+							  &nbsp;-&nbsp;
+                              {itinerary.endTime ? itinerary.endTime.toString() : "09:00"}
                             </span>
 
                             <span className="itinerary_display_card_time">
