@@ -536,6 +536,13 @@ export interface IInitiateTripPlanning {
     interests: string[]
 }
 
+export interface IAddItemToTrip {
+    tripId: number,
+    item: IWishListData | IDeal,
+    date: string | Date,
+    noOfPartners: number
+}
+
 export interface ITripPlanningData {
     userId: number,
     userFullName: string,

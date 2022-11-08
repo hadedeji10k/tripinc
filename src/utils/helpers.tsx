@@ -419,7 +419,7 @@ export const generateBucketListTripDateArray = (
   array = array.map((item) => {
     return {
       label: item.label,
-      key: `${itemId},${tripId},${item.date},${noOfPartner}`,
+      key: `${tripId},${item.date},${noOfPartner}`,
     };
   });
 

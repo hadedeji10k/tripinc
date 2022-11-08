@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 
 import { AuthProvider } from "stores/Auth";
 import { ChatProvider } from "stores/ChatContext";
@@ -12,19 +12,19 @@ import "./index.css";
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-	const root = createRoot(rootElement);
+  const root = createRoot(rootElement);
 
-	root.render(
-		<StrictMode>
-			<AuthProvider>
-				<ChatProvider>
-					<App />
-				</ChatProvider>
-			</AuthProvider>
-		</StrictMode>
-	);
+  root.render(
+    <StrictMode>
+      <AuthProvider>
+        <ChatProvider>
+          <App />
+        </ChatProvider>
+      </AuthProvider>
+    </StrictMode>
+  );
 } else {
-	throw new Error("Could not find root element to mount to!");
+  throw new Error("Could not find root element to mount to!");
 }
 
 // If you want to start measuring performance in your app, pass a function
