@@ -9,6 +9,7 @@ import { Dropdown, Menu, Space } from "antd";
 import { IAddCart, IWishListData } from "../../../api/interfaces";
 import { FiEdit2 } from "react-icons/fi";
 import { addToCart } from "../../../api/responseHandlers";
+import { addItemToTrip } from "../../../api";
 
 interface Props {
   item: IWishListData;
@@ -42,7 +43,6 @@ const BucketListCard = ({
       label: "Add to cart",
     },
   ];
-  console.log(item.dropDown);
 
   const itemDropDownData = item.dropDown ? item.dropDown : [];
 
@@ -91,6 +91,18 @@ const BucketListCard = ({
       // extract them from the key
       const keyArray = key.split(",");
       console.log("Key Array", keyArray);
+      const formData = {
+        tripId: parseInt(keyArray[0]),
+        item,
+        date: keyArray[1],
+        noOfPartners: parseInt(keyArray[2]),
+      };
+      console.log(formData);
+
+      addItemToTrip(formData).then((response) => {
+        console.log(response.data);
+      });
+
       Swal.fire({
         title: "Success!",
         text: "You have successfully added it to the list",

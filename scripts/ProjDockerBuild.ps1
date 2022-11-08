@@ -10,17 +10,18 @@ $TpiParams = & "$($TpiInvocationPath)/__TenantParams.ps1";
 
 $TpiVersion = & "$($($TpiInvocationPath))/TripIncVersion.ps1";
 
-$TpiProjHome = $TpiParams[$TpiProjKey]._ProjHome;
-$TpiProjHomeIntermediate = if ([String]::IsNullOrWhitespace($TpiProjHome)) { ""; } else { "/$($TpiProjHome)"; };
+# Write-Host "$TpiInvocationPath/..";
+
+$TpiBuildRoot = $(Resolve-Path "$TpiInvocationPath/..").Path;
+
+Write-Host "TpiBuildRoot - $TpiBuildRoot";
 
 $TpiProjPath = $TpiParams[$TpiProjKey]._ProjPath;
 $TpiProjPathIntermediate = if ([String]::IsNullOrWhitespace($TpiProjPath)) { ""; } else { "/$($TpiProjPath)"; };
 
-# $TpiBuildRoot = "$(${env:TRIPINC_PROJDIR})$($TpiProjHomeIntermediate)";
-# $TpiDockerFile = "$($TpiBuildRoot)$($TpiProjPathIntermediate)/Dockerfile";
-
-$TpiBuildRoot = "$(${env:TRIPINC_PROJDIR})$($TpiProjHomeIntermediate)";
 $TpiDockerFile = "$($TpiBuildRoot)$($TpiProjPathIntermediate)/Dockerfile";
+
+Write-Host "TpiDockerFile - $TpiDockerFile";
 
 $TpiProjName = $TpiParams[$TpiProjKey]._ProjName;
 $TpiImageName = "$($TpiProjName.ToLower()):$($TpiVersion)";
@@ -29,3 +30,5 @@ $TpiRepoImageName = "$($TpiParams.EcrName)/$($TpiImageName)";
 docker build $TpiBuildRoot --file $TpiDockerFile --build-arg NugetPassword=${env:NugetPassword} --tag $TpiImageName;
 
 docker tag $TpiImageName $TpiRepoImageName;
+
+return;

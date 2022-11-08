@@ -1,26 +1,27 @@
 import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import { Spin } from "antd";
-import "antd/dist/antd.min.css";
-import "./Signin.css";
 import { FaFacebookF } from "react-icons/fa";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { Formik } from "formik";
-import { IForgotPasswordRequest, ISignIn } from "../../../api/interfaces";
-import { SignInSchema } from "../../../schema/yupSchema";
+import Swal from "sweetalert2";
+
+import "antd/dist/antd.min.css";
+import "./Signin.css";
+import { IForgotPasswordRequest, ISignIn } from "api/interfaces";
+import { SignInSchema } from "schema/yupSchema";
 import {
   forgotPasswordRequest,
   googleSignIn,
   signIn,
-} from "../../../api/responseHandlers";
-import { GoogleLogin } from "react-google-login";
-// import { remoteGoogleLogin } from "../../api/responseHandlers";
-import { GoogleLoginClientId } from "../../../utils/constants";
+} from "api/responseHandlers";
+// import { remoteGoogleLogin } from "api/responseHandlers";
+import { GoogleLoginClientId } from "utils/constants";
 
-import { AuthContext } from "../../../stores/Auth";
-import Swal from "sweetalert2";
+import { AuthContext } from "stores/Auth";
 
 const Signin = () => {
   document.title = "TripInc - Sign In";

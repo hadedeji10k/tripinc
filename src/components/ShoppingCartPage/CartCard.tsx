@@ -91,7 +91,7 @@ const CartCard = ({
                 <select name="date" id="date">
                   <option value="Friday 21st, January">
                     {/* {new Date(item.date)} */}
-                    {item.date}
+                    {item.date.toDateString()}
                   </option>
                   <option value="Friday 21st, January">
                     Friday 21st, January
