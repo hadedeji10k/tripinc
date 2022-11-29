@@ -236,9 +236,13 @@ const Itinerary = ({
                               </span>
                             </Tooltip>
                             <span className="itinerary_display_card_time">
-                              {itinerary.startTime ? itinerary.startTime.toString() : "09:00"}
-							  &nbsp;-&nbsp;
-                              {itinerary.endTime ? itinerary.endTime.toString() : "09:00"}
+                              {itinerary.startTime
+                                ? itinerary.startTime.toString()
+                                : "09:00"}
+                              &nbsp;-&nbsp;
+                              {itinerary.endTime
+                                ? itinerary.endTime.toString()
+                                : "09:00"}
                             </span>
 
                             <span className="itinerary_display_card_time">
@@ -261,7 +265,7 @@ const Itinerary = ({
                                 itineraryKey
                               )
                             }
-                            className="w_90 basic_details_input m_5"
+                            className="w_90 custom_input m_5"
                             type="text"
                             name=""
                             id=""

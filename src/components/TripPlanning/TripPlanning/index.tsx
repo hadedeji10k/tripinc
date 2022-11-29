@@ -177,7 +177,7 @@ const TripPlanning = ({
               </span>
             )}
 
-            <h4 className="general_faq_question">Budget</h4>
+            <h4 className="fs-5">Budget</h4>
           </div>
           <div className="trip_planning_budget_container">
             {tripMenu[0].stateOfClass ? (
@@ -212,7 +212,7 @@ const TripPlanning = ({
               </span>
             )}
 
-            <h4 className="general_faq_question">Travel Details</h4>
+            <h4 className="fs-5">Travel Details</h4>
           </div>
           <div className="trip_planning_budget_container">
             {tripMenu[1].stateOfClass ? (
@@ -246,7 +246,7 @@ const TripPlanning = ({
               </span>
             )}
 
-            <h4 className="general_faq_question">Bucket List</h4>
+            <h4 className="fs-5">Bucket List</h4>
           </div>
           <div className="trip_planning_budget_container">
             {tripMenu[2].stateOfClass ? (
@@ -291,7 +291,7 @@ const TripPlanning = ({
               </span>
             )}
 
-            <h4 className="general_faq_question">Itinerary</h4>
+            <h4 className="fs-5">Itinerary</h4>
           </div>
           <div className="trip_planning_budget_container">
             {tripMenu[3].stateOfClass ? (
@@ -314,15 +314,12 @@ const TripPlanning = ({
       </div>
       <div className="scroll_button">
         <button
-          className={"explore_navigation_button_active"}
+          className={"custom_button"}
           onClick={() => handleMainTripPlanningMenuClick("prev")}
         >
           Go back
         </button>
-        <button
-          className={"explore_navigation_button_active"}
-          onClick={handleSubmit}
-        >
+        <button className={"custom_button"} onClick={handleSubmit}>
           Proceed
         </button>
       </div>

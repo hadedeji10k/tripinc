@@ -238,7 +238,7 @@ const TripView = () => {
                 </span>
               )}
 
-              <h4 className="general_faq_question">Budget</h4>
+              <h4 className="fs-5">Budget</h4>
             </div>
             <div className="trip_planning_budget_container">
               {tripMenu[0].stateOfClass ? (
@@ -273,7 +273,7 @@ const TripView = () => {
                 </span>
               )}
 
-              <h4 className="general_faq_question">Travel Details</h4>
+              <h4 className="fs-5">Travel Details</h4>
             </div>
             <div className="trip_planning_budget_container">
               {tripMenu[1].stateOfClass ? (
@@ -309,7 +309,7 @@ const TripView = () => {
                 </span>
               )}
 
-              <h4 className="general_faq_question">Itinerary</h4>
+              <h4 className="fs-5">Itinerary</h4>
             </div>
             <div className="trip_planning_budget_container">
               {tripMenu[2].stateOfClass ? (
@@ -332,9 +332,7 @@ const TripView = () => {
         </div>
         <div className="scroll_button">
           <Link to={`/plan-trip/${tripId}`}>
-            <button className="explore_navigation_button_active">
-              Edit Trip
-            </button>
+            <button className="custom_button">Edit Trip</button>
           </Link>
         </div>
       </div>

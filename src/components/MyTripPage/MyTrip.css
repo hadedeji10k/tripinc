@@ -136,6 +136,27 @@ select::-ms-expand {
     justify-content: space-around;
 }
 
+.explore_page_search_button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #92A5EF;
+    color: #fff;
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    align-items: center;
+    /* margin-left: 15px; */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.explore_page_search_button:hover {
+    background: #4b61b9;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
 .trip_search_input {
     border: none;
     height: inherit;

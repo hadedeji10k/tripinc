@@ -336,7 +336,7 @@ const Popular = () => {
             ) : null
           ) : null}
 
-          <div className="explore_page_number">
+          <div className="pagination_row">
             <span>
               Page {pagination?.currentPage} of {pagination?.totalPages}
             </span>
@@ -352,7 +352,7 @@ const Popular = () => {
               <button
                 className={
                   pagination?.hasPrevious
-                    ? "explore_navigation_button_active"
+                    ? "custom_button"
                     : "explore_navigation_button"
                 }
                 onClick={handlePaginationPrev}
@@ -365,7 +365,7 @@ const Popular = () => {
               <button
                 className={
                   pagination?.hasNext
-                    ? "explore_navigation_button_active"
+                    ? "custom_button"
                     : "explore_navigation_button"
                 }
                 onClick={handlePaginationNext}

@@ -60,9 +60,7 @@ const ExploreCategoryPage = () => {
                 <h3>No Result</h3>
                 <br />
                 <a href="/#/explore">
-                  <span className="explore_category_preferences_clicked">
-                    See all
-                  </span>
+                  <span className="preferences_clicked">See all</span>
                 </a>
               </>
             )

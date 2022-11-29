@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { AuthProvider } from "stores/Auth";
@@ -15,13 +14,11 @@ if (rootElement) {
   const root = createRoot(rootElement);
 
   root.render(
-    <StrictMode>
-      <AuthProvider>
-        <ChatProvider>
-          <App />
-        </ChatProvider>
-      </AuthProvider>
-    </StrictMode>
+    <AuthProvider>
+      <ChatProvider>
+        <App />
+      </ChatProvider>
+    </AuthProvider>
   );
 } else {
   throw new Error("Could not find root element to mount to!");

@@ -104,7 +104,6 @@ const Budget = ({
           type="number"
           disabled
           defaultValue={tripPlanningData.budget}
-          value={tripPlanningData.budget}
         />
       </div>
 

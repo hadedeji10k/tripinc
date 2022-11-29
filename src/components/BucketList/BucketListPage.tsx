@@ -363,7 +363,7 @@ const BucketListPage = () => {
               <br />
             </>
           )}
-          <div className="explore_page_number">
+          <div className="pagination_row">
             <span>
               Page {pagination?.currentPage} of {pagination?.totalPages}
             </span>
@@ -379,7 +379,7 @@ const BucketListPage = () => {
               <button
                 className={
                   pagination?.hasPrevious
-                    ? "explore_navigation_button_active"
+                    ? "custom_button"
                     : "explore_navigation_button"
                 }
                 onClick={handlePaginationPrev}
@@ -392,7 +392,7 @@ const BucketListPage = () => {
               <button
                 className={
                   pagination?.hasNext
-                    ? "explore_navigation_button_active"
+                    ? "custom_button"
                     : "explore_navigation_button"
                 }
                 onClick={handlePaginationNext}

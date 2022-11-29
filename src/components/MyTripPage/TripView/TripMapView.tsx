@@ -37,7 +37,10 @@ const TripMapView = ({ itineraryData, tripPlanningData }: Prop) => {
         const toBeAdded = {
           id: newPlace.length + 1,
           name: item.item.title,
-          position: { lat: item.item.latitude, lng: item.item.longitude },
+          position: {
+            lat: item.item.latitude.toString(),
+            lng: item.item.longitude.toString(),
+          },
           color: item.mapColor,
         };
         newPlace.push(toBeAdded);
@@ -100,8 +103,8 @@ const TripMapView = ({ itineraryData, tripPlanningData }: Prop) => {
                 bootstrapURLKeys={{ key: GOOGLEAPIKEY }}
                 defaultZoom={8}
                 defaultCenter={{
-                  lat: places[0].position.lat,
-                  lng: places[0].position.lng,
+                  lat: places[0].position.lat.toString(),
+                  lng: places[0].position.lng.toString(),
                 }}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ map, maps }) =>

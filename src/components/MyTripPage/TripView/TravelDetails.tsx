@@ -169,7 +169,7 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
                   </span>
                 )}
 
-                <h4 className="general_faq_question">Flights</h4>
+                <h4 className="fs-5">Flights</h4>
               </div>
             </div>
             {availableFlightsOpen
@@ -199,7 +199,7 @@ const TravelDetails = ({ travelDetails, setTravelDetails }: Props) => {
               : null}
           </div>
         ) : (
-          <h3>No flight details available in this trip</h3>
+          <h3 className="fs-6">No flight details available in this trip</h3>
         )}
       </div>
     </div>

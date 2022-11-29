@@ -506,7 +506,7 @@ const Itinerary = ({
                                     itineraryKey
                                   )
                                 }
-                                className="w_90 basic_details_input m_5 m_r_10"
+                                className="w_90 custom_input m_5 m_r_10"
                                 type="text"
                                 name=""
                                 id=""
@@ -674,7 +674,7 @@ const Itinerary = ({
                                     customEventKey
                                   )
                                 }
-                                className="w_90 basic_details_input m_5 m_r_10"
+                                className="w_90 custom_input m_5 m_r_10"
                                 type="text"
                                 name=""
                                 id=""
@@ -719,7 +719,7 @@ const Itinerary = ({
                               e.target.value
                             );
                           }}
-                          className="w-100 basic_details_input m_5 m_r_10"
+                          className="w-100 custom_input m_5 m_r_10"
                           type="text"
                           name=""
                           id=""
@@ -750,7 +750,7 @@ const Itinerary = ({
                               fields: ["All"],
                             }}
                             placeholder="Event Location"
-                            className="basic_details_input w-100 mb-0 mt-0"
+                            className="custom_input w-100 mb-0 mt-0"
                             id="country_input"
                           />
                         </div>
@@ -773,7 +773,7 @@ const Itinerary = ({
                       </div>
                       <div>
                         <button
-                          className="explore_navigation_button_active"
+                          className="custom_button"
                           onClick={() =>
                             addCustomEventDetailsToItinerary(tripDayKey)
                           }
@@ -781,7 +781,7 @@ const Itinerary = ({
                           Add
                         </button>
                         <button
-                          className="explore_navigation_button_active bg-danger"
+                          className="custom_button bg-danger"
                           onClick={() => setAddCustomEvent(false)}
                         >
                           Close
@@ -815,7 +815,7 @@ const Itinerary = ({
           fields: ["formatted_address"],
         }}
         placeholder="Where do you live?"
-        className="basic_details_input w-100 mb-0 mt-0 d-none"
+        className="custom_input w-100 mb-0 mt-0 d-none"
         id="load_api"
       /> */}
     </div>

@@ -105,7 +105,7 @@ const TripPlanningBucketList = ({
                 />
               ))}
             </div>
-            <div className="explore_page_number">
+            <div className="pagination_row">
               <span>
                 Page {pagination?.currentPage} of {pagination?.totalPages}
               </span>
@@ -116,12 +116,12 @@ const TripPlanningBucketList = ({
                   : pagination?.totalCount}
               </span>
             </div>
-            <div className="explore_page_number">
+            <div className="pagination_row">
               {pagination?.hasPrevious ? (
                 <button
                   className={
                     pagination?.hasPrevious
-                      ? "explore_navigation_button_active"
+                      ? "custom_button"
                       : "explore_navigation_button"
                   }
                   onClick={handlePaginationPrev}
@@ -135,7 +135,7 @@ const TripPlanningBucketList = ({
                 <button
                   className={
                     pagination?.hasNext
-                      ? "explore_navigation_button_active"
+                      ? "custom_button"
                       : "explore_navigation_button"
                   }
                   onClick={handlePaginationNext}

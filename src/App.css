@@ -409,6 +409,147 @@ a {
   background-color: rgb(120, 127, 142) !important;
 }
 
+.explore_details_image_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70vh;
+}
+
+.explore_details_image {
+  width: 98%;
+  height: 100%;
+}
+
+.custom_button {
+  min-width: 100px;
+  padding: 0.5rem;
+  border-radius: 20px;
+  background: #2f3b59;
+  color: #fff;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  border: none;
+}
+
+.custom_button:hover {
+  background: #1e2439;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+
+.preferences_not_clicked {
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 20px;
+  background: #fff;
+  color: #353945;
+  cursor: pointer;
+  margin: 0.5rem;
+  border: 2px solid #ccc;
+  transition: all 0.2s ease-in-out;
+  font-size: 14px;
+}
+
+.preferences_not_clicked:hover {
+  background: #353945;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+
+.preferences_clicked {
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 20px;
+  background: #353945;
+  color: #fff;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  font-size: 14px;
+}
+
+.preferences_clicked:hover {
+  background: #1b1d22;
+  color: fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination_row {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* START INPUT */
+
+.custom_input {
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 20px;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  outline: none;
+  border: 2px solid #ccc;
+  width: 500px;
+  color: #000;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom_input:focus {
+  border: 2px solid #252748;
+  transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 700px) {
+  .custom_input {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .custom_input {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 345px) {
+  .custom_input {
+    width: 250px;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .custom_input {
+    width: 200px;
+    font-size: 0.7rem;
+  }
+}
+
+/* END START INPUT */
+
+
 @media screen and (max-width: 500px) {
   .close_modal_button {
     top: 10px;

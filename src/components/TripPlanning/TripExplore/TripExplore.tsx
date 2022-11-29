@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 import { useState, useEffect } from "react";
+import "../../Explore/ExplorePage.css";
 import { DatePicker, Select, Spin } from "antd";
 import Card from "../../Cards/AttractionCard/AttractionCard";
 import { BiSearch } from "react-icons/bi";
@@ -612,7 +613,7 @@ const TripPlanningExplore = ({
             )
           ) : null}
 
-          <div className="explore_page_number">
+          <div className="pagination_row">
             <span>
               Page {pagination?.currentPage} of {pagination?.totalPages}
             </span>
@@ -628,7 +629,7 @@ const TripPlanningExplore = ({
               <button
                 className={
                   pagination?.hasPrevious
-                    ? "explore_navigation_button_active"
+                    ? "custom_button"
                     : "explore_navigation_button"
                 }
                 onClick={handlePaginationPrev}
@@ -641,7 +642,7 @@ const TripPlanningExplore = ({
               <button
                 className={
                   pagination?.hasNext
-                    ? "explore_navigation_button_active"
+                    ? "custom_button"
                     : "explore_navigation_button"
                 }
                 onClick={handlePaginationNext}
@@ -654,13 +655,13 @@ const TripPlanningExplore = ({
           <br />
           <div className="scroll_button">
             <button
-              className={"explore_navigation_button_active"}
+              className={"custom_button"}
               onClick={() => handleTripPlanningMenuClick("next")}
             >
               Proceed
             </button>
             {/* <button
-              className={"explore_navigation_button_active"}
+              className={"custom_button"}
               onClick={handlePaginationNext}
             >
               Proceed

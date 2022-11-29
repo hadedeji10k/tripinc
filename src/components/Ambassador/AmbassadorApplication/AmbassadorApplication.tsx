@@ -288,7 +288,7 @@ const AmbassadorApplication = () => {
                     <label className="basic_details_label">Full Name</label>
                     <input
                       name="fullName"
-                      className="basic_details_input"
+                      className="custom_input"
                       type="text"
                       placeholder="Full Name"
                       defaultValue={data.fullName}
@@ -308,7 +308,7 @@ const AmbassadorApplication = () => {
                         margin: "7px auto 20px",
                         border: "2px solid #ccc",
                       }}
-                      className="basic_details_input"
+                      className="custom_input"
                       onChange={handleDate}
                       disabled={edit ? !formEdit : false}
                       defaultValue={
@@ -327,7 +327,7 @@ const AmbassadorApplication = () => {
                     {edit ? (
                       <input
                         name="country"
-                        className="basic_details_input"
+                        className="custom_input"
                         type="text"
                         placeholder="Country of Residence"
                         disabled={!formEdit}
@@ -349,7 +349,7 @@ const AmbassadorApplication = () => {
                           fields: ["formatted_address"],
                         }}
                         placeholder="Country of Residence"
-                        className="basic_details_input"
+                        className="custom_input"
                         id="country_input"
                       />
                     )}
@@ -383,7 +383,7 @@ const AmbassadorApplication = () => {
                           fields: ["formatted_address"],
                         }}
                         placeholder="Enter country name"
-                        className="basic_details_input"
+                        className="custom_input"
                         id="countries_input"
                       />
                     ) : null}
@@ -435,7 +435,7 @@ const AmbassadorApplication = () => {
                           fields: ["formatted_address"],
                         }}
                         placeholder="Enter city name"
-                        className="basic_details_input"
+                        className="custom_input"
                         id="city_input"
                       />
                     ) : null}
@@ -466,7 +466,7 @@ const AmbassadorApplication = () => {
                     {formEdit || !edit ? (
                       <select
                         name="meansOfIdentity"
-                        className="basic_details_input"
+                        className="custom_input"
                         onChange={handleMeansOfIdentification}
                       >
                         <option value="NIN">National ID card</option>
@@ -476,7 +476,7 @@ const AmbassadorApplication = () => {
                     ) : (
                       <input
                         name="country"
-                        className="basic_details_input"
+                        className="custom_input"
                         type="text"
                         placeholder="Means of Identification"
                         disabled
@@ -589,7 +589,7 @@ const AmbassadorApplication = () => {
                           fields: ["formatted_address"],
                         }}
                         placeholder="Enter city name"
-                        className="basic_details_input"
+                        className="custom_input"
                         id="cities_of_interest"
                       />
                     ) : null}
@@ -622,7 +622,7 @@ const AmbassadorApplication = () => {
                     </small>
                     <input
                       name="timeAvailability"
-                      className="basic_details_input"
+                      className="custom_input"
                       type="number"
                       placeholder="Time availability"
                       onChange={handleChange}

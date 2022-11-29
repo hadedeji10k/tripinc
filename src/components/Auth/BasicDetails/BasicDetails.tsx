@@ -129,7 +129,7 @@ const BasicDetails: React.FC = () => {
                     <label className="basic_details_label">Phone Number</label>
                     <input
                       name="phoneNumber"
-                      className="basic_details_input"
+                      className="custom_input"
                       type="text"
                       placeholder="Phone Number"
                       onChange={handleChange}
@@ -152,7 +152,7 @@ const BasicDetails: React.FC = () => {
                         fields: ["formatted_address"],
                       }}
                       placeholder="Where do you live?"
-                      className="basic_details_input"
+                      className="custom_input"
                       id="country_input"
                     />
                   </div>
@@ -169,7 +169,7 @@ const BasicDetails: React.FC = () => {
                         fields: ["formatted_address"],
                       }}
                       placeholder="City"
-                      className="basic_details_input"
+                      className="custom_input"
                       id="city_input"
                     />
                   </div>
@@ -189,7 +189,7 @@ const BasicDetails: React.FC = () => {
                       </span>
                     </div>
                     <input
-                      className="basic_details_input"
+                      className="custom_input"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       name="password"
@@ -217,7 +217,7 @@ const BasicDetails: React.FC = () => {
                       </span>
                     </div>
                     <input
-                      className="basic_details_input"
+                      className="custom_input"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm your password"
                       name="confirmPassword"

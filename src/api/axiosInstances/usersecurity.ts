@@ -4,10 +4,11 @@ import { devUserServiceUrl, runtimeEnvironment, testUserServiceUrl, userServiceU
 
 // swagger api - registration - https://usersecurity.tripincmvptest.com/api-docs/index.html
 
-const baseURL =
-    (runtimeEnvironment as string) === "dev" ? devUserServiceUrl
-        : (runtimeEnvironment as string) === "test" ? testUserServiceUrl
-            : userServiceUrl;
+// const baseURL =
+//     (runtimeEnvironment as string) === "dev" ? devUserServiceUrl
+//         : (runtimeEnvironment as string) === "test" ? testUserServiceUrl
+//             : userServiceUrl;
+const baseURL = userServiceUrl;
 
 const ENDPOINTS_NO_TOKEN = ['/api/Auth/Login', '/api/Auth/SocialLogin']
 

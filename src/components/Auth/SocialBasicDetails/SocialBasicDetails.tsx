@@ -99,7 +99,7 @@ const SocialBasicDetails: React.FC = () => {
               <div>
                 <label className="basic_details_label">Phone Number</label>
                 <input
-                  className="basic_details_input"
+                  className="custom_input"
                   type="text"
                   placeholder="Phone Number"
                   name="phoneNumber"
@@ -113,7 +113,7 @@ const SocialBasicDetails: React.FC = () => {
               <div>
                 <label className="basic_details_label">Country of Origin</label>
                 <input
-                  className="basic_details_input"
+                  className="custom_input"
                   type="text"
                   placeholder="Select Country"
                   name="countryOfOrigin"
@@ -127,7 +127,7 @@ const SocialBasicDetails: React.FC = () => {
               <div>
                 <label className="basic_details_label">City of Origin</label>
                 <input
-                  className="basic_details_input"
+                  className="custom_input"
                   type="text"
                   placeholder="Enter city of Origin"
                   name="cityOfOrigin"

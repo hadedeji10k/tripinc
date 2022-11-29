@@ -64,7 +64,7 @@ const AdminAmbassadorApplication = () => {
               <label className="basic_details_label">Full Name</label>
               <input
                 name="fullName"
-                className="basic_details_input"
+                className="custom_input"
                 type="text"
                 placeholder="Full Name"
                 defaultValue={data.fullName}
@@ -82,7 +82,7 @@ const AdminAmbassadorApplication = () => {
                   margin: "7px auto 20px",
                   border: "2px solid #ccc",
                 }}
-                className="basic_details_input"
+                className="custom_input"
                 defaultValue={moment(data.dateOfBirth)}
                 disabled
               />
@@ -94,7 +94,7 @@ const AdminAmbassadorApplication = () => {
               </label>
               <input
                 name="country"
-                className="basic_details_input"
+                className="custom_input"
                 type="text"
                 placeholder="Country of Residence"
                 defaultValue={data.country}
@@ -141,7 +141,7 @@ const AdminAmbassadorApplication = () => {
               </label>
               <input
                 name="country"
-                className="basic_details_input"
+                className="custom_input"
                 type="text"
                 placeholder="Means of Identification"
                 defaultValue={data.meansOfIdentification}
@@ -214,7 +214,7 @@ const AdminAmbassadorApplication = () => {
               </small>
               <input
                 name="timeAvailability"
-                className="basic_details_input"
+                className="custom_input"
                 type="number"
                 placeholder="Time availability"
                 defaultValue={data.timeAvailability}

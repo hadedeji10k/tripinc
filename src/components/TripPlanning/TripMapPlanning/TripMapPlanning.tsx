@@ -201,13 +201,13 @@ const TripMapPlanning = ({
       </div>
       <div className="scroll_button">
         <button
-          className={"explore_navigation_button_active"}
+          className={"custom_button"}
           onClick={() => handleTripPlanningMenuClick("prev")}
         >
           Go back
         </button>
         <button
-          className={"explore_navigation_button_active"}
+          className={"custom_button"}
           onClick={() => handleMainTripPlanningMenuClick("next")}
         >
           Proceed

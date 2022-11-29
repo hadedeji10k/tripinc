@@ -272,35 +272,6 @@
 }
 
 */
-.explore_navigation_button_active {
-    min-width: 100px;
-    padding: 0.5rem;
-    border-radius: 20px;
-    background: #2f3b59;
-    color: #fff;
-    cursor: pointer;
-    margin: 0.5rem;
-    transition: all 0.2s ease-in-out;
-    outline: none;
-    border: none;
-}
-
-.explore_navigation_button_active:hover {
-    background: #1e2439;
-    color: fff;
-    transition: all 0.2s ease-in-out;
-}
-
-.explore_page_number {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin: auto;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
 
 .third_party_date_picker {
     width: 25%;
