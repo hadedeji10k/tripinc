@@ -9,11 +9,11 @@ import { Input, Select, message, Spin, DatePicker, Button } from "antd";
 import Autocomplete from "react-google-autocomplete";
 import { UploadOutlined } from "@mui/icons-material";
 import moment from "moment";
-import { GOOGLEAPIKEY } from "../../../utils/constants";
+import { GOOGLEAPIKEY } from "../../utils/constants";
 import { Formik } from "formik";
-import { AmbassadorApplicationSchema } from "../../../schema/yupSchema";
-import { localGetUserFullName } from "../../../utils/helpers";
-import { TripPlannerApplicationData } from "../Admin/AdminAmbassadorApplication";
+import { AmbassadorApplicationSchema } from "../../schema/yupSchema";
+import { localGetUserFullName } from "../../utils/helpers";
+import { TripPlannerApplicationData } from "../Ambassador/Admin/AdminAmbassadorApplication";
 import Swal from "sweetalert2";
 
 const { Option } = Select;

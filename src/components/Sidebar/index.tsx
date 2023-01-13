@@ -69,58 +69,54 @@ const Sidebar = ({
   // return the sidebar container
   return (
     <>
-      <GoogleOAuthProvider clientId={GoogleLoginClientId}>
-        <SidebarContainer isOpen={isOpen} onClick={toggleIsOpen}>
-          <Icon onClick={toggleIsOpen}>
-            <CloseIcon />
-          </Icon>
+      <SidebarContainer isOpen={isOpen} onClick={toggleIsOpen}>
+        <Icon onClick={toggleIsOpen}>
+          <CloseIcon />
+        </Icon>
 
-          <SidebarWrapper>
-            <SidebarMenu>
-              <SidebarLink to="/explore">Explore</SidebarLink>
-              <SidebarLink to="/bucket-list">Bucket List</SidebarLink>
-              <SidebarLink to="/my-trips">Plan a trip</SidebarLink>
-              {/* <SidebarLink to="/">
+        <SidebarWrapper>
+          <SidebarMenu>
+            <SidebarLink to="/explore">Explore</SidebarLink>
+            <SidebarLink to="/bucket-list">Bucket List</SidebarLink>
+            <SidebarLink to="/my-trips">Plan a trip</SidebarLink>
+            {/* <SidebarLink to="/">
               <MdOutlineLanguage />
               &nbsp; Language
             </SidebarLink> */}
-              {isLoggedIn ? (
-                <>
-                  <SidebarLink to="/shopping/cart">
-                    <ReactIcons>
-                      <AiOutlineShoppingCart />
-                      <span className="cart_number_active">{cartLength}</span>
-                    </ReactIcons>
-                  </SidebarLink>
-                  <SidebarLink to="/orders">
-                    <ReactIcons>
-                      <BsBagCheck />
-                      <span className="cart_number_active">{ordersLength}</span>
-                    </ReactIcons>
-                  </SidebarLink>
-                  <SidebarLink to="/profile">
-                    <img
-                      className="navbar_profile_pics sidebar_profile_pics"
-                      src={
-                        profilePicture !== "" ? profilePicture : defaultImage
-                      }
-                      alt="profile pic"
-                    />
-                  </SidebarLink>
-                  <SidebarNoLink onClick={handleLogout}>Log out</SidebarNoLink>
-                </>
-              ) : (
-                <SidebarLink to="/sign-up">Sign Up</SidebarLink>
-              )}
-            </SidebarMenu>
-            {!isLoggedIn ? (
-              <SidebarBtn>
-                <SidebarRoute to="/sign-in">Sign In</SidebarRoute>
-              </SidebarBtn>
-            ) : null}
-          </SidebarWrapper>
-        </SidebarContainer>
-      </GoogleOAuthProvider>
+            {isLoggedIn ? (
+              <>
+                <SidebarLink to="/shopping/cart">
+                  <ReactIcons>
+                    <AiOutlineShoppingCart />
+                    <span className="cart_number_active">{cartLength}</span>
+                  </ReactIcons>
+                </SidebarLink>
+                <SidebarLink to="/orders">
+                  <ReactIcons>
+                    <BsBagCheck />
+                    <span className="cart_number_active">{ordersLength}</span>
+                  </ReactIcons>
+                </SidebarLink>
+                <SidebarLink to="/profile">
+                  <img
+                    className="navbar_profile_pics sidebar_profile_pics"
+                    src={profilePicture !== "" ? profilePicture : defaultImage}
+                    alt="profile pic"
+                  />
+                </SidebarLink>
+                <SidebarNoLink onClick={handleLogout}>Log out</SidebarNoLink>
+              </>
+            ) : (
+              <SidebarLink to="/sign-up">Sign Up</SidebarLink>
+            )}
+          </SidebarMenu>
+          {!isLoggedIn ? (
+            <SidebarBtn>
+              <SidebarRoute to="/sign-in">Sign In</SidebarRoute>
+            </SidebarBtn>
+          ) : null}
+        </SidebarWrapper>
+      </SidebarContainer>
     </>
   );
 };

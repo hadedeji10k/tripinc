@@ -103,123 +103,115 @@ const Signup = () => {
 
   return (
     <>
-      <GoogleOAuthProvider clientId={GoogleLoginClientId}>
-        {/* {isLoading ? Swal.showLoading() : null} */}
-        <div className="signup_container">
-          <div className="signup_word">
-            <h1 className="signup_header">Sign up</h1>
-            <h3 className="signup_title">Welcome to Tripinc. All aboard.</h3>
-          </div>
-          <div className="external_signup_button">
-            <button
-              className="signin_google_button"
-              onClick={() => googleLogin()}
-            >
-              <BsGoogle /> Google
-            </button>
+      {/* {isLoading ? Swal.showLoading() : null} */}
+      <div className="signup_container">
+        <div className="signup_word">
+          <h1 className="signup_header">Sign up</h1>
+          <h3 className="signup_title">Welcome to Tripinc. All aboard.</h3>
+        </div>
+        <div className="external_signup_button">
+          <button
+            className="signin_google_button"
+            onClick={() => googleLogin()}
+          >
+            <BsGoogle /> Google
+          </button>
 
-            {/* <button className="signup_google_button" type="submit">
+          {/* <button className="signup_google_button" type="submit">
           <BsGoogle /> Google
         </button> */}
-            <button className="signup_facebook_button" type="submit">
-              <FaFacebookF /> Facebook
-            </button>
-          </div>
-          <div className="remote_error">
-            {remoteError ? <p className="red_alert">{remoteError} </p> : null}
-          </div>
-          <div className="signup_or">
-            <hr className="signup_or_line" />
-            <h3 className="signup_or_text">Or continue with email</h3>
-          </div>
-          <div>
-            {/* Formik */}
-            <Formik
-              initialValues={initialValues}
-              validationSchema={SignUpSchema}
-              onSubmit={(values) => {
-                onSubmit(values);
-              }}
-            >
-              {({
-                errors,
-                touched,
-                handleSubmit,
-                handleChange,
-                handleBlur,
-              }) => (
-                //  signup form
-
-                <form
-                  onSubmit={handleSubmit}
-                  autoComplete="off"
-                  className="sign_up_form"
-                >
-                  <div>
-                    <label className="signup_label">First Name</label>
-                    <input
-                      name="firstName"
-                      className="signup_input"
-                      type="text"
-                      placeholder="Enter your first name"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {errors.firstName && touched.firstName ? (
-                      <p className="red_alert">{errors.firstName}</p>
-                    ) : null}
-                  </div>
-                  <div>
-                    <label className="signup_label">Last Name</label>
-                    <input
-                      name="lastName"
-                      className="signup_input"
-                      type="text"
-                      placeholder="Enter your last name"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {errors.lastName && touched.lastName ? (
-                      <p className="red_alert">{errors.lastName}</p>
-                    ) : null}
-                  </div>
-                  <div>
-                    <label className="signup_label">Email</label>
-                    <input
-                      name="email"
-                      className="signup_input"
-                      type="email"
-                      placeholder="Enter your email address"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {errors.email && touched.email ? (
-                      <p className="red_alert">{errors.email}</p>
-                    ) : null}
-                  </div>
-                  <Spin spinning={isLoading}>
-                    <div className="signup_button_container">
-                      <button className="signup_button" type="submit">
-                        Create Profile
-                      </button>
-                    </div>
-                  </Spin>
-                </form>
-                // End of signup form
-              )}
-            </Formik>
-            {/* End of Formik */}
-          </div>
-          <div className="have_account">
-            <h3 className="fs-5">
-              Already have an account?{" "}
-              <a href="/#/sign-in" className="login_text">
-                Login
-              </a>
-            </h3>
-          </div>
+          <button className="signup_facebook_button" type="submit">
+            <FaFacebookF /> Facebook
+          </button>
         </div>
-      </GoogleOAuthProvider>
+        <div className="remote_error">
+          {remoteError ? <p className="red_alert">{remoteError} </p> : null}
+        </div>
+        <div className="signup_or">
+          <hr className="signup_or_line" />
+          <h3 className="signup_or_text">Or continue with email</h3>
+        </div>
+        <div>
+          {/* Formik */}
+          <Formik
+            initialValues={initialValues}
+            validationSchema={SignUpSchema}
+            onSubmit={(values) => {
+              onSubmit(values);
+            }}
+          >
+            {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
+              //  signup form
+
+              <form
+                onSubmit={handleSubmit}
+                autoComplete="off"
+                className="sign_up_form"
+              >
+                <div>
+                  <label className="signup_label">First Name</label>
+                  <input
+                    name="firstName"
+                    className="signup_input"
+                    type="text"
+                    placeholder="Enter your first name"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.firstName && touched.firstName ? (
+                    <p className="red_alert">{errors.firstName}</p>
+                  ) : null}
+                </div>
+                <div>
+                  <label className="signup_label">Last Name</label>
+                  <input
+                    name="lastName"
+                    className="signup_input"
+                    type="text"
+                    placeholder="Enter your last name"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.lastName && touched.lastName ? (
+                    <p className="red_alert">{errors.lastName}</p>
+                  ) : null}
+                </div>
+                <div>
+                  <label className="signup_label">Email</label>
+                  <input
+                    name="email"
+                    className="signup_input"
+                    type="email"
+                    placeholder="Enter your email address"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.email && touched.email ? (
+                    <p className="red_alert">{errors.email}</p>
+                  ) : null}
+                </div>
+                <Spin spinning={isLoading}>
+                  <div className="signup_button_container">
+                    <button className="signup_button" type="submit">
+                      Create Profile
+                    </button>
+                  </div>
+                </Spin>
+              </form>
+              // End of signup form
+            )}
+          </Formik>
+          {/* End of Formik */}
+        </div>
+        <div className="have_account">
+          <h3 className="fs-5">
+            Already have an account?{" "}
+            <a href="/#/sign-in" className="login_text">
+              Login
+            </a>
+          </h3>
+        </div>
+      </div>
     </>
   );
 };

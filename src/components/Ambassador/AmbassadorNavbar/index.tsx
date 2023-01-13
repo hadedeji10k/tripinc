@@ -83,17 +83,16 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
   // return the NavbarContainer
   return (
     <>
-      <GoogleOAuthProvider clientId={GoogleLoginClientId}>
-        <Nav loggedIn={isLoggedIn ? true : false} className="navbar_active">
-          <NavbarContainer>
-            <NavbarLogo className="navbar_nature_logo_color" to="/">
-              <img src={LogoWhite} alt="" />
-            </NavbarLogo>
-            <MobileIcon onClick={toggleIsOpen}>
-              <GoThreeBars />
-            </MobileIcon>
-            <NavMenu>
-              {/* <NavItem>
+      <Nav loggedIn={isLoggedIn ? true : false} className="navbar_active">
+        <NavbarContainer>
+          <NavbarLogo className="navbar_nature_logo_color" to="/">
+            <img src={LogoWhite} alt="" />
+          </NavbarLogo>
+          <MobileIcon onClick={toggleIsOpen}>
+            <GoThreeBars />
+          </MobileIcon>
+          <NavMenu>
+            {/* <NavItem>
               <NavLink
                 className={
                   navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
@@ -123,9 +122,9 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
                 My Trips
               </NavLink>
             </NavItem> */}
-            </NavMenu>
-            <NavBtn>
-              {/* {isLoggedIn ? (
+          </NavMenu>
+          <NavBtn>
+            {/* {isLoggedIn ? (
               <>
                 <NavLink
                   className={
@@ -167,45 +166,44 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
                 </NavLink>
               </>
             ) : null} */}
-              {isLoggedIn ? (
-                <>
-                  <NavBtnProfileLink
-                    className="navbar_nature_color"
-                    to="/profile"
-                  >
-                    {profilePicture !== "" ? (
-                      <img
-                        className="navbar_profile_pics"
-                        src={profilePicture}
-                        alt="profile pic"
-                      />
-                    ) : (
-                      <img
-                        className="navbar_profile_pics"
-                        src={defaultImage}
-                        alt="profile pic"
-                      />
-                    )}
-                  </NavBtnProfileLink>
-                  <NavBtnLinkLogout onClick={handleLogout}>
-                    Log out
-                  </NavBtnLinkLogout>
-                </>
-              ) : (
-                <>
-                  <NavBtnLink className="navbar_head_button" to="/sign-in">
-                    Sign in
-                  </NavBtnLink>{" "}
-                  &nbsp;&nbsp;
-                  <NavBtnLink className="navbar_head_button" to="/sign-up">
-                    Try Beta
-                  </NavBtnLink>
-                </>
-              )}
-            </NavBtn>
-          </NavbarContainer>
-        </Nav>
-      </GoogleOAuthProvider>
+            {isLoggedIn ? (
+              <>
+                <NavBtnProfileLink
+                  className="navbar_nature_color"
+                  to="/profile"
+                >
+                  {profilePicture !== "" ? (
+                    <img
+                      className="navbar_profile_pics"
+                      src={profilePicture}
+                      alt="profile pic"
+                    />
+                  ) : (
+                    <img
+                      className="navbar_profile_pics"
+                      src={defaultImage}
+                      alt="profile pic"
+                    />
+                  )}
+                </NavBtnProfileLink>
+                <NavBtnLinkLogout onClick={handleLogout}>
+                  Log out
+                </NavBtnLinkLogout>
+              </>
+            ) : (
+              <>
+                <NavBtnLink className="navbar_head_button" to="/sign-in">
+                  Sign in
+                </NavBtnLink>{" "}
+                &nbsp;&nbsp;
+                <NavBtnLink className="navbar_head_button" to="/sign-up">
+                  Try Beta
+                </NavBtnLink>
+              </>
+            )}
+          </NavBtn>
+        </NavbarContainer>
+      </Nav>
     </>
   );
 };

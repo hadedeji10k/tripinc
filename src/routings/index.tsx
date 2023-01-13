@@ -48,8 +48,7 @@ const CustomTripPlanning = lazy(() => import("components/CustomTripPlanning"));
 const TripView = lazy(() => import("components/MyTripPage/TripView"));
 const CreateAttraction = lazy(() => import("components/Attraction/Attraction"));
 const AmbassadorApplication = lazy(
-  () =>
-    import("components/Ambassador/AmbassadorApplication/AmbassadorApplication")
+  () => import("components/AmbassadorApplication/AmbassadorApplication")
 );
 const Dashboard = lazy(
   () => import("components/Ambassador/AmbassadorDashboard/Dashboard")
@@ -93,22 +92,8 @@ const MainRoute: FunctionComponent = () => {
               element={<ExploreDetails />}
             />
           </Route>
-          <Route
-            path="/sign-up"
-            element={
-              <GoogleOAuthProvider clientId={GoogleLoginClientId}>
-                <Signup />
-              </GoogleOAuthProvider>
-            }
-          />
-          <Route
-            path="/sign-in"
-            element={
-              <GoogleOAuthProvider clientId={GoogleLoginClientId}>
-                <Signin />
-              </GoogleOAuthProvider>
-            }
-          />
+          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-in" element={<Signin />} />
           <Route path="/reset-password" element={<ForgotPassword />} />
           <Route path="/basic-details" element={<BasicDetails />} />
           <Route
