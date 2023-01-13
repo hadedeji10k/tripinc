@@ -1,6 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect, createContext } from "react";
-// import { useLocation } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { checkAuth, localGetUser, localGetUserId } from "../utils/helpers";
 
@@ -32,7 +31,6 @@ export const AuthProvider = ({ children }: { children: any }) => {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentChatUser(user ? user : {});
-      console.log(user);
     });
 
     return () => {

@@ -1,6 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GoogleLogin } from "react-google-login";
+import {
+  GoogleLogin,
+  GoogleOAuthProvider,
+  useGoogleLogin,
+  useGoogleOneTapLogin,
+} from "@react-oauth/google";
 import axios from "axios";
 import { Spin } from "antd";
 import { FaFacebookF } from "react-icons/fa";
@@ -25,6 +30,7 @@ import { AuthContext } from "stores/Auth";
 
 const Signin = () => {
   document.title = "TripInc - Sign In";
+  console.log("Google", GoogleLoginClientId);
 
   const [remoteError, setRemoteError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -100,46 +106,6 @@ const Signin = () => {
     }
   };
 
-  const handleGoogleLogin = (googleData: any) => {
-    setIsLoading(true);
-    // const profileObj = googleData.profileObj;
-    // const tokenObj = googleData.tokenObj;
-
-    const formData = {
-      // email: profileObj.email,
-      // lastName: profileObj.familyName,
-      // firstName: profileObj.givenName,
-      // displayName: profileObj.name,
-      // pictureUrl: profileObj.imageUrl,
-      // idToken: tokenObj.id_token,
-      // providerUserId: googleData.googleId,
-    };
-
-    // console.log(googleData);
-    googleSignIn(formData);
-    // remoteGoogleLogin(formData).then((response: any) => {
-    //   console.log(response);
-    // localLogin(response);
-    // authContext.login();
-    // authContext.setUserId(response.data.user.id);
-    // authContext.setUsername(response.data.user.username);
-    // navigate("/");
-    // });
-    //   .catch((error: any) => {
-    //     setIsLoading(false);
-    //     const errors = Object.values(error?.response?.data);
-    //     const merged = errors.flat(1);
-    //     setRemoteError(merged.join(" "));
-    //   }).finally(() => {
-    //     setIsLoading(false);
-    // });
-  };
-
-  const handleGoogleLoginFailed = () => {
-    // (TODO) handle failed
-    setRemoteError("Google Login unsuccessful.");
-  };
-
   const handleForgotPassword = () => {
     Swal.fire({
       title: "Enter your email address",
@@ -161,6 +127,19 @@ const Signin = () => {
     });
   };
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
+  });
+
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      console.log(credentialResponse);
+    },
+    onError: () => {
+      console.log("Login Failed");
+    },
+  });
+
   return (
     <>
       <Spin spinning={isLoading}>
@@ -170,22 +149,12 @@ const Signin = () => {
             <h3 className="signin_title">Let’s get you back to planning!</h3>
           </div>
           <div className="external_signin_button">
-            <GoogleLogin
-              clientId={GoogleLoginClientId as string}
-              render={(renderProps) => (
-                <button
-                  className="signin_google_button"
-                  onClick={renderProps.onClick}
-                >
-                  <BsGoogle /> Google
-                </button>
-              )}
-              onSuccess={handleGoogleLogin}
-              onFailure={handleGoogleLoginFailed}
-              cookiePolicy={"single_host_origin"}
-              // isSignedIn={true}
-              // responseType="code"
-            />
+            <button
+              className="signin_google_button"
+              onClick={() => googleLogin()}
+            >
+              <BsGoogle /> Google
+            </button>
             {/* <button className="signin_google_button" type="submit">
           <BsGoogle /> Google
         </button> */}

@@ -3,7 +3,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../../stores/Auth";
 import { localLogoutProfile } from "../../../utils/helpers";
-import { useGoogleLogout } from "react-google-login";
 import defaultImage from "../../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
 // import { MdOutlineLanguage } from "react-icons/md";
@@ -27,6 +26,7 @@ import {
 import { GoogleLoginClientId } from "../../../utils/constants";
 import Swal from "sweetalert2";
 import { BsBagCheck } from "react-icons/bs";
+import { googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
 
 // Interface for this component
 interface NavbarProps {
@@ -61,19 +61,6 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
 
   window.addEventListener("scroll", changeNavbarBackground);
 
-  const handleGoogleLogoutSuccess = () => {
-    // navigate("/");
-  };
-  const handleGoogleLogoutFailure = () => {
-    // TODO: Handle failure scenario
-  };
-
-  const { signOut } = useGoogleLogout({
-    clientId: GoogleLoginClientId as string,
-    onLogoutSuccess: handleGoogleLogoutSuccess,
-    onFailure: handleGoogleLogoutFailure,
-  });
-
   const handleLogout = () => {
     Swal.fire({
       title: "Warning!",
@@ -85,8 +72,7 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("logout");
-        signOut();
+        googleLogout();
         authContext.logout();
         localLogoutProfile();
         window.location.href = "/";
@@ -97,16 +83,17 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
   // return the NavbarContainer
   return (
     <>
-      <Nav loggedIn={isLoggedIn ? true : false} className="navbar_active">
-        <NavbarContainer>
-          <NavbarLogo className="navbar_nature_logo_color" to="/">
-            <img src={LogoWhite} alt="" />
-          </NavbarLogo>
-          <MobileIcon onClick={toggleIsOpen}>
-            <GoThreeBars />
-          </MobileIcon>
-          <NavMenu>
-            {/* <NavItem>
+      <GoogleOAuthProvider clientId={GoogleLoginClientId}>
+        <Nav loggedIn={isLoggedIn ? true : false} className="navbar_active">
+          <NavbarContainer>
+            <NavbarLogo className="navbar_nature_logo_color" to="/">
+              <img src={LogoWhite} alt="" />
+            </NavbarLogo>
+            <MobileIcon onClick={toggleIsOpen}>
+              <GoThreeBars />
+            </MobileIcon>
+            <NavMenu>
+              {/* <NavItem>
               <NavLink
                 className={
                   navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
@@ -136,9 +123,9 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
                 My Trips
               </NavLink>
             </NavItem> */}
-          </NavMenu>
-          <NavBtn>
-            {/* {isLoggedIn ? (
+            </NavMenu>
+            <NavBtn>
+              {/* {isLoggedIn ? (
               <>
                 <NavLink
                   className={
@@ -180,44 +167,45 @@ const AmbassadorNavbar: React.FC<NavbarProps> = ({
                 </NavLink>
               </>
             ) : null} */}
-            {isLoggedIn ? (
-              <>
-                <NavBtnProfileLink
-                  className="navbar_nature_color"
-                  to="/profile"
-                >
-                  {profilePicture !== "" ? (
-                    <img
-                      className="navbar_profile_pics"
-                      src={profilePicture}
-                      alt="profile pic"
-                    />
-                  ) : (
-                    <img
-                      className="navbar_profile_pics"
-                      src={defaultImage}
-                      alt="profile pic"
-                    />
-                  )}
-                </NavBtnProfileLink>
-                <NavBtnLinkLogout onClick={handleLogout}>
-                  Log out
-                </NavBtnLinkLogout>
-              </>
-            ) : (
-              <>
-                <NavBtnLink className="navbar_head_button" to="/sign-in">
-                  Sign in
-                </NavBtnLink>{" "}
-                &nbsp;&nbsp;
-                <NavBtnLink className="navbar_head_button" to="/sign-up">
-                  Try Beta
-                </NavBtnLink>
-              </>
-            )}
-          </NavBtn>
-        </NavbarContainer>
-      </Nav>
+              {isLoggedIn ? (
+                <>
+                  <NavBtnProfileLink
+                    className="navbar_nature_color"
+                    to="/profile"
+                  >
+                    {profilePicture !== "" ? (
+                      <img
+                        className="navbar_profile_pics"
+                        src={profilePicture}
+                        alt="profile pic"
+                      />
+                    ) : (
+                      <img
+                        className="navbar_profile_pics"
+                        src={defaultImage}
+                        alt="profile pic"
+                      />
+                    )}
+                  </NavBtnProfileLink>
+                  <NavBtnLinkLogout onClick={handleLogout}>
+                    Log out
+                  </NavBtnLinkLogout>
+                </>
+              ) : (
+                <>
+                  <NavBtnLink className="navbar_head_button" to="/sign-in">
+                    Sign in
+                  </NavBtnLink>{" "}
+                  &nbsp;&nbsp;
+                  <NavBtnLink className="navbar_head_button" to="/sign-up">
+                    Try Beta
+                  </NavBtnLink>
+                </>
+              )}
+            </NavBtn>
+          </NavbarContainer>
+        </Nav>
+      </GoogleOAuthProvider>
     </>
   );
 };

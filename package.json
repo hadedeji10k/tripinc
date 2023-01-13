@@ -7,6 +7,7 @@
 		"@emotion/styled": "^11.8.1",
 		"@mui/icons-material": "^5.8.4",
 		"@mui/material": "^5.8.0",
+		"@react-oauth/google": "^0.5.1",
 		"@stripe/react-stripe-js": "^1.9.0",
 		"@stripe/stripe-js": "^1.33.0",
 		"@types/jest": "^27.4.1",
@@ -30,7 +31,6 @@
 		"react-bootstrap": "^2.5.0",
 		"react-dom": "^18.2.0",
 		"react-google-autocomplete": "^2.7.0",
-		"react-google-login": "^5.2.2",
 		"react-google-places-autocomplete": "^3.4.0",
 		"react-images-uploading": "^3.1.6",
 		"react-is": "^18.1.0",
@@ -55,6 +55,7 @@
 	},
 	"scripts": {
 		"start": "SET NODE_OPTIONS=\"--max-http-header-size=200000\" && node node_modules/react-scripts/bin/react-scripts.js start",
+		"dev": "set NODE_OPTIONS=\"--max-http-header-size=200000\" && node node_modules/react-scripts/bin/react-scripts.js start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"

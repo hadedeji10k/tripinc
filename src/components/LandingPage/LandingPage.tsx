@@ -362,8 +362,6 @@ const LandingPage = () => {
                   handleChange,
                   handleBlur,
                 }) => (
-                  //  signin form
-
                   <form
                     onSubmit={handleSubmit}
                     autoComplete="off"

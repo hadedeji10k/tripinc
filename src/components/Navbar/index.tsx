@@ -3,7 +3,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../stores/Auth";
 import { localLogoutProfile } from "../../utils/helpers";
-import { useGoogleLogout } from "react-google-login";
 import defaultImage from "../../images/default_profile_image.jpg";
 import { GoThreeBars } from "react-icons/go";
 // import { MdOutlineLanguage } from "react-icons/md";
@@ -27,6 +26,7 @@ import {
 import { GoogleLoginClientId } from "../../utils/constants";
 import Swal from "sweetalert2";
 import { BsBagCheck } from "react-icons/bs";
+import { googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
 
 // Interface for this component
 interface NavbarProps {
@@ -61,19 +61,6 @@ const Navbar: React.FC<NavbarProps> = ({
 
   window.addEventListener("scroll", changeNavbarBackground);
 
-  const handleGoogleLogoutSuccess = () => {
-    // navigate("/");
-  };
-  const handleGoogleLogoutFailure = () => {
-    // TODO: Handle failure scenario
-  };
-
-  const { signOut } = useGoogleLogout({
-    clientId: GoogleLoginClientId as string,
-    onLogoutSuccess: handleGoogleLogoutSuccess,
-    onFailure: handleGoogleLogoutFailure,
-  });
-
   const handleLogout = () => {
     Swal.fire({
       title: "Warning!",
@@ -85,8 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("logout");
-        signOut();
+        googleLogout();
         authContext.logout();
         localLogoutProfile();
         window.location.href = "/";
@@ -97,56 +83,63 @@ const Navbar: React.FC<NavbarProps> = ({
   // return the NavbarContainer
   return (
     <>
-      <Nav
-        loggedIn={isLoggedIn ? true : false}
-        className={navBarScrolled ? "navbar_active" : "navbar_nature"}
-      >
-        <NavbarContainer>
-          <NavbarLogo
-            className={
-              navBarScrolled
-                ? "navbar_active_logo_color"
-                : "navbar_nature_logo_color"
-            }
-            to="/"
-          >
-            <img src={navBarScrolled ? LogoWhite : LogoBlue} alt="" />
-          </NavbarLogo>
-          <MobileIcon onClick={toggleIsOpen}>
-            <GoThreeBars />
-          </MobileIcon>
-          <NavMenu>
-            <NavItem>
-              <NavLink
-                className={
-                  navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
-                }
-                to="/explore"
-              >
-                Explore
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={
-                  navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
-                }
-                to="/bucket-list"
-              >
-                Bucket List
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={
-                  navBarScrolled ? "navbar_active_color" : "navbar_nature_color"
-                }
-                to="/my-trips"
-              >
-                Plan a Trip
-              </NavLink>
-            </NavItem>
-            {/* <NavItem>
+      <GoogleOAuthProvider clientId={GoogleLoginClientId}>
+        <Nav
+          loggedIn={isLoggedIn ? true : false}
+          className={navBarScrolled ? "navbar_active" : "navbar_nature"}
+        >
+          <NavbarContainer>
+            <NavbarLogo
+              className={
+                navBarScrolled
+                  ? "navbar_active_logo_color"
+                  : "navbar_nature_logo_color"
+              }
+              to="/"
+            >
+              <img src={navBarScrolled ? LogoWhite : LogoBlue} alt="" />
+            </NavbarLogo>
+            <MobileIcon onClick={toggleIsOpen}>
+              <GoThreeBars />
+            </MobileIcon>
+            <NavMenu>
+              <NavItem>
+                <NavLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_active_color"
+                      : "navbar_nature_color"
+                  }
+                  to="/explore"
+                >
+                  Explore
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_active_color"
+                      : "navbar_nature_color"
+                  }
+                  to="/bucket-list"
+                >
+                  Bucket List
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={
+                    navBarScrolled
+                      ? "navbar_active_color"
+                      : "navbar_nature_color"
+                  }
+                  to="/my-trips"
+                >
+                  Plan a Trip
+                </NavLink>
+              </NavItem>
+              {/* <NavItem>
                         <NavLink to="/">
                             <GrLanguage />&nbsp; Language
                         </NavLink>
@@ -156,110 +149,111 @@ const Navbar: React.FC<NavbarProps> = ({
                             <AiOutlineShoppingCart />
                         </NavLink>
                     </NavItem> */}
-          </NavMenu>
-          <NavBtn>
-            {/* <NavLink to="/">
+            </NavMenu>
+            <NavBtn>
+              {/* <NavLink to="/">
               <MdOutlineLanguage />
               &nbsp; Language
             </NavLink> */}
-            {isLoggedIn ? (
-              <>
-                <NavLink
-                  className={
-                    navBarScrolled
-                      ? "navbar_active_color"
-                      : "navbar_nature_color"
-                  }
-                  to="/shopping/cart"
-                >
-                  <ReactIcons>
-                    <AiOutlineShoppingCart />
-                    <span
-                      className={
-                        navBarScrolled ? "cart_number_active" : "cart_number"
-                      }
-                    >
-                      {cartLength}
-                    </span>
-                  </ReactIcons>
-                </NavLink>
-                <NavLink
-                  className={
-                    navBarScrolled
-                      ? "navbar_active_color"
-                      : "navbar_nature_color"
-                  }
-                  to="/orders"
-                >
-                  <ReactIcons>
-                    <BsBagCheck />
-                    <span
-                      className={
-                        navBarScrolled ? "cart_number_active" : "cart_number"
-                      }
-                    >
-                      {ordersLength}
-                    </span>
-                  </ReactIcons>
-                </NavLink>
-              </>
-            ) : null}
-            {isLoggedIn ? (
-              <>
-                <NavBtnProfileLink
-                  className={
-                    navBarScrolled
-                      ? "navbar_active_color"
-                      : "navbar_nature_color"
-                  }
-                  to="/profile"
-                >
-                  {profilePicture !== "" ? (
-                    <img
-                      className="navbar_profile_pics"
-                      src={profilePicture}
-                      alt="profile pic"
-                    />
-                  ) : (
-                    <img
-                      className="navbar_profile_pics"
-                      src={defaultImage}
-                      alt="profile pic"
-                    />
-                  )}
-                </NavBtnProfileLink>
-                <NavBtnLinkLogout onClick={handleLogout}>
-                  Log out
-                </NavBtnLinkLogout>
-              </>
-            ) : (
-              <>
-                <NavBtnLink
-                  className={
-                    navBarScrolled
-                      ? "navbar_head_active_button"
-                      : "navbar_head_button"
-                  }
-                  to="/sign-in"
-                >
-                  Sign in
-                </NavBtnLink>{" "}
-                &nbsp;&nbsp;
-                <NavBtnLink
-                  className={
-                    navBarScrolled
-                      ? "navbar_head_active_button"
-                      : "navbar_head_button"
-                  }
-                  to="/sign-up"
-                >
-                  Try Beta
-                </NavBtnLink>
-              </>
-            )}
-          </NavBtn>
-        </NavbarContainer>
-      </Nav>
+              {isLoggedIn ? (
+                <>
+                  <NavLink
+                    className={
+                      navBarScrolled
+                        ? "navbar_active_color"
+                        : "navbar_nature_color"
+                    }
+                    to="/shopping/cart"
+                  >
+                    <ReactIcons>
+                      <AiOutlineShoppingCart />
+                      <span
+                        className={
+                          navBarScrolled ? "cart_number_active" : "cart_number"
+                        }
+                      >
+                        {cartLength}
+                      </span>
+                    </ReactIcons>
+                  </NavLink>
+                  <NavLink
+                    className={
+                      navBarScrolled
+                        ? "navbar_active_color"
+                        : "navbar_nature_color"
+                    }
+                    to="/orders"
+                  >
+                    <ReactIcons>
+                      <BsBagCheck />
+                      <span
+                        className={
+                          navBarScrolled ? "cart_number_active" : "cart_number"
+                        }
+                      >
+                        {ordersLength}
+                      </span>
+                    </ReactIcons>
+                  </NavLink>
+                </>
+              ) : null}
+              {isLoggedIn ? (
+                <>
+                  <NavBtnProfileLink
+                    className={
+                      navBarScrolled
+                        ? "navbar_active_color"
+                        : "navbar_nature_color"
+                    }
+                    to="/profile"
+                  >
+                    {profilePicture !== "" ? (
+                      <img
+                        className="navbar_profile_pics"
+                        src={profilePicture}
+                        alt="profile pic"
+                      />
+                    ) : (
+                      <img
+                        className="navbar_profile_pics"
+                        src={defaultImage}
+                        alt="profile pic"
+                      />
+                    )}
+                  </NavBtnProfileLink>
+                  <NavBtnLinkLogout onClick={handleLogout}>
+                    Log out
+                  </NavBtnLinkLogout>
+                </>
+              ) : (
+                <>
+                  <NavBtnLink
+                    className={
+                      navBarScrolled
+                        ? "navbar_head_active_button"
+                        : "navbar_head_button"
+                    }
+                    to="/sign-in"
+                  >
+                    Sign in
+                  </NavBtnLink>{" "}
+                  &nbsp;&nbsp;
+                  <NavBtnLink
+                    className={
+                      navBarScrolled
+                        ? "navbar_head_active_button"
+                        : "navbar_head_button"
+                    }
+                    to="/sign-up"
+                  >
+                    Try Beta
+                  </NavBtnLink>
+                </>
+              )}
+            </NavBtn>
+          </NavbarContainer>
+        </Nav>
+      </GoogleOAuthProvider>
     </>
   );
 };

@@ -122,7 +122,7 @@ const ProfileModal = ({
   // return the component
   return (
     <>
-      {isLoading ? Swal.showLoading() : null}
+      {isLoading ? Swal.showLoading(Swal.getDenyButton()) : null}
 
       {showProfileModal ? (
         // <div className="background">
