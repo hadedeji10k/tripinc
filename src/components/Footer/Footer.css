@@ -103,6 +103,32 @@
     transition: all 0.3s ease-in-out;
 }
 
+.button {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 25px;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 40px;
+    outline: none;
+    /* border: 2px solid #ccc; */
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+    width: 170px;
+    height: 48px;
+    background: #7386d3;
+    border-radius: 90px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #2b44a8;
+    color: #FCFCFD;
+    transition: all 0.3s ease-in-out;
+}
+
 @media screen and (max-width: 800px) {
     .footer_item_menu {
         flex-grow: 0;

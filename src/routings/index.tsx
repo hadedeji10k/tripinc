@@ -1,7 +1,7 @@
 import { Fragment, FunctionComponent, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { MainLayout, AmbassadorLayout } from "../pages";
+import { MainLayout } from "../pages";
 
 import RequireAuth from "pages/RequiredAuth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -50,22 +50,7 @@ const CreateAttraction = lazy(() => import("components/Attraction/Attraction"));
 const AmbassadorApplication = lazy(
   () => import("components/AmbassadorApplication/AmbassadorApplication")
 );
-const Dashboard = lazy(
-  () => import("components/Ambassador/AmbassadorDashboard/Dashboard")
-);
-const AmbassadorAttraction = lazy(
-  () =>
-    import("components/Ambassador/AmbassadorAttraction/AmbassadorAttraction")
-);
-const AmbassadorTrip = lazy(
-  () => import("components/Ambassador/AmbassadorTrip/AmbassadorTrip")
-);
-const AdminAmbassadorApplication = lazy(
-  () => import("components/Ambassador/Admin/AdminAmbassadorApplication")
-);
-const TripPlannerApplications = lazy(
-  () => import("components/Ambassador/Admin/TripPlannerApplications")
-);
+
 const NewDashboard = lazy(() => import("components/Dashboard/Dashboard"));
 const ChatComponent = lazy(() => import("components/Chat"));
 const AboutUs = lazy(() => import("components/AboutUs/AboutUs"));
@@ -214,29 +199,15 @@ const MainRoute: FunctionComponent = () => {
               </RequireAuth>
             }
           />
-        </Route>
 
-        {/* AMBASSADOR ROUTES */}
-        <Route element={<AmbassadorLayout />}>
-          <Route path="/ambassador" element={<Dashboard />} />
           <Route
-            path="/ambassador/attractions"
-            element={<AmbassadorAttraction />}
+            path="/chat"
+            element={
+              <RequireAuth>
+                <ChatComponent />
+              </RequireAuth>
+            }
           />
-          <Route
-            path="/ambassador/attractions/new"
-            element={<CreateAttraction />}
-          />
-          <Route path="/ambassador/chat" element={<ChatComponent />} />
-          <Route
-            path="/admin/trip-planners"
-            element={<TripPlannerApplications />}
-          />
-          <Route
-            path="/admin/trip-planners/:formId"
-            element={<AdminAmbassadorApplication />}
-          />
-          <Route path="/ambassador/trips" element={<AmbassadorTrip />} />
         </Route>
       </Routes>
     </Fragment>
